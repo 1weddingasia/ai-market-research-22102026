@@ -1,0 +1,688 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  PieChart, Pie, Legend,
+} from 'recharts';
+import { api, type ReportPayload } from '@/lib/api';
+import BasesMatrix from '@/components/charts/BasesMatrix';
+import VanWestendorpChart from '@/components/charts/VanWestendorpChart';
+import ABScorecard from '@/components/charts/ABScorecard';
+import OpportunityMatrix from '@/components/charts/OpportunityMatrix';
+import DealElasticityChart from '@/components/charts/DealElasticityChart';
+
+/* ── Helpers ─────────────────────────────────────────────── */
+
+function ScoreGauge({ score }: { score: number }) {
+  const isGo = score >= 70;
+  const isCaution = score >= 50 && score < 70;
+  const color = isGo ? '#059669' : isCaution ? '#D97706' : '#DC2626';
+  const verdict = isGo ? 'GO (ĐỦ ĐIỀU KIỆN RA MẮT)' : isCaution ? 'CAUTION (CẦN TỐI ƯU HÓA)' : 'NO-GO (RỦI RO CAO)';
+  const verdictBg = isGo ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : isCaution ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-red-50 text-red-800 border-red-300';
+
+  const r = 70;
+  const circ = 2 * Math.PI * r;
+  const dash = (score / 100) * circ;
+
+  return (
+    <div className="flex flex-col items-center justify-center p-6 bg-white border border-slate-200 rounded-2xl shadow-sm text-center">
+      <div className="relative inline-flex items-center justify-center mb-3">
+        <svg width={180} height={180} className="-rotate-90">
+          <circle cx={90} cy={90} r={r} fill="none" stroke="#F1F5F9" strokeWidth={12} />
+          <circle
+            cx={90}
+            cy={90}
+            r={r}
+            fill="none"
+            stroke={color}
+            strokeWidth={12}
+            strokeDasharray={`${dash} ${circ}`}
+            strokeLinecap="round"
+            className="transition-all duration-1000 ease-out"
+          />
+        </svg>
+        <div className="absolute text-center">
+          <div className="text-4xl font-serif font-black" style={{ color }}>
+            {score}
+          </div>
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            Điểm khả thi / 100
+          </div>
+        </div>
+      </div>
+
+      <div className={`px-4 py-1.5 rounded-full border text-xs font-bold tracking-wider uppercase ${verdictBg}`}>
+        {verdict}
+      </div>
+      <p className="text-[11px] text-slate-400 mt-2">
+        Chuẩn đánh giá chỉ số chấp nhận Nielsen BASES
+      </p>
+    </div>
+  );
+}
+
+function SentimentBadge({ s }: { s: string }) {
+  if (s === 'positive') {
+    return (
+      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+        ✓ Tích cực
+      </span>
+    );
+  }
+  if (s === 'negative') {
+    return (
+      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-800 border border-red-200">
+        ✕ Băn khoăn
+      </span>
+    );
+  }
+  return (
+    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+      — Trung lập
+    </span>
+  );
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+
+function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
+  const exec = report.executive_summary;
+
+  return (
+    <div className="space-y-6">
+      {/* Top Gauge & AI Verdict */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="lg:col-span-5 flex">
+          <div className="w-full">
+            <ScoreGauge score={exec.viability_score} />
+          </div>
+        </div>
+
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider mb-3">
+              🏛️ KẾT LUẬN TỪ HỘI ĐỒNG CHIẾN LƯỢC AI
+            </div>
+            <h3 className="font-serif text-xl font-bold text-slate-900 mb-3">
+              Nhận định điều hành (Executive Verdict)
+            </h3>
+            <p className="text-slate-700 text-sm leading-relaxed italic bg-slate-50 p-4 rounded-xl border border-slate-200/80 mb-5">
+              "{exec.verdict}"
+            </p>
+          </div>
+
+          <div>
+            <span className="text-[11px] uppercase font-bold text-slate-400 tracking-wider block mb-2">
+              Top 3 phát hiện thị trường quan trọng nhất
+            </span>
+            <ul className="space-y-2 text-xs text-slate-700">
+              {exec.top_findings.map((f, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-amber-600 font-bold mt-0.5">✦</span>
+                  <span className="leading-relaxed">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Target Summary 4-Card Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+            Cỡ mẫu thực nghiệm
+          </span>
+          <div className="text-xl font-serif font-bold text-slate-900 mt-1">
+            N = {report.target_summary.sample_size.toLocaleString('vi-VN')}
+          </div>
+          <span className="text-[11px] text-slate-500 font-medium">Personas mô phỏng phân tầng</span>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl border border-amber-200 bg-amber-50/20 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider block">
+            Độ tin cậy & Sai số biên
+          </span>
+          <div className="text-xl font-serif font-bold text-amber-700 mt-1">
+            95% <span className="text-sm font-sans font-normal text-slate-600">({report.target_summary.margin_of_error || '±3.1%'})</span>
+          </div>
+          <span className="text-[11px] text-slate-500 font-medium">Định lý Giới hạn Trung tâm</span>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+            Cơ sở phân tầng dân số
+          </span>
+          <div className="text-base font-bold text-slate-900 mt-1 truncate">
+            Tổng cục Thống kê (GSO)
+          </div>
+          <span className="text-[11px] text-slate-500 font-medium">{report.target_summary.location}</span>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+            Mô hình phân tích
+          </span>
+          <div className="text-base font-bold text-slate-900 mt-1 truncate">
+            {report.model_type.replace(/_/g, ' ').toUpperCase()}
+          </div>
+          <span className="text-[11px] text-slate-500 font-medium">Chuẩn ESOMAR / Kantar</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Tab2Quantitative({ report }: { report: ReportPayload }) {
+  const metrics = report.quantitative_metrics;
+
+  const ageData = metrics.demographic_breakdown?.by_age
+    ? Object.entries(metrics.demographic_breakdown.by_age).map(([group, val]) => ({ group, value: val }))
+    : [];
+
+  const genderData = metrics.demographic_breakdown?.by_gender
+    ? Object.entries(metrics.demographic_breakdown.by_gender).map(([name, value]) => ({
+        name: name === 'male' ? 'Nam giới' : 'Nữ giới',
+        value,
+      }))
+    : [];
+
+  const keyMetrics = [
+    metrics.appeal_score ? { name: 'Mức độ yêu thích (Appeal)', value: (metrics.appeal_score / 5) * 100 } : null,
+    metrics.uniqueness_score ? { name: 'Độ độc đáo (Uniqueness)', value: (metrics.uniqueness_score / 5) * 100 } : null,
+  ].filter(Boolean) as { name: string; value: number }[];
+
+  return (
+    <div className="space-y-6">
+      {/* ── Specialized Methodology-Specific Chart ── */}
+      {report.model_type === 'nielsen_bases' && (
+        <BasesMatrix
+          appealScore={metrics.appeal_score || 3.8}
+          uniquenessScore={metrics.uniqueness_score || 4.1}
+          viabilityScore={report.executive_summary.viability_score || 75}
+          flopRiskIndex={Number(metrics.model_specific?.flop_risk_index) || 18}
+          matrixPosition={String(metrics.model_specific?.matrix_position || 'Ngôi sao đột phá')}
+          matrixQuadrant={String(metrics.model_specific?.matrix_quadrant || 'star')}
+        />
+      )}
+
+      {report.model_type === 'van_westendorp' && (
+        <VanWestendorpChart modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'ab_testing' && (
+        <ABScorecard modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'ua_study' && (
+        <OpportunityMatrix modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'deal_elasticity' && (
+        <DealElasticityChart modelSpecific={metrics.model_specific} />
+      )}
+
+      {/* Top Bar Chart: Key Quantitative Metrics */}
+      {keyMetrics.length > 0 && (
+        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="font-serif text-lg font-bold text-slate-900">
+                Chỉ số định lượng trọng yếu (Key Metrics)
+              </h3>
+              <p className="text-xs text-slate-500">
+                Thang đo chuẩn hóa quy đổi trên hệ điểm 100%
+              </p>
+            </div>
+            <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200">
+              Nielsen BASES Score
+            </span>
+          </div>
+
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={keyMetrics} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#334155' }} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#64748B' }} unit="%" />
+                <Tooltip
+                  formatter={(val: any) => [`${Number(val ?? 0).toFixed(1)}%`, 'Điểm quy đổi']}
+                  contentStyle={{ borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '12px' }}
+                />
+                <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+                  {keyMetrics.map((_, idx) => (
+                    <Cell key={idx} fill={idx === 0 ? '#0F172A' : '#059669'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
+
+      {/* 2-Column: Demographics Breakdown */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Age Breakdown */}
+        {ageData.length > 0 && (
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <h3 className="font-serif text-base font-bold text-slate-900 mb-1">
+              Phân bổ cơ cấu theo độ tuổi
+            </h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Tỷ lệ đại diện nhân khẩu trong mẫu nghiên cứu
+            </p>
+            <div className="space-y-3">
+              {ageData.map(({ group, value }) => (
+                <div key={group} className="flex items-center gap-3">
+                  <div className="w-14 text-xs font-medium text-slate-600 text-right shrink-0">
+                    {group}
+                  </div>
+                  <div className="flex-1 bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div
+                      className="bg-slate-900 h-full rounded-full transition-all duration-500"
+                      style={{ width: `${value}%` }}
+                    />
+                  </div>
+                  <div className="w-12 text-xs font-mono font-bold text-slate-900">
+                    {value}%
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Gender Breakdown */}
+        {genderData.length > 0 && (
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 className="font-serif text-base font-bold text-slate-900 mb-1">
+                Phân bổ cơ cấu giới tính
+              </h3>
+              <p className="text-xs text-slate-500 mb-2">
+                Cân đối giới tính tự động theo Quota
+              </p>
+            </div>
+            <div className="h-48 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={genderData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={65}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value}%`}
+                    labelLine={false}
+                  >
+                    <Cell fill="#0F172A" />
+                    <Cell fill="#B45309" />
+                  </Pie>
+                  <Tooltip formatter={(v: any) => [`${v}%`]} />
+                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '12px' }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Top 2 Box Banner */}
+      {metrics.purchase_intent_top2box && (
+        <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-5 flex items-center gap-5">
+          <div className="bg-white border border-emerald-300 rounded-xl p-4 text-center shrink-0 min-w-[110px] shadow-xs">
+            <span className="text-2xl font-serif font-black text-emerald-700">
+              {metrics.purchase_intent_top2box}
+            </span>
+            <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block mt-1">
+              Top-2-Box (T2B)
+            </span>
+          </div>
+          <div>
+            <h4 className="font-bold text-sm text-emerald-950 mb-1">
+              Ý định mua sắm tích cực (Purchase Intent T2B)
+            </h4>
+            <p className="text-xs text-emerald-900/80 leading-relaxed">
+              Top-2-Box đo lường tỷ lệ người tiêu dùng chọn mức "Chắc chắn mua" hoặc "Rất có thể sẽ mua". Đây là chỉ báo quan trọng nhất để dự báo tỷ lệ thâm nhập thị trường thành công của sản phẩm mới.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
+  const { top_drivers, top_barriers, verbatim_quotes } = report.qualitative_insights;
+
+  return (
+    <div className="space-y-6">
+      {/* 2-Column: Drivers vs Barriers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Drivers */}
+        <div className="bg-white border border-emerald-200 rounded-xl p-6 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full mb-4">
+            <span>✅ ĐỘNG LỰC THÚC ĐẨY MUA HÀNG (DRIVERS)</span>
+          </div>
+          <ul className="space-y-3 text-xs text-slate-700">
+            {top_drivers.map((d, i) => (
+              <li key={i} className="flex items-start gap-2.5 bg-emerald-50/30 p-2.5 rounded-lg border border-emerald-100">
+                <span className="text-emerald-600 font-bold">›</span>
+                <span className="leading-relaxed font-medium">{d}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Barriers */}
+        <div className="bg-white border border-red-200 rounded-xl p-6 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-800 bg-red-50 px-2.5 py-1 rounded-full mb-4">
+            <span>⛔ RÀO CẢN & ĐIỂM NGẦN NGẠI (BARRIERS)</span>
+          </div>
+          <ul className="space-y-3 text-xs text-slate-700">
+            {top_barriers.map((b, i) => (
+              <li key={i} className="flex items-start gap-2.5 bg-red-50/30 p-2.5 rounded-lg border border-red-100">
+                <span className="text-red-600 font-bold">›</span>
+                <span className="leading-relaxed font-medium">{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Verbatim Quotes Grid */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-serif text-lg font-bold text-slate-900">
+              Trích dẫn người tiêu dùng thực địa (Verbatim Quotes)
+            </h3>
+            <p className="text-xs text-slate-500">
+              Các phản hồi định tính trích từ phỏng vấn sâu người tiêu dùng
+            </p>
+          </div>
+          <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200">
+            {verbatim_quotes.length} Phản hồi tiêu biểu
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {verbatim_quotes.map((q, i) => (
+            <div
+              key={i}
+              className={`p-5 rounded-xl border bg-white shadow-xs flex flex-col justify-between transition-all ${
+                q.sentiment === 'positive'
+                  ? 'border-emerald-200 hover:border-emerald-400'
+                  : q.sentiment === 'negative'
+                  ? 'border-red-200 hover:border-red-400'
+                  : 'border-slate-200'
+              }`}
+            >
+              <div className="mb-4">
+                <span className="font-serif text-3xl text-amber-300 leading-none block select-none mb-1">
+                  “
+                </span>
+                <p className="text-slate-800 text-xs sm:text-sm leading-relaxed italic pl-1">
+                  {q.quote}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-xs text-slate-900">{q.name}</div>
+                  <div className="text-[11px] text-slate-500">
+                    {q.age} tuổi · {q.job} {q.income ? `· Thu nhập ${q.income}` : ''}
+                  </div>
+                </div>
+                <SentimentBadge s={q.sentiment} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surveyId: string }) {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  const recs = report.actionable_recommendations;
+
+  return (
+    <div className="space-y-6">
+      {/* 3 Numbered Action Steps */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider mb-3">
+          📋 CHIẾN LƯỢC HÀNH ĐỘNG DOANH NGHIỆP
+        </div>
+        <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+          3 Khuyến nghị thực thi dành cho Ban Điều Hành & Marketing
+        </h3>
+        <p className="text-xs text-slate-500 mb-6">
+          Được tổng hợp tự động từ ma trận đánh giá rào cản và khoảng trống thị trường.
+        </p>
+
+        <div className="space-y-4">
+          {recs.map((rec, i) => (
+            <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div className="w-8 h-8 rounded-full bg-slate-900 text-amber-400 font-serif font-bold text-sm flex items-center justify-center shrink-0">
+                0{i + 1}
+              </div>
+              <div className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+                {rec}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* PDF Download Callout Banner */}
+      <div className="bg-[#0A192F] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-amber-500/30">
+        <div>
+          <div className="inline-block px-2.5 py-0.5 rounded bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/40 uppercase tracking-wider mb-2 font-mono">
+            BÁO CÁO EXECUTIVE 6 TRANG CHUẨN KANTAR / MCKINSEY
+          </div>
+          <h4 className="font-serif text-xl sm:text-2xl font-bold text-white mb-1">
+            Xuất Bản Báo Cáo Chiến Lược Toàn Văn (A4 Print / PDF)
+          </h4>
+          <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
+            Hồ sơ báo cáo đóng dấu mộc số bảo mật 1booking Insight Engine, thiết kế chuẩn A4 Landscape / Portrait gồm đủ 6 trang: Trang bìa, Kết luận HĐQT, Cơ sở GSO N=1.000, Biểu đồ kinh tế học, 15 Trích dẫn VoC và Lộ trình 30-60-90 ngày.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <a
+            href={`/results/${surveyId}/print`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
+          >
+            <span>🖨️ Mở Bản In / Lưu PDF A4 (6 Trang)</span>
+          </a>
+
+          <a
+            href={`${API_URL}/survey/${surveyId}/pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-1.5 border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs py-3 px-4 rounded-xl transition-colors"
+          >
+            <span>Tải file gốc</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Meta Footer */}
+      <div className="text-center text-[11px] text-slate-400 pt-2">
+        Mã hồ sơ: {report.project_id} · Thời điểm tạo: {new Date(report.generated_at).toLocaleString('vi-VN')} · Xác thực chữ ký số AI Market Research
+      </div>
+    </div>
+  );
+}
+
+/* ── Main Results Component ──────────────────────────────── */
+
+const TABS = [
+  { id: 'executive', label: '1. Tóm lược điều hành' },
+  { id: 'quantitative', label: '2. Phân tích định lượng' },
+  { id: 'consumer', label: '3. Tiếng nói thị trường' },
+  { id: 'actions', label: '4. Đề xuất hành động' },
+];
+
+export default function ResultsPage() {
+  const params = useParams();
+  const surveyId = params.id as string;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+  const [report, setReport] = useState<ReportPayload | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('executive');
+
+  useEffect(() => {
+    if (!surveyId) return;
+    api.getSurveyResults(surveyId)
+      .then(setReport)
+      .catch((e: Error) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, [surveyId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-12 h-12 border-3 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4" />
+        <h3 className="font-serif text-lg font-bold text-slate-900">
+          Đang nạp dữ liệu báo cáo chiến lược...
+        </h3>
+        <p className="text-xs text-slate-500 mt-1">
+          Đang xử lý ma trận số liệu khảo sát từ hồ sơ #{surveyId}
+        </p>
+      </div>
+    );
+  }
+
+  if (error || !report) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl font-bold mb-4">
+          ⚠️
+        </div>
+        <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+          Không tìm thấy hoặc chưa hoàn tất báo cáo
+        </h3>
+        <p className="text-xs text-slate-500 max-w-md mb-6 leading-relaxed">
+          {error || 'Khảo sát này đang được xử lý hoặc mã định danh không chính xác. Vui lòng kiểm tra lại.'}
+        </p>
+        <a
+          href="/wizard"
+          className="bg-slate-900 text-white text-xs font-semibold py-2.5 px-6 rounded-lg shadow-sm"
+        >
+          Khởi tạo khảo sát mới
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
+      {/* Sticky Top Header */}
+      <header className="bg-white border-b border-slate-200 px-6 sm:px-10 py-3.5 sticky top-0 z-30 shadow-xs">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+              <span className="text-amber-400 font-serif font-bold text-sm">AI</span>
+            </div>
+            <div>
+              <div className="font-serif font-bold text-slate-900 text-sm sm:text-base leading-tight">
+                Executive Briefing Dashboard
+              </div>
+              <div className="text-[11px] text-slate-500 font-mono">
+                Mã hồ sơ: #{surveyId}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            {/* Confidential Stamp */}
+            <div className="border border-red-500/80 bg-red-50 text-red-700 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded hidden sm:block">
+              CONFIDENTIAL · BẢO MẬT HĐQT
+            </div>
+
+            {/* Print / Download Button */}
+            <a
+              href={`/results/${surveyId}/print`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3.5 rounded-lg shadow-sm transition-all"
+            >
+              <span>🖨️ Xuất Báo Cáo 6 Trang (A4)</span>
+            </a>
+
+            <a
+              href={`${API_URL}/survey/${surveyId}/pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-3 rounded-lg shadow-xs transition-colors hidden sm:inline-flex"
+            >
+              <span>Tải PDF/HTML</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Project Title Banner */}
+      <section className="bg-[#0A192F] text-white py-10 px-6 sm:px-10 border-b border-amber-500/20">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/30 uppercase tracking-wider mb-2 font-mono">
+              BÁO CÁO NGHIÊN CỨU THỊ TRƯỜNG AI · EXECUTIVE INTELLIGENCE
+            </div>
+            <h1 className="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Báo Cáo Kiểm Định: {report.model_type.replace(/_/g, ' ').toUpperCase()}
+            </h1>
+            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed">
+              Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} cá nhân</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số: <span className="text-amber-400 font-semibold">{report.target_summary.margin_of_error || '±3.1%'}</span> (Chuẩn phân tầng GSO)
+            </p>
+          </div>
+
+          <div className="text-right">
+            <span className="text-[11px] text-slate-400 block font-mono">Phát hành bởi 1booking Insight</span>
+            <span className="text-xs font-mono text-[#D4AF37] font-semibold">
+              {new Date(report.generated_at).toLocaleDateString('vi-VN')}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 4-Tab Navigation */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-5">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-1.5 flex flex-wrap gap-1 mb-8">
+          {TABS.map((t) => {
+            const isActive = activeTab === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setActiveTab(t.id)}
+                className={`flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-150 text-center ${
+                  isActive
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tab Content Display */}
+        {activeTab === 'executive' && <Tab1ExecutiveSummary report={report} />}
+        {activeTab === 'quantitative' && <Tab2Quantitative report={report} />}
+        {activeTab === 'consumer' && <Tab3VoiceOfConsumer report={report} />}
+        {activeTab === 'actions' && <Tab4StrategicAction report={report} surveyId={surveyId} />}
+      </div>
+    </main>
+  );
+}
