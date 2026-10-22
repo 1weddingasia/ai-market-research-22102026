@@ -99,66 +99,66 @@ export default function Step4Payment() {
         {/* Left Column (7 cols): Proforma Research Invoice */}
         <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
           {/* Invoice Header */}
-          <div className="bg-slate-900 text-white p-6 flex items-start justify-between">
+          <div className="bg-slate-900 text-white p-4 sm:p-6 flex flex-col sm:flex-row gap-3 sm:gap-0 sm:items-start justify-between">
             <div>
               <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400 block mb-1">
                 OFFICIAL RESEARCH INVOICE
               </span>
-              <h3 className="font-serif text-xl font-bold text-white">
+              <h3 className="font-serif text-lg sm:text-xl font-bold text-white">
                 Bản Kê Chi Phí Khảo Sát
               </h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-400 mt-0.5 sm:mt-1">
                 Nền tảng Nghiên cứu Thị trường AI Synthetic Panel Việt Nam
               </p>
             </div>
-            <div className="text-right">
-              <span className="text-[10px] text-slate-400 block">Mã hồ sơ dự án</span>
-              <span className="font-mono font-bold text-amber-400 text-sm tracking-wider">
+            <div className="text-left sm:text-right flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-0 border-t sm:border-t-0 border-slate-800 pt-2 sm:pt-0">
+              <span className="text-[10px] text-slate-400 block">Mã hồ sơ:</span>
+              <span className="font-mono font-bold text-amber-400 text-xs sm:text-sm tracking-wider">
                 {projectCode}
               </span>
-              <div className="mt-2 inline-block px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/30">
+              <div className="sm:mt-2 inline-block px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/30">
                 CHỜ THANH TOÁN
               </div>
             </div>
           </div>
 
           {/* Invoice Details Table */}
-          <div className="p-6 space-y-4">
+          <div className="p-4 sm:p-6 space-y-4">
             <div className="divide-y divide-slate-100 text-sm">
-              <div className="py-3 flex items-center justify-between">
-                <span className="text-slate-500 text-xs">Phương pháp nghiên cứu</span>
-                <span className="font-semibold text-slate-900 text-right">
+              <div className="py-2.5 sm:py-3 flex items-center justify-between gap-2">
+                <span className="text-slate-500 text-xs shrink-0">Phương pháp nghiên cứu</span>
+                <span className="font-semibold text-slate-900 text-right text-xs sm:text-sm">
                   {modelName || 'Kiểm định Ý tưởng Sản phẩm (BASES)'}
                 </span>
               </div>
-              <div className="py-3 flex items-center justify-between">
-                <span className="text-slate-500 text-xs">Quy mô mẫu thực nghiệm</span>
-                <span className="font-semibold text-slate-900 font-mono">
+              <div className="py-2.5 sm:py-3 flex items-center justify-between gap-2">
+                <span className="text-slate-500 text-xs">Quy mô mẫu</span>
+                <span className="font-semibold text-slate-900 font-mono text-xs sm:text-sm">
                   N = {sampleSize.toLocaleString('vi-VN')} hồ sơ
                 </span>
               </div>
-              <div className="py-3 flex items-center justify-between">
+              <div className="py-2.5 sm:py-3 flex items-center justify-between gap-2">
                 <span className="text-slate-500 text-xs">Phạm vi địa lý & nhân khẩu</span>
-                <span className="font-semibold text-slate-900">
+                <span className="font-semibold text-slate-900 text-xs sm:text-sm text-right">
                   {region} (18 - 65 tuổi)
                 </span>
               </div>
-              <div className="py-3 flex items-center justify-between">
+              <div className="py-2.5 sm:py-3 flex items-center justify-between gap-2">
                 <span className="text-slate-500 text-xs">Thuật toán phân bổ</span>
-                <span className="text-slate-700 text-xs font-medium">
+                <span className="text-slate-700 text-xs font-medium text-right">
                   Phân tầng thống kê chuẩn xác (Stratified Quota Sampling)
                 </span>
               </div>
-              <div className="py-3 flex items-center justify-between">
+              <div className="py-2.5 sm:py-3 flex items-center justify-between gap-2">
                 <span className="text-slate-500 text-xs">Báo cáo xuất xưởng</span>
-                <span className="text-slate-700 text-xs font-medium">
+                <span className="text-slate-700 text-xs font-medium text-right">
                   Executive Dashboard + File PDF A4
                 </span>
               </div>
             </div>
 
             {/* Total Section */}
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-4 flex items-center justify-between">
+            <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200 mt-4 flex items-center justify-between">
               <div>
                 <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">
                   Tổng kinh phí trọn gói
@@ -166,7 +166,7 @@ export default function Step4Payment() {
                 <span className="text-[11px] text-slate-400">Không phát sinh phụ phí</span>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-serif font-bold text-slate-900">
+                <span className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
                   {formatVND(priceAmount || 300000)}
                 </span>
               </div>
@@ -174,9 +174,9 @@ export default function Step4Payment() {
 
             {/* Account Info Pill */}
             <div className="space-y-2 pt-2">
-              <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
                 <span className="text-slate-500">Số tài khoản:</span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-end gap-2">
                   <span className="font-mono font-bold text-slate-900">
                     {qrData?.accountNumber || '0987654321'}
                   </span>
@@ -190,9 +190,9 @@ export default function Step4Payment() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
                 <span className="text-slate-500">Nội dung chuyển khoản:</span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-end gap-2">
                   <span className="font-mono font-bold text-slate-900">
                     {qrData?.addInfo || surveyId}
                   </span>
@@ -211,7 +211,7 @@ export default function Step4Payment() {
 
         {/* Right Column (5 cols): VietQR Box + Status */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-white border-2 border-amber-300 rounded-2xl p-6 shadow-md text-center">
+          <div className="bg-white border-2 border-amber-300 rounded-2xl p-4 sm:p-6 shadow-md text-center">
             {/* Bank Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <span className="text-xs font-bold text-slate-900">

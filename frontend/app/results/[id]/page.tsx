@@ -593,23 +593,23 @@ export default function ResultsPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
       {/* Sticky Top Header */}
-      <header className="bg-white border-b border-slate-200 px-6 sm:px-10 py-3.5 sticky top-0 z-30 shadow-xs">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-10 py-3 sm:py-3.5 sticky top-0 z-30 shadow-xs">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
-            <div className="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center group-hover:ring-2 group-hover:ring-amber-400 transition-all">
-              <span className="text-amber-400 font-serif font-bold text-sm">AI</span>
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group hover:opacity-90 transition-opacity">
+            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-lg bg-slate-900 flex items-center justify-center group-hover:ring-2 group-hover:ring-amber-400 transition-all shrink-0">
+              <span className="text-amber-400 font-serif font-bold text-xs sm:text-sm">AI</span>
             </div>
             <div>
-              <div className="font-serif font-bold text-slate-900 text-sm sm:text-base leading-tight group-hover:text-amber-600 transition-colors">
-                Executive Briefing Dashboard
+              <div className="font-serif font-bold text-slate-900 text-xs sm:text-base leading-tight group-hover:text-amber-600 transition-colors">
+                Executive Briefing
               </div>
-              <div className="text-[11px] text-slate-500 font-mono truncate max-w-[280px]">
+              <div className="text-[10px] sm:text-[11px] text-slate-500 font-mono truncate max-w-[140px] sm:max-w-[280px]">
                 {companyName} · #{surveyId}
               </div>
             </div>
           </Link>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Confidential Stamp */}
             <div className="border border-red-500/80 bg-red-50 text-red-700 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded hidden sm:block">
               CONFIDENTIAL · BẢO MẬT HĐQT
@@ -620,9 +620,11 @@ export default function ResultsPage() {
               href={`/results/${surveyId}/print`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3.5 rounded-lg shadow-sm transition-all"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3 sm:px-3.5 rounded-lg shadow-sm transition-all"
             >
-              <span>🖨️ Xuất Báo Cáo 6 Trang (A4)</span>
+              <span>🖨️</span>
+              <span className="hidden sm:inline">Xuất Báo Cáo 6 Trang (A4)</span>
+              <span className="sm:hidden">Xuất A4</span>
             </a>
 
             <a
@@ -638,13 +640,13 @@ export default function ResultsPage() {
       </header>
 
       {/* Project Title Banner */}
-      <section className="bg-[#0A192F] text-white py-10 px-6 sm:px-10 border-b border-amber-500/20">
+      <section className="bg-[#0A192F] text-white py-6 sm:py-10 px-4 sm:px-10 border-b border-amber-500/20">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/30 uppercase tracking-wider mb-2 font-mono">
               BÁO CÁO NGHIÊN CỨU THỊ TRƯỜNG AI · EXECUTIVE INTELLIGENCE
             </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="font-serif text-xl sm:text-3xl font-black text-white tracking-tight">
               {productName}
             </h1>
             <div className="text-amber-400 font-medium text-xs sm:text-sm mt-1">
@@ -655,7 +657,7 @@ export default function ResultsPage() {
             </p>
           </div>
 
-          <div className="text-right">
+          <div className="text-left md:text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
             <span className="text-[11px] text-slate-400 block font-mono">Phát hành bởi 1booking Insight</span>
             <span className="text-xs font-mono text-[#D4AF37] font-semibold">
               {new Date(report.generated_at).toLocaleDateString('vi-VN')}
@@ -666,7 +668,7 @@ export default function ResultsPage() {
 
       {/* 4-Tab Navigation */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-5">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-1.5 flex flex-wrap gap-1 mb-8">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-1.5 grid grid-cols-2 sm:flex sm:flex-wrap gap-1 mb-8">
           {TABS.map((t) => {
             const isActive = activeTab === t.id;
             return (
@@ -674,7 +676,7 @@ export default function ResultsPage() {
                 key={t.id}
                 type="button"
                 onClick={() => setActiveTab(t.id)}
-                className={`flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-150 text-center ${
+                className={`py-2 sm:py-2.5 px-2 sm:px-4 rounded-lg text-xs font-bold transition-all duration-150 text-center ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'

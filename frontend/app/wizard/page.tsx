@@ -78,35 +78,35 @@ export default function WizardPage() {
       </div>
 
       {/* Executive Navigation Header */}
-      <header className="bg-white border-b border-slate-200 px-6 sm:px-10 py-4 shadow-xs sticky top-0 z-30">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-10 py-3 sm:py-4 shadow-xs sticky top-0 z-30">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo có Link quay lại trang chủ */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
-              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-sm tracking-tighter transition-colors">AI</span>
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-lg bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
+              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-xs sm:text-sm tracking-tighter transition-colors">AI</span>
             </div>
             <div>
-              <div className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-base leading-tight transition-colors">
+              <div className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-sm sm:text-base leading-tight transition-colors">
                 AI Market Research
               </div>
-              <div className="text-[11px] text-slate-500 font-medium">
+              <div className="hidden sm:block text-[11px] text-slate-500 font-medium">
                 Executive Intelligence Platform · Vietnam Synthetic Panel
               </div>
             </div>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-600 hover:text-slate-900 py-1.5 px-3 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors"
+              className="text-xs font-semibold text-slate-600 hover:text-slate-900 py-1.5 px-2.5 sm:px-3 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors"
             >
-              ← Về trang chủ
+              ← <span className="hidden xs:inline">Về</span> trang chủ
             </Link>
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+            <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              Phân tầng chuẩn GSO
+              Phân tầng GSO
             </span>
-            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+            <span className="hidden sm:inline-flex text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
               Chuẩn ESOMAR v2.0
             </span>
           </div>
