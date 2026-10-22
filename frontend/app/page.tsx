@@ -119,11 +119,20 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
+          <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600">
             <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">Phương pháp</a>
             <a href="#quy-trinh" className="hover:text-slate-900 transition-colors">Quy trình</a>
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">Bảng giá</a>
             <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Cơ sở khoa học</a>
+            <Link
+              href="/bach-thu"
+              className="text-amber-800 hover:text-amber-950 font-bold flex items-center gap-1 transition-colors"
+            >
+              <span>Bạch thư</span>
+              <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-mono font-bold">
+                C-Level
+              </span>
+            </Link>
             <a href="#faq" className="hover:text-slate-900 transition-colors">FAQ</a>
             <Link href="/results/DEMO-NIELSEN-BASES" className="text-amber-700 hover:text-amber-900 font-bold transition-colors">
               📄 Báo cáo mẫu
@@ -183,6 +192,18 @@ export default function HomePage() {
                 <span>Xem Báo Cáo Mẫu Thực Tế (DEMO)</span>
               </span>
               <span>→</span>
+            </Link>
+
+            <Link
+              href="/bach-thu"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl bg-slate-900 text-amber-300 font-bold text-xs border border-amber-500/30"
+            >
+              <span className="flex items-center gap-2">
+                <span>📚</span>
+                <span>Bạch Thư Phương Pháp Luận (C-Level)</span>
+              </span>
+              <span className="text-amber-400">→</span>
             </Link>
 
             <div className="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700 pt-1">
@@ -605,6 +626,28 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
+
+            {/* Bạch thư Callout Box */}
+            <div className="mt-6 pt-5 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-amber-50/70 p-4 sm:p-5 rounded-xl border border-amber-300/80">
+              <div className="space-y-1">
+                <span className="inline-block text-[10px] font-mono font-bold text-amber-900 bg-amber-200/60 px-2 py-0.5 rounded uppercase">
+                  TÀI LIỆU TOÀN VĂN CHÍNH THỨC DÀNH CHO C-LEVEL & R&D
+                </span>
+                <h4 className="font-serif font-bold text-slate-900 text-sm sm:text-base">
+                  Bạch Thư Phương Pháp Luận: Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng
+                </h4>
+                <p className="text-xs text-slate-600 max-w-2xl">
+                  Tìm hiểu chi tiết cơ sở toán học Cochran, độ tương quan 75%–85% theo chuẩn Stanford &amp; Harvard, cơ chế bảo mật theo Luật 91/2025/QH15 và cách loại bỏ 80% rủi ro dòng vốn trước khi sản xuất đại trà.
+                </p>
+              </div>
+              <Link
+                href="/bach-thu"
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all shrink-0"
+              >
+                <span>Đọc Bạch Thư (Lookbook)</span>
+                <span className="text-amber-400">→</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -732,6 +775,10 @@ export default function HomePage() {
           </Link>
 
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
+            <Link href="/bach-thu" className="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-4 transition-colors">
+              Bạch Thư Phương Pháp Luận
+            </Link>
+            <span>·</span>
             <span>Bảo mật dữ liệu tuyệt đối</span>
             <span>·</span>
             <span>Chuẩn Thống Kê ESOMAR</span>
