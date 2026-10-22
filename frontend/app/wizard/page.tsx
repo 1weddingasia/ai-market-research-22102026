@@ -1,11 +1,40 @@
 'use client';
 
+import React, { Suspense, useEffect } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import WizardStepper from '@/components/WizardStepper';
 import Step1ModelSelect from '@/components/Step1ModelSelect';
 import Step2SampleConfig from '@/components/Step2SampleConfig';
 import Step3ProductInfo from '@/components/Step3ProductInfo';
 import Step4Payment from '@/components/Step4Payment';
 import { useWizard } from '@/lib/wizard-context';
+import { DEFAULT_SURVEY_CONFIGS } from '@/lib/survey-configs';
+
+function QueryParamHandler() {
+  const searchParams = useSearchParams();
+  const { updateSampleConfig, updateModel, state } = useWizard();
+
+  useEffect(() => {
+    const sampleParam = searchParams.get('sample');
+    if (sampleParam) {
+      const parsed = parseInt(sampleParam, 10);
+      if ([500, 1000, 2000, 3000].includes(parsed)) {
+        updateSampleConfig({ sampleSize: parsed });
+      }
+    }
+
+    const modelParam = searchParams.get('model');
+    if (modelParam && !state.selectedModel) {
+      const found = DEFAULT_SURVEY_CONFIGS.find((c) => c.id === modelParam);
+      if (found) {
+        updateModel(found.id, found.name, found.framework);
+      }
+    }
+  }, [searchParams, updateSampleConfig, updateModel, state.selectedModel]);
+
+  return null;
+}
 
 function StepContent() {
   const { state } = useWizard();
@@ -26,6 +55,10 @@ function StepContent() {
 export default function WizardPage() {
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans">
+      <Suspense fallback={null}>
+        <QueryParamHandler />
+      </Suspense>
+
       {/* Editorial Trust Bar */}
       <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-10 font-medium">
@@ -47,27 +80,34 @@ export default function WizardPage() {
       {/* Executive Navigation Header */}
       <header className="bg-white border-b border-slate-200 px-6 sm:px-10 py-4 shadow-xs sticky top-0 z-30">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center shadow-xs">
-              <span className="text-amber-400 font-serif font-bold text-sm tracking-tighter">AI</span>
+          {/* Logo có Link quay lại trang chủ */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-lg bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
+              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-sm tracking-tighter transition-colors">AI</span>
             </div>
             <div>
-              <div className="font-serif font-bold text-slate-900 text-base leading-tight">
+              <div className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-base leading-tight transition-colors">
                 AI Market Research
               </div>
               <div className="text-[11px] text-slate-500 font-medium">
                 Executive Intelligence Platform · Vietnam Synthetic Panel
               </div>
             </div>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="text-xs font-semibold text-slate-600 hover:text-slate-900 py-1.5 px-3 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors"
+            >
+              ← Về trang chủ
+            </Link>
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              DuckDB Online
+              DuckDB Cloud
             </span>
             <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-              Chuẩn Quốc Tế EIDS v2.0
+              Chuẩn EIDS v2.0
             </span>
           </div>
         </div>

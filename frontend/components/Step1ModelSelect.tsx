@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { api, type SurveyConfig } from '@/lib/api';
 import { useWizard } from '@/lib/wizard-context';
+import { DEFAULT_SURVEY_CONFIGS } from '@/lib/survey-configs';
 
 const CERTIFICATIONS: Record<string, string> = {
   nielsen_bases: 'CHỨNG THỰC NIELSEN BASES',
@@ -42,16 +43,22 @@ const DELIVERABLES: Record<string, string[]> = {
 
 export default function Step1ModelSelect() {
   const { state, updateModel, setStep } = useWizard();
-  const [configs, setConfigs] = useState<SurveyConfig[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [configs, setConfigs] = useState<SurveyConfig[]>(DEFAULT_SURVEY_CONFIGS);
   const [modalConfig, setModalConfig] = useState<SurveyConfig | null>(null);
 
   useEffect(() => {
+    // Nếu chưa có model nào được chọn, mặc định chọn nielsen_bases
+    if (!state.selectedModel) {
+      const defaultCfg = configs[0] || DEFAULT_SURVEY_CONFIGS[0];
+      updateModel(defaultCfg.id, defaultCfg.name, defaultCfg.framework);
+    }
+    // Cập nhật thêm từ API nếu backend có thêm configs
     api.getSurveyConfigs()
-      .then((c) => setConfigs(c))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+      .then((c) => {
+        if (c && c.length > 0) setConfigs(c);
+      })
+      .catch(() => {});
+  }, [state.selectedModel, updateModel]);
 
   const handleSelect = (cfg: SurveyConfig) => {
     updateModel(cfg.id, cfg.name, cfg.framework);
@@ -63,15 +70,6 @@ export default function Step1ModelSelect() {
     }
     setStep(2);
   };
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-24">
-        <div className="w-10 h-10 border-3 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4" />
-        <p className="text-sm text-slate-500 font-medium">Đang tải danh mục phương pháp nghiên cứu chuẩn quốc tế...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full">

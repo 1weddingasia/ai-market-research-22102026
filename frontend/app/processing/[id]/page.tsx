@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface LogEntry {
   percent: number;
@@ -155,9 +156,34 @@ export default function ProcessingPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#070B13] text-slate-100 flex flex-col justify-center items-center py-10 px-4 font-sans selection:bg-amber-500 selection:text-slate-950">
+    <main className="min-h-screen bg-[#070B13] text-slate-100 flex flex-col items-center py-6 px-4 font-sans selection:bg-amber-500 selection:text-slate-950">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_20%,rgba(14,165,233,0.08),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(217,119,6,0.06),transparent_50%)]" />
+
+      {/* Top Navigation Bar */}
+      <div className="relative max-w-4xl w-full flex items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center font-serif font-black text-slate-950 text-base shadow-md group-hover:scale-105 transition-transform">
+            AI
+          </div>
+          <div>
+            <div className="font-serif font-bold text-white text-sm tracking-tight group-hover:text-amber-400 transition-colors">
+              Market Research AI
+            </div>
+            <div className="text-[10px] font-mono text-slate-400">
+              insight.1booking.asia
+            </div>
+          </div>
+        </Link>
+
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 bg-slate-900/60 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all"
+        >
+          <span>←</span>
+          <span>Về trang chủ</span>
+        </Link>
+      </div>
 
       {/* Header Container */}
       <div className="relative max-w-4xl w-full text-center mb-8">

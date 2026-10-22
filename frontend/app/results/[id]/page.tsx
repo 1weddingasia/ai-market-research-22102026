@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
   PieChart, Pie, Legend,
@@ -589,19 +590,19 @@ export default function ResultsPage() {
       {/* Sticky Top Header */}
       <header className="bg-white border-b border-slate-200 px-6 sm:px-10 py-3.5 sticky top-0 z-30 shadow-xs">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
+            <div className="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center group-hover:ring-2 group-hover:ring-amber-400 transition-all">
               <span className="text-amber-400 font-serif font-bold text-sm">AI</span>
             </div>
             <div>
-              <div className="font-serif font-bold text-slate-900 text-sm sm:text-base leading-tight">
+              <div className="font-serif font-bold text-slate-900 text-sm sm:text-base leading-tight group-hover:text-amber-600 transition-colors">
                 Executive Briefing Dashboard
               </div>
               <div className="text-[11px] text-slate-500 font-mono">
-                Mã hồ sơ: #{surveyId}
+                Mã hồ sơ: #{surveyId} · ← Về trang chủ
               </div>
             </div>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-2.5">
             {/* Confidential Stamp */}

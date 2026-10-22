@@ -122,8 +122,15 @@ async function fetchJSON<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export const api = {
-  getSurveyConfigs: () =>
-    fetchJSON<{ configs: SurveyConfig[] }>('/survey/configs').then(r => r.configs),
+  getSurveyConfigs: async (): Promise<SurveyConfig[]> => {
+    try {
+      const res = await fetchJSON<{ configs: SurveyConfig[] }>('/survey/configs');
+      if (res && res.configs && res.configs.length > 0) return res.configs;
+      return (await import('./survey-configs')).DEFAULT_SURVEY_CONFIGS;
+    } catch {
+      return (await import('./survey-configs')).DEFAULT_SURVEY_CONFIGS;
+    }
+  },
 
   createSurvey: (data: SurveyCreateRequest) =>
     fetchJSON<SurveyCreateResponse>('/survey/create', {
