@@ -28,6 +28,31 @@ export default function TraCuuPage() {
   const [infoMessage, setInfoMessage] = useState('');
   const [surveys, setSurveys] = useState<SurveyItem[]>([]);
 
+  // Trạng thái xóa riêng 1 báo cáo
+  const [deleteSurveyId, setDeleteSurveyId] = useState<string | null>(null);
+  const [deleteSurveyLoading, setDeleteSurveyLoading] = useState(false);
+  const [deleteSurveyError, setDeleteSurveyError] = useState('');
+  const [deleteSurveySuccess, setDeleteSurveySuccess] = useState('');
+
+  const handleConfirmDelete = async () => {
+    if (!deleteSurveyId) return;
+    setDeleteSurveyLoading(true);
+    setDeleteSurveyError('');
+    try {
+      await api.deleteSurvey(deleteSurveyId, email.trim().toLowerCase());
+      setDeleteSurveySuccess(`Báo cáo #${deleteSurveyId} đã được tiêu hủy thành công.`);
+      setSurveys((prev) => prev.filter((s) => s.survey_id !== deleteSurveyId));
+      setTimeout(() => {
+        setDeleteSurveyId(null);
+        setDeleteSurveySuccess('');
+      }, 1500);
+    } catch (err: any) {
+      setDeleteSurveyError(err.message || 'Lỗi khi tiêu hủy báo cáo. Vui lòng thử lại.');
+    } finally {
+      setDeleteSurveyLoading(false);
+    }
+  };
+
   // BƯỚC 1: Gửi OTP
   const handleRequestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -372,23 +397,44 @@ export default function TraCuuPage() {
                       </div>
 
                       {/* Nút hành động */}
-                      <div className="flex sm:flex-col items-center sm:items-end gap-2.5 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                      <div className="flex sm:flex-col items-center sm:items-end gap-2 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                         {isCompleted ? (
                           <>
                             <Link
                               href={`/results/${s.survey_id}`}
-                              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-xs transition-all text-center"
+                              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-xs transition-all text-center"
                             >
                               <span>Xem Dashboard</span>
                               <span>→</span>
                             </Link>
-                            <Link
-                              href={`/results/${s.survey_id}/print`}
-                              target="_blank"
-                              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs py-2 px-3 rounded-xl border border-slate-300 transition-all text-center"
+                            <div className="flex items-center gap-1.5 w-full sm:w-auto">
+                              <Link
+                                href={`/results/${s.survey_id}/print`}
+                                target="_blank"
+                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs py-1.5 px-3 rounded-lg border border-slate-300 transition-all text-center"
+                              >
+                                <span>📄 In A4</span>
+                              </Link>
+                              <a
+                                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${s.survey_id}/pdf?download=true`}
+                                download={`bao-cao-khao-sat-${s.survey_id}.html`}
+                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs py-1.5 px-3 rounded-lg border border-slate-300 transition-all text-center"
+                              >
+                                <span>💾 Tải file</span>
+                              </a>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setDeleteSurveyId(s.survey_id);
+                                setDeleteSurveyError('');
+                                setDeleteSurveySuccess('');
+                              }}
+                              className="text-slate-400 hover:text-red-600 text-[11px] font-medium py-1 px-2 rounded hover:bg-red-50 transition-colors cursor-pointer"
+                              title="Chỉ xóa duy nhất báo cáo này"
                             >
-                              <span>📄 In Báo Cáo A4</span>
-                            </Link>
+                              🗑️ Xóa riêng báo cáo này
+                            </button>
                           </>
                         ) : (
                           <Link
@@ -408,6 +454,64 @@ export default function TraCuuPage() {
           </div>
         )}
       </main>
+
+      {/* ── Modal Tiêu Hủy Riêng 1 Báo Cáo ── */}
+      {deleteSurveyId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <div className="flex items-center gap-3 text-red-600 mb-3">
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-lg shrink-0">
+                ⚠️
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-base text-slate-900">
+                  Tiêu Hủy Riêng Báo Cáo Này
+                </h3>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  Mã hồ sơ: #{deleteSurveyId}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Bạn đang yêu cầu tiêu hủy <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{deleteSurveyId}</strong>.
+              <br /><br />
+              🛡️ <strong>Cam kết an toàn tuyệt đối:</strong> Toàn bộ các báo cáo khảo sát khác của bạn (nếu có) trên hệ thống vẫn được <strong>bảo toàn nguyên vẹn 100%</strong>. Hành động này không thể hoàn tác.
+            </p>
+
+            {deleteSurveyError && (
+              <div className="p-3 mb-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700">
+                ⚠️ {deleteSurveyError}
+              </div>
+            )}
+
+            {deleteSurveySuccess && (
+              <div className="p-3 mb-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+                ✅ {deleteSurveySuccess}
+              </div>
+            )}
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={deleteSurveyLoading}
+                onClick={() => setDeleteSurveyId(null)}
+                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                type="button"
+                disabled={deleteSurveyLoading || !!deleteSurveySuccess}
+                onClick={handleConfirmDelete}
+                className="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 rounded-lg shadow-sm transition-colors cursor-pointer"
+              >
+                {deleteSurveyLoading ? 'Đang tiêu hủy...' : 'Xác nhận xóa riêng báo cáo này'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-6 px-4 text-center text-xs text-slate-400">

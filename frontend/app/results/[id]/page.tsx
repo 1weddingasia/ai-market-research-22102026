@@ -18,6 +18,55 @@ import MaxDiffChart from '@/components/charts/MaxDiffChart';
 import KanoGrid from '@/components/charts/KanoGrid';
 import BrandPerceptualMap from '@/components/charts/BrandPerceptualMap';
 
+/* ── Model Strategic Pillars Mapping (McKinsey / Domain-Specific Framework) ── */
+const MODEL_STRATEGIC_PILLARS: Record<string, Array<{ pillar_name: string; icon: string }>> = {
+  nielsen_bases: [
+    { pillar_name: 'Tối ưu hóa Khái niệm & USP', icon: '💡' },
+    { pillar_name: 'Kích hoạt Dùng thử (Trial Rate)', icon: '🎯' },
+    { pillar_name: 'Rào chắn Giảm Rủi ro Thất bại', icon: '🛡️' },
+  ],
+  van_westendorp: [
+    { pillar_name: 'Điểm Giá Tối Ưu (OPP)', icon: '💎' },
+    { pillar_name: 'Bảo Toàn Giá Trị Thương Hiệu (IPP)', icon: '⚖️' },
+    { pillar_name: 'Biên Độ Chấp Nhận & Phân Tầng Giá', icon: '📊' },
+  ],
+  ab_testing: [
+    { pillar_name: 'Phương Án Chiến Thắng & Lợi Thế Cốt Lõi', icon: '🏆' },
+    { pillar_name: 'Khắc Phục Điểm Nghẽn Mẫu Thua', icon: '🔍' },
+    { pillar_name: 'Kế Hoạch Triển Khai Hoàn Thiện', icon: '📦' },
+  ],
+  maxdiff: [
+    { pillar_name: 'Thuộc Tính Ưu Tiên Cao Nhất (Top-Tier)', icon: '⭐' },
+    { pillar_name: 'Thông Điệp Truyền Thông Bán Hàng (USP)', icon: '📢' },
+    { pillar_name: 'Cắt Giảm Chi Phí Thuộc Tính Thờ Ơ', icon: '✂️' },
+  ],
+  kano: [
+    { pillar_name: 'Tính Năng Bắt Buộc (Must-be)', icon: '🔒' },
+    { pillar_name: 'Tính Năng Tăng Trưởng (One-dimensional)', icon: '📈' },
+    { pillar_name: 'Vũ Khí Bất Ngờ (Attractive)', icon: '✨' },
+  ],
+  brand_map: [
+    { pillar_name: 'Tọa Độ Định Vị Hiện Tại', icon: '📍' },
+    { pillar_name: 'Khai Thác Khoảng Trống (White-space)', icon: '🌊' },
+    { pillar_name: 'Lộ Trình Tái Định Vị Cạnh Tranh', icon: '🧭' },
+  ],
+  monadic: [
+    { pillar_name: 'Hiệu Suất Ý Niệm Độc Lập (Top-2-Box)', icon: '⚖️' },
+    { pillar_name: 'Mức Độ Chênh Lệch (Lift %)', icon: '📊' },
+    { pillar_name: 'Quyết Định Lựa Chọn Khái Niệm Tối Ưu', icon: '🎯' },
+  ],
+  ua_study: [
+    { pillar_name: 'Dịp Sử Dụng Cốt Lõi (Occasions)', icon: '⏰' },
+    { pillar_name: 'Nhu Cầu Chưa Thỏa Mãn (Unmet Needs)', icon: '💡' },
+    { pillar_name: 'Gia Tăng Tần Suất & Quy Mô Giỏ Hàng', icon: '🛒' },
+  ],
+  deal_elasticity: [
+    { pillar_name: 'Ngưỡng Co Giãn Giá Khuyến Mãi', icon: '📉' },
+    { pillar_name: 'Tỷ Lệ Lôi Kéo Người Dùng (Switching)', icon: '🔄' },
+    { pillar_name: 'Cấu Trúc Chiết Khấu Tối Ưu Lợi Nhuận', icon: '💰' },
+  ],
+};
+
 /* ── Helpers ─────────────────────────────────────────────── */
 
 function ScoreGauge({ score }: { score: number }) {
@@ -212,32 +261,50 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
             </p>
           </div>
 
-          {/* 2. Ba trụ cột khuyến nghị hành động */}
+          {/* 2. Ba trụ cột khuyến nghị hành động theo đúng phương pháp luận nghiên cứu */}
           <div>
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold mb-3 block">
-              3 Trọng tâm khuyến nghị hành động C-Level (McKinsey Strategic Framework):
+              3 Trọng tâm khuyến nghị hành động C-Level (Model-Specific Strategic Framework):
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {(
-                report.quantitative_metrics?.model_specific?.deepseek_audit?.strategic_recommendations ||
-                report.actionable_recommendations.slice(0, 3)
-              ).map((rec: string, i: number) => {
-                const titles = ['R&D / Cải tiến sản phẩm', 'Chiến lược Giá & Phân khúc', 'Go-To-Market / Truyền thông'];
-                const icons = ['🔬', '💰', '🚀'];
-                return (
-                  <div key={i} className="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 flex flex-col justify-between">
-                    <div>
-                      <div className="text-[10px] font-mono uppercase font-bold text-amber-400 mb-1 flex items-center gap-1">
-                        <span>{icons[i] || '✦'}</span>
-                        <span>{titles[i] || `Khuyến nghị 0${i + 1}`}</span>
+              {(() => {
+                const audit = report.quantitative_metrics?.model_specific?.deepseek_audit;
+                const defaultPillars = MODEL_STRATEGIC_PILLARS[report.model_type] || MODEL_STRATEGIC_PILLARS.nielsen_bases;
+
+                if (audit?.strategic_pillars && Array.isArray(audit.strategic_pillars) && audit.strategic_pillars.length > 0) {
+                  return audit.strategic_pillars.slice(0, 3).map((p: any, i: number) => (
+                    <div key={i} className="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 flex flex-col justify-between">
+                      <div>
+                        <div className="text-[10px] font-mono uppercase font-bold text-amber-400 mb-1 flex items-center gap-1.5">
+                          <span>{p.icon || defaultPillars[i]?.icon || '✦'}</span>
+                          <span>{p.pillar_name || defaultPillars[i]?.pillar_name || `Trọng tâm 0${i + 1}`}</span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-relaxed mt-1">
+                          {(p.recommendation || '').replace(/^\[.*?\]:\s*/, '')}
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed mt-1">
-                        {rec.replace(/^\[.*?\]:\s*/, '')}
-                      </p>
                     </div>
-                  </div>
-                );
-              })}
+                  ));
+                }
+
+                const recList = audit?.strategic_recommendations || report.actionable_recommendations.slice(0, 3);
+                return recList.map((rec: string, i: number) => {
+                  const fallbackPillar = defaultPillars[i] || { pillar_name: `Trọng tâm 0${i + 1}`, icon: '✦' };
+                  return (
+                    <div key={i} className="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 flex flex-col justify-between">
+                      <div>
+                        <div className="text-[10px] font-mono uppercase font-bold text-amber-400 mb-1 flex items-center gap-1.5">
+                          <span>{fallbackPillar.icon}</span>
+                          <span>{fallbackPillar.pillar_name}</span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-relaxed mt-1">
+                          {rec.replace(/^\[.*?\]:\s*/, '')}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           </div>
 
@@ -599,7 +666,7 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
             Xuất Bản Báo Cáo Chiến Lược Toàn Văn (A4 Print / PDF)
           </h4>
           <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
-            Hồ sơ báo cáo đóng dấu mộc số bảo mật 1booking Insight Engine, thiết kế chuẩn A4 Landscape / Portrait gồm đủ 6 trang: Trang bìa, Kết luận HĐQT, Cơ sở GSO N=1.000, Biểu đồ kinh tế học, 15 Trích dẫn VoC và Lộ trình 30-60-90 ngày.
+            Hồ sơ báo cáo đóng dấu mộc số bảo mật 1booking Insight Engine, thiết kế chuẩn A4 Landscape / Portrait gồm đủ 6 trang: Trang bìa, Kết luận HĐQT, Cơ sở GSO N={report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'}, Biểu đồ kinh tế học, 15 Trích dẫn VoC và Lộ trình 30-60-90 ngày.
           </p>
         </div>
 
@@ -614,12 +681,11 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
           </a>
 
           <a
-            href={`${API_URL}/survey/${surveyId}/pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs py-3 px-4 rounded-xl transition-colors"
+            href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
+            download={`bao-cao-khao-sat-${surveyId}.html`}
+            className="inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-white text-xs py-3 px-4 rounded-xl transition-colors font-medium"
           >
-            <span>Tải file gốc</span>
+            <span>💾 Tải file báo cáo (.html / .pdf)</span>
           </a>
         </div>
       </div>
@@ -770,12 +836,11 @@ export default function ResultsPage() {
             </a>
 
             <a
-              href={`${API_URL}/survey/${surveyId}/pdf`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
+              download={`bao-cao-khao-sat-${surveyId}.html`}
               className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-3 rounded-lg shadow-xs transition-colors hidden sm:inline-flex"
             >
-              <span>Tải PDF/HTML</span>
+              <span>💾 Tải file</span>
             </a>
 
             {/* Enterprise Privacy & Data Destruction Button */}
@@ -867,7 +932,7 @@ export default function ResultsPage() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, toàn bộ dữ liệu khảo sát của 1.000 Personas và báo cáo kết quả sẽ bị xóa sạch khỏi toàn bộ máy chủ Cloud của chúng tôi. <strong>Hành động này không thể hoàn tác.</strong>
+              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, hành động này sẽ xóa vĩnh viễn <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{surveyId}</strong> và dữ liệu phản hồi của {report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'} Personas thuộc khảo sát này khỏi toàn bộ máy chủ Cloud của chúng tôi. <strong>Toàn bộ các báo cáo khác của bạn trên hệ thống (nếu có) vẫn được giữ nguyên vẹn 100%.</strong> Hành động này không thể hoàn tác.
             </p>
 
             <form onSubmit={handleDeleteSurvey} className="space-y-4">

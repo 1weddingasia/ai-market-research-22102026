@@ -385,7 +385,7 @@
 
     <p class="cover-desc">
       Báo cáo nghiên cứu định lượng độc bản được bảo trợ phương pháp luận bởi Tổng cục Thống kê (GSO) và Định lý Giới hạn Trung tâm (Central Limit Theorem). 
-      Dữ liệu kết xuất từ 1.000 hồ sơ người tiêu dùng mô phỏng phân tầng đại diện dân số Việt Nam, phục vụ trực tiếp cho quyết định đầu tư và chiến lược HĐQT.
+      Dữ liệu kết xuất từ {{ target.sample_size | default(1000) }} hồ sơ người tiêu dùng mô phỏng phân tầng đại diện dân số Việt Nam, phục vụ trực tiếp cho quyết định đầu tư và chiến lược HĐQT.
     </p>
   </div>
 
@@ -823,7 +823,7 @@
   </div>
 
   <div class="page-footer">
-    <span>Dữ liệu thực chứng từ phỏng vấn 1.000 Synthetic Personas độc lập</span>
+    <span>Dữ liệu thực chứng từ phỏng vấn {{ target.sample_size | default(1000) }} Synthetic Personas độc lập</span>
     <span>Trang 5 / 6</span>
   </div>
 </section>

@@ -212,6 +212,14 @@ export default function PrintReportPage() {
               ← Dashboard
             </Link>
 
+            <a
+              href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${surveyId}/pdf?download=true`}
+              download={`bao-cao-khao-sat-${surveyId}.html`}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs font-medium transition-colors"
+            >
+              <span>💾 Tải file về máy</span>
+            </a>
+
             <button
               onClick={() => window.print()}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-5 py-2 rounded-lg text-xs shadow-lg transition-transform hover:scale-105"
@@ -1447,7 +1455,7 @@ export default function PrintReportPage() {
 
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
-          <span>Dữ liệu trích xuất từ 1.000 hồ sơ phỏng vấn sâu trực tiếp</span>
+          <span>Dữ liệu trích xuất từ {sampleN.toLocaleString('vi-VN')} hồ sơ phỏng vấn sâu trực tiếp</span>
           <span className="font-bold text-slate-600">TRANG 05 / 06</span>
         </div>
       </section>

@@ -303,9 +303,10 @@ async def delete_survey_permanently(
         except Exception:
             pass
 
+    sample_size = survey.sample_size or 1000
     return {
         "success": True,
-        "message": f"Báo cáo #{survey_id} và toàn bộ dữ liệu phản hồi của 1.000 Personas đã được xóa vĩnh viễn khỏi toàn bộ hệ thống máy chủ Cloud theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp.",
+        "message": f"Duy nhất báo cáo #{survey_id} và toàn bộ dữ liệu phản hồi của {sample_size:,} Personas đã được xóa vĩnh viễn khỏi toàn bộ hệ thống máy chủ Cloud theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp. Toàn bộ các báo cáo khác của bạn trên hệ thống (nếu có) vẫn được giữ nguyên vẹn 100%.",
         "survey_id": survey_id,
     }
 

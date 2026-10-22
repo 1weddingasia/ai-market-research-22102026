@@ -23,6 +23,7 @@ router = APIRouter(prefix="/survey", tags=["Export"])
 async def download_pdf(
     survey_id: str,
     refresh: bool = False,
+    download: bool = False,
     db: Session = Depends(get_db),
 ):
     """
@@ -48,6 +49,13 @@ async def download_pdf(
                     media_type="application/pdf",
                     filename=f"bao-cao-{survey_id}.pdf",
                 )
+            elif download:
+                return FileResponse(
+                    path=str(cached),
+                    media_type="text/html",
+                    filename=f"bao-cao-{survey_id}.html",
+                    content_disposition_type="attachment",
+                )
             else:
                 return HTMLResponse(content=cached.read_text(encoding="utf-8"))
 
@@ -71,6 +79,13 @@ async def download_pdf(
                 path=file_path,
                 media_type="application/pdf",
                 filename=f"bao-cao-{survey_id}.pdf",
+            )
+        elif download:
+            return FileResponse(
+                path=file_path,
+                media_type="text/html",
+                filename=f"bao-cao-{survey_id}.html",
+                content_disposition_type="attachment",
             )
         else:
             # HTML mode — trả về HTML với nút Print
