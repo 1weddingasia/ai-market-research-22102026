@@ -91,7 +91,7 @@ export default function Step4Payment() {
           Phiếu thanh toán & Kích hoạt khảo sát
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống SePay sẽ tự động ghi nhận và kích hoạt AI ngay lập tức.
+          Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống sẽ tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.
         </p>
       </div>
 
@@ -108,7 +108,7 @@ export default function Step4Payment() {
                 Bản Kê Chi Phí Khảo Sát
               </h3>
               <p className="text-xs text-slate-400 mt-1">
-                Nền tảng Giả lập Nghiên cứu Thị trường AI Việt Nam
+                Nền tảng Nghiên cứu Thị trường AI Synthetic Panel Việt Nam
               </p>
             </div>
             <div className="text-right">
@@ -146,7 +146,7 @@ export default function Step4Payment() {
               <div className="py-3 flex items-center justify-between">
                 <span className="text-slate-500 text-xs">Thuật toán phân bổ</span>
                 <span className="text-slate-700 text-xs font-medium">
-                  Stratified Quota Sampling (DuckDB)
+                  Phân tầng thống kê chuẩn xác (Stratified Quota Sampling)
                 </span>
               </div>
               <div className="py-3 flex items-center justify-between">
@@ -256,28 +256,28 @@ export default function Step4Payment() {
               </div>
             </div>
 
-            {/* Webhook Status Pulse */}
+            {/* Transfer Confirmation Pulse */}
             <div className="flex items-center justify-center gap-2 text-xs text-slate-600 font-medium">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
               </span>
-              <span>Đang lắng nghe xác nhận qua SePay Webhook...</span>
+              <span>Hệ thống đang tự động lắng nghe xác nhận chuyển khoản...</span>
             </div>
           </div>
 
-          {/* Test / Dev Simulation Button */}
+          {/* Manual Confirm Button */}
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
             <span className="text-[11px] text-slate-500 block mb-2">
-              Dành cho môi trường kiểm thử (Testing / Demo):
+              Sau khi chuyển khoản thành công trên app ngân hàng:
             </span>
             <button
               type="button"
               onClick={handleSimulatePayment}
               disabled={simulating}
-              className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow-xs transition-colors disabled:opacity-50"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {simulating ? 'Đang kích hoạt...' : '⚡ Giả lập thanh toán thành công (Bắt đầu khảo sát)'}
+              <span>{simulating ? 'Đang xác thực giao dịch...' : '✓ Tôi Đã Hoàn Tất Chuyển Khoản (Tiến Hành Khảo Sát)'}</span>
             </button>
           </div>
         </div>

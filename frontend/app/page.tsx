@@ -47,7 +47,7 @@ export default function HomePage() {
       sampleSize: 3000,
       price: '700.000',
       moe: '±1.79%',
-      desc: 'Bao phủ toàn diện 6 vùng kinh tế trọng điểm. Độ chính xác tương đương khảo sát thực địa diện rộng của Nielsen/Kantar.',
+      desc: 'Bao phủ toàn diện 6 vùng kinh tế trọng điểm. Quy mô mẫu lớn giúp loại bỏ nhiễu và định vị xu hướng hành vi với độ chuẩn xác thống kê cao nhất.',
       badge: 'DOANH NGHIỆP LỚN',
       recommended: false,
     },
@@ -118,11 +118,15 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-600">
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">Phương pháp</a>
-            <a href="#quy-trinh" className="hover:text-slate-900 transition-colors">Quy trình 3 bước</a>
+            <a href="#quy-trinh" className="hover:text-slate-900 transition-colors">Quy trình</a>
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">Bảng giá</a>
-            <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Tiêu chuẩn Khoa học</a>
+            <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Cơ sở khoa học</a>
+            <a href="#faq" className="hover:text-slate-900 transition-colors">FAQ</a>
+            <Link href="/results/DEMO-NIELSEN-BASES" className="text-amber-700 hover:text-amber-900 font-bold transition-colors">
+              📄 Báo cáo mẫu
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -225,22 +229,28 @@ export default function HomePage() {
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Mô phỏng hành vi tiêu dùng bằng AI Agents độc lập trên kho dữ liệu phân tầng dân số học Việt Nam (DuckDB + Cloudflare R2). Chuẩn xác theo Nielsen BASES & Van Westendorp, chi phí chỉ bằng 1/20 phương pháp truyền thống.
+            Mô phỏng hành vi tiêu dùng bằng AI Synthetic Panel độc lập trên kho dữ liệu phân tầng nhân khẩu học 1.000.000 người tiêu dùng Việt Nam. Chuẩn xác theo Nielsen BASES & Van Westendorp, chi phí chỉ bằng 1/20 phương pháp truyền thống.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/wizard"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm py-3.5 px-8 rounded-xl shadow-md transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm py-3.5 px-8 rounded-xl shadow-md transition-all transform hover:scale-[1.02]"
             >
               <span>Khởi tạo khảo sát ngay</span>
               <span>→</span>
             </Link>
+            <Link
+              href="/results/DEMO-NIELSEN-BASES"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm py-3.5 px-6 rounded-xl border border-slate-300 shadow-xs transition-all"
+            >
+              <span>📄 Xem Báo Cáo Mẫu Thực Tế</span>
+            </Link>
             <a
               href="#bang-gia"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm py-3.5 px-6 rounded-xl border border-slate-300 shadow-xs transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold text-sm py-3.5 px-4 transition-colors"
             >
-              Xem bảng giá minh bạch
+              Bảng giá & Chi phí
             </a>
           </div>
 
@@ -254,7 +264,7 @@ export default function HomePage() {
             <div className="p-4 rounded-xl bg-white border border-slate-200">
               <span className="text-[10px] uppercase font-bold text-slate-400 block">Thời gian xử lý</span>
               <div className="text-2xl font-serif font-black text-emerald-700 mt-1">&lt; 60 giây</div>
-              <span className="text-[11px] text-slate-500">Chạy song song 50 batch</span>
+              <span className="text-[11px] text-slate-500">Xử lý song song đa luồng</span>
             </div>
             <div className="p-4 rounded-xl bg-white border border-slate-200">
               <span className="text-[10px] uppercase font-bold text-slate-400 block">Độ tin cậy</span>
@@ -263,8 +273,8 @@ export default function HomePage() {
             </div>
             <div className="p-4 rounded-xl bg-white border border-slate-200">
               <span className="text-[10px] uppercase font-bold text-slate-400 block">Thanh toán tự động</span>
-              <div className="text-2xl font-serif font-black text-slate-900 mt-1">VietQR + SePay</div>
-              <span className="text-[11px] text-slate-500">Kích hoạt AI tức thì</span>
+              <div className="text-2xl font-serif font-black text-slate-900 mt-1">VietQR Tự Động</div>
+              <span className="text-[11px] text-slate-500">Kích hoạt tức thì 24/7</span>
             </div>
           </div>
         </div>
@@ -301,7 +311,7 @@ export default function HomePage() {
             </div>
             <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Quét mã VietQR thanh toán</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Quét mã VietQR bằng app ngân hàng bất kỳ. Cổng thanh toán SePay tự động ghi nhận chuyển khoản và kích hoạt AI ngay lập tức.
+              Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.
             </p>
           </div>
 
@@ -311,7 +321,7 @@ export default function HomePage() {
             </div>
             <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Nhận Dashboard & Tải PDF A4</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Theo dõi trực tiếp terminal SSE xử lý từng hồ sơ. Nhận báo cáo chiến lược điều hành 4 tab và tải file PDF in ấn chuẩn bìa đen vàng.
+              Theo dõi luồng phân tích trực tiếp theo thời gian thực (Live Stream). Nhận báo cáo chiến lược điều hành 4 tab và xuất file báo cáo chiến lược chuẩn Executive Summary (A4) sẵn sàng thuyết trình.
             </p>
           </div>
         </div>
@@ -405,7 +415,7 @@ export default function HomePage() {
                   {pkg.price} <span className="text-xs font-sans font-normal text-slate-500">đ / khảo sát</span>
                 </div>
                 <div className="text-xs text-amber-700 font-semibold mb-4">
-                  Sai số biên: {pkg.moe}
+                  Sai số thống kê trên cỡ mẫu (MoE): {pkg.moe} (Độ tin cậy 95%)
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
                   {pkg.desc}
@@ -515,6 +525,115 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── FAQ Section (Giải Tỏa Hoài Nghi) ── */}
+      <section id="faq" className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-14">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+            GIẢI ĐÁP DOANH NGHIỆP
+          </span>
+          <h2 className="font-serif text-3xl font-bold text-slate-900 mt-3">
+            Câu hỏi thường gặp của Nhà Sáng Lập & Giám Đốc
+          </h2>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+            Mọi thắc mắc về tính chuẩn xác, nguồn dữ liệu và giá trị thực tế của báo cáo.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+            <h3 className="font-serif text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span className="text-amber-600 font-sans font-black">01.</span>
+              Tại sao AI Synthetic Panel chuẩn xác và khách quan hơn việc tự hỏi ChatGPT thông thường?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-7">
+              Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Mỗi Persona mang một bộ gen nhân khẩu học thực tế (độ tuổi, giới tính, thu nhập gia đình, thói quen mua sắm, vùng miền sinh sống theo Niên giám Thống kê GSO). Từng cá nhân phản hồi độc lập, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, mang lại dữ liệu thị trường đa chiều chân thực.
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+            <h3 className="font-serif text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span className="text-amber-600 font-sans font-black">02.</span>
+              Dữ liệu 1.000.000 hồ sơ người tiêu dùng lấy từ đâu và có đại diện được cho thị trường?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-7">
+              Kho dữ liệu được phân tầng khoa học (Stratified Sampling) theo cơ cấu dân số học thực tế của Việt Nam từ Tổng cục Thống kê (GSO): tỷ lệ giới tính (49.8% Nam / 50.2% Nữ), phân bổ độ tuổi 18 - 65, và 6 vùng kinh tế trọng điểm (Đồng bằng sông Hồng, Đông Nam Bộ, Đồng bằng sông Cửu Long, Duyên hải miền Trung, Tây Nguyên, Trung du miền núi phía Bắc). Nhờ đó, mẫu khảo sát phản ánh chân thực các rào cản tài chính, khẩu vị chi tiêu và đặc thù văn hóa tiêu dùng địa phương.
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+            <h3 className="font-serif text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span className="text-amber-600 font-sans font-black">03.</span>
+              Khi nào doanh nghiệp nên sử dụng nền tảng này?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-7">
+              Nền tảng phát huy hiệu quả cao nhất ở 4 giai đoạn quan trọng: (1) <strong>Kiểm định ý tưởng mới</strong> trước khi đầu tư khuôn mẫu hoặc nhập hàng số lượng lớn; (2) <strong>Tìm điểm giá tối ưu (OPP)</strong> để không bán quá rẻ làm mất biên lợi nhuận hoặc quá đắt làm tắc thanh khoản; (3) <strong>Thử nghiệm bao bì & thông điệp A/B</strong> trước khi chi ngân sách chạy quảng cáo; (4) <strong>Đo độ co giãn khuyến mãi</strong> để thiết kế combo quà tặng có tỷ lệ chốt đơn cao nhất.
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+            <h3 className="font-serif text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span className="text-amber-600 font-sans font-black">04.</span>
+              Báo cáo có đủ tiêu chuẩn để trình Hội Đồng Quản Trị hoặc Nhà Đầu Tư không?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-7">
+              Hoàn toàn đủ tiêu chuẩn. Báo cáo được xây dựng theo chuẩn <strong>Executive Briefing 4 Phân mục</strong> (Tóm lược điều hành, Phân tích định lượng, Tiếng nói thị trường và Đề xuất hành động). Hệ thống cung cấp nút bấm <strong>Xuất Báo Cáo 6 Trang (A4)</strong> với bố cục sang trọng, có thông tin doanh nghiệp, mã độc bản bảo mật và biểu đồ trực quan, sẵn sàng in ấn hoặc đính kèm vào hồ sơ gọi vốn.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Bottom High-Converting CTA Section ── */}
+      <section className="py-20 px-6 bg-gradient-to-br from-slate-900 via-[#0A192F] to-slate-950 text-white relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_0%,rgba(217,119,6,0.15),transparent_60%)]" />
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold tracking-wider uppercase">
+            TỐI ƯU HÓA QUYẾT ĐỊNH KINH DOANH
+          </div>
+
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            Sẵn sàng kiểm chứng sản phẩm của bạn <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
+              trong 60 giây?
+            </span>
+          </h2>
+
+          <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            Tiết kiệm hàng trăm triệu đồng và hàng tuần chờ đợi phỏng vấn thực địa. Kiểm tra ngay mức độ sẵn sàng đón nhận của 1.000 người tiêu dùng Việt Nam trước khi đưa ra quyết định sản xuất lớn.
+          </p>
+
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/wizard"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm py-4 px-9 rounded-xl shadow-xl transition-all transform hover:scale-105"
+            >
+              <span>Khởi tạo khảo sát ngay</span>
+              <span>→</span>
+            </Link>
+            <Link
+              href="/results/DEMO-NIELSEN-BASES"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-800 text-white font-bold text-sm py-4 px-7 rounded-xl border border-slate-700 hover:border-slate-500 transition-all"
+            >
+              <span>📄 Xem Báo Cáo Mẫu Thực Tế</span>
+            </Link>
+          </div>
+
+          <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-400 border-t border-slate-800/80">
+            <span className="flex items-center gap-1.5">
+              <span className="text-emerald-400">✓</span> Kích hoạt VietQR tức thì
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-emerald-400">✓</span> Độ tin cậy 95% chuẩn Cochran
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-emerald-400">✓</span> Xuất báo cáo PDF A4 6 trang
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-emerald-400">✓</span> Bảo mật dữ liệu tuyệt đối
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* ── Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-12 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
@@ -531,7 +650,7 @@ export default function HomePage() {
           <div className="flex items-center gap-6">
             <span>Bảo mật dữ liệu tuyệt đối</span>
             <span>·</span>
-            <span>Cloudflare R2 Storage</span>
+            <span>Chuẩn Thống Kê ESOMAR</span>
             <span>·</span>
             <span>VietQR Pro Certified</span>
           </div>

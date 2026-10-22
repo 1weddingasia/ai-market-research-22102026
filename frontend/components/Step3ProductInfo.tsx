@@ -16,6 +16,13 @@ interface FieldConfig {
 const FIELDS_MAP: Record<string, FieldConfig[]> = {
   nielsen_bases: [
     {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
+      placeholder: 'VD: Công ty Cổ phần Thực phẩm Sạch Á Châu (Asia Food Corp)',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
       id: 'product_name',
       label: 'Tên sản phẩm / ý tưởng kiểm định',
       placeholder: 'VD: Nước giải khát Kombucha men xoài Cát Chu 330ml',
@@ -43,6 +50,13 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
   ],
   van_westendorp: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
+      placeholder: 'VD: Trung tâm Anh ngữ Quốc tế Elite Academy',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
     {
       id: 'product_name',
       label: 'Tên sản phẩm / gói dịch vụ định giá',
@@ -73,9 +87,16 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
   ],
   ab_testing: [
     {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
+      placeholder: 'VD: Công ty Cổ phần Sữa Việt Nam (Vinamilk)',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
       id: 'brand_name',
-      label: 'Tên thương hiệu & Dòng sản phẩm',
-      placeholder: 'VD: Sữa Chua Uống Men Sống Vinamilk Probi',
+      label: 'Dòng sản phẩm thử nghiệm',
+      placeholder: 'VD: Sữa Chua Uống Men Sống Probi',
       required: true,
     },
     {
@@ -101,6 +122,13 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
   ],
   ua_study: [
     {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
+      placeholder: 'VD: Be Group / Grab Vietnam / VinFast',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
       id: 'industry',
       label: 'Ngành hàng & Thị trường khảo sát',
       placeholder: 'VD: Dịch vụ gọi xe công nghệ & Giao đồ ăn nhanh tại Việt Nam',
@@ -121,6 +149,13 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
   ],
   deal_elasticity: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
+      placeholder: 'VD: Tập đoàn Bánh kẹo Kinh Đô Mondelez',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
     {
       id: 'deal_description',
       label: 'Mô tả chương trình ưu đãi / Combo Tết',

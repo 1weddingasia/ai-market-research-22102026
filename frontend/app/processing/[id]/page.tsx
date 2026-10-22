@@ -287,11 +287,11 @@ export default function ProcessingPage() {
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
               <span className="text-[11px] font-mono text-slate-400 ml-2">
-                insight.1booking.asia — Simulation Terminal [Cores 10]
+                insight.1booking.asia — Luồng Phân Tích Thực Địa Theo Thời Gian Thực
               </span>
             </div>
             <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest hidden sm:block">
-              DUCKDB v1.2 · LAKEHOUSE ENGINE
+              SYNTHETIC RESEARCH ENGINE
             </div>
           </div>
 
@@ -299,7 +299,7 @@ export default function ProcessingPage() {
           <div className="p-4 sm:p-5 font-mono text-xs leading-relaxed max-h-80 overflow-y-auto space-y-2.5 scrollbar-thin scrollbar-thumb-slate-800">
             {logs.length === 0 && (
               <div className="text-slate-500 italic py-2">
-                [00:00s] [SYSTEM] Đang khởi tạo kết nối DuckDB Parquet Lakehouse và nạp bảng phân tầng dân số...
+                [00:00s] [SYSTEM] Đang khởi tạo dữ liệu 1.000.000 người tiêu dùng và phân bổ hạn ngạch mẫu theo Tổng cục Thống kê (GSO)...
               </div>
             )}
 

@@ -83,7 +83,7 @@ export default function Step2SampleConfig() {
               </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-2">
-              Bộ lọc sẽ tự động đối sánh tọa độ và địa bàn sinh sống trong kho hồ sơ DuckDB.
+              Bộ lọc sẽ tự động đối sánh tọa độ và địa bàn sinh sống trong kho dữ liệu 1.000.000 người tiêu dùng Việt Nam.
             </p>
           </div>
 
@@ -258,7 +258,7 @@ export default function Step2SampleConfig() {
                 </span>
               </div>
               <p className="text-[10px] text-amber-700 mt-1">
-                Đã bao gồm chi phí tính toán DuckDB, suy luận mô hình AI và xuất bản báo cáo PDF A4.
+                Đã bao gồm chi phí phân tích phân tầng dữ liệu, suy luận mô hình AI và xuất bản báo cáo PDF A4.
               </p>
             </div>
           </div>

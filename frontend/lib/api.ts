@@ -141,8 +141,13 @@ export const api = {
   getSurveyStatus: (surveyId: string) =>
     fetchJSON<SurveyStatus>(`/survey/${surveyId}/status`),
 
-  getSurveyResults: (surveyId: string) =>
-    fetchJSON<ReportPayload>(`/survey/${surveyId}/results`),
+  getSurveyResults: async (surveyId: string): Promise<ReportPayload> => {
+    if (surveyId.toUpperCase().includes('DEMO')) {
+      const { DEMO_REPORT } = await import('./demo-report');
+      return DEMO_REPORT;
+    }
+    return fetchJSON<ReportPayload>(`/survey/${surveyId}/results`);
+  },
 
   getPdfUrl: (surveyId: string) => `${API_URL}/survey/${surveyId}/pdf`,
 

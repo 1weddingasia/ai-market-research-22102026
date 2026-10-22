@@ -585,6 +585,11 @@ export default function ResultsPage() {
     );
   }
 
+  const pInfo = report.product_info || {};
+  const companyName = pInfo.company_name || pInfo.brand_name || 'Doanh Nghiệp / Thương Hiệu';
+  const productName = pInfo.product_name || pInfo.concept_name || pInfo.deal_description || pInfo.brand_name || 'Dự án Nghiên Cứu Thị Trường';
+  const category = pInfo.category || pInfo.industry || 'Tiêu dùng & Dịch vụ';
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
       {/* Sticky Top Header */}
@@ -598,8 +603,8 @@ export default function ResultsPage() {
               <div className="font-serif font-bold text-slate-900 text-sm sm:text-base leading-tight group-hover:text-amber-600 transition-colors">
                 Executive Briefing Dashboard
               </div>
-              <div className="text-[11px] text-slate-500 font-mono">
-                Mã hồ sơ: #{surveyId} · ← Về trang chủ
+              <div className="text-[11px] text-slate-500 font-mono truncate max-w-[280px]">
+                {companyName} · #{surveyId}
               </div>
             </div>
           </Link>
@@ -640,10 +645,13 @@ export default function ResultsPage() {
               BÁO CÁO NGHIÊN CỨU THỊ TRƯỜNG AI · EXECUTIVE INTELLIGENCE
             </div>
             <h1 className="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Báo Cáo Kiểm Định: {report.model_type.replace(/_/g, ' ').toUpperCase()}
+              {productName}
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed">
-              Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} cá nhân</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số: <span className="text-amber-400 font-semibold">{report.target_summary.margin_of_error || '±3.1%'}</span> (Chuẩn phân tầng GSO)
+            <div className="text-amber-400 font-medium text-xs sm:text-sm mt-1">
+              Đơn vị yêu cầu: <span className="text-white font-semibold">{companyName}</span> · Ngành hàng: <span className="text-slate-200">{category}</span>
+            </div>
+            <p className="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+              Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} Personas</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số thống kê: <span className="text-amber-400 font-semibold">{report.target_summary.margin_of_error || '±3.1%'}</span> (Chuẩn phân tầng GSO)
             </p>
           </div>
 

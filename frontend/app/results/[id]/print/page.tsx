@@ -84,8 +84,9 @@ export default function PrintReportPage() {
 
   const modelInfo = MODEL_TITLES[report.model_type] || MODEL_TITLES.nielsen_bases;
   const pInfo = report.product_info || {};
-  const productName = (pInfo.product_name as string) || (pInfo.concept_name as string) || 'Sản phẩm thử nghiệm thị trường';
-  const category = (pInfo.category as string) || 'Tiêu dùng & Dịch vụ';
+  const companyName = (pInfo.company_name as string) || (pInfo.brand_name as string) || 'Doanh Nghiệp / Thương Hiệu';
+  const productName = (pInfo.product_name as string) || (pInfo.concept_name as string) || (pInfo.deal_description as string) || (pInfo.brand_name as string) || 'Sản phẩm thử nghiệm thị trường';
+  const category = (pInfo.category as string) || (pInfo.industry as string) || 'Tiêu dùng & Dịch vụ';
   const targetDesc = report.target_summary?.demographics || 'Đại diện phân tầng dân số Việt Nam';
   const sampleN = report.target_summary?.sample_size || 1000;
   const moe = report.target_summary?.margin_of_error || '±3.1%';
@@ -241,8 +242,12 @@ export default function PrintReportPage() {
             {modelInfo.title}
           </h1>
 
-          <div className="text-xl sm:text-2xl font-serif text-[#D4AF37] font-semibold mb-6">
+          <div className="text-xl sm:text-2xl font-serif text-[#D4AF37] font-semibold mb-2">
             Dự án: {productName}
+          </div>
+
+          <div className="text-sm font-sans text-slate-200 mb-6 font-medium">
+            Đơn vị yêu cầu / Khách hàng: <span className="text-[#D4AF37] font-bold">{companyName}</span> · Ngành: <span className="text-white font-semibold">{category}</span>
           </div>
 
           <p className="text-slate-300 text-sm max-w-xl leading-relaxed">
@@ -252,7 +257,16 @@ export default function PrintReportPage() {
 
         {/* Metadata Footer Card */}
         <div className="relative pb-6">
-          <div className="grid grid-cols-2 gap-4 bg-[#071120]/90 border border-slate-700/80 rounded-xl p-5 font-mono text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-[#071120]/90 border border-slate-700/80 rounded-xl p-5 font-mono text-xs">
+            <div>
+              <span className="text-[10px] text-slate-400 uppercase block tracking-wider mb-1">
+                Doanh nghiệp / Khách hàng
+              </span>
+              <span className="text-white font-bold text-xs truncate block">
+                {companyName}
+              </span>
+            </div>
+
             <div>
               <span className="text-[10px] text-slate-400 uppercase block tracking-wider mb-1">
                 Mã khảo sát độc bản
@@ -277,6 +291,15 @@ export default function PrintReportPage() {
               </span>
               <span className="text-emerald-400 font-semibold">
                 Độ tin cậy 95% | Sai số {moe}
+              </span>
+            </div>
+
+            <div>
+              <span className="text-[10px] text-slate-400 uppercase block tracking-wider mb-1">
+                Ngành hàng khảo sát
+              </span>
+              <span className="text-slate-200 font-semibold truncate block">
+                {category}
               </span>
             </div>
 

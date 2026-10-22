@@ -69,7 +69,7 @@ export default function WizardPage() {
             <span className="text-amber-400">📊</span> 5 phương pháp chuẩn quốc tế (Nielsen, Kantar, Van Westendorp)
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">⚡</span> Xử lý DuckDB & AI trong 60 giây
+            <span className="text-amber-400">⚡</span> Mô phỏng tức thì bằng AI trong 60 giây
           </span>
           <span className="flex items-center gap-1.5">
             <span className="text-emerald-400">🔒</span> Bảo mật dữ liệu & Báo cáo đóng dấu doanh nghiệp
@@ -104,10 +104,10 @@ export default function WizardPage() {
             </Link>
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              DuckDB Cloud
+              Phân tầng chuẩn GSO
             </span>
             <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-              Chuẩn EIDS v2.0
+              Chuẩn ESOMAR v2.0
             </span>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function WizardPage() {
       <footer className="border-t border-slate-200 bg-white py-5 px-6 text-center text-xs text-slate-500 mt-12">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
-            Hệ thống vận hành bởi Cụm AI Personas Việt Nam · DuckDB Engine · Cổng thanh toán tự động SePay
+            Hệ thống vận hành bởi Cụm AI Synthetic Personas Việt Nam · Phân tầng thống kê GSO · Cổng thanh toán VietQR tự động
           </div>
           <div className="text-slate-400">
             © 2026 AI Market Research Platform. All rights reserved.
