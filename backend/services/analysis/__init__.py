@@ -6,6 +6,7 @@ from models.schemas import ReportPayload
 from models.survey_configs import get_survey_config
 from services.analysis import (
     ab_analysis, bases_analysis, deal_analysis, psm_analysis, ua_analysis,
+    monadic_analysis, maxdiff_analysis, kano_analysis, brand_map_analysis,
 )
 
 _ANALYSIS_MAP = {
@@ -14,6 +15,10 @@ _ANALYSIS_MAP = {
     "ab_testing": ab_analysis.analyze,
     "ua_study": ua_analysis.analyze,
     "deal_elasticity": deal_analysis.analyze,
+    "monadic": monadic_analysis.analyze,
+    "maxdiff": maxdiff_analysis.analyze,
+    "kano": kano_analysis.analyze,
+    "brand_map": brand_map_analysis.analyze,
 }
 
 

@@ -11,6 +11,10 @@ const CERTIFICATIONS: Record<string, string> = {
   ab_testing: 'CHUẨN KANTAR TNS SPLIT TEST',
   ua_study: 'CHUẨN U&A IPSOS TOÀN DIỆN',
   deal_elasticity: 'PRICE SENSITIVITY & ELASTICITY',
+  monadic: 'MONADIC TESTING SPLIT-SAMPLE',
+  maxdiff: 'MAXDIFF BEST-WORST SCALING',
+  kano: 'MÔ HÌNH KANO PRODUCT ROADMAP',
+  brand_map: 'BẢN ĐỒ ĐỊNH VỊ PERCEPTUAL MAP',
 };
 
 const DELIVERABLES: Record<string, string[]> = {
@@ -38,6 +42,26 @@ const DELIVERABLES: Record<string, string[]> = {
     'Độ nhạy cảm chương trình khuyến mãi/combo Tết',
     'Dự báo nguy cơ tự ăn thịt sản phẩm (Cannibalization)',
     'Mức chiết khấu tối ưu không làm giảm giá trị thương hiệu',
+  ],
+  monadic: [
+    'Thử nghiệm mù độc lập 2 nhánh mẫu (Split-Sample)',
+    'Đo lường mức tăng trưởng ý định mua (Lift %)',
+    'So sánh đa chiều: Độc đáo, Cấp thiết & Giá trị',
+  ],
+  maxdiff: [
+    'Xếp hạng khoa học độ ưu tiên tính năng/claims',
+    'Phân tầng Core Must-Haves vs Low Priority',
+    'Chỉ số tiện ích MaxDiff Score loại bỏ điểm ảo 5 sao',
+  ],
+  kano: [
+    'Ma trận phân loại tính năng 4 góc phần tư',
+    'Hệ số làm hài lòng (CS+) & giảm bất mãn (CS-)',
+    'Tối ưu lộ trình R&D và cắt giảm tính năng dư thừa',
+  ],
+  brand_map: [
+    'Tọa độ nhận thức thương hiệu so với đối thủ (X, Y)',
+    'Phát hiện khoảng trống thị trường (White-space)',
+    'Chiến lược tái định vị chiếm lĩnh đại dương xanh',
   ],
 };
 

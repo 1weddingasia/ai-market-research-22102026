@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 T1.3: Survey Configs — 5 bộ cấu hình phương pháp luận khảo sát.
 
@@ -8,6 +9,7 @@ Mỗi config định nghĩa:
 - Output metrics cần tính toán
 - Model type identifier
 """
+from typing import Any
 
 SURVEY_CONFIGS: dict[str, dict[str, Any]] = {
     # ═══════════════════════════════════════════════════════════════════════════
@@ -326,22 +328,243 @@ SURVEY_CONFIGS: dict[str, dict[str, Any]] = {
             "reason": "string (nhận xét về chương trình ưu đãi, tiếng Việt)",
         },
     },
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GÓI 6: Monadic Concept Testing — Thử nghiệm ý tưởng độc lập (Split-Sample)
+    # ═══════════════════════════════════════════════════════════════════════════
+    "monadic": {
+        "id": "monadic",
+        "name": "Thử Nghiệm Ý Tưởng Độc Lập (Monadic Testing)",
+        "short_name": "Monadic Concept",
+        "framework": "Monadic Testing",
+        "icon": "🧪",
+        "description": "Chia tách mẫu độc lập (Split-Sample) để đánh giá 2 concept sản phẩm hoàn toàn khách quan, tránh thiên vị so sánh trực tiếp.",
+        "use_case": "Mỗi nhóm người tiêu dùng chỉ nhìn thấy duy nhất 1 phương án (A hoặc B). Đo lường tỷ lệ mua thử độc lập và chênh lệch Lift %.",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Ý định mua (Purchase Intent)",
+                "text": "Trên thang đo 5 điểm, mức độ sẵn sàng mua sản phẩm này của bạn là gì? (1: Chắc chắn không mua -> 5: Chắc chắn mua)",
+                "type": "scale_1_5",
+                "metric": "purchase_intent",
+            },
+            {
+                "id": "q2",
+                "label": "Mức độ độc đáo (Uniqueness)",
+                "text": "Sản phẩm này mới lạ và khác biệt thế nào so với những thứ bạn đang dùng? (Thang 1 đến 5)",
+                "type": "scale_1_5",
+                "metric": "uniqueness_score",
+            },
+            {
+                "id": "q3",
+                "label": "Mức độ liên quan (Relevance)",
+                "text": "Sản phẩm có giải quyết đúng vấn đề cấp thiết của bạn không? (Thang 1 đến 5)",
+                "type": "scale_1_5",
+                "metric": "relevance_score",
+            },
+            {
+                "id": "q4",
+                "label": "Độ đáng giá (Value for Money)",
+                "text": "Với mức giá này, sản phẩm là đắt, rẻ hay hợp lý?",
+                "type": "choice_value",
+                "metric": "value_for_money",
+            },
+            {
+                "id": "q5",
+                "label": "Động lực & Rào cản",
+                "text": "Điều gì khiến bạn thích nhất và rào cản ngăn bạn chọn mua?",
+                "type": "open_text",
+                "metric": "barrier_reason",
+            },
+        ],
+        "output_metrics": [
+            "top2box_concept_a",
+            "top2box_concept_b",
+            "lift_percentage",
+            "uniqueness_comparison",
+            "value_for_money_comparison",
+            "winner_concept",
+        ],
+        "llm_instruction": (
+            "Bạn là bộ máy mô phỏng hành vi người tiêu dùng Việt Nam theo phương pháp Monadic Testing. "
+            "Mỗi persona chỉ được xem duy nhất concept được giao (Concept A hoặc Concept B) và không biết sự tồn tại của concept kia. "
+            "Hãy đánh giá chân thực theo thu nhập, lối sống và thói quen thực tế của hồ sơ người dùng."
+        ),
+        "response_format": {
+            "id": "string (persona id)",
+            "concept_assigned": "\"A\" or \"B\"",
+            "q1_intent": "int 1-5 (1: Chắc chắn không mua -> 5: Chắc chắn mua)",
+            "q2_uniqueness": "int 1-5 (1: Bình thường -> 5: Rất mới lạ độc đáo)",
+            "q3_relevance": "int 1-5 (1: Không liên quan -> 5: Rất cấp thiết)",
+            "q4_value": "\"Đắt\" | \"Hợp lý\" | \"Rẻ\"",
+            "q5_reason": "string (lý do cụ thể)",
+        },
+    },
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GÓI 7: MaxDiff — Xếp hạng thuộc tính Best-Worst Scaling
+    # ═══════════════════════════════════════════════════════════════════════════
+    "maxdiff": {
+        "id": "maxdiff",
+        "name": "Xếp Hạng Thuộc Tính & Thông Điệp (MaxDiff)",
+        "short_name": "MaxDiff Scaling",
+        "framework": "Best-Worst Scaling",
+        "icon": "⚡",
+        "description": "Xếp hạng mức độ ưu tiên của 6-10 tính năng hoặc thông điệp bán hàng (Claims) mà không bị hiện tượng đánh giá đồng đều 5 sao.",
+        "use_case": "Tìm ra tính năng cốt lõi bắt buộc phải có, thông điệp truyền thông tạo đột phá và những tính năng khách hàng hoàn toàn thờ ơ.",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Thuộc tính Thích Nhất (Best)",
+                "text": "Trong 4 thuộc tính hiển thị, yếu tố nào bạn THÍCH NHẤT hoặc quan trọng nhất với bạn?",
+                "type": "best_attribute",
+                "metric": "best_choice",
+            },
+            {
+                "id": "q2",
+                "label": "Thuộc tính Ít Quan Tâm Nhất (Worst)",
+                "text": "Trong 4 thuộc tính hiển thị, yếu tố nào bạn ÍT QUAN TÂM NHẤT hoặc kém hấp dẫn nhất?",
+                "type": "worst_attribute",
+                "metric": "worst_choice",
+            },
+        ],
+        "output_metrics": [
+            "maxdiff_scores",
+            "attribute_rankings",
+            "must_have_claims",
+            "low_priority_claims",
+            "utility_spread",
+        ],
+        "llm_instruction": (
+            "Bạn là bộ máy mô phỏng hành vi người tiêu dùng Việt Nam theo phương pháp MaxDiff (Best-Worst Scaling). "
+            "Với mỗi nhóm 4 thuộc tính ngẫu nhiên, hãy chọn ra đúng 1 yếu tố THÍCH NHẤT (Best) và đúng 1 yếu tố ÍT QUAN TÂM NHẤT (Worst)."
+        ),
+        "response_format": {
+            "id": "string (persona id)",
+            "shown_attributes": ["attr1", "attr2", "attr3", "attr4"],
+            "best": "string (tên thuộc tính thích nhất)",
+            "worst": "string (tên thuộc tính ít quan tâm nhất)",
+            "reason": "string (lý do chọn)",
+        },
+    },
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GÓI 8: Kano Model — Phân loại tính năng cho đội ngũ R&D
+    # ═══════════════════════════════════════════════════════════════════════════
+    "kano": {
+        "id": "kano",
+        "name": "Phân Loại Tính Năng R&D (Kano Model)",
+        "short_name": "Kano Prioritization",
+        "framework": "Kano Model",
+        "icon": "🎯",
+        "description": "Phân loại tính năng thành Bắt buộc (Must-be), Càng nhiều càng tốt (One-dimensional) và Bất ngờ thú vị (Attractive) để tối ưu chi phí phát triển.",
+        "use_case": "Định hướng lộ trình tính năng (Product Roadmap) cho đội ngũ kỹ thuật và R&D dựa trên mức độ thỏa mãn và bất mãn của khách hàng.",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Câu hỏi Chức năng (Functional)",
+                "text": "Nếu sản phẩm CÓ tính năng này, bạn cảm thấy thế nào? (1: Thích, 2: Mặc nhiên phải có, 3: Bình thường, 4: Chấp nhận được, 5: Không thích)",
+                "type": "kano_scale",
+                "metric": "functional_score",
+            },
+            {
+                "id": "q2",
+                "label": "Câu hỏi Phi chức năng (Dysfunctional)",
+                "text": "Nếu sản phẩm KHÔNG CÓ tính năng này, bạn cảm thấy thế nào? (1: Thích, 2: Mặc nhiên phải có, 3: Bình thường, 4: Chấp nhận được, 5: Không thích)",
+                "type": "kano_scale",
+                "metric": "dysfunctional_score",
+            },
+        ],
+        "output_metrics": [
+            "kano_grid_coordinates",
+            "satisfaction_index_better",
+            "dissatisfaction_index_worse",
+            "feature_classifications",
+            "rd_priority_order",
+        ],
+        "llm_instruction": (
+            "Bạn là bộ máy mô phỏng hành vi người tiêu dùng Việt Nam theo phương pháp Kano. "
+            "Với mỗi tính năng, hãy trả lời trung thực cả 2 câu hỏi: khi CÓ tính năng và khi KHÔNG CÓ tính năng."
+        ),
+        "response_format": {
+            "id": "string (persona id)",
+            "features_evaluation": [
+                {
+                    "feature": "string (tên tính năng)",
+                    "functional": "int 1-5 (1: Thích, 2: Mặc nhiên, 3: Bình thường, 4: Chấp nhận, 5: Không thích)",
+                    "dysfunctional": "int 1-5 (1: Thích, 2: Mặc nhiên, 3: Bình thường, 4: Chấp nhận, 5: Không thích)",
+                }
+            ],
+            "reason": "string (đánh giá tổng quan về bộ tính năng)",
+        },
+    },
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GÓI 9: Brand Perceptual Mapping — Bản đồ định vị thương hiệu
+    # ═══════════════════════════════════════════════════════════════════════════
+    "brand_map": {
+        "id": "brand_map",
+        "name": "Bản Đồ Định Vị Thương Hiệu (Perceptual Map)",
+        "short_name": "Perceptual Mapping",
+        "framework": "Brand Perceptual Map",
+        "icon": "🗺️",
+        "description": "Định vị thương hiệu của bạn và đối thủ cạnh tranh trên không gian 2 chiều để phát hiện khoảng trống thị trường (White-space Opportunity).",
+        "use_case": "Biết rõ thương hiệu của mình đang đứng ở đâu trong tâm trí khách hàng về Giá cả và Đột phá sáng tạo, tìm đại dương xanh.",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Điểm nhận thức Trục X (Phân khúc giá)",
+                "text": "Chấm điểm từ 1 đến 10 cho thương hiệu về mức giá (1: Siêu bình dân/Rẻ -> 10: Siêu cao cấp/Sang trọng).",
+                "type": "scale_1_10",
+                "metric": "axis_x_score",
+            },
+            {
+                "id": "q2",
+                "label": "Điểm nhận thức Trục Y (Đổi mới sáng tạo)",
+                "text": "Chấm điểm từ 1 đến 10 cho thương hiệu về độ đổi mới sáng tạo (1: Rất truyền thống/Cũ kỹ -> 10: Rất đột phá/Hiện đại).",
+                "type": "scale_1_10",
+                "metric": "axis_y_score",
+            },
+        ],
+        "output_metrics": [
+            "brand_coordinates",
+            "whitespace_quadrants",
+            "quadrant_analysis",
+            "competitive_clustering",
+            "repositioning_strategy",
+        ],
+        "llm_instruction": (
+            "Bạn là bộ máy mô phỏng nhận thức thương hiệu của người tiêu dùng Việt Nam. "
+            "Với danh sách thương hiệu được cung cấp, hãy chấm điểm khách quan từ 1 đến 10 trên Trục X và Trục Y."
+        ),
+        "response_format": {
+            "id": "string (persona id)",
+            "ratings": [
+                {
+                    "brand": "string (tên thương hiệu)",
+                    "score_x": "float 1.0-10.0",
+                    "score_y": "float 1.0-10.0",
+                }
+            ],
+            "brand_preference": "string (thương hiệu ấn tượng nhất và lý do)",
+        },
+    },
 }
 
 
 def get_survey_config(model_type: str) -> dict:
-    """Lấy config của một model. Raise ValueError nếu không tồn tại."""
+    # Lấy config của một model. Raise ValueError nếu không tồn tại.
     config = SURVEY_CONFIGS.get(model_type)
     if not config:
         raise ValueError(
-            f"Model type '{model_type}' không hợp lệ. "
-            f"Chọn 1 trong: {list(SURVEY_CONFIGS.keys())}"
+            f"Model type '{model_type}' khong hop le. "
+            f"Chon 1 trong: {list(SURVEY_CONFIGS.keys())}"
         )
     return config
 
 
 def get_all_configs_summary() -> list[dict]:
-    """Trả về danh sách rút gọn cho API hiển thị trên Step 1."""
+    # Trả về danh sách rút gọn cho API hiển thị trên Step 1.
     return [
         {
             "id": cfg["id"],

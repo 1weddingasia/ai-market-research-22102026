@@ -23,6 +23,10 @@ MODEL_TYPE_LABELS = {
     "ab_testing":      "Kantar Link — Thử nghiệm A/B Bao bì & Thông điệp",
     "ua_study":        "U&A Study — Thói quen & Thái độ Ngành hàng",
     "deal_elasticity": "Deal Elasticity — Đánh giá Chương trình Ưu đãi",
+    "monadic":         "Monadic Testing — Thử nghiệm Khái niệm Độc lập",
+    "maxdiff":         "MaxDiff Scaling — Xếp hạng Thuộc tính & Thông điệp",
+    "kano":            "Kano Model — Phân loại Tính năng R&D",
+    "brand_map":       "Brand Perceptual Mapping — Bản đồ Định vị Thương hiệu",
 }
 
 

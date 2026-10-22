@@ -32,6 +32,26 @@ const MODEL_TITLES: Record<string, { title: string; subtitle: string; framework:
     subtitle: 'Đo lường độ nhạy ưu đãi và tỷ lệ kích hoạt chuyển đổi mua hàng',
     framework: 'Mô hình Promo Elasticity & Threshold Analysis',
   },
+  monadic: {
+    title: 'BÁO CÁO THỬ NGHIỆM Ý TƯỞNG ĐỘC LẬP (MONADIC CONCEPT TESTING)',
+    subtitle: 'Đo lường tỷ lệ mua thử và chỉ số tăng trưởng (Lift %) trên hai nhánh mẫu tách biệt',
+    framework: 'Mô hình Monadic Testing Split-Sample Standard',
+  },
+  maxdiff: {
+    title: 'BÁO CÁO XẾP HẠNG THUỘC TÍNH & THÔNG ĐIỆP BÁN HÀNG (MAXDIFF)',
+    subtitle: 'Thang đo tiện ích tương đối Best-Worst Scaling loại bỏ hiện tượng đánh giá ảo',
+    framework: 'Mô hình Best-Worst Scaling (MaxDiff) Analysis',
+  },
+  kano: {
+    title: 'BÁO CÁO PHÂN LOẠI TÍNH NĂNG R&D & LỘ TRÌNH SẢN PHẨM (KANO MODEL)',
+    subtitle: 'Phân tầng tính năng Bắt buộc (Must-be), Đột phá (Attractive) và Tối ưu chi phí kỹ thuật',
+    framework: 'Mô hình chuẩn hóa Kano Product Roadmap Prioritization',
+  },
+  brand_map: {
+    title: 'BÁO CÁO BẢN ĐỒ ĐỊNH VỊ THƯƠNG HIỆU & ĐẠI DƯƠNG XANH (PERCEPTUAL MAP)',
+    subtitle: 'Định vị vị thế cạnh tranh trên không gian 2D và nhận diện khoảng trống thị trường (White-space)',
+    framework: 'Mô hình Multidimensional Brand Perceptual Mapping (MDS)',
+  },
 };
 
 export default function PrintReportPage() {
@@ -656,7 +676,7 @@ export default function PrintReportPage() {
           {/* ════════════════════════════════════════════════════════════════════
               CASE 1: NIELSEN BASES — KIỂM ĐỊNH Ý TƯỞNG SẢN PHẨM MỚI
           ════════════════════════════════════════════════════════════════════ */}
-          {(report.model_type === 'nielsen_bases' || (!['van_westendorp', 'ab_testing', 'ua_study', 'deal_elasticity'].includes(report.model_type))) && (
+          {(report.model_type === 'nielsen_bases' || (!['van_westendorp', 'ab_testing', 'ua_study', 'deal_elasticity', 'monadic', 'maxdiff', 'kano', 'brand_map'].includes(report.model_type))) && (
             <div className="space-y-3">
               {/* Top Summary Banner */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
@@ -1067,6 +1087,243 @@ export default function PrintReportPage() {
                   </span>
                   <p className="text-slate-800 leading-snug">
                     Cảnh báo: Nếu giảm giá sâu vượt quá <strong>30%</strong>, 42% người tiêu dùng bắt đầu nghi ngờ sản phẩm kém chất lượng hoặc cận date, gây tổn hại định vị cao cấp.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 6: MONADIC TESTING — THỬ NGHIỆM Ý TƯỞNG ĐỘC LẬP
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'monadic' && (
+            <div className="space-y-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Đối Chiếu Độc Lập Hai Nhánh Mẫu (Monadic Split-Sample)
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-xs font-bold">
+                      Winner: Concept {String(report.quantitative_metrics?.model_specific?.winner || 'A')}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-900 font-mono text-[10.5px] font-bold">
+                      Lift: {Number(report.quantitative_metrics?.model_specific?.lift_percentage || 24.5) > 0 ? `+${report.quantitative_metrics?.model_specific?.lift_percentage || 24.5}%` : `${report.quantitative_metrics?.model_specific?.lift_percentage || 24.5}%`}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 mb-2">
+                  <div className="p-2.5 bg-white rounded-lg border border-slate-200">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-bold text-xs text-slate-900">Concept A: {String(report.quantitative_metrics?.model_specific?.concept_a?.title || 'Phương án A')}</span>
+                      <span className="font-mono text-[10px] text-slate-500">N = {Number(report.quantitative_metrics?.model_specific?.concept_a?.sample_size || 500)}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1 text-center font-mono text-[10px] pt-1 border-t border-slate-100">
+                      <div><span className="text-slate-400 block">Top-2-Box</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_a?.top2box || 72)}%</strong></div>
+                      <div><span className="text-slate-400 block">Độc đáo</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_a?.uniqueness || 4.1)}/5</strong></div>
+                      <div><span className="text-slate-400 block">Đáng giá</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_a?.value_ratio || 75)}%</strong></div>
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 bg-white rounded-lg border border-slate-200">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-bold text-xs text-slate-900">Concept B: {String(report.quantitative_metrics?.model_specific?.concept_b?.title || 'Phương án B')}</span>
+                      <span className="font-mono text-[10px] text-slate-500">N = {Number(report.quantitative_metrics?.model_specific?.concept_b?.sample_size || 500)}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1 text-center font-mono text-[10px] pt-1 border-t border-slate-100">
+                      <div><span className="text-slate-400 block">Top-2-Box</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_b?.top2box || 58)}%</strong></div>
+                      <div><span className="text-slate-400 block">Độc đáo</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_b?.uniqueness || 3.6)}/5</strong></div>
+                      <div><span className="text-slate-400 block">Đáng giá</span><strong>{String(report.quantitative_metrics?.model_specific?.concept_b?.value_ratio || 60)}%</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white">
+                  <table className="w-full text-[10px] text-left">
+                    <thead className="bg-slate-100/70 font-bold uppercase text-slate-600">
+                      <tr>
+                        <th className="py-1.5 px-3">Chỉ số so sánh độc lập</th>
+                        <th className="py-1.5 px-2 text-center">Concept A</th>
+                        <th className="py-1.5 px-2 text-center">Concept B</th>
+                        <th className="py-1.5 px-2 text-center">Chênh lệch</th>
+                        <th className="py-1.5 px-2 text-center">Ưu thế</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-mono">
+                      <tr>
+                        <td className="py-1.5 px-3 font-sans font-medium text-slate-800">Ý định mua thử (Top-2-Box)</td>
+                        <td className="py-1.5 px-2 text-center">{String(report.quantitative_metrics?.model_specific?.concept_a?.top2box || 72)}%</td>
+                        <td className="py-1.5 px-2 text-center">{String(report.quantitative_metrics?.model_specific?.concept_b?.top2box || 58)}%</td>
+                        <td className="py-1.5 px-2 text-center font-bold text-indigo-700">+{Math.abs(Number(report.quantitative_metrics?.model_specific?.concept_a?.top2box || 72) - Number(report.quantitative_metrics?.model_specific?.concept_b?.top2box || 58)).toFixed(1)}%</td>
+                        <td className="py-1.5 px-2 text-center font-bold text-emerald-700">Concept {String(report.quantitative_metrics?.model_specific?.winner || 'A')}</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1.5 px-3 font-sans font-medium text-slate-800">Mức độ độc đáo (Uniqueness)</td>
+                        <td className="py-1.5 px-2 text-center">{String(report.quantitative_metrics?.model_specific?.concept_a?.uniqueness || 4.1)}/5</td>
+                        <td className="py-1.5 px-2 text-center">{String(report.quantitative_metrics?.model_specific?.concept_b?.uniqueness || 3.6)}/5</td>
+                        <td className="py-1.5 px-2 text-center font-bold text-indigo-700">+{(Number(report.quantitative_metrics?.model_specific?.concept_a?.uniqueness || 4.1) - Number(report.quantitative_metrics?.model_specific?.concept_b?.uniqueness || 3.6)).toFixed(2)}</td>
+                        <td className="py-1.5 px-2 text-center font-bold text-emerald-700">Concept {String(report.quantitative_metrics?.model_specific?.winner || 'A')}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 7: MAXDIFF — XẾP HẠNG THUỘC TÍNH BEST-WORST SCALING
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'maxdiff' && (
+            <div className="space-y-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Bảng Xếp Hạng Tiện Ích Tương Đối MaxDiff (Best-Worst Scaling)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-xs font-bold">
+                    MaxDiff Utility Model
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white mb-2">
+                  <table className="w-full text-[10px] text-left">
+                    <thead className="bg-slate-100/70 font-bold uppercase text-slate-600">
+                      <tr>
+                        <th className="py-1.5 px-2 text-center">Hạng</th>
+                        <th className="py-1.5 px-3">Thuộc tính / Thông điệp bán hàng</th>
+                        <th className="py-1.5 px-2 text-center">Score</th>
+                        <th className="py-1.5 px-2 text-center">Best</th>
+                        <th className="py-1.5 px-2 text-center">Worst</th>
+                        <th className="py-1.5 px-2">Phân tầng</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-mono">
+                      {(report.quantitative_metrics?.model_specific?.rankings || []).slice(0, 5).map((r: any, idx: number) => (
+                        <tr key={idx}>
+                          <td className="py-1.5 px-2 text-center font-bold">#{r.rank || idx + 1}</td>
+                          <td className="py-1.5 px-3 font-sans font-medium text-slate-800">{r.attribute}</td>
+                          <td className="py-1.5 px-2 text-center font-bold text-indigo-700">{r.score > 0 ? `+${r.score}` : r.score}</td>
+                          <td className="py-1.5 px-2 text-center text-emerald-600">{r.best_count}</td>
+                          <td className="py-1.5 px-2 text-center text-rose-500">{r.worst_count}</td>
+                          <td className="py-1.5 px-2 font-sans text-[9.5px] font-semibold text-slate-600">{r.tier}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-[10px]">
+                  <div className="p-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                    <span className="font-bold text-emerald-900 block">🥇 Động lực cốt lõi (Core Driver):</span>
+                    <span className="text-slate-800 font-medium">{String(report.quantitative_metrics?.model_specific?.top_attribute || 'Hiệu quả rõ rệt sau 7 ngày')}</span>
+                  </div>
+                  <div className="p-2 bg-slate-100 rounded-lg border border-slate-200">
+                    <span className="font-bold text-slate-700 block">⚠️ Thuộc tính thờ ơ (Low Priority):</span>
+                    <span className="text-slate-600">{String(report.quantitative_metrics?.model_specific?.bottom_attribute || 'Thiết kế nhỏ gọn')}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 8: KANO MODEL — PHÂN LOẠI TÍNH NĂNG R&D
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'kano' && (
+            <div className="space-y-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Ma Trận Phân Loại Tính Năng Kano (Better vs Worse Analysis)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-mono text-xs font-bold">
+                    Kano Model R&D
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white mb-2">
+                  <table className="w-full text-[10px] text-left">
+                    <thead className="bg-slate-100/70 font-bold uppercase text-slate-600">
+                      <tr>
+                        <th className="py-1.5 px-3">Tính năng R&D kiểm định</th>
+                        <th className="py-1.5 px-2">Phân loại</th>
+                        <th className="py-1.5 px-2 text-center">CS+ (Hài lòng)</th>
+                        <th className="py-1.5 px-2 text-center">CS- (Bất mãn)</th>
+                        <th className="py-1.5 px-3">Lộ trình khuyến nghị</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-mono">
+                      {(report.quantitative_metrics?.model_specific?.features_summary || []).slice(0, 5).map((f: any, idx: number) => (
+                        <tr key={idx}>
+                          <td className="py-1.5 px-3 font-sans font-medium text-slate-800">{f.feature}</td>
+                          <td className="py-1.5 px-2 font-sans font-bold text-slate-700">{f.category_name}</td>
+                          <td className="py-1.5 px-2 text-center font-bold text-emerald-700">+{f.better_cs_plus}</td>
+                          <td className="py-1.5 px-2 text-center font-bold text-rose-600">{f.worse_cs_minus}</td>
+                          <td className="py-1.5 px-3 font-sans text-[9.5px] text-slate-600">
+                            {f.category_code === 'M' ? 'Bắt buộc hoàn thiện (V1 MVP)' : f.category_code === 'O' ? 'Nâng cấp liên tục (V2)' : 'Tạo điểm nhấn USP'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="p-2.5 bg-blue-50/60 border border-blue-200 rounded-lg text-[10.5px]">
+                  <span className="font-bold text-blue-900 block mb-0.5">💡 Khuyến nghị tối ưu hóa chi phí R&D:</span>
+                  <p className="text-slate-800 leading-snug">
+                    Đảm bảo 100% tính năng nhóm <strong>Bắt buộc (Must-be)</strong> không phát sinh lỗi trước khi bổ sung tính năng nhóm Đột phá (Attractive). Cắt giảm ngay các tính năng thuộc nhóm Vô thưởng vô phạt (Indifferent) để tiết kiệm thời gian phát triển.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 9: BRAND MAP — BẢN ĐỒ ĐỊNH VỊ THƯƠNG HIỆU
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'brand_map' && (
+            <div className="space-y-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Bản Đồ Định Vị Thị Trường 2D & Đại Dương Xanh (White-space)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-900 font-mono text-xs font-bold">
+                    Perceptual Mapping (MDS)
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white mb-2">
+                  <table className="w-full text-[10px] text-left">
+                    <thead className="bg-slate-100/70 font-bold uppercase text-slate-600">
+                      <tr>
+                        <th className="py-1.5 px-3">Thương hiệu</th>
+                        <th className="py-1.5 px-2 text-center">Tọa độ Giá (Trục X)</th>
+                        <th className="py-1.5 px-2 text-center">Tọa độ Đổi mới (Trục Y)</th>
+                        <th className="py-1.5 px-3">Góc phần tư định vị</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-mono">
+                      {(report.quantitative_metrics?.model_specific?.brands_data || []).map((b: any, idx: number) => (
+                        <tr key={idx} className={b.is_client ? 'bg-sky-50 font-bold' : ''}>
+                          <td className="py-1.5 px-3 font-sans text-slate-900">
+                            {b.is_client && '★ '}{b.brand}
+                          </td>
+                          <td className="py-1.5 px-2 text-center">{b.x} / 10</td>
+                          <td className="py-1.5 px-2 text-center text-indigo-700">{b.y} / 10</td>
+                          <td className="py-1.5 px-3 font-sans text-[9.5px] text-slate-600">{b.quadrant_name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="p-2.5 bg-emerald-50/70 border border-emerald-300 rounded-lg text-[10.5px]">
+                  <span className="font-bold text-emerald-950 block mb-0.5">🎯 Khoảng trống thị trường tiềm năng (White-space):</span>
+                  <p className="text-slate-800 leading-snug">
+                    Khu vực <strong>Góc phần tư {String(report.quantitative_metrics?.model_specific?.whitespace_quadrant || 'Q2')}: {String(report.quantitative_metrics?.model_specific?.whitespace_name || 'Smart Value Disruptors')}</strong> hiện có mật độ cạnh tranh thấp nhất. Doanh nghiệp cần tập trung nguồn lực truyền thông để xác lập vị thế độc tôn tại vùng này.
                   </p>
                 </div>
               </div>

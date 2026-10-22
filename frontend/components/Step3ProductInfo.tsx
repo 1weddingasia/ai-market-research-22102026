@@ -39,6 +39,26 @@ const MODEL_GUIDANCE: Record<string, { purpose: string; badge: string; icon: str
     badge: 'PROMO ELASTICITY & THRESHOLD ANALYSIS',
     purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Nên tung chương trình khuyến mãi nào để bùng nổ doanh số mà không bị lỗ và không làm mất giá trị thương hiệu?"',
   },
+  monadic: {
+    icon: '🧪',
+    badge: 'MONADIC TESTING SPLIT-SAMPLE FRAMEWORK',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Khi người tiêu dùng chỉ nhìn thấy 1 phương án duy nhất trong điều kiện độc lập, phương án nào thực sự kích hoạt ý định mua thử cao hơn?"',
+  },
+  maxdiff: {
+    icon: '⚡',
+    badge: 'MAXDIFF BEST-WORST SCALING MODEL',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Trong danh sách 6-10 tính năng/thông điệp, yếu tố nào là động lực mua hàng bắt buộc phải có và yếu tố nào khách hàng hoàn toàn thờ ơ?"',
+  },
+  kano: {
+    icon: '🎯',
+    badge: 'KANO MODEL PRODUCT ROADMAP PRIORITIZATION',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Đội ngũ R&D nên ưu tiên đầu tư vào tính năng nào để vừa chống mất khách vừa tạo sự đột phá hài lòng cao nhất?"',
+  },
+  brand_map: {
+    icon: '🗺️',
+    badge: 'BRAND PERCEPTUAL MAPPING & WHITE-SPACE DISCOVERY',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Thương hiệu của bạn đang đứng ở đâu so với đối thủ trong tâm trí khách hàng và đâu là khoảng trống thị trường (đại dương xanh) chưa ai chiếm giữ?"',
+  },
 };
 
 const FIELDS_MAP: Record<string, FieldConfig[]> = {
@@ -235,6 +255,170 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       required: true,
       type: 'textarea',
       hint: 'Liệt kê 2-3 kịch bản ưu đãi để cụm AI đo lường độ co giãn và so sánh sức bật chuyển đổi.',
+    },
+  ],
+  monadic: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
+      placeholder: 'VD: Tập đoàn Đồ uống & Thực phẩm Sạch Á Châu',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'category',
+      label: 'Danh mục ngành hàng',
+      placeholder: 'VD: Nước giải khát / Mỹ phẩm hữu cơ / Thực phẩm bổ sung',
+      required: true,
+    },
+    {
+      id: 'concept_a_title',
+      label: 'Tên Phương án A (Concept A)',
+      placeholder: 'VD: Trà Kombucha Tự Nhiên (Bao bì Truyền thống)',
+      required: true,
+    },
+    {
+      id: 'concept_a_price',
+      label: 'Mức giá dự kiến Concept A',
+      placeholder: 'VD: 35.000đ / chai',
+      required: true,
+    },
+    {
+      id: 'concept_a_description',
+      label: 'Mô tả chi tiết Concept A',
+      placeholder: 'Mô tả giá trị cốt lõi, thành phần và thông điệp của Concept A...',
+      required: true,
+      type: 'textarea',
+      hint: 'Nhóm người tiêu dùng A sẽ chỉ nhìn thấy duy nhất Concept A này.',
+    },
+    {
+      id: 'concept_b_title',
+      label: 'Tên Phương án B (Concept B)',
+      placeholder: 'VD: Trà Kombucha Năng Lượng Đột Phá (Bao bì Lon Nhôm Thể Thao)',
+      required: true,
+    },
+    {
+      id: 'concept_b_price',
+      label: 'Mức giá dự kiến Concept B',
+      placeholder: 'VD: 39.000đ / lon',
+      required: true,
+    },
+    {
+      id: 'concept_b_description',
+      label: 'Mô tả chi tiết Concept B',
+      placeholder: 'Mô tả giá trị cốt lõi, thành phần và thông điệp của Concept B...',
+      required: true,
+      type: 'textarea',
+      hint: 'Nhóm người tiêu dùng B sẽ chỉ nhìn thấy duy nhất Concept B này (không biết Concept A).',
+    },
+  ],
+  maxdiff: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
+      placeholder: 'VD: Công ty Công nghệ Tiêu dùng TechLife',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'product_name',
+      label: 'Tên sản phẩm / Chiến dịch thông điệp',
+      placeholder: 'VD: Bộ giải pháp Chăm sóc Sức khỏe Cá nhân AI Health',
+      required: true,
+    },
+    {
+      id: 'category',
+      label: 'Danh mục sản phẩm / Ngành hàng',
+      placeholder: 'VD: Chăm sóc cá nhân / Thiết bị thông minh / Dịch vụ Tài chính',
+      required: true,
+    },
+    {
+      id: 'attributes',
+      label: 'Danh sách 6 đến 10 tính năng hoặc thông điệp bán hàng (Claims)',
+      placeholder: `Nhập mỗi thuộc tính trên một dòng mới:
+VD:
+100% Nguyên liệu hữu cơ đạt chuẩn USDA
+Hiệu quả rõ rệt ngay sau 7 ngày sử dụng
+Mức giá hợp lý, tiết kiệm 30% chi phí hàng tháng
+Bao bì sinh học tự phân hủy thân thiện môi trường
+Dịch vụ chăm sóc và bảo hành 1-đổi-1 trong 12 tháng
+Thiết kế tối giản, sang trọng phong cách Bắc Âu`,
+      required: true,
+      type: 'textarea',
+      hint: 'Hệ thống sẽ tự động tạo các nhóm 4 thuộc tính ngẫu nhiên xoay vòng để personas chọn Best và Worst.',
+    },
+  ],
+  kano: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Đơn vị phát triển R&D',
+      placeholder: 'VD: Công ty Phần mềm & Nền tảng SaaS Việt Nam',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'product_name',
+      label: 'Tên sản phẩm / Dự án R&D',
+      placeholder: 'VD: Nền tảng Quản trị Bán hàng Đa kênh OmniHub 3.0',
+      required: true,
+    },
+    {
+      id: 'category',
+      label: 'Ngành hàng / Lĩnh vực',
+      placeholder: 'VD: Phần mềm B2B / Thiết bị Gia dụng / Ô tô điện / FMCG',
+      required: true,
+    },
+    {
+      id: 'features',
+      label: 'Danh sách 3 đến 5 tính năng dự kiến phát triển',
+      placeholder: `Nhập mỗi tính năng trên một dòng mới:
+VD:
+Tự động đồng bộ tồn kho thời gian thực với Shopee & TikTok
+Trợ lý AI tự động trả lời tin nhắn và chốt đơn khách hàng
+Báo cáo phân tích dòng tiền và dự báo doanh thu tự động
+Tùy biến giao diện hóa đơn và thương hiệu riêng`,
+      required: true,
+      type: 'textarea',
+      hint: 'Với mỗi tính năng, hệ thống sẽ hỏi persona 2 câu hỏi đối lập: khi CÓ và khi KHÔNG CÓ tính năng.',
+    },
+  ],
+  brand_map: [
+    {
+      id: 'company_name',
+      label: 'Tên Doanh nghiệp / Tổ chức yêu cầu khảo sát',
+      placeholder: 'VD: Tập đoàn Thời trang & Bán lẻ Việt Nam',
+      required: true,
+      hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'brand_name',
+      label: 'Tên thương hiệu của bạn',
+      placeholder: 'VD: Thương hiệu Thời trang EcoSmart',
+      required: true,
+    },
+    {
+      id: 'brands',
+      label: 'Danh sách các thương hiệu đối thủ cùng ngành cần so chuẩn',
+      placeholder: `Nhập mỗi đối thủ trên một dòng mới:
+VD:
+Thương hiệu đối thủ A (Truyền thống dẫn đầu)
+Thương hiệu đối thủ B (Ngoại nhập cao cấp)
+Thương hiệu đối thủ C (Chuỗi giá rẻ bình dân)`,
+      required: true,
+      type: 'textarea',
+      hint: 'Nhập từ 2 đến 4 đối thủ trực tiếp để hệ thống chấm điểm và định vị trên bản đồ 2D.',
+    },
+    {
+      id: 'axis_x_label',
+      label: 'Tên tiêu chí Trục X (Mặc định: Phân khúc Giá)',
+      placeholder: 'VD: Mức giá (1: Siêu bình dân ↔ 10: Siêu cao cấp)',
+      required: false,
+    },
+    {
+      id: 'axis_y_label',
+      label: 'Tên tiêu chí Trục Y (Mặc định: Đổi mới sáng tạo)',
+      placeholder: 'VD: Độ đột phá công nghệ (1: Truyền thống ↔ 10: Đột phá)',
+      required: false,
     },
   ],
 };

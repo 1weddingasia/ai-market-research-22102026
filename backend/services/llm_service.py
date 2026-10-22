@@ -181,7 +181,7 @@ def _generate_synthetic_batch(model_type: str, personas: list[dict], start_idx: 
                 "top_drivers": "Chất lượng, Giá hợp lý, Tiện lợi",
                 "pain_point": random.choice(pains),
             })
-        else:  # deal_elasticity
+        elif model_type == "deal_elasticity":
             orig_intent = random.choices([2, 3, 4], weights=[0.3, 0.4, 0.3])[0]
             stimulus = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
             risk = random.choices([1, 2, 3], weights=[0.5, 0.3, 0.2])[0]
@@ -195,6 +195,95 @@ def _generate_synthetic_batch(model_type: str, personas: list[dict], start_idx: 
                 "q3_brand_risk": risk,
                 "reason": "Mức ưu đãi hợp lý và kích thích dùng thử ngay.",
             })
+        elif model_type == "monadic":
+            # Phân tách mẫu: chẵn -> Concept A, lẻ -> Concept B
+            assigned = "A" if (start_idx + i) % 2 == 0 else "B"
+            if assigned == "A":
+                intent = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
+                uniq = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
+            else:
+                intent = random.choices([2, 3, 4], weights=[0.3, 0.4, 0.3])[0]
+                uniq = random.choices([2, 3, 4], weights=[0.4, 0.4, 0.2])[0]
+            rel = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
+            val = random.choices(["Hợp lý", "Đắt", "Rẻ"], weights=[0.7, 0.2, 0.1])[0]
+            results.append({
+                "persona_id": pid,
+                "concept_assigned": assigned,
+                "q1_intent": intent,
+                "q2_uniqueness": uniq,
+                "q3_relevance": rel,
+                "q4_value": val,
+                "q5_reason": f"Đánh giá riêng cho Concept {assigned}: ý tưởng thực tế, phù hợp phân khúc.",
+                "purchase_intent": intent,
+                "uniqueness": uniq,
+                "relevance": rel,
+            })
+        elif model_type == "maxdiff":
+            default_attrs = [
+                "Hiệu quả rõ rệt sau 7 ngày",
+                "100% Nguồn gốc tự nhiên hữu cơ",
+                "Mức giá hợp lý tiết kiệm",
+                "Bao bì thân thiện môi trường",
+                "Thương hiệu chuẩn quốc tế",
+                "Thiết kế nhỏ gọn tiện lợi",
+            ]
+            shown = random.sample(default_attrs, min(4, len(default_attrs)))
+            best = shown[0]
+            worst = shown[-1]
+            results.append({
+                "persona_id": pid,
+                "shown_attributes": shown,
+                "best": best,
+                "worst": worst,
+                "reason": f"Tôi ưu tiên thuộc tính '{best}' nhất vì giải quyết trực tiếp nhu cầu.",
+            })
+        elif model_type == "kano":
+            default_feats = [
+                "Công nghệ bảo quản chân không",
+                "Ứng dụng di động theo dõi lộ trình",
+                "Đóng gói theo khẩu phần ăn dinh dưỡng",
+                "Tùy biến hương vị cá nhân hóa",
+            ]
+            evals = []
+            for f_idx, f in enumerate(default_feats):
+                if f_idx == 0:
+                    func, dys = 2, 5  # Must-be
+                elif f_idx == 1:
+                    func, dys = 1, 3  # Attractive
+                elif f_idx == 2:
+                    func, dys = 1, 5  # One-dimensional
+                else:
+                    func, dys = 3, 3  # Indifferent
+                evals.append({
+                    "feature": f,
+                    "functional": func,
+                    "dysfunctional": dys,
+                })
+            results.append({
+                "persona_id": pid,
+                "features_evaluation": evals,
+                "reason": "Bộ tính năng phân chia rõ ràng giữa nhu cầu cơ bản và trải nghiệm gia tăng.",
+            })
+        elif model_type == "brand_map":
+            default_brands = [
+                "Thương hiệu của bạn",
+                "Đối thủ A (Truyền thống)",
+                "Đối thủ B (Ngoại nhập)",
+                "Đối thủ C (Giá rẻ)",
+            ]
+            ratings = [
+                {"brand": default_brands[0], "score_x": 4.5, "score_y": 7.8},  # Smart Disruptor
+                {"brand": default_brands[1], "score_x": 5.2, "score_y": 3.8},  # Heritage Traditional
+                {"brand": default_brands[2], "score_x": 8.5, "score_y": 8.2},  # Premium Innovator
+                {"brand": default_brands[3], "score_x": 2.5, "score_y": 2.8},  # Budget Low-tech
+            ]
+            results.append({
+                "persona_id": pid,
+                "ratings": ratings,
+                "brand_preference": f"Thương hiệu của bạn tạo cảm giác đột phá công nghệ và giá thành rất cạnh tranh.",
+            })
+        else:
+            results.append({"persona_id": pid, "status": "simulated"})
     return results
 
 

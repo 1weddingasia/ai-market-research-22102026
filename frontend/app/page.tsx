@@ -85,6 +85,30 @@ export default function HomePage() {
       title: 'Đo Độ Co Giãn Khuyến Mãi & Tỷ Lệ Đổi Thương Hiệu',
       desc: 'Dự báo tỷ lệ khách hàng từ bỏ đối thủ để chuyển sang dùng thử khi tung ra các gói ưu đãi / combo.',
     },
+    {
+      id: 'monadic',
+      code: 'MONADIC TESTING',
+      title: 'Thử nghiệm Ý tưởng Độc lập (Split-Sample)',
+      desc: 'Đánh giá khách quan 2 concept trên 2 nhánh mẫu riêng biệt, đo lường chính xác tỷ lệ mua thử và Lift %.',
+    },
+    {
+      id: 'maxdiff',
+      code: 'MAXDIFF SCALING',
+      title: 'Xếp hạng Thuộc tính & Thông điệp Bán hàng',
+      desc: 'Phương pháp Best-Worst Scaling xếp hạng khoa học 6-10 thông điệp, loại bỏ hiện tượng đánh giá ảo 5 sao.',
+    },
+    {
+      id: 'kano',
+      code: 'KANO MODEL R&D',
+      title: 'Phân loại Tính năng & Lộ trình Sản phẩm',
+      desc: 'Phân loại tính năng Bắt buộc (Must-be) vs Đột phá (Attractive) giúp đội ngũ kỹ thuật tối ưu chi phí phát triển.',
+    },
+    {
+      id: 'brand_map',
+      code: 'PERCEPTUAL MAP',
+      title: 'Bản đồ Định vị & Khoảng trống Thị trường',
+      desc: 'Định vị vị thế thương hiệu so với đối thủ cạnh tranh trên không gian 2D để tìm kiếm đại dương xanh (White-space).',
+    },
   ];
 
   const handleLookup = (e: React.FormEvent) => {

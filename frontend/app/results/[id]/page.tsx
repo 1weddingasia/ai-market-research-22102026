@@ -13,6 +13,10 @@ import VanWestendorpChart from '@/components/charts/VanWestendorpChart';
 import ABScorecard from '@/components/charts/ABScorecard';
 import OpportunityMatrix from '@/components/charts/OpportunityMatrix';
 import DealElasticityChart from '@/components/charts/DealElasticityChart';
+import MonadicScorecard from '@/components/charts/MonadicScorecard';
+import MaxDiffChart from '@/components/charts/MaxDiffChart';
+import KanoGrid from '@/components/charts/KanoGrid';
+import BrandPerceptualMap from '@/components/charts/BrandPerceptualMap';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -223,6 +227,22 @@ function Tab2Quantitative({ report }: { report: ReportPayload }) {
 
       {report.model_type === 'deal_elasticity' && (
         <DealElasticityChart modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'monadic' && (
+        <MonadicScorecard modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'maxdiff' && (
+        <MaxDiffChart modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'kano' && (
+        <KanoGrid modelSpecific={metrics.model_specific} />
+      )}
+
+      {report.model_type === 'brand_map' && (
+        <BrandPerceptualMap modelSpecific={metrics.model_specific} />
       )}
 
       {/* Top Bar Chart: Key Quantitative Metrics */}

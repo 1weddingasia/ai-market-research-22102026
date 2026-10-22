@@ -52,11 +52,41 @@ class DealElasticityInput(BaseModel):
     gift_items: Optional[str] = None          # Quà tặng kèm nếu có
 
 
+class MonadicConceptInput(BaseModel):
+    """Gói 6: Monadic Concept Testing (Thử nghiệm ý tưởng độc lập)."""
+    concept_a_title: str = Field(..., min_length=2, max_length=200)
+    concept_a_description: str = Field(..., min_length=10, max_length=2000)
+    concept_a_price: Optional[str] = None
+    concept_b_title: str = Field(..., min_length=2, max_length=200)
+    concept_b_description: str = Field(..., min_length=10, max_length=2000)
+    concept_b_price: Optional[str] = None
+
+
+class MaxDiffInput(ProductInfoBase):
+    """Gói 7: MaxDiff Best-Worst Scaling."""
+    attributes: list[str] = Field(..., min_length=4, max_length=15,
+                                  description="Danh sách 6-10 tính năng hoặc thông điệp bán hàng")
+
+
+class KanoInput(ProductInfoBase):
+    """Gói 8: Kano Feature Prioritization."""
+    features: list[str] = Field(..., min_length=2, max_length=10,
+                                description="Danh sách 3-5 tính năng dự kiến phát triển")
+
+
+class BrandMapInput(ProductInfoBase):
+    """Gói 9: Brand Perceptual Mapping."""
+    brands: list[str] = Field(..., min_length=2, max_length=8,
+                              description="Danh sách 3-5 thương hiệu cần định vị")
+    axis_x_label: Optional[str] = "Giá cả (Bình dân ↔ Cao cấp)"
+    axis_y_label: Optional[str] = "Mức độ Đổi mới Sáng tạo (Truyền thống ↔ Đột phá)"
+
+
 class SurveyCreateRequest(BaseModel):
     """Request tạo survey mới."""
     model_type: str = Field(
         ...,
-        pattern="^(nielsen_bases|van_westendorp|ab_testing|ua_study|deal_elasticity)$"
+        pattern="^(nielsen_bases|van_westendorp|ab_testing|ua_study|deal_elasticity|monadic|maxdiff|kano|brand_map)$"
     )
     # Phạm vi mẫu
     region: Optional[str] = None       # None = toàn quốc
