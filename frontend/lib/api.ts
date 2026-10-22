@@ -151,6 +151,42 @@ export const api = {
 
   getPdfUrl: (surveyId: string) => `${API_URL}/survey/${surveyId}/pdf`,
 
+  requestLookupOtp: (email: string) =>
+    fetchJSON<{ success: boolean; message: string; email: string; total_surveys: number }>('/survey/lookup/request-otp', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+
+  verifyLookupOtp: (email: string, otp: string) =>
+    fetchJSON<{
+      success: boolean;
+      email: string;
+      total: number;
+      surveys: Array<{
+        survey_id: string;
+        product_name: string;
+        model_type: string;
+        status: string;
+        sample_size: number;
+        price_amount: number;
+        viability_score?: number;
+        verdict?: string;
+        created_at: string;
+        completed_at?: string;
+        results_url?: string;
+        print_url?: string;
+      }>;
+    }>('/survey/lookup/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ email, otp }),
+    }),
+
+  deleteSurvey: (surveyId: string, email: string) =>
+    fetchJSON<{ success: boolean; message: string; survey_id: string }>(`/survey/${surveyId}/delete`, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+
   uploadImage: async (file: File, option: 'A' | 'B') => {
     const formData = new FormData();
     formData.append('file', file);

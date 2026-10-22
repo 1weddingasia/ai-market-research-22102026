@@ -9,7 +9,7 @@ import asyncio
 import json
 import os
 from datetime import datetime
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Optional
 
 import structlog
 
@@ -19,6 +19,8 @@ from services.analysis import run_analysis
 from services.duckdb_service import get_demographic_summary, get_stratified_sample
 from services.llm_service import run_llm_simulation
 from services.region_mapping import get_region_filter, get_province_filter
+from services.deepseek_auditor import audit_survey
+from services.email_service import send_survey_completed_email
 
 log = structlog.get_logger(__name__)
 
@@ -155,9 +157,39 @@ async def run_simulation(survey_id: str) -> None:
         )
 
         await _emit_log(
-            survey_id, 90,
-            f"[ANALYSIS ENGINE] Đang tổng hợp ma trận {model_type.upper()} & biên soạn báo cáo Executive chuẩn Kantar/McKinsey..."
+            survey_id, 86,
+            f"[ANALYSIS ENGINE] Đang tổng hợp ma trận {model_type.upper()} & phân tích định lượng..."
         )
+
+        # ── Milestone 5.5: DeepSeek Reasoner Auditor (Kiến trúc AI Kép - Lớp 2) ─
+        await _emit_log(
+            survey_id, 92,
+            "[DEEPSEEK REASONER] Hội đồng Thẩm định DeepSeek đang cross-check logic kinh tế lượng & soạn thảo Executive Summary C-Level..."
+        )
+
+        try:
+            barriers_list = [b.barrier for b in getattr(report, "barriers_identified", [])]
+            deepseek_audit = audit_survey(
+                survey_id=survey_id,
+                model_type=model_type,
+                product_info=product_info,
+                viability_score=report.executive_summary.viability_score,
+                metrics=report.quantitative_metrics.model_dump(),
+                barriers=barriers_list,
+                sample_size=len(personas_df),
+            )
+            # Tích hợp kết quả thẩm định DeepSeek vào báo cáo
+            if deepseek_audit.get("executive_verdict"):
+                report.executive_summary.verdict = deepseek_audit["executive_verdict"]
+            if deepseek_audit.get("strategic_recommendations"):
+                report.actionable_recommendations = deepseek_audit["strategic_recommendations"]
+
+            # Lưu trọn vẹn kết quả audit vào model_specific metrics
+            if report.quantitative_metrics.model_specific is None:
+                report.quantitative_metrics.model_specific = {}
+            report.quantitative_metrics.model_specific["deepseek_audit"] = deepseek_audit
+        except Exception as audit_err:
+            log.warning("DeepSeek audit step encountered issue, continuing pipeline", survey_id=survey_id, error=str(audit_err))
 
         # ── Milestone 6: Save results ──────────────────────────────────────────
         result_json = report.model_dump_json()
@@ -178,8 +210,8 @@ async def run_simulation(survey_id: str) -> None:
             status="COMPLETED",
         )
 
-        # Gửi email nếu có
-        await _send_completion_email(survey_id, db)
+        # Gửi email hoàn tất kèm đầy đủ thông số báo cáo
+        await _send_completion_email(survey_id, db, report=report)
 
     except Exception as e:
         log.error("Simulation failed", survey_id=survey_id, error=str(e))
@@ -252,43 +284,50 @@ async def stream_events(survey_id: str) -> AsyncGenerator[str, None]:
             yield f"data: {json.dumps({'ping': True})}\n\n"
 
 
-async def _send_completion_email(survey_id: str, db) -> None:
-    """Gửi email thông báo hoàn tất qua Resend."""
+async def _send_completion_email(survey_id: str, db, report: Optional[ReportPayload] = None) -> None:
+    """Gửi email thông báo hoàn tất qua Resend chuẩn thương mại."""
     try:
-        import resend
-
-        resend.api_key = os.getenv("RESEND_API_KEY", "")
-        if not resend.api_key:
-            return
-
         survey = db.query(Survey).filter(Survey.id == survey_id).first()
         if not survey or not survey.customer_email:
             return
 
-        frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
-        results_url  = f"{frontend_url}/results/{survey_id}"
+        p_info = {}
+        if survey.product_info_json:
+            try:
+                p_info = json.loads(survey.product_info_json)
+            except Exception:
+                pass
 
-        resend.Emails.send({
-            "from": os.getenv("EMAIL_FROM", "onboarding@resend.dev"),
-            "to": [survey.customer_email],
-            "subject": f"✅ Báo cáo khảo sát {survey_id} đã sẵn sàng",
-            "html": f"""
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #1a1a1a;">Báo cáo của bạn đã sẵn sàng! 🎉</h2>
-                <p>Khảo sát <strong>{survey_id}</strong> đã hoàn tất xử lý.</p>
-                <p>
-                    <a href="{results_url}"
-                       style="background: #C9A84C; color: white; padding: 12px 24px;
-                              text-decoration: none; border-radius: 6px; display: inline-block;">
-                        Xem Dashboard kết quả →
-                    </a>
-                </p>
-                <p style="color: #888; font-size: 12px;">
-                    Link này là mã truy cập duy nhất của bạn. Hãy lưu lại.
-                </p>
-            </div>
-            """,
-        })
-        log.info("Completion email sent", survey_id=survey_id)
+        product_name = (
+            p_info.get("product_name")
+            or p_info.get("concept_name")
+            or p_info.get("brand_name")
+            or p_info.get("deal_description")
+            or "Dự án Khảo sát Thị trường"
+        )
+
+        viability_score = 75
+        verdict = "Báo cáo đã hoàn tất phân tích toàn diện."
+        if report:
+            viability_score = report.executive_summary.viability_score
+            verdict = report.executive_summary.verdict
+        elif survey.result_json:
+            try:
+                res_dict = json.loads(survey.result_json)
+                viability_score = res_dict.get("executive_summary", {}).get("viability_score", 75)
+                verdict = res_dict.get("executive_summary", {}).get("verdict", verdict)
+            except Exception:
+                pass
+
+        send_survey_completed_email(
+            survey_id=survey.id,
+            customer_email=survey.customer_email,
+            product_name=product_name,
+            model_type=survey.model_type,
+            sample_size=survey.sample_size or 1000,
+            viability_score=viability_score,
+            verdict=verdict,
+        )
     except Exception as e:
-        log.warning("Email send failed", error=str(e), survey_id=survey_id)
+        log.warning("Completion email failed in worker", error=str(e), survey_id=survey_id)
+

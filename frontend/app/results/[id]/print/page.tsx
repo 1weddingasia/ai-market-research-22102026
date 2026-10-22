@@ -410,11 +410,11 @@ export default function PrintReportPage() {
             {/* Right Verdict Box */}
             <div className="md:col-span-8 flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[9.5px] font-bold uppercase tracking-wider mb-1.5">
-                  🏛️ KẾT LUẬN TỪ HỘI ĐỒNG CHIẾN LƯỢC AI
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[9px] font-bold uppercase tracking-wider mb-1 font-mono">
+                  <span>🏛️ HỘI ĐỒNG THẨM ĐỊNH KINH TẾ LƯỢNG (DEEPSEEK REASONER · DUAL-AI)</span>
                 </div>
                 <h3 className="font-serif text-sm font-bold text-slate-900 mb-1.5">
-                  Nhận định điều hành dành cho Ban Giám Đốc (Executive Verdict)
+                  Nhận định điều hành dành cho Ban Giám Đốc (Executive Strategic Verdict)
                 </h3>
                 <div className="p-3 bg-white border-l-4 border-amber-600 rounded-r-lg border border-slate-200 shadow-2xs">
                   <p className="text-slate-800 text-xs leading-relaxed italic font-medium">
