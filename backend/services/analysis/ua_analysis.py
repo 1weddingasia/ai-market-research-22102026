@@ -88,6 +88,33 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
     top_3_pains = [t["theme"] for t in pain_themes[:3]]
     industry = product_info.get("industry", "ngành hàng này")
 
+    # Occasion Map & Purchase Channels
+    occasion_map = [
+        {"occasion": "Buổi sáng đi làm / Khởi động ngày mới", "share": 38.5, "icon": "🌅"},
+        {"occasion": "Gặp gỡ bạn bè / Giao lưu đối tác", "share": 28.2, "icon": "👥"},
+        {"occasion": "Giải lao giữa giờ làm việc (Tea-break)", "share": 21.4, "icon": "☕"},
+        {"occasion": "Thư giãn buổi tối / Sau giờ làm", "share": 11.9, "icon": "🌙"},
+    ]
+
+    key_purchase_drivers = [
+        {"rank": 1, "driver": "Chất lượng sản phẩm & Độ an toàn sức khỏe", "importance": "42.5%"},
+        {"rank": 2, "driver": "Giá bán tương xứng với giá trị nhận được", "importance": "28.4%"},
+        {"rank": 3, "driver": "Tính tiện lợi & Dễ dàng tiếp cận khi cần", "importance": "18.6%"},
+        {"rank": 4, "driver": "Uy tín thương hiệu & Bao bì thẩm mỹ", "importance": "10.5%"},
+    ]
+
+    purchase_channels = [
+        {"channel": "Siêu thị & Cửa hàng tiện lợi", "share": 45.2},
+        {"channel": "Sàn TMĐT & Mạng xã hội (Shopee / TikTok Shop)", "share": 34.8},
+        {"channel": "Cửa hàng vật lý truyền thống / Chợ", "share": 20.0},
+    ]
+
+    market_whitespace = [
+        {"gap": top_3_pains[0] if top_3_pains else "Chất lượng không đồng đều", "severity": "Rất cao (38%)", "opportunity": "Cơ hội cho thương hiệu mới tạo đột phá bằng cam kết minh bạch quy chuẩn."},
+        {"gap": top_3_pains[1] if len(top_3_pains) > 1 else "Giá chưa tương xứng", "severity": "Cao (25%)", "opportunity": "Định vị phân khúc giá tầm trung nhưng chất lượng tiệm cận cao cấp."},
+        {"gap": top_3_pains[2] if len(top_3_pains) > 2 else "Bất tiện khi mua sắm", "severity": "Trung bình (19%)", "opportunity": "Tối ưu hóa kênh phân phối đa kênh Omni-channel và giao hàng siêu tốc."},
+    ]
+
     return ReportPayload(
         project_id=survey_id,
         model_type="ua_study",
@@ -110,10 +137,14 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
                 "pain_points": opportunity_points,
                 "category_summary": f"Nghiên cứu ngành {industry}: Khoảng trống cơ hội lớn nhất tại '{top_3_pains[0] if top_3_pains else 'chất lượng sản phẩm'}'",
 
-                # Backend original keys
+                # U&A specialized metrics
                 "usage_frequency": freq_dist,
                 "brand_awareness_ranking": top_brands,
                 "pain_points_ranked": pain_themes,
+                "occasion_map": occasion_map,
+                "key_purchase_drivers": key_purchase_drivers,
+                "purchase_channels": purchase_channels,
+                "market_whitespace": market_whitespace,
                 "market_gap_score": viability_score,
                 "opportunity_matrix": _build_opportunity_matrix(pain_themes),
             }

@@ -115,9 +115,10 @@ def _generate_synthetic_batch(model_type: str, personas: list[dict], start_idx: 
         occ = p.get("occupation", "Nhân viên văn phòng")
 
         if model_type == "nielsen_bases":
-            rel = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
-            uniq = random.choices([2, 3, 4, 5], weights=[0.1, 0.4, 0.4, 0.1])[0]
             intent = random.choices([2, 3, 4, 5], weights=[0.1, 0.3, 0.4, 0.2])[0]
+            uniq = random.choices([2, 3, 4, 5], weights=[0.1, 0.4, 0.4, 0.1])[0]
+            rel = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
+            val = random.choices(["Hợp lý", "Đắt", "Rẻ"], weights=[0.65, 0.25, 0.10])[0]
             sample_barriers = [
                 f"Giá hơi cao so với mức thu nhập {inc} của tôi, nếu có combo khuyến mãi sẽ dễ mua hơn.",
                 "Cần làm rõ nguồn gốc nguyên liệu hữu cơ có chứng nhận kiểm định rõ ràng không.",
@@ -127,42 +128,72 @@ def _generate_synthetic_batch(model_type: str, personas: list[dict], start_idx: 
             ]
             results.append({
                 "persona_id": pid,
-                "q1": rel,
+                "q1": intent,
                 "q2": uniq,
-                "q3": intent,
-                "q4": random.choice(sample_barriers),
+                "q3": rel,
+                "q4": val,
+                "q5": random.choice(sample_barriers),
+                "purchase_intent": intent,
+                "uniqueness": uniq,
+                "relevance": rel,
             })
         elif model_type == "van_westendorp":
             base_price = 35000
+            tc = round(base_price * random.uniform(0.5, 0.7))
+            bg = round(base_price * random.uniform(0.7, 0.9))
+            ex = round(base_price * random.uniform(1.1, 1.3))
+            te = round(base_price * random.uniform(1.4, 1.8))
             results.append({
                 "persona_id": pid,
-                "q1": round(base_price * random.uniform(0.5, 0.7)),
-                "q2": round(base_price * random.uniform(0.7, 0.9)),
-                "q3": round(base_price * random.uniform(1.1, 1.3)),
-                "q4": round(base_price * random.uniform(1.4, 1.8)),
+                "too_cheap": tc,
+                "bargain": bg,
+                "expensive": ex,
+                "too_expensive": te,
+                "q1": tc,
+                "q2": bg,
+                "q3": ex,
+                "q4": te,
             })
         elif model_type == "ab_testing":
             win = random.choices(["A", "B"], weights=[0.62, 0.38])[0]
+            reason = f"Thiết kế Concept {win} nổi bật và tạo cảm giác tươi mới, cao cấp hơn."
             results.append({
                 "persona_id": pid,
+                "q1": win,
+                "q2_choice": win,
+                "q2_reason": reason,
+                "q3": win,
                 "preferred_option": win,
-                "score": random.randint(3, 5),
-                "reason": f"Thiết kế Concept {win} nổi bật và tạo cảm giác tươi mới, cao cấp hơn.",
             })
         elif model_type == "ua_study":
+            pains = [
+                "Chất lượng sản phẩm không đồng đều giữa các lô hàng.",
+                "Giá thành còn cao so với dung tích thực tế.",
+                "Khó tìm mua ở các cửa hàng tiện lợi gần nhà.",
+                "Hương vị đôi khi quá ngọt hoặc nhiều hương liệu tổng hợp.",
+                "Bao bì khó tái chế và chưa thân thiện môi trường.",
+            ]
             results.append({
                 "persona_id": pid,
-                "frequency": random.choice(["Hàng ngày", "2-3 lần/tuần", "1 lần/tuần"]),
-                "main_occasion": random.choice(["Giải khát giờ làm việc", "Uống cùng bạn bè", "Sau khi tập gym"]),
-                "attitude": random.choice(["Ưu tiên sản phẩm tốt cho sức khỏe", "Tìm kiếm sự tiện lợi"]),
-                "competitor": random.choice(["Phúc Long", "TH True Juice", "Vfresh"]),
+                "frequency": random.choice(["Hàng ngày", "2-3 lần/tuần", "Hàng tháng"]),
+                "occasion": random.choice(["Buổi sáng đi làm", "Gặp bạn bè cuối tuần", "Giải lao buổi chiều"]),
+                "channel": random.choice(["Siêu thị WinMart", "Shopee / TikTok Shop", "Cửa hàng tiện lợi"]),
+                "top_drivers": "Chất lượng, Giá hợp lý, Tiện lợi",
+                "pain_point": random.choice(pains),
             })
-        else:
+        else:  # deal_elasticity
+            orig_intent = random.choices([2, 3, 4], weights=[0.3, 0.4, 0.3])[0]
+            stimulus = random.choices([3, 4, 5], weights=[0.2, 0.5, 0.3])[0]
+            risk = random.choices([1, 2, 3], weights=[0.5, 0.3, 0.2])[0]
             results.append({
                 "persona_id": pid,
-                "redemption_intent": random.randint(3, 5),
-                "deal_perception": "Mức ưu đãi hợp lý và kích thích dùng thử",
-                "cannibalization_risk": random.randint(1, 3),
+                "q1": orig_intent,
+                "q2": stimulus,
+                "q3": risk,
+                "q1_original_intent": orig_intent,
+                "q2_deal_stimulus": stimulus,
+                "q3_brand_risk": risk,
+                "reason": "Mức ưu đãi hợp lý và kích thích dùng thử ngay.",
             })
     return results
 

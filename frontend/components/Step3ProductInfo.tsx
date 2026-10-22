@@ -13,31 +13,59 @@ interface FieldConfig {
   hint?: string;
 }
 
+const MODEL_GUIDANCE: Record<string, { purpose: string; badge: string; icon: string }> = {
+  nielsen_bases: {
+    icon: '💡',
+    badge: 'NIELSEN BASES INNOVATION FRAMEWORK',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Khách hàng có muốn mua sản phẩm mới này không? Ý tưởng này có khả năng sống sót ngoài thị trường không?"',
+  },
+  van_westendorp: {
+    icon: '💰',
+    badge: 'VAN WESTENDORP PRICE SENSITIVITY METER (PSM)',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Bán giá bao nhiêu là chuẩn nhất? Khách hàng bắt đầu chê đắt ở mức nào và nghi ngờ chất lượng ở mức nào?"',
+  },
+  ab_testing: {
+    icon: '🎨',
+    badge: 'KANTAR LINK PRE-TESTING FRAMEWORK',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Giữa 2 mẫu bao bì, 2 câu slogan hoặc 2 concept sản phẩm thì phương án nào có tỷ lệ chuyển đổi cao hơn?"',
+  },
+  ua_study: {
+    icon: '🔍',
+    badge: 'USAGE & ATTITUDE (U&A) STUDY',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Khách hàng đang dùng những sản phẩm gì trong ngành hàng này? Họ mua ở đâu, dùng khi nào và đang bức xúc điều gì chưa được giải quyết?"',
+  },
+  deal_elasticity: {
+    icon: '🎁',
+    badge: 'PROMO ELASTICITY & THRESHOLD ANALYSIS',
+    purpose: 'Mục đích cốt lõi: Trả lời câu hỏi "Nên tung chương trình khuyến mãi nào để bùng nổ doanh số mà không bị lỗ và không làm mất giá trị thương hiệu?"',
+  },
+};
+
 const FIELDS_MAP: Record<string, FieldConfig[]> = {
   nielsen_bases: [
     {
       id: 'company_name',
-      label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
-      placeholder: 'VD: Công ty Cổ phần Thực phẩm Sạch Á Châu (Asia Food Corp)',
+      label: 'Tên Doanh nghiệp / Khách hàng yêu cầu khảo sát',
+      placeholder: 'VD: Tập đoàn Tiêu dùng & Thực phẩm Sạch Á Châu (Asia Food Corp)',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },
     {
       id: 'product_name',
-      label: 'Tên sản phẩm / ý tưởng kiểm định',
-      placeholder: 'VD: Nước giải khát Kombucha men xoài Cát Chu 330ml',
+      label: 'Tên sản phẩm / Ý tưởng kiểm định',
+      placeholder: 'VD: Trà Kombucha Lên Men Xoài Cát Chu Tự Nhiên (330ml)',
       required: true,
     },
     {
       id: 'category',
-      label: 'Ngành hàng kinh doanh',
+      label: 'Danh mục ngành hàng',
       placeholder: 'VD: Thực phẩm & Đồ uống (FMCG / F&B)',
       required: true,
     },
     {
       id: 'description',
-      label: 'Mô tả chi tiết USP & Vấn đề giải quyết',
-      placeholder: 'Mô tả điểm độc đáo, nguyên liệu tự nhiên, lợi ích sức khỏe và nhóm đối tượng người dùng...',
+      label: 'Bản mô tả chi tiết ý tưởng (Concept)',
+      placeholder: 'Mô tả điểm khác biệt độc nhất (USP), thành phần/công nghệ, lợi ích mang lại và nhóm đối tượng...',
       required: true,
       type: 'textarea',
       hint: 'Mô tả càng chi tiết và trung thực, hệ thống AI Persona phản hồi càng chính xác và giá trị.',
@@ -47,6 +75,12 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       label: 'Mức giá dự kiến đưa ra thị trường',
       placeholder: 'VD: 32.000đ / lon hoặc 180.000đ / lốc 6 lon',
       required: true,
+    },
+    {
+      id: 'concept_image_note',
+      label: 'Ghi chú bao bì / Link ảnh concept (Tùy chọn)',
+      placeholder: 'VD: https://... hoặc Mô tả lon nhôm tối giản, phong cách healthy sang trọng',
+      required: false,
     },
   ],
   van_westendorp: [
@@ -59,30 +93,39 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'product_name',
-      label: 'Tên sản phẩm / gói dịch vụ định giá',
+      label: 'Tên sản phẩm / Gói dịch vụ cần định giá',
       placeholder: 'VD: Khóa học Tiếng Anh Giao Tiếp 1-kèm-1 qua AI (3 tháng)',
       required: true,
     },
     {
+      id: 'category',
+      label: 'Danh mục sản phẩm / Dịch vụ',
+      placeholder: 'VD: Giáo dục trực tuyến (EdTech) / Mỹ phẩm / Phần mềm SaaS / FMCG',
+      required: true,
+    },
+    {
       id: 'description',
-      label: 'Mô tả tính năng & Giá trị cốt lõi mang lại',
-      placeholder: 'Liệt kê các quyền lợi, thời lượng, công cụ hỗ trợ và cam kết đầu ra...',
+      label: 'Bản mô tả sản phẩm và giá trị mang lại',
+      placeholder: 'Liệt kê các tính năng, quyền lợi cốt lõi, giá trị giải quyết cho khách hàng...',
       required: true,
       type: 'textarea',
+      hint: '🔴 NGUYÊN TẮC KINH TẾ HỌC: Tuyệt đối KHÔNG đưa trước giá bán vào đây để tránh mỏ neo tâm lý (Anchoring Effect).',
     },
     {
       id: 'price_range_min',
-      label: 'Mức giá sàn dự kiến (VND)',
+      label: 'Khoảng giá sàn tham chiếu (VND)',
       placeholder: 'VD: 500000',
       type: 'number',
       required: true,
+      hint: 'Hệ thống dùng giá sàn để định vị phổ phân khúc thị trường.',
     },
     {
       id: 'price_range_max',
-      label: 'Mức giá trần dự kiến (VND)',
+      label: 'Khoảng giá trần tham chiếu (VND)',
       placeholder: 'VD: 2500000',
       type: 'number',
       required: true,
+      hint: 'Hệ thống dùng giá trần để vẽ đồ thị 4 đường cong Van Westendorp.',
     },
   ],
   ab_testing: [
@@ -95,27 +138,28 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'brand_name',
-      label: 'Dòng sản phẩm thử nghiệm',
+      label: 'Dòng sản phẩm / Thương hiệu thử nghiệm',
       placeholder: 'VD: Sữa Chua Uống Men Sống Probi',
       required: true,
     },
     {
       id: 'test_objective',
-      label: 'Mục tiêu thử nghiệm so sánh',
-      placeholder: 'VD: Chọn concept bao bì Tết: Sắc Đỏ Truyền Thống vs Sắc Vàng Thịnh Vượng',
+      label: 'Bối cảnh so sánh & Kênh bán mục tiêu',
+      placeholder: 'VD: So sánh 2 concept bao bì Tết tại quầy kệ siêu thị: nhắm tới nhóm khách hàng gia đình thành thị',
       required: true,
+      hint: 'Giúp thiết lập bối cảnh kích thích hành vi chọn mua của Personas.',
     },
     {
       id: 'option_a_description',
-      label: 'Phương án A (Concept A)',
-      placeholder: 'Mô tả bao bì, thông điệp truyền thông, tông màu và cảm xúc truyền tải của Phương án A...',
+      label: 'Bản mô tả Phương án A (Hình ảnh / Bao bì / Slogan A)',
+      placeholder: 'Mô tả chi tiết Concept A: Tông màu chủ đạo, hình ảnh nhận diện, thông điệp truyền thông USP...',
       required: true,
       type: 'textarea',
     },
     {
       id: 'option_b_description',
-      label: 'Phương án B (Concept B)',
-      placeholder: 'Mô tả bao bì, thông điệp truyền thông, tông màu và cảm xúc truyền tải của Phương án B...',
+      label: 'Bản mô tả Phương án B (Hình ảnh / Bao bì / Slogan B)',
+      placeholder: 'Mô tả chi tiết Concept B: Tông màu chủ đạo, hình ảnh nhận diện, thông điệp truyền thông USP...',
       required: true,
       type: 'textarea',
     },
@@ -130,20 +174,26 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'industry',
-      label: 'Ngành hàng & Thị trường khảo sát',
-      placeholder: 'VD: Dịch vụ gọi xe công nghệ & Giao đồ ăn nhanh tại Việt Nam',
+      label: 'Ngành hàng cần nghiên cứu (Category)',
+      placeholder: 'VD: Cà phê đóng lon uống liền / Chăm sóc da mụn / Đặt xe công nghệ',
+      required: true,
+    },
+    {
+      id: 'target_audience',
+      label: 'Đối tượng khách hàng mục tiêu muốn thấu hiểu',
+      placeholder: 'VD: Giới trẻ công sở 22 - 35 tuổi tại Hà Nội và TP.HCM, thu nhập 10-25 triệu/tháng',
       required: true,
     },
     {
       id: 'key_competitors',
-      label: 'Danh sách các đối thủ cạnh tranh chính',
-      placeholder: 'VD: Grab, Xanh SM, Be, ShopeeFood',
+      label: 'Các đối thủ cạnh tranh chính trên thị trường',
+      placeholder: 'VD: Highlands Coffee, Nescafe, Trung Nguyên, Birdy...',
       required: true,
     },
     {
       id: 'research_focus',
-      label: 'Trọng tâm tìm hiểu thói quen & thái độ',
-      placeholder: 'VD: Tần suất đặt xe trong tuần, rào cản về giá cước giờ cao điểm, yếu tố quyết định chuyển app...',
+      label: 'Nỗi đau hoặc câu hỏi trọng tâm muốn khai phá',
+      placeholder: 'VD: Tần suất dùng, dịp sử dụng (buổi sáng/chiều), kênh mua (tiện lợi/sàn TMĐT), nỗi đau chưa được giải quyết...',
       required: true,
       type: 'textarea',
     },
@@ -157,25 +207,34 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },
     {
-      id: 'deal_description',
-      label: 'Mô tả chương trình ưu đãi / Combo Tết',
-      placeholder: 'VD: Combo Tết Đoàn Viên: Mua 3 Hộp Bánh Tặng 1 Bình Trà Cao Cấp, Giảm 20% khi mua trước 20 tháng Chạp...',
+      id: 'deal_name',
+      label: 'Tên sản phẩm / Gói ưu đãi',
+      placeholder: 'VD: Hộp Bánh Tết Đoàn Viên Thượng Hạng',
       required: true,
-      type: 'textarea',
     },
     {
       id: 'original_price',
-      label: 'Giá trị gốc của combo/sản phẩm (VND)',
+      label: 'Mức giá gốc niêm yết ban đầu (VND)',
       placeholder: 'VD: 450000',
       type: 'number',
       required: true,
+      hint: 'Mức giá chuẩn để tính toán độ co giãn và tỷ lệ Volume Lift.',
     },
     {
       id: 'discounted_price',
-      label: 'Giá bán thực tế sau khuyến mãi (VND)',
+      label: 'Mức giá bán dự kiến sau ưu đãi (VND)',
       placeholder: 'VD: 360000',
       type: 'number',
       required: true,
+      hint: 'Mức giá sau chiết khấu hoặc sau áp dụng quà tặng.',
+    },
+    {
+      id: 'deal_description',
+      label: 'Các kịch bản khuyến mãi muốn đo lường',
+      placeholder: 'VD: Kịch bản 1: Giảm thẳng 15%; Kịch bản 2: Mua 2 tặng 1; Kịch bản 3: Tặng bình trà cao cấp...',
+      required: true,
+      type: 'textarea',
+      hint: 'Liệt kê 2-3 kịch bản ưu đãi để cụm AI đo lường độ co giãn và so sánh sức bật chuyển đổi.',
     },
   ],
 };
@@ -269,6 +328,23 @@ export default function Step3ProductInfo() {
           </span>
         </div>
       </div>
+
+      {/* Model-Specific Methodology Guidance Card */}
+      {MODEL_GUIDANCE[currentModelKey] && (
+        <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-slate-900 to-[#0A192F] text-white border border-amber-500/30 shadow-md">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl shrink-0 mt-0.5">{MODEL_GUIDANCE[currentModelKey].icon}</span>
+            <div className="space-y-1">
+              <span className="inline-block text-[10px] font-mono font-bold text-amber-300 uppercase tracking-widest">
+                {MODEL_GUIDANCE[currentModelKey].badge}
+              </span>
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
+                {MODEL_GUIDANCE[currentModelKey].purpose}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Error Alert */}
       {error && (

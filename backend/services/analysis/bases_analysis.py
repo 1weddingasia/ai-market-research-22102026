@@ -41,8 +41,17 @@ def analyze(
     avg_intent     = statistics.mean(q3_scores) if q3_scores else 3.0
 
     # Top-2-Box: tỷ lệ chọn 4 hoặc 5 cho purchase intent
-    top2box_count = sum(1 for s in q3_scores if s >= 4)
-    top2box_pct   = (top2box_count / len(q3_scores) * 100) if q3_scores else 0
+    top_box_count    = sum(1 for s in q3_scores if s == 5)
+    second_box_count = sum(1 for s in q3_scores if s == 4)
+    top2box_count    = top_box_count + second_box_count
+    
+    total_intent_n   = max(len(q3_scores), 1)
+    top_box_pct      = (top_box_count / total_intent_n) * 100
+    second_box_pct   = (second_box_count / total_intent_n) * 100
+    top2box_pct      = (top2box_count / total_intent_n) * 100
+
+    # Chuẩn Nielsen BASES: Trial Rate = (Top-Box % * 0.75) + (Second-Box % * 0.25)
+    trial_rate_forecast = round((top_box_pct * 0.75) + (second_box_pct * 0.25), 1)
 
     # BASES Viability Score (thang 100):
     # = 0.3 * relevance + 0.25 * uniqueness + 0.45 * intent (normalized)
@@ -55,7 +64,7 @@ def analyze(
 
     # Flop Risk Index: % người chọn 1 hoặc 2 cho purchase intent
     flop_count = sum(1 for s in q3_scores if s <= 2)
-    flop_risk  = round((flop_count / len(q3_scores) * 100) if q3_scores else 0)
+    flop_risk  = round((flop_count / total_intent_n * 100))
 
     # ── 3. BASES Matrix position ──────────────────────────────────────────────
     # Trục X: Uniqueness (>= 3.5 = high), Trục Y: Relevance (>= 3.5 = high)
@@ -146,6 +155,9 @@ def analyze(
             model_specific={
                 "bases_viability_score": viability_score,
                 "avg_purchase_intent": round(avg_intent, 2),
+                "top2box_pct": round(top2box_pct, 1),
+                "trial_rate_forecast": trial_rate_forecast,
+                "barrier_map": top_barriers,
                 "flop_risk_index": flop_risk,
                 "matrix_position": matrix_position,
                 "matrix_quadrant": matrix_quadrant,

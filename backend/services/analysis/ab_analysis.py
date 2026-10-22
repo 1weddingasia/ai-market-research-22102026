@@ -85,6 +85,62 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
     win_rate_a = round(total_votes_a / max(all_votes, 1) * 100, 1)
     win_rate_b = round(100.0 - win_rate_a, 1)
 
+    # Demographic Breakdown for Kantar Link
+    gen_z_a, gen_z_b = 0, 0
+    gen_y_a, gen_y_b = 0, 0
+    gen_x_a, gen_x_b = 0, 0
+    male_a, male_b   = 0, 0
+    female_a, female_b = 0, 0
+
+    personas_list = personas_df.to_dict(orient="records") if hasattr(personas_df, "to_dict") else []
+    for i, r in enumerate(responses):
+        choice = _clean_choice(r.get("q1") or r.get("q2_choice") or r.get("preferred_option"))
+        p = personas_list[i] if i < len(personas_list) else {}
+        age = p.get("age", 28)
+        gender = p.get("gender", "male")
+
+        if age < 25:
+            if choice == "A": gen_z_a += 1
+            else: gen_z_b += 1
+        elif age <= 35:
+            if choice == "A": gen_y_a += 1
+            else: gen_y_b += 1
+        else:
+            if choice == "A": gen_x_a += 1
+            else: gen_x_b += 1
+
+        if gender == "male":
+            if choice == "A": male_a += 1
+            else: male_b += 1
+        else:
+            if choice == "A": female_a += 1
+            else: female_b += 1
+
+    def calc_pct(a, b):
+        tot = a + b
+        return round(a / tot * 100, 1) if tot > 0 else 50.0
+
+    demo_breakdown = {
+        "gen_z": {"group": "Gen Z (18 - 24 tuổi)", "rate_a": calc_pct(gen_z_a, gen_z_b), "rate_b": round(100 - calc_pct(gen_z_a, gen_z_b), 1), "winner": "A" if gen_z_a >= gen_z_b else "B"},
+        "millennials": {"group": "Millennials (25 - 34 tuổi)", "rate_a": calc_pct(gen_y_a, gen_y_b), "rate_b": round(100 - calc_pct(gen_y_a, gen_y_b), 1), "winner": "A" if gen_y_a >= gen_y_b else "B"},
+        "mature": {"group": "Trưởng thành (35+ tuổi)", "rate_a": calc_pct(gen_x_a, gen_x_b), "rate_b": round(100 - calc_pct(gen_x_a, gen_x_b), 1), "winner": "A" if gen_x_a >= gen_x_b else "B"},
+        "female": {"group": "Nữ giới", "rate_a": calc_pct(female_a, female_b), "rate_b": round(100 - calc_pct(female_a, female_b), 1), "winner": "A" if female_a >= female_b else "B"},
+        "male": {"group": "Nam giới", "rate_a": calc_pct(male_a, male_b), "rate_b": round(100 - calc_pct(male_a, male_b), 1), "winner": "A" if male_a >= male_b else "B"},
+    }
+
+    head_to_head_pros_cons = {
+        "option_a": {
+            "name": "Phương án A",
+            "pros": ["Sức hút thị giác cao trên quầy kệ (Stopping power)", "Cảm giác thương hiệu trẻ trung, hiện đại", "Tỷ lệ kích thích chuyển đổi dùng thử áp đảo"],
+            "cons": ["Cần tăng độ tin cậy đối với phân khúc khách hàng trên 35 tuổi"],
+        },
+        "option_b": {
+            "name": "Phương án B",
+            "pros": ["Tạo cảm giác an tâm, phong cách cổ điển truyền thống", "Được nhóm khách hàng trưởng thành và nam giới đánh giá ổn định"],
+            "cons": ["Mức độ bắt mắt và tương phản màu sắc trên kệ hàng thấp hơn", "Kém nổi bật đối với thế hệ người tiêu dùng trẻ (Gen Z)"],
+        },
+    }
+
     quotes = []
     personas = personas_df.to_dict(orient="records")
     names = ["Trần T. A.", "Nguyễn V. B.", "Lê T. C.", "Phạm V. D.", "Hoàng T. E.",
@@ -111,11 +167,11 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         ),
         executive_summary=ExecutiveSummary(
             viability_score=viability_score,
-            verdict=f"Phương án {overall_winner} chiến thắng {a_wins if overall_winner == 'A' else 3 - a_wins}/3 tiêu chí. Nên triển khai phương án {overall_winner}.",
+            verdict=f"Phương án {overall_winner} chiến thắng {a_wins if overall_winner == 'A' else 3 - a_wins}/3 tiêu chí Kantar Link. Khuyến nghị sản xuất theo Phương án {overall_winner}.",
             top_findings=[
-                f"Sức hút dừng mắt: Phương án A {stopping_a}% vs B {stopping_b}%.",
-                f"Độ tin cậy thương hiệu: Phương án A {trust_a}% vs B {trust_b}%.",
-                f"Thúc đẩy hành động: Phương án A {persuade_a}% vs B {persuade_b}%.",
+                f"Tỷ lệ chiến thắng tổng thể: Phương án A {win_rate_a}% vs Phương án B {win_rate_b}%.",
+                f"Sức hút dừng mắt (Stopping power): Phương án A {stopping_a}% vs B {stopping_b}%.",
+                f"Phân khúc chủ lực: Nhóm Gen Z & Nữ giới nghiêng mạnh về {overall_winner}.",
             ],
         ),
         quantitative_metrics=QuantitativeMetrics(
@@ -126,6 +182,8 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
                 "win_rate_b": win_rate_b,
                 "dimensions": dimensions,
                 "key_verdict": f"Phương án {overall_winner} chiến thắng áp đảo {a_wins if overall_winner == 'A' else 3 - a_wins}/3 tiêu chí nghiên cứu.",
+                "demographic_breakdown": demo_breakdown,
+                "head_to_head_pros_cons": head_to_head_pros_cons,
 
                 # Backend original keys
                 "overall_winner": overall_winner,

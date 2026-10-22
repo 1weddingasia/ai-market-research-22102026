@@ -151,7 +151,12 @@ def analyze(
                 # Props cho VanWestendorpChart.tsx frontend
                 "optimal_price": opp,
                 "indifference_price": ipp,
+                "opp": opp,
+                "idp": ipp,
+                "pmc": pmc,
+                "pme": pme,
                 "acceptable_range": [pmc, pme],
+                "rap": [pmc, pme],
                 "price_curves": frontend_curves,
 
                 # Backend original keys

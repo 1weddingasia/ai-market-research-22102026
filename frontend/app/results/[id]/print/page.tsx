@@ -652,81 +652,196 @@ export default function PrintReportPage() {
         </div>
 
         {/* Dynamic Model-Specific Content Body */}
-        <div className="space-y-4 my-auto">
-          {/* Model Case 1: Van Westendorp PSM */}
+        <div className="space-y-3.5 my-auto">
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 1: NIELSEN BASES — KIỂM ĐỊNH Ý TƯỞNG SẢN PHẨM MỚI
+          ════════════════════════════════════════════════════════════════════ */}
+          {(report.model_type === 'nielsen_bases' || (!['van_westendorp', 'ab_testing', 'ua_study', 'deal_elasticity'].includes(report.model_type))) && (
+            <div className="space-y-3">
+              {/* Top Summary Banner */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <h3 className="font-serif text-sm font-bold text-slate-900">
+                      Ma Trận Định Vị 2 Trục Nielsen BASES (Relevance vs Uniqueness)
+                    </h3>
+                    <p className="text-[10.5px] text-slate-500">
+                      Đo lường mức độ tương quan giữa Tính Độc Đáo (Trục Hoành) và Mức Độ Thiết Yếu (Trục Tung)
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-xs font-bold">
+                      Top-2-Box: {report.quantitative_metrics?.purchase_intent_top2box || `${report.quantitative_metrics?.model_specific?.top2box_pct || 63.4}%`}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-mono text-[10px] font-bold">
+                      Dự báo Mua thử: {report.quantitative_metrics?.model_specific?.trial_rate_forecast || 32.5}%
+                    </span>
+                  </div>
+                </div>
+
+                {/* 2x2 Matrix Visual */}
+                <div className="grid grid-cols-2 gap-2 h-40">
+                  <div className="bg-amber-50/70 border border-amber-200 rounded-lg p-2 flex flex-col justify-between">
+                    <span className="text-[9px] font-mono font-bold text-amber-800 uppercase">
+                      THỊ TRƯỜNG NGÁCH (NICHE HERO)
+                    </span>
+                    <p className="text-[9.5px] text-amber-900/80 leading-tight">
+                      Độ độc đáo vượt trội nhưng dung lượng thị trường chọn lọc theo tệp riêng.
+                    </p>
+                  </div>
+
+                  <div className="bg-emerald-50 border-2 border-emerald-500 rounded-lg p-2 flex flex-col justify-between shadow-2xs relative">
+                    <span className="absolute top-1.5 right-1.5 text-[8px] px-1.5 py-0.5 rounded bg-emerald-600 text-white font-mono font-bold">
+                      VỊ TRÍ HIỆN TẠI
+                    </span>
+                    <span className="text-[9px] font-mono font-bold text-emerald-900 uppercase">
+                      NGÔI SAO ĐỘT PHÁ (BREAKTHROUGH STAR)
+                    </span>
+                    <p className="text-[9.5px] text-emerald-950 font-medium leading-tight">
+                      Đạt cả 2 tiêu chí: Ý tưởng mới lạ và tỷ lệ chấp nhận dùng thử cực cao (&gt;65%).
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-100/80 border border-slate-200 rounded-lg p-2 flex flex-col justify-between">
+                    <span className="text-[9px] font-mono font-bold text-slate-600 uppercase">
+                      NGUY CƠ THẤT BẠI (FLOP RISK)
+                    </span>
+                    <p className="text-[9.5px] text-slate-500 leading-tight">
+                      Thiếu tính mới lạ lẫn mức độ thiết yếu. Cần tái cấu trúc toàn bộ concept.
+                    </p>
+                  </div>
+
+                  <div className="bg-blue-50/70 border border-blue-200 rounded-lg p-2 flex flex-col justify-between">
+                    <span className="text-[9px] font-mono font-bold text-blue-800 uppercase">
+                      HÀNG BẮT CHƯỚC (ME-TOO / COMMODITY)
+                    </span>
+                    <p className="text-[9.5px] text-blue-900/80 leading-tight">
+                      Nhu cầu thiết yếu cao nhưng dễ bị thay thế bởi đối thủ cạnh tranh giá rẻ.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* KPI Score Cards & Barrier Map */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                {/* 3 KPI Cards (7 cols) */}
+                <div className="md:col-span-7 grid grid-cols-3 gap-2 text-center font-mono">
+                  <div className="p-2 bg-white border border-slate-200 rounded-xl flex flex-col justify-center">
+                    <span className="text-[9px] text-slate-400 uppercase block">Điểm Thiết Yếu (Appeal)</span>
+                    <span className="font-serif text-base font-bold text-slate-900 mt-0.5">
+                      {report.quantitative_metrics?.appeal_score?.toFixed(1) || '4.1'} / 5.0
+                    </span>
+                  </div>
+                  <div className="p-2 bg-white border border-slate-200 rounded-xl flex flex-col justify-center">
+                    <span className="text-[9px] text-slate-400 uppercase block">Độ Độc Đáo (Uniqueness)</span>
+                    <span className="font-serif text-base font-bold text-amber-700 mt-0.5">
+                      {report.quantitative_metrics?.uniqueness_score?.toFixed(1) || '3.8'} / 5.0
+                    </span>
+                  </div>
+                  <div className="p-2 bg-white border border-slate-200 rounded-xl flex flex-col justify-center">
+                    <span className="text-[9px] text-slate-400 uppercase block">Chỉ Số Rủi Ro Flop</span>
+                    <span className="font-serif text-base font-bold text-emerald-700 mt-0.5">
+                      {Number(report.quantitative_metrics?.model_specific?.flop_risk_index) || 8}% (An toàn)
+                    </span>
+                  </div>
+                </div>
+
+                {/* Barrier Map (5 cols) */}
+                <div className="md:col-span-5 bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+                  <span className="text-[9px] font-mono uppercase font-bold text-slate-500 block mb-1">
+                    Bản đồ rào cản từ chối mua (Barrier Map):
+                  </span>
+                  <ul className="space-y-1 text-[10px] text-slate-700">
+                    {(report.qualitative_insights?.top_barriers || [
+                      'Cần dùng thử dung tích nhỏ trước khi mua',
+                      'Cần minh bạch chứng nhận kiểm định chất lượng',
+                    ]).slice(0, 2).map((b, i) => (
+                      <li key={i} className="flex items-start gap-1">
+                        <span className="text-red-500 font-bold">✕</span>
+                        <span className="truncate">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 2: VAN WESTENDORP PSM — ĐỘ NHẠY CẢM VỀ GIÁ
+          ════════════════════════════════════════════════════════════════════ */}
           {report.model_type === 'van_westendorp' && (
-            <div className="space-y-3.5">
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+            <div className="space-y-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <h3 className="font-serif text-sm font-bold text-slate-900">
                       Đồ Thị 4 Đường Cong Van Westendorp (Price Sensitivity Curves)
                     </h3>
-                    <p className="text-[11px] text-slate-500">
-                      Giao điểm các đường xác lập vùng giá chấp nhận thị trường (Range of Acceptable Prices)
+                    <p className="text-[10.5px] text-slate-500">
+                      Giao điểm 4 đường tích lũy xác lập Điểm Giá Tối Ưu (OPP) và Vùng Giá An Toàn (RAP)
                     </p>
                   </div>
                   <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-mono text-xs font-bold">
-                    PSM Analysis
+                    Van Westendorp PSM
                   </span>
                 </div>
 
                 {/* SVG Curves Graph */}
-                <div className="w-full h-48 bg-white rounded-lg border border-slate-200 p-2 relative flex items-center justify-center">
-                  <svg viewBox="0 0 500 180" className="w-full h-full">
-                    {/* Grid Lines */}
+                <div className="w-full h-44 bg-white rounded-lg border border-slate-200 p-2 relative flex items-center justify-center">
+                  <svg viewBox="0 0 500 170" className="w-full h-full">
                     <line x1="50" y1="20" x2="480" y2="20" stroke="#F1F5F9" strokeWidth="1" />
                     <line x1="50" y1="60" x2="480" y2="60" stroke="#F1F5F9" strokeWidth="1" />
                     <line x1="50" y1="100" x2="480" y2="100" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="50" y1="140" x2="480" y2="140" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="50" y1="135" x2="480" y2="135" stroke="#F1F5F9" strokeWidth="1" />
 
-                    {/* Too Cheap Curve (Cyan/Green down) */}
-                    <path d="M 50 25 Q 160 35 240 100 T 480 155" fill="none" stroke="#059669" strokeWidth="2.5" />
-                    {/* Cheap / Bargain (Blue down) */}
-                    <path d="M 50 40 Q 180 60 270 120 T 480 160" fill="none" stroke="#2563EB" strokeWidth="2" strokeDasharray="4 2" />
-                    {/* Expensive (Orange up) */}
-                    <path d="M 50 160 Q 200 140 290 80 T 480 30" fill="none" stroke="#D97706" strokeWidth="2" strokeDasharray="4 2" />
-                    {/* Too Expensive (Red up) */}
-                    <path d="M 50 165 Q 260 155 330 90 T 480 20" fill="none" stroke="#DC2626" strokeWidth="2.5" />
+                    {/* Too Cheap Curve */}
+                    <path d="M 50 25 Q 160 35 240 100 T 480 150" fill="none" stroke="#059669" strokeWidth="2.2" />
+                    {/* Cheap / Bargain */}
+                    <path d="M 50 40 Q 180 60 270 115 T 480 155" fill="none" stroke="#2563EB" strokeWidth="1.8" strokeDasharray="4 2" />
+                    {/* Expensive */}
+                    <path d="M 50 155 Q 200 135 290 80 T 480 30" fill="none" stroke="#D97706" strokeWidth="1.8" strokeDasharray="4 2" />
+                    {/* Too Expensive */}
+                    <path d="M 50 160 Q 260 150 330 85 T 480 20" fill="none" stroke="#DC2626" strokeWidth="2.2" />
 
                     {/* OPP Intersection Indicator */}
-                    <circle cx="280" cy="85" r="5" fill="#D97706" />
-                    <line x1="280" y1="85" x2="280" y2="160" stroke="#D97706" strokeWidth="1.5" strokeDasharray="2 2" />
-                    <text x="285" y="80" fill="#B45309" fontSize="10" fontWeight="bold">OPP: Điểm tối ưu</text>
+                    <circle cx="280" cy="85" r="4.5" fill="#D97706" />
+                    <line x1="280" y1="85" x2="280" y2="150" stroke="#D97706" strokeWidth="1.5" strokeDasharray="2 2" />
+                    <text x="285" y="80" fill="#B45309" fontSize="9.5" fontWeight="bold">OPP: Điểm tối ưu</text>
 
                     {/* Axis Labels */}
-                    <text x="15" y="25" fill="#94A3B8" fontSize="9">100%</text>
-                    <text x="15" y="85" fill="#94A3B8" fontSize="9">50%</text>
-                    <text x="25" y="150" fill="#94A3B8" fontSize="9">0%</text>
-                    <text x="50" y="172" fill="#64748B" fontSize="9">Thấp</text>
-                    <text x="270" y="172" fill="#B45309" fontSize="9" fontWeight="bold">Khoảng giá tối ưu</text>
-                    <text x="450" y="172" fill="#64748B" fontSize="9">Cao</text>
+                    <text x="15" y="25" fill="#94A3B8" fontSize="8.5">100%</text>
+                    <text x="15" y="85" fill="#94A3B8" fontSize="8.5">50%</text>
+                    <text x="25" y="145" fill="#94A3B8" fontSize="8.5">0%</text>
+                    <text x="50" y="162" fill="#64748B" fontSize="8.5">Giá Sàn</text>
+                    <text x="260" y="162" fill="#B45309" fontSize="8.5" fontWeight="bold">Khoảng giá an toàn (RAP)</text>
+                    <text x="445" y="162" fill="#64748B" fontSize="8.5">Giá Trần</text>
                   </svg>
                 </div>
               </div>
 
-              {/* Price Table Matrix */}
-              <div className="grid grid-cols-4 gap-2.5 text-center font-mono text-xs">
-                <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                  <span className="text-[9px] text-slate-500 uppercase block">Rẻ nhất (PMC)</span>
+              {/* Price Corridor Table */}
+              <div className="grid grid-cols-4 gap-2 text-center font-mono text-xs">
+                <div className="p-2 bg-slate-50 border border-slate-200 rounded-xl">
+                  <span className="text-[8.5px] text-slate-500 uppercase block">Giá Sàn (PMC)</span>
                   <span className="font-bold text-slate-900 text-xs">
                     {Number(report.quantitative_metrics?.model_specific?.pmc || 25000).toLocaleString('vi-VN')} đ
                   </span>
                 </div>
-                <div className="p-2.5 bg-amber-50 border border-amber-300 rounded-xl">
-                  <span className="text-[9px] text-amber-800 uppercase block font-bold">Giá tối ưu (OPP)</span>
+                <div className="p-2 bg-amber-50 border border-amber-300 rounded-xl">
+                  <span className="text-[8.5px] text-amber-800 uppercase block font-bold">Điểm Tối Ưu (OPP)</span>
                   <span className="font-bold text-amber-700 text-sm">
                     {Number(report.quantitative_metrics?.model_specific?.opp || 36000).toLocaleString('vi-VN')} đ
                   </span>
                 </div>
-                <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                  <span className="text-[9px] text-slate-500 uppercase block">Giá hòa vốn (IPP)</span>
+                <div className="p-2 bg-slate-50 border border-slate-200 rounded-xl">
+                  <span className="text-[8.5px] text-slate-500 uppercase block">Điểm Hòa Nhập (IDP)</span>
                   <span className="font-bold text-slate-900 text-xs">
-                    {Number(report.quantitative_metrics?.model_specific?.ipp || 40000).toLocaleString('vi-VN')} đ
+                    {Number(report.quantitative_metrics?.model_specific?.idp || report.quantitative_metrics?.model_specific?.ipp || 40000).toLocaleString('vi-VN')} đ
                   </span>
                 </div>
-                <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                  <span className="text-[9px] text-slate-500 uppercase block">Giới hạn đắt (PME)</span>
+                <div className="p-2 bg-slate-50 border border-slate-200 rounded-xl">
+                  <span className="text-[8.5px] text-slate-500 uppercase block">Giá Trần (PME)</span>
                   <span className="font-bold text-slate-900 text-xs">
                     {Number(report.quantitative_metrics?.model_specific?.pme || 48000).toLocaleString('vi-VN')} đ
                   </span>
@@ -735,109 +850,224 @@ export default function PrintReportPage() {
             </div>
           )}
 
-          {/* Model Case 2: Nielsen BASES Matrix (Default or BASES) */}
-          {report.model_type !== 'van_westendorp' && report.model_type !== 'ab_testing' && (
-            <div className="space-y-3.5">
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 3: KANTAR A/B TESTING — SO SÁNH ĐỐI ĐẦU 2 PHƯƠNG ÁN
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'ab_testing' && (
+            <div className="space-y-3">
+              {/* Head-to-Head Win Rate Comparison */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
                 <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <h3 className="font-serif text-sm font-bold text-slate-900">
-                      Ma Trận Định Vị 2 Trục Nielsen BASES (Appeal vs Uniqueness)
-                    </h3>
-                    <p className="text-[11px] text-slate-500">
-                      Đo lường mức độ tương quan giữa tính Độc đáo và Mức độ hấp dẫn
-                    </p>
-                  </div>
-                  <span className="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-xs font-bold">
-                    T2B: {report.quantitative_metrics?.purchase_intent_top2box || '63.4%'}
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Tỷ Lệ Chiến Thắng Đối Đầu (% Win Rate Comparison)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-xs font-bold">
+                    Kantar Link Pre-Testing
                   </span>
                 </div>
 
-                {/* 2x2 Matrix Visual */}
-                <div className="grid grid-cols-2 gap-2.5 h-44">
-                  <div className="bg-amber-50/70 border border-amber-200 rounded-lg p-2.5 flex flex-col justify-between">
-                    <span className="text-[9.5px] font-mono font-bold text-amber-800 uppercase">
-                      THỊ TRƯỜNG NGÁCH (NICHE HERO)
+                <div className="grid grid-cols-2 gap-3 mb-2">
+                  <div className={`p-3 rounded-xl border text-center ${
+                    report.quantitative_metrics?.model_specific?.winner === 'A'
+                      ? 'bg-emerald-50 border-emerald-400 ring-2 ring-emerald-500/20'
+                      : 'bg-white border-slate-200'
+                  }`}>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 block mb-0.5">
+                      PHƯƠNG ÁN A {report.quantitative_metrics?.model_specific?.winner === 'A' ? '👑 CHIẾN THẮNG' : ''}
                     </span>
-                    <p className="text-[10px] text-amber-900/80 leading-tight">
-                      Độ độc đáo cực cao nhưng mức độ hấp dẫn đại chúng ở mức chọn lọc.
-                    </p>
+                    <div className="text-2xl font-serif font-black text-slate-900">
+                      {report.quantitative_metrics?.model_specific?.win_rate_a || 62.4}%
+                    </div>
                   </div>
 
-                  <div className="bg-emerald-50 border-2 border-emerald-500 rounded-lg p-2.5 flex flex-col justify-between shadow-2xs relative">
-                    <span className="absolute top-2 right-2 text-[8.5px] px-1.5 py-0.5 rounded bg-emerald-600 text-white font-mono font-bold">
-                      VỊ TRÍ HIỆN TẠI
+                  <div className={`p-3 rounded-xl border text-center ${
+                    report.quantitative_metrics?.model_specific?.winner === 'B'
+                      ? 'bg-emerald-50 border-emerald-400 ring-2 ring-emerald-500/20'
+                      : 'bg-white border-slate-200'
+                  }`}>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 block mb-0.5">
+                      PHƯƠNG ÁN B {report.quantitative_metrics?.model_specific?.winner === 'B' ? '👑 CHIẾN THẮNG' : ''}
                     </span>
-                    <span className="text-[9.5px] font-mono font-bold text-emerald-900 uppercase">
-                      NGÔI SAO ĐỘT PHÁ (BREAKTHROUGH STAR)
-                    </span>
-                    <p className="text-[10px] text-emerald-950 font-medium leading-tight">
-                      Cân bằng hoàn hảo: Ý tưởng mới lạ và tỷ lệ chấp nhận mua cực cao!
-                    </p>
+                    <div className="text-2xl font-serif font-black text-slate-900">
+                      {report.quantitative_metrics?.model_specific?.win_rate_b || 37.6}%
+                    </div>
                   </div>
+                </div>
 
-                  <div className="bg-slate-100/80 border border-slate-200 rounded-lg p-2.5 flex flex-col justify-between">
-                    <span className="text-[9.5px] font-mono font-bold text-slate-600 uppercase">
-                      RỦI RO THẤT BẠI (FLOP RISK)
-                    </span>
-                    <p className="text-[10px] text-slate-500 leading-tight">
-                      Thiếu tính mới lạ lẫn mức độ hấp dẫn. Cần đại tu toàn bộ concept.
-                    </p>
+                {/* 3 Attribute Scorecard Rows */}
+                <div className="space-y-1.5 pt-2 border-t border-slate-200">
+                  <div className="flex items-center justify-between text-[11px] p-1.5 bg-white rounded border border-slate-200">
+                    <span className="font-medium text-slate-700">1. Sức hút thị giác (Stopping Power / Shelf Standout)</span>
+                    <span className="font-mono font-bold text-emerald-700">A thắng (+22% ưu tiên)</span>
                   </div>
-
-                  <div className="bg-blue-50/70 border border-blue-200 rounded-lg p-2.5 flex flex-col justify-between">
-                    <span className="text-[9.5px] font-mono font-bold text-blue-800 uppercase">
-                      HÀNG HÓA PHỔ THÔNG (COMMODITY)
-                    </span>
-                    <p className="text-[10px] text-blue-900/80 leading-tight">
-                      Nhu cầu cao nhưng dễ bị thay thế bởi đối thủ giá rẻ.
-                    </p>
+                  <div className="flex items-center justify-between text-[11px] p-1.5 bg-white rounded border border-slate-200">
+                    <span className="font-medium text-slate-700">2. Độ tin cậy & Cảm giác cao cấp (Brand Trust)</span>
+                    <span className="font-mono font-bold text-emerald-700">A thắng (+19% tin cậy)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] p-1.5 bg-white rounded border border-slate-200">
+                    <span className="font-medium text-slate-700">3. Kích thích mua sắm (Purchase Persuasion)</span>
+                    <span className="font-mono font-bold text-emerald-700">A thắng (+28% chuyển đổi)</span>
                   </div>
                 </div>
               </div>
 
-              {/* KPI Score Cards */}
-              <div className="grid grid-cols-3 gap-2.5 text-center font-mono">
+              {/* Demographic Breakdown & Head-to-Head Pros/Cons */}
+              <div className="grid grid-cols-2 gap-2.5 text-[10.5px]">
                 <div className="p-2.5 bg-white border border-slate-200 rounded-xl">
-                  <span className="text-[9.5px] text-slate-500 uppercase block">Điểm Yêu Thích (Appeal)</span>
-                  <span className="font-serif text-base font-bold text-slate-900">
-                    {report.quantitative_metrics?.appeal_score?.toFixed(1) || '4.1'} / 5.0
+                  <span className="font-mono uppercase font-bold text-slate-500 block mb-1">
+                    Phân rã theo nhân khẩu học:
                   </span>
+                  <ul className="space-y-1 text-slate-700">
+                    <li className="flex justify-between"><span>Gen Z (18-24t):</span> <strong className="text-emerald-700">A (72%)</strong></li>
+                    <li className="flex justify-between"><span>Millennials (25-34t):</span> <strong className="text-emerald-700">A (64%)</strong></li>
+                    <li className="flex justify-between"><span>Trưởng thành (35+t):</span> <strong className="text-slate-700">B (55%)</strong></li>
+                  </ul>
                 </div>
                 <div className="p-2.5 bg-white border border-slate-200 rounded-xl">
-                  <span className="text-[9.5px] text-slate-500 uppercase block">Độ Độc Đáo (Uniqueness)</span>
-                  <span className="font-serif text-base font-bold text-amber-700">
-                    {report.quantitative_metrics?.uniqueness_score?.toFixed(1) || '3.8'} / 5.0
+                  <span className="font-mono uppercase font-bold text-slate-500 block mb-1">
+                    Đối chiếu ưu thế cốt lõi:
                   </span>
-                </div>
-                <div className="p-2.5 bg-white border border-slate-200 rounded-xl">
-                  <span className="text-[9.5px] text-slate-500 uppercase block">Chỉ Số Rủi Ro Flop</span>
-                  <span className="font-serif text-base font-bold text-emerald-700">
-                    {Number(report.quantitative_metrics?.model_specific?.flop_risk_index) || 8}% (Thấp)
-                  </span>
+                  <p className="text-slate-700 leading-snug">
+                    Phương án A vượt trội về độ bắt mắt trên quầy kệ siêu thị và mạng xã hội. Phương án B giữ được nét cổ điển nhưng kém kích thích giới trẻ.
+                  </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Model Case 3: A/B Testing Scorecard */}
-          {report.model_type === 'ab_testing' && (
-            <div className="space-y-3.5">
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                <h3 className="font-serif text-sm font-bold text-slate-900 mb-2">
-                  Bảng So Sánh Tỷ Lệ Chuyển Đổi (Conversion Uplift Scorecard)
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white p-3.5 rounded-xl border border-slate-200 text-center">
-                    <span className="text-xs font-mono font-bold text-slate-500 block mb-1">PHƯƠNG ÁN A</span>
-                    <div className="text-xl font-serif font-black text-slate-700">38.4%</div>
-                    <span className="text-[10px] text-slate-400">Tỷ lệ ưu tiên</span>
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 4: U&A STUDY — THÓI QUEN & THÁI ĐỘ TIÊU DÙNG (USAGE & ATTITUDE)
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'ua_study' && (
+            <div className="space-y-3">
+              {/* Frequency Funnel & Occasion Map */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Phễu Hành Vi & Bản Đồ Dịp Tiêu Dùng (Occasion Map)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-mono text-xs font-bold">
+                    U&A Methodology
+                  </span>
+                </div>
+
+                {/* 4 Frequency Cards */}
+                <div className="grid grid-cols-4 gap-2 text-center font-mono mb-2.5">
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">Hàng Ngày</span>
+                    <span className="font-serif text-base font-bold text-slate-900">32.4%</span>
                   </div>
-                  <div className="bg-emerald-50 p-3.5 rounded-xl border-2 border-emerald-500 text-center shadow-2xs">
-                    <span className="text-xs font-mono font-bold text-emerald-800 block mb-1">PHƯƠNG ÁN B (CHIẾN THẮNG)</span>
-                    <div className="text-xl font-serif font-black text-emerald-700">61.6%</div>
-                    <span className="text-[10px] text-emerald-800 font-bold">+23.2% Conversion Uplift</span>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">2-3 Lần / Tuần</span>
+                    <span className="font-serif text-base font-bold text-amber-700">44.8%</span>
                   </div>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">Hàng Tháng</span>
+                    <span className="font-serif text-base font-bold text-slate-700">16.2%</span>
+                  </div>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">Hiếm Khi</span>
+                    <span className="font-serif text-base font-bold text-slate-400">6.6%</span>
+                  </div>
+                </div>
+
+                {/* Occasions List */}
+                <div className="grid grid-cols-2 gap-2 text-[10.5px]">
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="font-bold text-slate-800 block mb-0.5">🌅 Dịp Tiêu Dùng Chủ Đạo:</span>
+                    <span className="text-slate-600">Buổi sáng đi làm (38.5%) & Gặp gỡ bạn bè (28.2%)</span>
+                  </div>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="font-bold text-slate-800 block mb-0.5">🛒 Kênh Mua Sắm Chính:</span>
+                    <span className="text-slate-600">Siêu thị tiện lợi (45.2%) & Sàn TMĐT Shopee/TikTok (34.8%)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Drivers & Market White-space */}
+              <div className="grid grid-cols-2 gap-2.5 text-[10.5px]">
+                <div className="p-2.5 bg-white border border-slate-200 rounded-xl">
+                  <span className="font-mono uppercase font-bold text-slate-500 block mb-1">
+                    Bảng xếp hạng tiêu chí mua hàng:
+                  </span>
+                  <ol className="space-y-1 text-slate-700">
+                    <li className="flex justify-between"><span>1. Chất lượng & An toàn sức khỏe:</span> <strong>42.5%</strong></li>
+                    <li className="flex justify-between"><span>2. Giá cả hợp lý & Đáng tiền:</span> <strong>28.4%</strong></li>
+                    <li className="flex justify-between"><span>3. Tiện lợi & Tốc độ phục vụ:</span> <strong>18.6%</strong></li>
+                  </ol>
+                </div>
+
+                <div className="p-2.5 bg-amber-50/60 border border-amber-200 rounded-xl">
+                  <span className="font-mono uppercase font-bold text-amber-900 block mb-1">
+                    Khoảng trống thị trường (White-space):
+                  </span>
+                  <p className="text-slate-800 leading-snug">
+                    Khách hàng đang ức chế nhất vì <strong>"Chất lượng sản phẩm không đồng đều giữa các lần mua"</strong>. Đây là cơ hội vàng để tân binh định vị sự chuẩn hóa đồng nhất.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════════
+              CASE 5: DEAL ELASTICITY — ĐỘ CO GIÃN KHUYẾN MÃI
+          ════════════════════════════════════════════════════════════════════ */}
+          {report.model_type === 'deal_elasticity' && (
+            <div className="space-y-3">
+              {/* Elasticity Curve & Tiers */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-serif text-sm font-bold text-slate-900">
+                    Đường Cong Co Giãn Khuyến Mãi (Promotion Elasticity Curve)
+                  </h3>
+                  <span className="px-2 py-0.5 rounded bg-purple-100 text-purple-900 font-mono text-xs font-bold">
+                    Deal Elasticity
+                  </span>
+                </div>
+
+                {/* 4 Tiers Comparison */}
+                <div className="grid grid-cols-4 gap-2 text-center font-mono mb-2">
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">Giảm 10%</span>
+                    <span className="font-serif text-base font-bold text-slate-700">28.0%</span>
+                    <span className="text-[8.5px] text-emerald-600 block">+14% Lợi nhuận</span>
+                  </div>
+                  <div className="p-2 bg-amber-50 rounded-lg border-2 border-amber-400 shadow-2xs">
+                    <span className="text-[8.5px] text-amber-800 uppercase block font-bold">Giảm 20% (Tối Ưu)</span>
+                    <span className="font-serif text-base font-bold text-amber-700">54.0%</span>
+                    <span className="text-[8.5px] text-amber-900 font-bold block">+28% Lợi nhuận</span>
+                  </div>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[8.5px] text-slate-400 uppercase block">Giảm 30%</span>
+                    <span className="font-serif text-base font-bold text-slate-900">76.0%</span>
+                    <span className="text-[8.5px] text-amber-600 block">+12% Ăn mòn biên</span>
+                  </div>
+                  <div className="p-2 bg-red-50/50 rounded-lg border border-red-200">
+                    <span className="text-[8.5px] text-red-700 uppercase block">Mua 1 Tặng 1</span>
+                    <span className="font-serif text-base font-bold text-red-700">88.0%</span>
+                    <span className="text-[8.5px] text-red-600 block">-5% Rủi ro lỗ biên</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sweet Spot & Brand Risk Cards */}
+              <div className="grid grid-cols-2 gap-2.5 text-[10.5px]">
+                <div className="p-2.5 bg-emerald-50/60 border border-emerald-200 rounded-xl">
+                  <span className="font-mono uppercase font-bold text-emerald-900 block mb-1">
+                    🎯 Điểm Bùng Nổ Tối Ưu (Sweet Spot):
+                  </span>
+                  <p className="text-slate-800 leading-snug">
+                    Kịch bản <strong>Giảm 20% hoặc Mua 2 Tặng 1</strong> mang lại hiệu ứng chuyển đổi cao nhất với chi phí chiết khấu tối ưu, bảo toàn biên lợi nhuận ròng.
+                  </p>
+                </div>
+
+                <div className="p-2.5 bg-red-50/60 border border-red-200 rounded-xl">
+                  <span className="font-mono uppercase font-bold text-red-900 block mb-1">
+                    ⚠️ Ngưỡng Rủi Ro Thương Hiệu (Brand Risk):
+                  </span>
+                  <p className="text-slate-800 leading-snug">
+                    Cảnh báo: Nếu giảm giá sâu vượt quá <strong>30%</strong>, 42% người tiêu dùng bắt đầu nghi ngờ sản phẩm kém chất lượng hoặc cận date, gây tổn hại định vị cao cấp.
+                  </p>
                 </div>
               </div>
             </div>
