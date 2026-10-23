@@ -122,15 +122,26 @@ def verify_sepay_webhook(
     - 'Bearer {SEPAY_API_TOKEN}'
     - hoặc token thuần
     """
-    clean_token = token.strip()
-    expected_apikey = f"Apikey {SEPAY_API_TOKEN}"
-    expected_bearer = f"Bearer {SEPAY_API_TOKEN}"
+    expected_token = os.getenv("SEPAY_API_TOKEN", "").strip()
+    if not expected_token:
+        log.warning("SEPAY_API_TOKEN is not configured in environment variables")
+        return False
 
-    if clean_token in (expected_apikey, expected_bearer, SEPAY_API_TOKEN):
+    clean_token = token.strip()
+    expected_apikey = f"Apikey {expected_token}"
+    expected_bearer = f"Bearer {expected_token}"
+
+    # Kiểm tra khớp chính xác
+    if clean_token in (expected_apikey, expected_bearer, expected_token):
         return True
 
-    # Nếu header có prefix không phân biệt hoa thường
-    if clean_token.lower() in (expected_apikey.lower(), expected_bearer.lower(), SEPAY_API_TOKEN.lower()):
+    # Kiểm tra không phân biệt hoa thường
+    if clean_token.lower() in (expected_apikey.lower(), expected_bearer.lower(), expected_token.lower()):
+        return True
+
+    # Trích xuất phần đuôi token sau 'Apikey ' hoặc 'Bearer '
+    parts = clean_token.split(maxsplit=1)
+    if len(parts) == 2 and parts[1].strip() == expected_token:
         return True
 
     log.warning("SePay webhook token mismatch", received=clean_token[:20] if clean_token else "empty")

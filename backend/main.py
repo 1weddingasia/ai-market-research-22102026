@@ -98,12 +98,20 @@ app.include_router(export.router, prefix="/api")
 # ── Health check ───────────────────────────────────────────────────────────────
 @app.get("/health", tags=["System"])
 async def health_check():
-    """Health check endpoint cho Render/Railway."""
+    """Health check endpoint cho Render/Railway kèm trạng thái cấu hình."""
     return {
         "status": "ok",
         "service": "AI Market Research Platform",
         "version": "1.0.0",
         "environment": os.getenv("ENVIRONMENT", "development"),
+        "config_check": {
+            "database_url": bool(os.getenv("DATABASE_URL")),
+            "openai_api_key": bool(os.getenv("OPENAI_API_KEY")),
+            "deepseek_api_key": bool(os.getenv("DEEPSEEK_API_KEY")),
+            "sepay_api_token": bool(os.getenv("SEPAY_API_TOKEN")),
+            "r2_configured": bool(os.getenv("R2_ACCESS_KEY_ID") and os.getenv("R2_SECRET_ACCESS_KEY")),
+            "resend_api_key": bool(os.getenv("RESEND_API_KEY")),
+        },
     }
 
 
