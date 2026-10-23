@@ -394,7 +394,7 @@ def audit_survey(
         ),
         "executive_verdict": (
             f"Dự án '{product_name}' của {company_name} đạt điểm khả thi {viability_score}/100 trên mô hình {domain_cfg['title']}. "
-            f"Dữ liệu thực địa từ {sample_size:,} personas cung cấp cơ sở vững chắc cho các quyết định đầu tư và định hướng điều hành của Ban Lãnh Đạo trong ngành {category}."
+            f"Dữ liệu mô phỏng từ {sample_size:,} tác tử AI phân vai theo ma trận GSO cung cấp cơ sở vững chắc cho các quyết định đầu tư và định hướng điều hành của Ban Lãnh Đạo trong ngành {category}."
         ),
         "strategic_pillars": [
             {
@@ -491,7 +491,7 @@ TÀI SẢN HÌNH ẢNH / BAO BÌ ĐÃ NẠP:
 CÁC CHỈ SỐ ĐỊNH LƯỢNG THỰC NGHIỆM TỪ {sample_size:,} PERSONAS:
 {json.dumps(metrics, ensure_ascii=False, indent=2)}
 
-Ý KIẾN RÀO CẢN & PHẢN HỒI THỰC TẾ TỪ NGƯỜI TIÊU DÙNG:
+Ý KIẾN RÀO CẢN & PHẢN HỒI ĐỊNH TÍNH TỪ TÁC TỬ AI (SYNTHETIC VOC):
 {json.dumps(barriers, ensure_ascii=False, indent=2)}
 
 CHỈ ĐẠO THẨM ĐỊNH TỪ C-LEVEL:

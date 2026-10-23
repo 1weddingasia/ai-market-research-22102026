@@ -51,7 +51,7 @@ export default function Step2SampleConfig() {
           Cấu hình quy mô & Phạm vi mẫu
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Chọn địa bàn và số lượng người tiêu dùng mục tiêu. Hệ thống sẽ áp dụng thuật toán phân tầng thống kê tức thì.
+          Chọn địa bàn và quy mô tác tử AI mô phỏng mục tiêu. Hệ thống sẽ áp dụng thuật toán phân tầng nhân khẩu học GSO tức thì.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function Step2SampleConfig() {
           {/* Age Demographics */}
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
             <label className="block text-xs uppercase font-bold tracking-wider text-slate-500 mb-3">
-              Độ tuổi người tiêu dùng mục tiêu
+              Độ tuổi mục tiêu của tác tử AI phân vai
             </label>
             <div className="grid grid-cols-2 gap-4 items-center">
               <div>

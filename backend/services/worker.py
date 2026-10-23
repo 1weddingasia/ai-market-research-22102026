@@ -109,19 +109,19 @@ async def run_simulation(survey_id: str) -> None:
 
             await _emit_log(
                 survey_id, 30,
-                f"[PHÂN BỔ MẪU] Khu vực: {location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} người tiêu dùng đại diện (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[PHÂN BỔ MẪU GSO] Khu vực: {location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
             )
 
         except Exception as e:
             log.error("Sampling failed", error=str(e), survey_id=survey_id)
-            await _emit_log(survey_id, 30, f"[PHÂN BỔ MẪU] Đang chuẩn hóa hạn ngạch cơ cấu dân số...", status=None)
+            await _emit_log(survey_id, 30, f"[PHÂN BỔ MẪU GSO] Đang chuẩn hóa hạn ngạch cơ cấu dân số...", status=None)
             raise
 
         # ── Milestone 3: Bắt đầu phỏng vấn ──────────────────────────────────
         batch_count = (len(personas_df) + 19) // 20
         await _emit_log(
             survey_id, 45,
-            f"[PHỎNG VẤN THỰC ĐỊA] Kích hoạt phỏng vấn {len(personas_df):,} người tiêu dùng đại diện — chia {batch_count} nhóm khảo sát song song..."
+            f"[MÔ PHỎNG ĐA TÁC TỬ] Kích hoạt phân vai {len(personas_df):,} tác tử AI độc lập — chia {batch_count} nhóm mô phỏng song song..."
         )
 
         # ── Milestone 4: Thu thập phản hồi ─────────────────────────────────
@@ -133,7 +133,7 @@ async def run_simulation(survey_id: str) -> None:
             if done % 2 == 0 or done == total:
                 await _emit_log(
                     survey_id, pct,
-                    f"[TIẾN ĐỘ {done:02d}/{total:02d}] Ghi nhận ý kiến và đánh giá từ {min(done * 20, len(personas_df))}/{len(personas_df)} người tiêu dùng..."
+                    f"[TIẾN ĐỘ {done:02d}/{total:02d}] Ghi nhận phản ứng thị trường từ {min(done * 20, len(personas_df))}/{len(personas_df)} tác tử AI phân vai..."
                 )
 
         llm_responses = await run_llm_simulation(

@@ -253,7 +253,7 @@ export default function PrintReportPage() {
                   INSIGHT AI — MARKET RESEARCH PLATFORM
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block">
-                  Hệ thống phân tích ý kiến người tiêu dùng Việt Nam · GSO Stratified Panel
+                  Hệ thống mô phỏng phản ứng thị trường bằng Tác tử AI Đa Nhân Khẩu (GSO Stratified Synthetic Panel)
                 </span>
               </div>
             </div>
@@ -1397,10 +1397,10 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 05 / 06 · TIẾNG NÓI KHÁCH HÀNG THỰC TẾ (VOC)
+              TRANG 05 / 06 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
-              Trích Dẫn Phỏng Vấn Sâu Người Tiêu Dùng Phân Tầng
+              Ý Kiến Định Tính Trích Xuất Từ Tác Tử AI Phân Vai Theo Phân Tầng GSO
             </h2>
           </div>
           <div className="text-[11px] font-mono text-slate-400">MÃ: #{surveyId}</div>

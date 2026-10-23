@@ -258,7 +258,7 @@ export const DEFAULT_SURVEY_CONFIGS: SurveyConfig[] = [
       },
       {
         id: 'q4',
-        label: 'Lý do lựa chọn & Góp ý thực địa',
+        label: 'Lý do lựa chọn & Góp ý định tính',
         text: 'Tại sao yếu tố bạn chọn lại là quan trọng nhất và yếu tố nào hoàn toàn dư thừa đối với bạn?',
         type: 'open_text',
       },

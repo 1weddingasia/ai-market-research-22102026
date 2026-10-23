@@ -213,7 +213,7 @@ export default function ProcessingPage() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
           </span>
           <span className="text-emerald-400 font-semibold tracking-wider uppercase text-[11px]">
-            HỆ THỐNG KHẢO SÁT THỰC ĐỊA ĐANG VẬN HÀNH
+            HỆ THỐNG MÔ PHỎNG TÁC TỬ AI ĐANG VẬN HÀNH
           </span>
           <span className="text-slate-500">|</span>
           <span className="text-slate-400">TIẾN ĐỘ PHÂN TÍCH TRỰC TIẾP</span>
@@ -224,11 +224,11 @@ export default function ProcessingPage() {
             ? 'Hoàn Tất Khảo Sát & Báo Cáo Chiến Lược'
             : failed
             ? 'Sự Cố Hệ Thống Khảo Sát'
-            : `Đang Thực Thi Khảo Sát N=${sampleSize.toLocaleString('vi-VN')} Người Tiêu Dùng Đại Diện`}
+            : `Đang Mô Phỏng Khảo Sát N=${sampleSize.toLocaleString('vi-VN')} Tác Tử AI Phân Vai`}
         </h1>
 
         <p className="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-          Khai thác mẫu đại diện phân tầng dân số Việt Nam (Stratified Sampling).
+          Phân vai tác tử AI theo ma trận phân tầng nhân khẩu học người tiêu dùng Việt Nam (chuẩn GSO).
           Định lý giới hạn trung tâm bảo đảm sai số biên <span className="text-amber-400 font-semibold">±3.1%</span> ở độ tin cậy <span className="text-amber-400 font-semibold">95%</span>.
         </p>
       </div>
@@ -331,7 +331,7 @@ export default function ProcessingPage() {
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
               <span className="text-[11px] font-mono text-slate-400 ml-2">
-                insight.1booking.asia — Tiến Độ Khảo Sát & Phân Tích Thực Địa Trực Tiếp
+                insight.1booking.asia — Tiến Độ Khảo Sát & Mô Phỏng Tác Tử AI Trực Tiếp
               </span>
             </div>
             <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest hidden sm:block">
@@ -343,7 +343,7 @@ export default function ProcessingPage() {
           <div className="p-4 sm:p-5 font-mono text-xs leading-relaxed max-h-80 overflow-y-auto space-y-2.5 scrollbar-thin scrollbar-thumb-slate-800">
             {logs.length === 0 && (
               <div className="text-slate-500 italic py-2">
-                [00:00s] [DỮ LIỆU DÂN SỐ] Đang khởi tạo mẫu người tiêu dùng và phân bổ hạn ngạch theo Tổng cục Thống kê (GSO)...
+                [00:00s] [DÂN SỐ HỌC GSO] Đang khởi tạo ma trận tác tử AI và phân bổ hạn ngạch nhân khẩu học theo Tổng cục Thống kê...
               </div>
             )}
 

@@ -94,11 +94,11 @@ def _build_prompt(
 ━━━ BỘ CÂU HỎI KHẢO SÁT TIÊU CHUẨN (BẮT BUỘC TRẢ LỜI ĐỦ {len(question_keys)} CÂU HỎI) ━━━
 {questions_text}
 
-━━━ HỒ SƠ NHÂN KHẨU HỌC CỦA {len(personas)} NGƯỜI TIÊU DÙNG VIỆT NAM (CHUẨN GSO) ━━━
+━━━ MA TRẬN NHÂN KHẨU HỌC CỦA {len(personas)} TÁC TỬ AI MÔ PHỎNG (CHUẨN GSO) ━━━
 {persona_block}
 
-━━━ NGUYÊN TẮC NHẬP VAI & ĐẦU RA BẮT BUỘC (STRICT PERSONA ROLEPLAY) ━━━
-1. BẠN PHẢI ĐÓNG VAI TỪNG NGƯỜI TIÊU DÙNG THỰC TẾ theo đúng nhân khẩu học:
+━━━ NGUYÊN TẮC PHÂN VAI TÁC TỬ & ĐẦU RA BẮT BUỘC (MULTI-AGENT ROLEPLAY) ━━━
+1. BẠN PHẢI ĐÓNG VAI TỪNG TÁC TỬ TIÊU DÙNG ĐỘC LẬP theo đúng hồ sơ nhân khẩu học GSO được gán:
    - Người có mức thu nhập thấp (< 7.5tr/tháng) phải cực kỳ nhạy cảm về giá, đắn đo kỹ lưỡng từng khoản chi tiêu.
    - Người có thu nhập cao (> 25tr/tháng) chú trọng sự an toàn, thẩm mỹ bao bì, uy tín thương hiệu và tính tiện dụng vượt trội.
    - Người tiêu dùng trẻ (18-25 tuổi) nhạy bén với phong cách hiện đại, xu hướng mạng xã hội; người trung niên/lớn tuổi (40-65) coi trọng sức khỏe gia đình, sự bền bỉ và tính thiết thực.

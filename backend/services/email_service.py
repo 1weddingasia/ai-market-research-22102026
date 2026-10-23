@@ -150,7 +150,7 @@ def send_survey_completed_email(
                                     © 2026 AI Market Research Platform · insight.1booking.asia
                                 </p>
                                 <p style="font-size: 11px; color: #94a3b8; margin: 0;">
-                                    Nền tảng khảo sát ý kiến người tiêu dùng Việt Nam bằng tác tử AI mô phỏng
+                                    Nền tảng nghiên cứu thị trường bằng Tác tử AI phân vai theo nhân khẩu học Việt Nam (Synthetic Personas)
                                 </p>
                             </td>
                         </tr>

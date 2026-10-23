@@ -271,7 +271,7 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
               Hình ảnh nhận diện thực tế của sản phẩm
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} người tiêu dùng đại diện trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và đưa ra phản hồi chân thực nhất.
+              Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} tác tử AI phân vai trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và mô phỏng phản xạ mua sắm khách quan.
             </p>
             {report.quantitative_metrics?.model_specific?.deepseek_audit?.packaging_visual_audit && (
               <div className="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
@@ -339,7 +339,7 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
               Đánh Giá Độc Lập Dành Cho Ban Giám Đốc
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              Đối chiếu sức mua & thu nhập thực tế trên mẫu {report.target_summary.sample_size.toLocaleString('vi-VN')} người tiêu dùng đại diện
+              Đối chiếu sức mua & thu nhập thực tế trên mẫu {report.target_summary.sample_size.toLocaleString('vi-VN')} tác tử AI phân vai theo ma trận GSO
             </p>
           </div>
           <div className="text-left sm:text-right shrink-0">
@@ -359,7 +359,7 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
             </div>
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
               {report.quantitative_metrics?.model_specific?.deepseek_audit?.data_consistency_audit ||
-                `Dữ liệu phản hồi từ ${report.target_summary.sample_size.toLocaleString('vi-VN')} người tiêu dùng đại diện thể hiện tính nhất quán cao giữa ngưỡng định giá và thu nhập khả dụng tại thị trường mục tiêu. Phương sai phân bố chuẩn p < 0.05.`}
+                `Dữ liệu mô phỏng từ ${report.target_summary.sample_size.toLocaleString('vi-VN')} tác tử AI phân vai thể hiện tính nhất quán cao giữa ngưỡng định giá và thu nhập khả dụng theo phân tầng dân số GSO. Phương sai phân bố chuẩn p < 0.05.`}
             </p>
           </div>
 
@@ -677,10 +677,10 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="font-serif text-lg font-bold text-slate-900">
-              Trích dẫn người tiêu dùng thực địa (Verbatim Quotes)
+              Ý kiến định tính trích xuất từ Tác tử AI phân vai (Synthetic VoC Verbatim)
             </h3>
             <p className="text-xs text-slate-500">
-              Các phản hồi định tính trích từ phỏng vấn sâu người tiêu dùng
+              Các phản hồi định tính mô phỏng góc nhìn tâm lý học của người tiêu dùng theo phân tầng GSO
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200">
@@ -1032,7 +1032,7 @@ export default function ResultsPage() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, hành động này sẽ xóa vĩnh viễn <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{surveyId}</strong> và dữ liệu phản hồi của {report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'} người tiêu dùng đại diện khỏi toàn bộ hệ thống lưu trữ của chúng tôi. <strong>Toàn bộ các báo cáo khác của bạn (nếu có) vẫn được giữ nguyên vẹn 100%.</strong> Hành động này không thể hoàn tác.
+              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, hành động này sẽ xóa vĩnh viễn <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{surveyId}</strong> và dữ liệu phản hồi của {report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'} tác tử AI mô phỏng khỏi toàn bộ hệ thống lưu trữ của chúng tôi. <strong>Toàn bộ các báo cáo khác của bạn (nếu có) vẫn được giữ nguyên vẹn 100%.</strong> Hành động này không thể hoàn tác.
             </p>
 
             <form onSubmit={handleDeleteSurvey} className="space-y-4">

@@ -64,12 +64,12 @@ export default function HeroSlider() {
         text: 'PHÂN TẦNG DÂN SỐ VIỆT NAM CHUẨN GSO · ESOMAR',
         color: 'bg-amber-500/10 text-amber-900 border-amber-300/60',
       },
-      headlinePrefix: 'Khảo sát thị trường ',
-      headlineHighlight: '1.000 người tiêu dùng',
+      headlinePrefix: 'Mô phỏng thị trường qua ',
+      headlineHighlight: '1.000 tác tử AI phân vai',
       headlineHighlightClass: 'from-amber-600 via-amber-700 to-slate-900',
       headlineSuffix: ' trong 60 giây',
       description:
-        'Mô phỏng phản hồi thực tế từ mẫu đại diện 6 vùng kinh tế trọng điểm (Hà Nội, Đà Nẵng, TP.HCM, ĐBSCL...). Đo lường mức độ độc đáo, tỷ lệ dùng thử dự báo và rào cản thất bại trước khi xuất xưởng.',
+        'Tác tử AI phân vai độc lập dựa trên ma trận phân tầng nhân khẩu học người tiêu dùng Việt Nam (chuẩn GSO: 6 vùng kinh tế, độ tuổi, thu nhập). Đo lường mức độ độc đáo, tỷ lệ dùng thử dự báo và rào cản thất bại trước khi xuất xưởng.',
       primaryCta: {
         label: 'Khởi tạo khảo sát ngay',
         href: '/wizard?model=nielsen_bases',
@@ -85,7 +85,7 @@ export default function HeroSlider() {
       },
       accentColor: 'amber',
       imageSrc: '/images/hero/slide-1-concept.jpg',
-      imageAlt: 'Mô phỏng khảo sát 1.000 người tiêu dùng Việt Nam trên bản đồ kinh tế 3D',
+      imageAlt: 'Mô phỏng thị trường qua 1.000 tác tử AI phân vai theo nhân khẩu học Việt Nam trên bản đồ 3D',
       floatingBadgeTop: {
         icon: '👥',
         text: '1.000 Synthetic Personas · 6 Vùng Kinh Tế',

@@ -631,7 +631,7 @@ export default function HomePage() {
               <span>Tại sao AI Synthetic Panel chuẩn xác và khách quan hơn việc tự hỏi ChatGPT thông thường?</span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
-              Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Mỗi Persona mang một bộ gen nhân khẩu học thực tế (độ tuổi, giới tính, thu nhập gia đình, thói quen mua sắm, vùng miền sinh sống theo Niên giám Thống kê GSO). Từng cá nhân phản hồi độc lập, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, mang lại dữ liệu thị trường đa chiều chân thực.
+              Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Mỗi Persona được nạp một bộ tham số nhân khẩu học thực tế (độ tuổi, giới tính, thu nhập gia đình, thói quen mua sắm, vùng miền sinh sống theo Niên giám Thống kê GSO). Từng tác tử AI phân vai độc lập và đưa ra phản hồi đa chiều, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, phản ánh khách quan phản ứng của thị trường.
             </p>
           </div>
 
@@ -685,7 +685,7 @@ export default function HomePage() {
           </h2>
 
           <p className="text-slate-300 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Tiết kiệm hàng trăm triệu đồng và hàng tuần chờ đợi phỏng vấn thực địa. Kiểm tra ngay mức độ sẵn sàng đón nhận của 1.000 người tiêu dùng Việt Nam trước khi đưa ra quyết định sản xuất lớn.
+            Tiết kiệm hàng trăm triệu đồng và hàng tuần chờ đợi phỏng vấn thực địa. Kiểm tra ngay phản ứng thị trường qua cụm 1.000 tác tử AI phân vai độc lập theo ma trận nhân khẩu học người tiêu dùng Việt Nam trước khi đưa ra quyết định sản xuất lớn.
           </p>
 
           <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -728,7 +728,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center md:items-start gap-1">
             <Logo variant="footer" href="/" />
             <span className="text-[11px] text-slate-400 mt-1">
-              insight.1booking.asia · Nền tảng phân tích ý kiến người tiêu dùng Việt Nam
+              insight.1booking.asia · Nền tảng mô phỏng thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas)
             </span>
           </div>
 

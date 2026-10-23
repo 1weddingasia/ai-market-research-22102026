@@ -302,7 +302,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       placeholder: 'Mô tả giá trị cốt lõi, thành phần và thông điệp của Concept A...',
       required: true,
       type: 'textarea',
-      hint: 'Nhóm người tiêu dùng A sẽ chỉ nhìn thấy duy nhất Concept A này.',
+      hint: 'Nhánh tác tử AI phân vai nhóm A sẽ chỉ nhìn thấy duy nhất Concept A này.',
     },
     {
       id: 'concept_b_title',
@@ -322,7 +322,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       placeholder: 'Mô tả giá trị cốt lõi, thành phần và thông điệp của Concept B...',
       required: true,
       type: 'textarea',
-      hint: 'Nhóm người tiêu dùng B sẽ chỉ nhìn thấy duy nhất Concept B này (không biết Concept A).',
+      hint: 'Nhánh tác tử AI phân vai nhóm B sẽ chỉ nhìn thấy duy nhất Concept B này (không biết Concept A).',
     },
   ],
   maxdiff: [
@@ -731,7 +731,7 @@ export default function Step3ProductInfo() {
           Thông tin sản phẩm & Khảo sát
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Cung cấp dữ kiện sản phẩm để cụm AI nạp bối cảnh và giả lập phản hồi của người tiêu dùng.
+          Cung cấp dữ kiện sản phẩm để cụm tác tử AI nạp bối cảnh và phân vai mô phỏng phản ứng thị trường.
         </p>
       </div>
 

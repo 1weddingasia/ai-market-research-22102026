@@ -206,7 +206,7 @@ export default function Step1ModelSelect() {
             ⚖️
           </div>
           <p className="text-xs text-slate-600 leading-relaxed">
-            <strong className="text-slate-900">Cam kết học thuật:</strong> Mọi khảo sát đảm bảo cỡ mẫu N ≥ 500, khoảng tin cậy 95%, sai số biên (MoE) ≤ ±4.3%. Dữ liệu người tiêu dùng được phân bổ tự động theo phương pháp Stratified Quota chuẩn Tổng cục Thống kê.
+            <strong className="text-slate-900">Cam kết học thuật:</strong> Mọi khảo sát đảm bảo cỡ mẫu N ≥ 500 tác tử AI, khoảng tin cậy 95%, sai số biên (MoE) ≤ ±4.3%. Hồ sơ nhân khẩu học được phân tầng tự động (Stratified Quota) chuẩn Niên giám Tổng cục Thống kê (GSO).
           </p>
         </div>
       </div>
@@ -251,7 +251,7 @@ export default function Step1ModelSelect() {
             {/* Modal Content */}
             <div className="p-6 overflow-y-auto space-y-4 text-sm text-slate-700 divide-y divide-slate-100">
               <p className="text-xs text-slate-500 pb-2">
-                Các câu hỏi dưới đây được hệ thống AI kích hoạt độc lập tới từng hồ sơ người tiêu dùng thực tế. Thang đo tâm lý học được thiết kế tương đương bộ câu hỏi khảo sát thực địa của Kantar và Nielsen.
+                Các câu hỏi dưới đây được hệ thống kích hoạt độc lập tới từng tác tử AI phân vai theo hồ sơ nhân khẩu học GSO. Thang đo tâm lý học được thiết kế chuẩn hóa theo bộ khung phương pháp luận của Kantar và Nielsen.
               </p>
               {modalConfig.questions && modalConfig.questions.length > 0 ? (
                 modalConfig.questions.map((q, idx) => (

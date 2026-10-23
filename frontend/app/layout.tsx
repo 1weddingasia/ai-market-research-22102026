@@ -20,11 +20,11 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://insight.1booking.asia'),
-  title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
+  title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng',
   description:
-    'Nền tảng nghiên cứu thị trường AI hàng đầu Việt Nam. Giả lập 1.000 người tiêu dùng trong 60 giây. Bảo chứng học thuật Cochran 95% (±3.10%), 9 mô hình chuyên sâu chuẩn ESOMAR & AAPOR.',
+    'Nền tảng nghiên cứu thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas) phân vai theo ma trận dân số Việt Nam (chuẩn GSO). Bảo chứng học thuật Cochran 95% (±3.10%), 9 mô hình chuyên sâu chuẩn ESOMAR & AAPOR.',
   keywords:
-    'INSIGHT AI, nghiên cứu thị trường, AI Market Research, khảo sát thị trường AI, consumer research, Nielsen BASES, Van Westendorp, Kantar, Vietnam synthetic panel',
+    'INSIGHT AI, nghiên cứu thị trường, AI Market Research, tác tử AI, synthetic personas, consumer simulation, Nielsen BASES, Van Westendorp, Kantar, Vietnam synthetic panel',
   authors: [{ name: 'INSIGHT AI Platform' }],
   creator: 'INSIGHT AI Platform',
   publisher: '1booking Insight Engine',
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
+    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng',
     description:
-      'Khảo sát 1.000 người tiêu dùng Việt Nam trong 60 giây bằng AI Đa Tác Tử. Chuẩn Cochran 95% (±3.10%), 9 mô hình kinh tế học quốc tế, xuất bản báo cáo điều hành A4.',
+      'Mô phỏng phản ứng thị trường qua 1.000 tác tử AI phân vai theo ma trận nhân khẩu học Việt Nam trong 60 giây. Chuẩn Cochran 95% (±3.10%), 9 mô hình kinh tế học quốc tế, xuất bản báo cáo điều hành A4.',
     url: 'https://insight.1booking.asia',
     siteName: 'INSIGHT AI',
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         url: '/og-banner.jpg',
         width: 1200,
         height: 630,
-        alt: 'INSIGHT AI — Nền tảng Nghiên cứu Thị trường & Khảo sát Người tiêu dùng bằng AI',
+        alt: 'INSIGHT AI — Nền tảng Nghiên cứu Thị trường bằng Tác tử AI Mô phỏng Nhân khẩu học',
       },
     ],
     locale: 'vi_VN',
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
+    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng',
     description:
-      'Khảo sát 1.000 người tiêu dùng Việt Nam trong 60 giây bằng AI Đa Tác Tử. Bảo chứng học thuật Cochran 95%.',
+      'Mô phỏng phản ứng thị trường qua 1.000 tác tử AI phân vai theo ma trận nhân khẩu học Việt Nam trong 60 giây. Bảo chứng học thuật Cochran 95%.',
     images: ['/og-banner.jpg'],
   },
 };
