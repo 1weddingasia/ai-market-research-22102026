@@ -105,3 +105,14 @@ async def health_check():
 @app.get("/", tags=["System"])
 async def root():
     return {"message": "AI Synthetic Market Research API", "docs": "/docs"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    raw_port = os.getenv("PORT", "8000")
+    try:
+        port = int(raw_port)
+    except (ValueError, TypeError):
+        port = 8000
+    log.info(f"Starting server on 0.0.0.0:{port}...")
+    uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")
