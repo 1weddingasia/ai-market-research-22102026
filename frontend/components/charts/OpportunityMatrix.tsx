@@ -58,7 +58,7 @@ export default function OpportunityMatrix({ modelSpecific }: OpportunityMatrixPr
         {/* Scatter / Bubble Plot (7 cols) */}
         <div className="lg:col-span-7 h-80 w-full relative">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 20, right: 30, bottom: 25, left: 10 }}>
+            <ScatterChart margin={{ top: 25, right: 30, bottom: 35, left: 35 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis
                 type="number"
@@ -66,7 +66,7 @@ export default function OpportunityMatrix({ modelSpecific }: OpportunityMatrixPr
                 name="Thỏa mãn hiện tại"
                 domain={[2, 10]}
                 unit="/10"
-                label={{ value: 'MỨC ĐỘ THỎA MÃN VỚI CÁC SẢN PHẨM HIỆN CÓ (SATISFACTION) →', position: 'bottom', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'MỨC ĐỘ THỎA MÃN VỚI CÁC SẢN PHẨM HIỆN CÓ (SATISFACTION) →', position: 'bottom', offset: 12, fontSize: 10, fill: '#475569', fontWeight: 600 }}
                 tick={{ fontSize: 11, fill: '#64748B' }}
               />
               <YAxis
@@ -75,7 +75,7 @@ export default function OpportunityMatrix({ modelSpecific }: OpportunityMatrixPr
                 name="Tầm quan trọng"
                 domain={[2, 10]}
                 unit="/10"
-                label={{ value: '↑ TẦM QUAN TRỌNG CỦA NHU CẦU (IMPORTANCE)', angle: -90, position: 'insideLeft', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'TẦM QUAN TRỌNG CỦA NHU CẦU (IMPORTANCE) ↑', angle: -90, position: 'insideLeft', offset: -10, fontSize: 10, fill: '#475569', fontWeight: 600 }}
                 tick={{ fontSize: 11, fill: '#64748B' }}
               />
 
@@ -114,7 +114,7 @@ export default function OpportunityMatrix({ modelSpecific }: OpportunityMatrixPr
             </ScatterChart>
           </ResponsiveContainer>
 
-          <div className="absolute top-3 left-16 text-[10px] font-bold text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded pointer-events-none">
+          <div className="absolute top-4 left-24 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded shadow-2xs border border-amber-300 pointer-events-none">
             ⭐ KHOẢNG TRỐNG CƠ HỘI VÀNG (UNMET NEEDS)
           </div>
         </div>

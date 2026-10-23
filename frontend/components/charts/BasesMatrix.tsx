@@ -81,9 +81,9 @@ export default function BasesMatrix({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         {/* Scatter Chart (7 cols) */}
-        <div className="lg:col-span-7 h-80 w-full relative">
+        <div className="lg:col-span-7 h-84 w-full relative">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 25, left: 10 }}>
+            <ScatterChart margin={{ top: 25, right: 25, bottom: 35, left: 35 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis
                 type="number"
@@ -92,7 +92,7 @@ export default function BasesMatrix({
                 domain={[1, 5]}
                 tickCount={5}
                 unit="/5"
-                label={{ value: 'ĐỘ ĐỘC ĐÁO (UNIQUENESS) →', position: 'bottom', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'ĐỘ ĐỘC ĐÁO (UNIQUENESS) →', position: 'bottom', offset: 12, fontSize: 10, fill: '#475569', fontWeight: 600 }}
                 tick={{ fontSize: 11, fill: '#64748B' }}
               />
               <YAxis
@@ -102,7 +102,7 @@ export default function BasesMatrix({
                 domain={[1, 5]}
                 tickCount={5}
                 unit="/5"
-                label={{ value: '↑ MỨC ĐỘ THIẾT YẾU / LIÊN QUAN (RELEVANCE)', angle: -90, position: 'insideLeft', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'MỨC ĐỘ THIẾT YẾU / LIÊN QUAN (RELEVANCE) ↑', angle: -90, position: 'insideLeft', offset: -10, fontSize: 10, fill: '#475569', fontWeight: 600 }}
                 tick={{ fontSize: 11, fill: '#64748B' }}
               />
               {/* Midpoint references (3.5) */}
@@ -129,21 +129,21 @@ export default function BasesMatrix({
                   return null;
                 }}
               />
-              <Scatter name="Ý tưởng" data={currentPoint} fill="#B45309" shape="circle" />
+              <Scatter name="Ý tưởng" data={currentPoint} fill="#B45309" shape="circle" stroke="#FFFFFF" strokeWidth={2} />
             </ScatterChart>
           </ResponsiveContainer>
 
-          {/* Quadrant Labels in Plot corners */}
-          <div className="absolute top-3 left-16 text-[10px] font-bold text-slate-400 pointer-events-none">
+          {/* Quadrant Badges - positioned cleanly inside the 4 quadrant zones without clipping tick marks */}
+          <div className="absolute top-4 left-24 text-[10px] font-bold text-slate-600 bg-white/90 px-2 py-0.5 rounded shadow-2xs border border-slate-200 pointer-events-none">
             HÀNG BẮT CHƯỚC
           </div>
-          <div className="absolute top-3 right-5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded pointer-events-none">
+          <div className="absolute top-4 right-8 text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2.5 py-0.5 rounded shadow-2xs border border-emerald-300 pointer-events-none">
             ⭐ NGÔI SAO ĐỘT PHÁ
           </div>
-          <div className="absolute bottom-10 left-16 text-[10px] font-bold text-red-500 pointer-events-none">
+          <div className="absolute bottom-14 left-24 text-[10px] font-bold text-rose-700 bg-rose-50/90 px-2 py-0.5 rounded shadow-2xs border border-rose-200 pointer-events-none">
             NGUY CƠ THẤT BẠI
           </div>
-          <div className="absolute bottom-10 right-5 text-[10px] font-bold text-blue-600 pointer-events-none">
+          <div className="absolute bottom-14 right-8 text-[10px] font-bold text-blue-700 bg-blue-50/90 px-2 py-0.5 rounded shadow-2xs border border-blue-200 pointer-events-none">
             THỊ TRƯỜNG NGÁCH
           </div>
         </div>

@@ -108,7 +108,7 @@ export default function DealElasticityChart({ modelSpecific }: DealElasticityCha
 
         <div className="h-60 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={tiers} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
+            <BarChart data={tiers} margin={{ top: 10, right: 30, left: 15, bottom: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis dataKey="discount_level" tick={{ fontSize: 11, fill: '#334155' }} />
               <YAxis unit="%" domain={[0, 100]} tick={{ fontSize: 11, fill: '#64748B' }} />

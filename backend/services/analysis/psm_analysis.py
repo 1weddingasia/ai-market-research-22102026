@@ -122,11 +122,15 @@ def analyze(
         f"Khuyến nghị 3: Với khách hàng nhạy cảm về giá, có thể áp dụng mức giá thâm nhập {pmc:,.0f} đ cho giai đoạn ra mắt.",
     ]
 
-    location = demo.get("top_zones") or "Việt Nam"
-    if isinstance(location, dict):
-        location = ", ".join(list(location.keys())[:2]) or "Việt Nam"
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
 
     margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}
+    male_float = float(demo.get("gender", {}).get("male_pct", male_pct))
+    female_float = float(demo.get("gender", {}).get("female_pct", female_pct))
 
     return ReportPayload(
         project_id=survey_id,
@@ -135,7 +139,7 @@ def analyze(
             sample_size=total,
             margin_of_error=margin_map.get(total, "±3.1%"),
             location=location,
-            demographics=f"Nam {male_pct}%, Nữ {female_pct}%",
+            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Phân tầng Quota GSO",
         ),
         executive_summary=ExecutiveSummary(
             viability_score=viability_score,
@@ -147,6 +151,10 @@ def analyze(
             ],
         ),
         quantitative_metrics=QuantitativeMetrics(
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": male_float, "female": female_float},
+            ),
             model_specific={
                 # Props cho VanWestendorpChart.tsx frontend
                 "optimal_price": opp,

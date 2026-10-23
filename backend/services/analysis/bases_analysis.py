@@ -86,10 +86,11 @@ def analyze(
 
     # ── 4. Demographic breakdown ──────────────────────────────────────────────
     demo = get_demographic_summary(personas_df)
-    male_pct   = demo.get("gender", {}).get("male_pct", 50)
-    female_pct = demo.get("gender", {}).get("female_pct", 50)
+    male_pct   = float(demo.get("gender", {}).get("male_pct", 50))
+    female_pct = float(demo.get("gender", {}).get("female_pct", 50))
+    age_dist   = demo.get("age_distribution", {})
 
-    # Simulate score by age group (dùng actual age distribution)
+    # Điểm số ý định mua theo độ tuổi (thang điểm 100)
     age_scores = _compute_age_scores(responses, personas_df)
     gender_scores = {
         "male": round(male_pct * 0.95 + 5),     # Approximation từ demo
@@ -112,14 +113,16 @@ def analyze(
     )
 
     # ── 9. Location info ──────────────────────────────────────────────────────
-    location = demo.get("top_zones") or product_info.get("region", "Việt Nam")
-    if isinstance(location, dict):
-        location = ", ".join(list(location.keys())[:2]) or "Việt Nam"
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
 
     demographics_str = (
-        f"Nam {male_pct}%, Nữ {female_pct}% | "
+        f"Nam {male_pct:.0f}%, Nữ {female_pct:.0f}% | "
         f"Tuổi trung bình {demo.get('avg_age', 30):.0f} | "
-        f"Phân bổ thu nhập đa dạng"
+        f"Phân tầng Quota chuẩn GSO"
     )
 
     margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}
@@ -149,8 +152,8 @@ def analyze(
             uniqueness_score=round(avg_uniqueness, 2),
             purchase_intent_top2box=f"{top2box_pct:.1f}%",
             demographic_breakdown=DemographicBreakdown(
-                by_age=age_scores,
-                by_gender=gender_scores,
+                by_age=age_dist,
+                by_gender={"male": male_pct, "female": female_pct},
             ),
             model_specific={
                 "bases_viability_score": viability_score,
@@ -161,6 +164,7 @@ def analyze(
                 "flop_risk_index": flop_risk,
                 "matrix_position": matrix_position,
                 "matrix_quadrant": matrix_quadrant,
+                "purchase_intent_by_age": age_scores,
                 "bases_matrix_data": {
                     "x": round(avg_uniqueness, 2),
                     "y": round(avg_relevance, 2),

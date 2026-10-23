@@ -166,13 +166,19 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         ),
     ]
 
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
+
     return ReportPayload(
         project_id=survey_id,
         model_type="monadic",
         target_summary=TargetSummary(
             sample_size=total,
             margin_of_error=f"±{round(98 / (total ** 0.5), 2)}%",
-            location="Toàn quốc (Phân bổ 6 vùng kinh tế)",
+            location=location,
             demographics=f"Nam {male_pct:.0f}% / Nữ {female_pct:.0f}% | Thử nghiệm mù độc lập (Nhóm A: {len_a} mẫu — Nhóm B: {len_b} mẫu)",
         ),
         executive_summary=ExecutiveSummary(
@@ -192,10 +198,10 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             appeal_score=round(max(uniq_a, uniq_b), 1),
             uniqueness_score=round(max(uniq_a, uniq_b), 1),
             purchase_intent_top2box=f"{winning_top2box}%",
-            demographic_breakdown={
-                "by_age": {"18-24": 68.0, "25-34": 74.0, "35-44": 69.0, "45+": 62.0},
-                "by_gender": {"male": float(male_pct), "female": float(female_pct)},
-            },
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": float(male_pct), "female": float(female_pct)},
+            ),
             model_specific=model_specific,
         ),
         qualitative_insights=QualitativeInsights(

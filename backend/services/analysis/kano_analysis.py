@@ -154,13 +154,19 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         ),
     ]
 
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
+
     return ReportPayload(
         project_id=survey_id,
         model_type="kano",
         target_summary=TargetSummary(
             sample_size=total,
             margin_of_error=f"±{round(98 / (total ** 0.5), 2)}%",
-            location="Toàn quốc (Phân bổ chuẩn hóa xã hội học)",
+            location=location,
             demographics=f"Nam {male_pct:.0f}% / Nữ {female_pct:.0f}% | Khảo sát phân loại tính năng R&D theo mô hình Kano Quốc tế",
         ),
         executive_summary=ExecutiveSummary(
@@ -181,10 +187,10 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             appeal_score=round(float(max([f["better_cs_plus"] for f in features_summary] or [0.7])) * 5, 1),
             uniqueness_score=round(float(abs(min([f["worse_cs_minus"] for f in features_summary] or [-0.7]))) * 5, 1),
             purchase_intent_top2box=f"{round(viability_score * 0.85, 1)}%",
-            demographic_breakdown={
-                "by_age": {"18-24": 75.0, "25-34": 82.0, "35-44": 72.0, "45+": 66.0},
-                "by_gender": {"male": float(male_pct), "female": float(female_pct)},
-            },
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": float(male_pct), "female": float(female_pct)},
+            ),
             model_specific=model_specific,
         ),
         qualitative_insights=QualitativeInsights(

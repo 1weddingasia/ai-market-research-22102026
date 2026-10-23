@@ -18,7 +18,7 @@ from models.schemas import ReportPayload
 from services.analysis import run_analysis
 from services.duckdb_service import get_demographic_summary, get_stratified_sample
 from services.llm_service import run_llm_simulation
-from services.region_mapping import get_region_filter, get_province_filter
+from services.region_mapping import get_region_filter, get_province_filter, resolve_sampling_filters
 from services.deepseek_auditor import audit_survey
 from services.email_service import send_survey_completed_email
 
@@ -89,8 +89,13 @@ async def run_simulation(survey_id: str) -> None:
 
         # ── Milestone 2: Phân bổ mẫu theo chuẩn GSO ──────────────────────────
         try:
-            region_filter = get_region_filter(survey.region or "Toàn quốc", survey.zone) if (survey.region or survey.zone) else None
-            zone_filter   = get_province_filter(survey.zone) if survey.zone else None
+            region_filter, zone_filter, display_location = resolve_sampling_filters(survey.region, survey.zone)
+
+            # Cung cấp đầy đủ thông tin vị trí và quy mô cho product_info để cả 9 analyzer sử dụng
+            product_info["region"] = survey.region
+            product_info["zone"] = survey.zone
+            product_info["display_location"] = display_location
+            product_info["sample_size"] = survey.sample_size
 
             personas_df = await asyncio.to_thread(
                 get_stratified_sample,
@@ -105,11 +110,10 @@ async def run_simulation(survey_id: str) -> None:
             male_pct   = demo.get("gender", {}).get("male_pct", 50)
             female_pct = demo.get("gender", {}).get("female_pct", 50)
             avg_age    = demo.get("avg_age", 30)
-            location   = survey.zone or survey.region or "Toàn quốc"
 
             await _emit_log(
                 survey_id, 30,
-                f"[PHÂN BỔ MẪU GSO] Khu vực: {location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[PHÂN BỔ MẪU GSO] Khu vực: {display_location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
             )
 
         except Exception as e:

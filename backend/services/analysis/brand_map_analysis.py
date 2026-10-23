@@ -148,13 +148,19 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         ),
     ]
 
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
+
     return ReportPayload(
         project_id=survey_id,
         model_type="brand_map",
         target_summary=TargetSummary(
             sample_size=total,
             margin_of_error=f"±{round(98 / (total ** 0.5), 2)}%",
-            location="Toàn quốc (Phân bổ chuẩn hóa xã hội học)",
+            location=location,
             demographics=f"Nam {male_pct:.0f}% / Nữ {female_pct:.0f}% | Khảo sát Bản đồ Định vị Thương hiệu Perceptual Mapping ({len(raw_brands)} nhãn hàng)",
         ),
         executive_summary=ExecutiveSummary(
@@ -174,10 +180,10 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             appeal_score=round(float(client_data["y"]) / 2, 1),
             uniqueness_score=round(float(client_data["x"]) / 2, 1),
             purchase_intent_top2box=f"{round(viability_score * 0.82, 1)}%",
-            demographic_breakdown={
-                "by_age": {"18-24": 74.0, "25-34": 80.0, "35-44": 73.0, "45+": 67.0},
-                "by_gender": {"male": float(male_pct), "female": float(female_pct)},
-            },
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": float(male_pct), "female": float(female_pct)},
+            ),
             model_specific=model_specific,
         ),
         qualitative_insights=QualitativeInsights(

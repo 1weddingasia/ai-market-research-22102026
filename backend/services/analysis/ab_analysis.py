@@ -154,16 +154,21 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             sentiment="positive" if choice == overall_winner else "neutral",
         ))
 
-    location = demo.get("top_zones") or "Việt Nam"
-    if isinstance(location, dict):
-        location = ", ".join(list(location.keys())[:2]) or "Việt Nam"
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
+    male_float = float(demo.get("gender", {}).get("male_pct", male_pct))
+    female_float = float(demo.get("gender", {}).get("female_pct", female_pct))
 
     return ReportPayload(
         project_id=survey_id,
         model_type="ab_testing",
         target_summary=TargetSummary(
             sample_size=total, margin_of_error="±3.1%",
-            location=location, demographics=f"Nam {male_pct}%, Nữ {female_pct}%",
+            location=location,
+            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Phân tầng Quota GSO",
         ),
         executive_summary=ExecutiveSummary(
             viability_score=viability_score,
@@ -175,6 +180,10 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             ],
         ),
         quantitative_metrics=QuantitativeMetrics(
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": male_float, "female": female_float},
+            ),
             model_specific={
                 # Props cho ABScorecard.tsx
                 "winner": overall_winner,

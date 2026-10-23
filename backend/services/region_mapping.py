@@ -111,13 +111,92 @@ SAMPLE_RECOMMENDATIONS: dict[str, dict] = {
 }
 
 
+# ─── Display Labels Map ────────────────────────────────────────────────────────
+REGION_DISPLAY_NAMES: dict[str, str] = {
+    "TP. Hồ Chí Minh": "TP. Hồ Chí Minh (Đô thị loại đặc biệt)",
+    "Thành phố Hồ Chí Minh": "TP. Hồ Chí Minh (Đô thị loại đặc biệt)",
+    "Hồ Chí Minh": "TP. Hồ Chí Minh (Đô thị loại đặc biệt)",
+    "Hà Nội": "Hà Nội (Thủ đô & Vùng kinh tế Bắc Bộ)",
+    "Thành phố Hà Nội": "Hà Nội (Thủ đô & Vùng kinh tế Bắc Bộ)",
+    "Đà Nẵng": "Đà Nẵng & Duyên hải Miền Trung",
+    "Cần Thơ": "Cần Thơ & Đồng bằng Sông Cửu Long",
+    "Hải Phòng": "Hải Phòng & Vùng Đông Bắc",
+    "Miền Bắc": "Khu vực Miền Bắc (Phân bổ chuẩn GSO)",
+    "Miền Nam": "Khu vực Miền Nam (Phân bổ chuẩn GSO)",
+    "Miền Trung": "Khu vực Miền Trung (Phân bổ chuẩn GSO)",
+    "Tây Nam Bộ": "Khu vực Đồng bằng sông Cửu Long",
+    "Đông Nam Bộ": "Khu vực Đông Nam Bộ",
+    "Đồng bằng sông Hồng": "Khu vực Đồng bằng sông Hồng",
+    "Đồng bằng sông Cửu Long": "Khu vực Đồng bằng sông Cửu Long",
+    "Bắc Trung Bộ và Duyên hải miền Trung": "Khu vực Miền Trung & Duyên hải",
+    "Trung du và miền núi phía Bắc": "Khu vực Trung du & Miền núi phía Bắc",
+    "Tây Nguyên": "Khu vực Tây Nguyên",
+    "Toàn quốc": "Toàn quốc (Đại diện 3 miền)",
+}
+
+
+def resolve_sampling_filters(
+    ui_region: Optional[str],
+    ui_zone: Optional[str] = None
+) -> tuple[Optional[str], Optional[str], str]:
+    """
+    Chuẩn hóa bộ lọc địa lý cho DuckDB và tên hiển thị uy tín trong báo cáo.
+
+    Returns:
+        tuple(region_filter, zone_filter, display_location)
+        - region_filter: Tên cột 'region' trong Parquet ('Đông Nam Bộ', 'Đồng bằng sông Hồng', ...) hoặc None (toàn quốc)
+        - zone_filter: Tên cột 'zone' ('Đô Thị' hoặc 'Nông Thôn') hoặc None (không lọc theo zone)
+        - display_location: Tên hiển thị chuẩn xác, trang trọng cho báo cáo
+    """
+    raw_input = (ui_region or "").strip()
+    zone_input = (ui_zone or "").strip() if ui_zone else None
+
+    # Mặc định toàn quốc
+    if not raw_input or raw_input.lower() in ("toàn quốc", "vietnam", "việt nam", "national", "none"):
+        if zone_input in ("Đô Thị", "Nông Thôn"):
+            return None, zone_input, f"Toàn quốc (Phân khúc {zone_input})"
+        return None, None, "Toàn quốc (Đại diện 3 miền)"
+
+    # Trường hợp là Thành phố lớn trực thuộc Trung ương -> Lọc Đô Thị + Region tương ứng
+    city_to_filters = {
+        "TP. Hồ Chí Minh": ("Đông Nam Bộ", "Đô Thị", "TP. Hồ Chí Minh (Đô thị loại đặc biệt)"),
+        "Thành phố Hồ Chí Minh": ("Đông Nam Bộ", "Đô Thị", "TP. Hồ Chí Minh (Đô thị loại đặc biệt)"),
+        "Hồ Chí Minh": ("Đông Nam Bộ", "Đô Thị", "TP. Hồ Chí Minh (Đô thị loại đặc biệt)"),
+        "Hà Nội": ("Đồng bằng sông Hồng", "Đô Thị", "Hà Nội (Thủ đô & Vùng kinh tế Bắc Bộ)"),
+        "Thành phố Hà Nội": ("Đồng bằng sông Hồng", "Đô Thị", "Hà Nội (Thủ đô & Vùng kinh tế Bắc Bộ)"),
+        "Đà Nẵng": ("Bắc Trung Bộ và Duyên hải miền Trung", "Đô Thị", "Đà Nẵng & Duyên hải Miền Trung"),
+        "Hải Phòng": ("Đồng bằng sông Hồng", "Đô Thị", "Hải Phòng & Vùng Đông Bắc"),
+        "Cần Thơ": ("Đồng bằng sông Cửu Long", "Đô Thị", "Cần Thơ & Đồng bằng Sông Cửu Long"),
+        "Bình Dương": ("Đông Nam Bộ", "Đô Thị", "Bình Dương (Đô thị Công nghiệp)"),
+        "Đồng Nai": ("Đông Nam Bộ", "Đô Thị", "Đồng Nai (Vùng kinh tế Đông Nam Bộ)"),
+    }
+
+    if raw_input in city_to_filters:
+        r, z, disp = city_to_filters[raw_input]
+        return r, z, disp
+
+    # Trường hợp là Vùng miền / Nhóm vùng
+    region_val = REGION_MAP.get(raw_input)
+    if region_val:
+        zone_val = get_province_filter(zone_input) if zone_input else None
+        disp = REGION_DISPLAY_NAMES.get(raw_input, f"Khu vực {raw_input}")
+        return region_val, zone_val, disp
+
+    # Fallback kiểm tra trong PROVINCE_TO_REGION
+    if raw_input in PROVINCE_TO_REGION:
+        r = PROVINCE_TO_REGION[raw_input]
+        z = PROVINCE_MAP.get(raw_input, "Đô Thị")
+        disp = REGION_DISPLAY_NAMES.get(raw_input, f"Khu vực {raw_input}")
+        return r, z, disp
+
+    # Nếu không khớp danh sách định sẵn, giữ nguyên nhãn người dùng nhập
+    return None, None, raw_input or "Toàn quốc (Đại diện 3 miền)"
+
+
 def get_region_filter(ui_region: Optional[str], ui_province: Optional[str] = None) -> Optional[str]:
     """Trả về giá trị thực trong dataset cho cột region."""
-    if ui_region and ui_region in REGION_MAP and REGION_MAP[ui_region]:
-        return REGION_MAP[ui_region]
-    if ui_province and ui_province in PROVINCE_TO_REGION:
-        return PROVINCE_TO_REGION[ui_province]
-    return REGION_MAP.get(ui_region) if ui_region else None
+    r, _, _ = resolve_sampling_filters(ui_region, ui_province)
+    return r
 
 
 def get_province_filter(ui_province: Optional[str]) -> Optional[str]:
@@ -137,3 +216,4 @@ def get_price(sample_size: int) -> int:
 def get_sample_recommendation(scope: str) -> dict:
     """scope: 'district' | 'province' | 'national'"""
     return SAMPLE_RECOMMENDATIONS.get(scope, SAMPLE_RECOMMENDATIONS["province"])
+

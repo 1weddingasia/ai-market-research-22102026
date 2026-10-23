@@ -141,13 +141,19 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         ),
     ]
 
+    location = (
+        product_info.get("display_location")
+        or product_info.get("region")
+        or "Toàn quốc (Đại diện 3 miền)"
+    )
+
     return ReportPayload(
         project_id=survey_id,
         model_type="maxdiff",
         target_summary=TargetSummary(
             sample_size=total,
             margin_of_error=f"±{round(98 / (total ** 0.5), 2)}%",
-            location="Toàn quốc (Phân bổ chuẩn hóa xã hội học)",
+            location=location,
             demographics=f"Nam {male_pct:.0f}% / Nữ {female_pct:.0f}% | Thử nghiệm Best-Worst Scaling ({len(raw_attrs)} thuộc tính xoay vòng)",
         ),
         executive_summary=ExecutiveSummary(
@@ -167,10 +173,10 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
             appeal_score=round(max(1.0, min(5.0, 3.0 + top_score / 40)), 1),
             uniqueness_score=round(max(1.0, min(5.0, 3.2 + utility_spread / 50)), 1),
             purchase_intent_top2box=f"{round(max(40.0, min(92.0, 50.0 + top_score * 0.7)), 1)}%",
-            demographic_breakdown={
-                "by_age": {"18-24": 72.0, "25-34": 78.0, "35-44": 70.0, "45+": 64.0},
-                "by_gender": {"male": float(male_pct), "female": float(female_pct)},
-            },
+            demographic_breakdown=DemographicBreakdown(
+                by_age=demo.get("age_distribution", {}),
+                by_gender={"male": float(male_pct), "female": float(female_pct)},
+            ),
             model_specific=model_specific,
         ),
         qualitative_insights=QualitativeInsights(

@@ -76,19 +76,19 @@ export default function VanWestendorpChart({ modelSpecific }: VanWestendorpChart
         {/* Line Chart (8 cols) */}
         <div className="lg:col-span-8 h-80 w-full relative">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+            <LineChart data={data} margin={{ top: 25, right: 30, left: 35, bottom: 30 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis
                 dataKey="price"
                 tickFormatter={formatVND}
                 tick={{ fontSize: 11, fill: '#64748B' }}
-                label={{ value: 'MỨC GIÁ DỰ KIẾN (VND) →', position: 'bottom', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'MỨC GIÁ DỰ KIẾN (VND) →', position: 'bottom', offset: 12, fontSize: 10, fill: '#475569', fontWeight: 600 }}
               />
               <YAxis
                 unit="%"
                 domain={[0, 100]}
                 tick={{ fontSize: 11, fill: '#64748B' }}
-                label={{ value: 'TỶ LỆ % NGƯỜI ĐÁNH GIÁ', angle: -90, position: 'insideLeft', offset: 10, fontSize: 11, fill: '#64748B' }}
+                label={{ value: 'TỶ LỆ % NGƯỜI ĐÁNH GIÁ ↑', angle: -90, position: 'insideLeft', offset: -10, fontSize: 10, fill: '#475569', fontWeight: 600 }}
               />
 
               {/* Acceptable Price Range Highlight */}
