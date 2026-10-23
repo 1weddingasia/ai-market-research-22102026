@@ -181,17 +181,19 @@ class ReportPayload(BaseModel):
 # ─── Payment ───────────────────────────────────────────────────────────────────
 
 class SepayWebhookPayload(BaseModel):
-    """Payload từ SePay webhook — theo chuẩn SePay API docs."""
-    id: int
-    gateway: str
-    transactionDate: str
-    accountNumber: str
+    """Payload từ SePay webhook — thiết kế phòng thủ tương thích mọi phiên bản SePay."""
+    model_config = {"extra": "ignore"}
+
+    id: Any
+    gateway: Optional[str] = None
+    transactionDate: Optional[str] = None
+    accountNumber: Optional[str] = None
     subAccount: Optional[str] = None
     code: Optional[str] = None
-    content: str           # Nội dung chuyển khoản (chứa survey_id)
-    transferType: str      # "in" | "out"
-    transferAmount: float  # Số tiền
-    accumulated: float
+    content: Optional[str] = ""           # Nội dung chuyển khoản (chứa survey_id)
+    transferType: Optional[str] = "in"    # "in" | "out"
+    transferAmount: float = 0.0           # Số tiền
+    accumulated: Optional[float] = None
     referenceCode: Optional[str] = None
     description: Optional[str] = None
 
