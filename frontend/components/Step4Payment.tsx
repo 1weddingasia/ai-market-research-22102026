@@ -158,18 +158,13 @@ export default function Step4Payment() {
   const handleSimulatePayment = async () => {
     if (!surveyId) return;
     setSimulating(true);
+    setCouponError('');
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      await fetch(`${API_URL}/payment/simulate/${surveyId}`, {
-        method: 'POST',
-      }).catch(() => null);
-
+      await api.simulatePayment(surveyId);
       setStep(5);
       router.push(`/processing/${surveyId}`);
-    } catch (e) {
-      console.error(e);
-      setStep(5);
-      router.push(`/processing/${surveyId}`);
+    } catch (e: unknown) {
+      setCouponError(e instanceof Error ? e.message : 'Chưa thể kích hoạt khảo sát. Vui lòng thử lại sau.');
     } finally {
       setSimulating(false);
     }
@@ -196,6 +191,85 @@ export default function Step4Payment() {
             ? 'Hồ sơ đã được áp dụng mã ưu đãi 100%. Bạn có thể bấm kích hoạt để cụm AI bắt đầu khảo sát ngay lập tức.'
             : 'Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống sẽ tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.'}
         </p>
+      </div>
+
+      {/* ── BĂNG NHẬP MÃ ƯU ĐÃI NỔI BẬT (PROMINENT COUPON BAR) ── */}
+      <div className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-amber-50 via-white to-amber-50/80 border-2 border-amber-300 shadow-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xl">🏷️</span>
+              <span className="text-sm font-bold uppercase tracking-wider text-slate-900">
+                Bạn có mã ưu đãi / Voucher đối tác?
+              </span>
+              {discountCode && (
+                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  ✓ ĐÃ ÁP DỤNG: {discountCode}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-slate-600">
+              Nhập mã ưu đãi để khấu trừ trực tiếp kinh phí (ví dụ mã tài trợ kiểm thử <strong className="font-mono text-amber-800">OFF100</strong>, ưu đãi đối tác <strong className="font-mono text-amber-800">OFF50</strong>, <strong className="font-mono text-amber-800">OFF30</strong>).
+            </p>
+          </div>
+
+          <div className="w-full md:w-auto shrink-0">
+            {!discountCode ? (
+              <form onSubmit={handleApplyCoupon} className="flex items-center gap-2 w-full sm:w-auto">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder="Nhập mã ưu đãi..."
+                  disabled={couponLoading}
+                  className="w-full sm:w-56 bg-white border-2 border-amber-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 font-mono font-bold tracking-wider uppercase transition-all disabled:opacity-50 shadow-inner"
+                />
+                <button
+                  type="submit"
+                  disabled={couponLoading || !couponCode.trim()}
+                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-colors disabled:opacity-40 cursor-pointer flex items-center gap-1.5 shrink-0 shadow-sm"
+                >
+                  {couponLoading ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Đang kiểm tra...</span>
+                    </>
+                  ) : (
+                    <span>Áp Dụng</span>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-semibold text-emerald-800">
+                  {isZeroCost ? '🎉 Miễn phí 100%' : `Tiết kiệm ${formatVND(discountAmount)}`}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleRemoveCoupon}
+                  disabled={couponLoading}
+                  className="text-xs font-semibold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg border border-red-200 transition-colors cursor-pointer"
+                >
+                  Hủy mã
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {couponError && (
+          <div className="mt-3 p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-1.5">
+            <span>⚠️</span>
+            <span>{couponError}</span>
+          </div>
+        )}
+
+        {couponSuccess && (
+          <div className="mt-3 p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-1.5">
+            <span>✓</span>
+            <span>{couponSuccess}</span>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
@@ -266,77 +340,17 @@ export default function Step4Payment() {
               </div>
             </div>
 
-            {/* ── MÃ GIẢM GIÁ / ƯU ĐÃI (DISCREET & DYNAMIC FROM DATABASE) ── */}
-            <div className="pt-2 border-t border-slate-100">
-              <div className="bg-slate-50/80 p-3 sm:p-3.5 rounded-xl border border-slate-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                    <span>🏷️</span> Mã ưu đãi đối tác (Nếu có)
-                  </span>
-                  {discountCode && (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
-                      ĐÃ ÁP DỤNG: {discountCode}
-                    </span>
-                  )}
-                </div>
-
-                {!discountCode ? (
-                  <form onSubmit={handleApplyCoupon} className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      placeholder="Nhập mã ưu đãi..."
-                      disabled={couponLoading}
-                      className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 font-mono tracking-wider uppercase transition-all disabled:opacity-50"
-                    />
-                    <button
-                      type="submit"
-                      disabled={couponLoading || !couponCode.trim()}
-                      className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-40 cursor-pointer flex items-center gap-1.5 shrink-0"
-                    >
-                      {couponLoading ? (
-                        <>
-                          <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Kiểm tra...</span>
-                        </>
-                      ) : (
-                        <span>Áp dụng</span>
-                      )}
-                    </button>
-                  </form>
-                ) : (
-                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg p-2.5">
-                    <div className="text-xs text-emerald-900">
-                      <span className="font-bold">Mã ưu đãi: {discountCode}</span>
-                      <span className="text-emerald-700 ml-1.5 font-medium">
-                        (Tiết kiệm {formatVND(discountAmount)})
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleRemoveCoupon}
-                      disabled={couponLoading}
-                      className="text-[11px] font-semibold text-red-600 hover:text-red-800 hover:underline px-2 py-1 rounded transition-colors cursor-pointer"
-                    >
-                      {couponLoading ? 'Đang hủy...' : 'Hủy mã'}
-                    </button>
-                  </div>
-                )}
-
-                {/* Coupon Feedback Messages */}
-                {couponError && (
-                  <p className="text-[11px] text-red-600 font-medium mt-1.5 flex items-center gap-1">
-                    <span>⚠️</span> {couponError}
-                  </p>
-                )}
-                {couponSuccess && (
-                  <p className="text-[11px] text-emerald-700 font-medium mt-1.5 flex items-center gap-1">
-                    <span>✓</span> {couponSuccess}
-                  </p>
-                )}
+            {/* Status indicator if discount applied */}
+            {discountCode && (
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs">
+                <span className="font-bold text-emerald-900">
+                  🏷️ Đã áp dụng mã: <span className="font-mono">{discountCode}</span>
+                </span>
+                <span className="font-semibold text-emerald-700">
+                  Giảm {formatVND(discountAmount)}
+                </span>
               </div>
-            </div>
+            )}
 
             {/* Total Section with breakdown if discounted */}
             <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200 space-y-2">
@@ -492,9 +506,9 @@ export default function Step4Payment() {
                   )}
                 </div>
 
-                {/* Account Owner */}
+                {/* Beneficiary Name */}
                 <div className="text-xs text-slate-600 mb-4">
-                  Chủ TK: <strong className="text-slate-900">{qrData?.accountName || 'CONG TY CP AI RESEARCH'}</strong>
+                  Đơn vị thụ hưởng: <strong className="text-slate-900">HỆ THỐNG AI MARKET RESEARCH</strong>
                 </div>
 
                 {/* Countdown Timer */}

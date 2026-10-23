@@ -19,7 +19,7 @@ log = structlog.get_logger(__name__)
 SEPAY_API_TOKEN    = os.getenv("SEPAY_API_TOKEN", "")
 BANK_ACCOUNT_NUMBER = os.getenv("BANK_ACCOUNT_NUMBER", "")
 BANK_SHORT_NAME     = os.getenv("BANK_SHORT_NAME", "VCB")
-ACCOUNT_NAME        = os.getenv("ACCOUNT_NAME", "CONG TY")
+ACCOUNT_NAME        = os.getenv("ACCOUNT_NAME", "AI RESEARCH PLATFORM")
 VIETQR_API         = "https://api.vietqr.io/v2/generate"
 
 
