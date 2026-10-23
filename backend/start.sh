@@ -5,6 +5,7 @@ set -e
 if [ -z "$PORT" ] || [ "$PORT" = '$PORT' ] || [ "$PORT" = "\$PORT" ]; then
     PORT=8000
 fi
+export PORT="$PORT"
 
-echo "Starting AI Market Research Backend on 0.0.0.0:$PORT..."
-exec python -m uvicorn main:app --host 0.0.0.0 --port "$PORT"
+echo "Starting AI Market Research Backend on port $PORT..."
+exec python main.py

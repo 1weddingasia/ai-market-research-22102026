@@ -31,6 +31,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy backend source code into /app
 COPY backend/ .
 
+# Immune patch uvicorn against literal '$PORT' CLI argument
+RUN python patch_uvicorn.py
+
 # Railway sets $PORT dynamically
 ENV PORT=8000
 EXPOSE 8000
