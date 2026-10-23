@@ -105,48 +105,116 @@ body {
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: var(--navy);
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
   color: #fff;
   font-weight: 600;
-  font-size: 0.875rem;
-  border-radius: 8px;
-  padding: 10px 24px;
-  border: none;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  padding: 12px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--font-sans);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  user-select: none;
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.btn-primary:hover   { background: var(--navy-700); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-.btn-primary:active  { transform: translateY(0); }
-.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+.btn-primary:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
 .btn-gold {
-  background: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
   color: #fff;
   font-weight: 700;
-  font-size: 0.875rem;
-  border-radius: 8px;
-  padding: 11px 28px;
-  border: none;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  padding: 12px 30px;
+  border: 1px solid rgba(254, 243, 199, 0.3);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 16px rgba(180, 83, 9, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  user-select: none;
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.btn-gold:hover   { background: var(--gold-light); box-shadow: 0 4px 16px rgba(180,83,9,.3); }
-.btn-gold:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-gold:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  box-shadow: 0 8px 26px rgba(180, 83, 9, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
+}
+.btn-gold:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+.btn-gold:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
 .btn-outline {
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
   color: var(--navy);
   font-weight: 600;
   font-size: 0.875rem;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 22px;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 11px 24px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  user-select: none;
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.btn-outline:hover { border-color: var(--navy-600); background: var(--bg-subtle); }
+.btn-outline:hover {
+  border-color: var(--navy-600);
+  background: #F8FAFC;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1.5px);
+}
+.btn-outline:active {
+  transform: translateY(1px) scale(0.985);
+  background: #F1F5F9;
+}
+
+/* Hiệu ứng tương tác xúc giác cao cấp cho bất kỳ nút bấm / card có thể click */
+.btn-interactive {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.btn-interactive:hover {
+  transform: translateY(-1.5px);
+}
+.btn-interactive:active {
+  transform: translateY(1px) scale(0.985);
+}
 
 /* ── Input ──────────────────────────────────────────────── */
 .input-field {
@@ -436,8 +504,82 @@ body {
 .step-dot.active  { background: var(--navy); color: #fff; box-shadow: 0 0 0 4px rgba(15,23,42,.15); }
 .step-dot.pending { background: var(--bg-card); color: var(--text-muted); border: 2px solid var(--border); }
 
-/* ── Responsive utils ───────────────────────────────────── */
+/* ── Responsive utils & Mobile Legibility ──────────────── */
 @media (max-width: 768px) {
-  .tab-btn { padding: 10px 14px; font-size: 0.78rem; }
-  .section-heading { font-size: 1.2rem; }
+  .tab-btn {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    min-height: 44px;
+  }
+  .section-heading {
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
 }
+
+/* Tối ưu cỡ chữ và khả năng đọc trên điện thoại (< 640px) */
+@media (max-width: 640px) {
+  html {
+    font-size: 15px; /* Tăng baseline để toàn bộ chữ 1rem đạt 15px */
+  }
+
+  /* Body & Paragraphs trên mobile cần thoáng đãng, dễ đọc */
+  p, .text-reading {
+    line-height: 1.65 !important;
+  }
+
+  /* Ngăn chặn tình trạng chữ chú thích, mô tả quá bé (< 12px) gây nheo mắt trên điện thoại */
+  .text-\[10px\], .text-\[11px\] {
+    font-size: 0.75rem !important; /* Tối thiểu 12px trên điện thoại */
+    line-height: 1.4 !important;
+  }
+
+  /* Ngăn iOS Safari tự zoom màn hình đột ngột khi chạm vào input */
+  input, textarea, select {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+
+  /* Touch target tối thiểu 44px cho mọi button trên mobile */
+  button, .btn-primary, .btn-gold, .btn-outline {
+    min-height: 44px;
+  }
+}
+
+/* ── Luxury Visual Utilities ────────────────────────────── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.25);
+}
+
+.shimmer-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: rotate(30deg);
+  animation: sweep 4s infinite;
+}
+@keyframes sweep {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  20%, 100% { transform: translateX(100%) rotate(30deg); }
+}
+

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HeroSlider from '@/components/HeroSlider';
+import Logo from '@/components/Logo';
 
 export default function HomePage() {
   const router = useRouter();
@@ -129,20 +130,8 @@ export default function HomePage() {
       {/* ── Top Bar / Header ── */}
       <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          {/* Logo có Link quay lại trang chủ */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
-              <span className="text-amber-400 group-hover:text-white font-serif font-black text-xs sm:text-sm transition-colors">AI</span>
-            </div>
-            <div>
-              <span className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-sm sm:text-base tracking-tight block leading-tight transition-colors">
-                AI Market Research
-              </span>
-              <span className="text-[10px] text-slate-500 font-medium hidden sm:block">
-                Nền tảng Nghiên cứu Thị trường AI Việt Nam
-              </span>
-            </div>
-          </Link>
+          {/* Logo INSIGHT AI chuẩn hóa */}
+          <Logo href="/" />
 
           <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600">
             <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">Phương pháp</a>
@@ -738,15 +727,13 @@ export default function HomePage() {
       {/* ── Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-8 sm:py-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-lg bg-slate-800 group-hover:bg-amber-600 transition-colors flex items-center justify-center">
-              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-sm transition-colors">AI</span>
-            </div>
-            <div>
-              <span className="text-white font-bold block group-hover:text-amber-300 transition-colors">AI Market Research Platform</span>
-              <span>insight.1booking.asia · Hệ thống phân tích ý kiến người tiêu dùng Việt Nam</span>
-            </div>
-          </Link>
+          {/* Logo INSIGHT AI Footer */}
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <Logo variant="footer" href="/" />
+            <span className="text-[11px] text-slate-400 mt-1">
+              insight.1booking.asia · Nền tảng phân tích ý kiến người tiêu dùng Việt Nam
+            </span>
+          </div>
 
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
             <Link href="/bach-thu" className="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-4 transition-colors">
@@ -760,8 +747,8 @@ export default function HomePage() {
             <span>VietQR Pro Certified</span>
           </div>
 
-          <div>
-            © 2026 AI Market Research. All rights reserved.
+          <div className="text-[11px] text-slate-400">
+            © 2026 INSIGHT AI Platform. All rights reserved.
           </div>
         </div>
       </footer>

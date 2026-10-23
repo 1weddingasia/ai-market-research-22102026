@@ -19,10 +19,49 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'AI Market Research — Nghiên cứu thị trường bằng AI',
+  metadataBase: new URL('https://insight.1booking.asia'),
+  title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
   description:
-    'Nền tảng nghiên cứu thị trường AI — giả lập 1.000 người tiêu dùng Việt Nam trong 60 giây. Chuẩn Nielsen BASES, Van Westendorp, McKinsey.',
-  keywords: 'nghiên cứu thị trường, AI, consumer research, Nielsen, Kantar, Vietnam, khảo sát',
+    'Nền tảng nghiên cứu thị trường AI hàng đầu Việt Nam. Giả lập 1.000 người tiêu dùng trong 60 giây. Bảo chứng học thuật Cochran 95% (±3.10%), 9 mô hình chuyên sâu chuẩn ESOMAR & AAPOR.',
+  keywords:
+    'INSIGHT AI, nghiên cứu thị trường, AI Market Research, khảo sát thị trường AI, consumer research, Nielsen BASES, Van Westendorp, Kantar, Vietnam synthetic panel',
+  authors: [{ name: 'INSIGHT AI Platform' }],
+  creator: 'INSIGHT AI Platform',
+  publisher: '1booking Insight Engine',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  openGraph: {
+    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
+    description:
+      'Khảo sát 1.000 người tiêu dùng Việt Nam trong 60 giây bằng AI Đa Tác Tử. Chuẩn Cochran 95% (±3.10%), 9 mô hình kinh tế học quốc tế, xuất bản báo cáo điều hành A4.',
+    url: 'https://insight.1booking.asia',
+    siteName: 'INSIGHT AI',
+    images: [
+      {
+        url: '/og-banner.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'INSIGHT AI — Nền tảng Nghiên cứu Thị trường & Khảo sát Người tiêu dùng bằng AI',
+      },
+    ],
+    locale: 'vi_VN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường & Khảo Sát Bằng AI',
+    description:
+      'Khảo sát 1.000 người tiêu dùng Việt Nam trong 60 giây bằng AI Đa Tác Tử. Bảo chứng học thuật Cochran 95%.',
+    images: ['/og-banner.jpg'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

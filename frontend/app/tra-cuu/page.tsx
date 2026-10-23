@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { api, formatVND } from '@/lib/api';
+import Logo from '@/components/Logo';
 
 interface SurveyItem {
   survey_id: string;
@@ -143,19 +144,8 @@ function TraCuuContent() {
       {/* ── Header ── */}
       <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
-              <span className="text-amber-400 group-hover:text-white font-serif font-black text-xs sm:text-sm transition-colors">AI</span>
-            </div>
-            <div>
-              <span className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-sm sm:text-base tracking-tight block leading-tight transition-colors">
-                AI Market Research
-              </span>
-              <span className="text-[10px] text-slate-500 font-medium hidden sm:block">
-                Hệ Thống Tra Cứu Báo Cáo Doanh Nghiệp
-              </span>
-            </div>
-          </Link>
+          {/* Logo INSIGHT AI */}
+          <Logo href="/" />
 
           <div className="flex items-center gap-3">
             <Link
@@ -567,7 +557,7 @@ function TraCuuContent() {
       {/* ── Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-6 px-4 text-center text-xs text-slate-400">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span>AI Market Research Platform · insight.1booking.asia</span>
+          <span>INSIGHT AI Platform · insight.1booking.asia</span>
           <div className="flex items-center gap-3 text-slate-400">
             <span>Bảo Mật Cấp Doanh Nghiệp</span>
             <span>·</span>

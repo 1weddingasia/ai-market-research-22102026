@@ -8,6 +8,7 @@ import Step1ModelSelect from '@/components/Step1ModelSelect';
 import Step2SampleConfig from '@/components/Step2SampleConfig';
 import Step3ProductInfo from '@/components/Step3ProductInfo';
 import Step4Payment from '@/components/Step4Payment';
+import Logo from '@/components/Logo';
 import { useWizard } from '@/lib/wizard-context';
 import { DEFAULT_SURVEY_CONFIGS } from '@/lib/survey-configs';
 
@@ -80,20 +81,8 @@ export default function WizardPage() {
       {/* Executive Navigation Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-10 py-3 sm:py-4 shadow-xs sticky top-0 z-30">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          {/* Logo có Link quay lại trang chủ */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-lg bg-slate-900 group-hover:bg-amber-600 transition-colors flex items-center justify-center shadow-xs">
-              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-xs sm:text-sm tracking-tighter transition-colors">AI</span>
-            </div>
-            <div>
-              <div className="font-serif font-bold text-slate-900 group-hover:text-amber-700 text-sm sm:text-base leading-tight transition-colors">
-                AI Market Research
-              </div>
-              <div className="hidden sm:block text-[11px] text-slate-500 font-medium">
-                Executive Intelligence Platform · Vietnam Synthetic Panel
-              </div>
-            </div>
-          </Link>
+          {/* Logo INSIGHT AI */}
+          <Logo href="/" />
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
@@ -126,7 +115,7 @@ export default function WizardPage() {
             Hệ thống vận hành bởi Cụm AI Synthetic Personas Việt Nam · Phân tầng thống kê GSO · Cổng thanh toán VietQR tự động
           </div>
           <div className="text-slate-400">
-            © 2026 AI Market Research Platform. All rights reserved.
+            © 2026 INSIGHT AI Platform. All rights reserved.
           </div>
         </div>
       </footer>

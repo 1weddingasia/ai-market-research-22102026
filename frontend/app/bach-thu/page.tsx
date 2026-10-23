@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Logo from '@/components/Logo';
 
 export default function BachThuPage() {
   return (
@@ -720,19 +721,14 @@ export default function BachThuPage() {
       {/* ── Document Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-10 px-5 sm:px-8 mt-20">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-lg bg-slate-800 group-hover:bg-amber-600 transition-colors flex items-center justify-center">
-              <span className="text-amber-400 group-hover:text-white font-serif font-bold text-sm">AI</span>
-            </div>
-            <div>
-              <span className="text-white font-bold block group-hover:text-amber-300">AI Market Research Platform</span>
-              <span>insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
-            </div>
-          </Link>
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <Logo variant="footer" href="/" />
+            <span className="text-[11px] text-slate-400 mt-1">insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
+          </div>
           <div className="text-[11px] font-mono text-slate-400">
             Tuân thủ Luật 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP · Chuẩn Cochran 95%
           </div>
-          <div>© 2026 AI Synthetic Consumer Panel. All rights reserved.</div>
+          <div>© 2026 INSIGHT AI Platform. All rights reserved.</div>
         </div>
       </footer>
     </div>

@@ -307,7 +307,7 @@ export default function HeroSlider() {
               {slide.headlineSuffix}
             </h1>
 
-            <p className="text-slate-600 text-xs sm:text-[15px] leading-relaxed">
+            <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
               {slide.description}
             </p>
 
@@ -315,7 +315,7 @@ export default function HeroSlider() {
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href={slide.primaryCta.href}
-                className={`inline-flex items-center justify-center gap-2 font-bold text-xs sm:text-sm py-3 px-6 rounded-xl shadow-md transition-all transform hover:scale-[1.02] cursor-pointer ${slide.primaryCta.btnClass}`}
+                className={`inline-flex items-center justify-center gap-2 font-bold text-sm sm:text-base py-3.5 px-7 rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0.5 active:scale-[0.98] cursor-pointer ${slide.primaryCta.btnClass}`}
               >
                 <span>{slide.primaryCta.label}</span>
                 <span>→</span>
@@ -323,25 +323,25 @@ export default function HeroSlider() {
 
               <Link
                 href={slide.secondaryCta.href}
-                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs sm:text-sm py-3 px-5 rounded-xl border border-slate-300 shadow-2xs transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm py-3 px-5 rounded-xl border border-slate-300 shadow-2xs hover:shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0.5 active:scale-[0.98] cursor-pointer"
               >
                 <span>{slide.secondaryCta.label}</span>
               </Link>
 
               <a
                 href={slide.tertiaryCta.href}
-                className="inline-flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold text-xs py-2 px-3 transition-colors text-center"
+                className="inline-flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold text-xs sm:text-sm py-2 px-3 transition-colors text-center"
               >
                 {slide.tertiaryCta.label}
               </a>
             </div>
 
             {/* Micro guarantee */}
-            <div className="flex items-center gap-4 pt-1 text-[11px] text-slate-500">
-              <span className="flex items-center gap-1">
+            <div className="flex flex-wrap items-center gap-4 pt-1 text-xs sm:text-sm text-slate-600 font-medium">
+              <span className="flex items-center gap-1.5">
                 <span className="text-emerald-600 font-bold">✓</span> Không cần tạo tài khoản phức tạp
               </span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1.5">
                 <span className="text-emerald-600 font-bold">✓</span> Xuất kết quả trong 60 giây
               </span>
             </div>

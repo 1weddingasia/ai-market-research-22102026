@@ -250,7 +250,7 @@ export default function PrintReportPage() {
               </div>
               <div>
                 <span className="font-serif font-bold text-slate-900 text-sm tracking-tight block">
-                  AI MARKET RESEARCH PLATFORM
+                  INSIGHT AI — MARKET RESEARCH PLATFORM
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block">
                   Hệ thống phân tích ý kiến người tiêu dùng Việt Nam · GSO Stratified Panel

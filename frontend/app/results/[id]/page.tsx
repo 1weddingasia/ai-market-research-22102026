@@ -8,6 +8,7 @@ import {
   PieChart, Pie, Legend,
 } from 'recharts';
 import { api, type ReportPayload } from '@/lib/api';
+import Logo from '@/components/Logo';
 import BasesMatrix from '@/components/charts/BasesMatrix';
 import VanWestendorpChart from '@/components/charts/VanWestendorpChart';
 import ABScorecard from '@/components/charts/ABScorecard';
@@ -793,7 +794,7 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
 
       {/* Meta Footer */}
       <div className="text-center text-[11px] text-slate-400 pt-2">
-        Mã hồ sơ: {report.project_id} · Thời điểm tạo: {new Date(report.generated_at).toLocaleString('vi-VN')} · Xác thực chữ ký số AI Market Research
+        Mã hồ sơ: {report.project_id} · Thời điểm tạo: {new Date(report.generated_at).toLocaleString('vi-VN')} · Xác thực chữ ký số INSIGHT AI Platform
       </div>
     </div>
   );
@@ -904,19 +905,17 @@ export default function ResultsPage() {
       {/* Sticky Top Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-10 py-3 sm:py-3.5 sticky top-0 z-30 shadow-xs">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group hover:opacity-90 transition-opacity">
-            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-lg bg-slate-900 flex items-center justify-center group-hover:ring-2 group-hover:ring-amber-400 transition-all shrink-0">
-              <span className="text-amber-400 font-serif font-bold text-xs sm:text-sm">AI</span>
-            </div>
-            <div>
-              <div className="font-serif font-bold text-slate-900 text-xs sm:text-base leading-tight group-hover:text-amber-600 transition-colors">
-                Executive Briefing
+          <div className="flex items-center gap-3">
+            <Logo variant="compact" href="/" />
+            <div className="border-l border-slate-200 pl-3">
+              <div className="font-serif font-bold text-slate-900 text-xs sm:text-base leading-tight">
+                INSIGHT AI · Executive Briefing
               </div>
               <div className="text-[10px] sm:text-[11px] text-slate-500 font-mono truncate max-w-[140px] sm:max-w-[280px]">
                 {companyName} · #{surveyId}
               </div>
             </div>
-          </Link>
+          </div>
 
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Confidential Stamp */}

@@ -133,7 +133,7 @@ export default function Step1ModelSelect() {
                   <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-xl text-slate-800 group-hover:bg-slate-900 group-hover:text-amber-400 transition-colors">
                     {cfg.icon || '📊'}
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-right uppercase tracking-wider">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-right uppercase tracking-wider">
                     {cert}
                   </span>
                 </div>
@@ -144,22 +144,22 @@ export default function Step1ModelSelect() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-600 text-xs mt-2 leading-relaxed min-h-[36px]">
+                <p className="text-slate-600 text-sm mt-2 leading-relaxed min-h-[42px]">
                   {cfg.description}
                 </p>
 
                 {/* Deliverables Checklist */}
                 <div className="mt-4 pt-4 border-t border-slate-100">
-                  <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-2">
-                    Bạn sẽ nhận được
+                  <p className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-2">
+                    Bạn sẽ nhận được:
                   </p>
-                  <ul className="space-y-1.5 text-xs text-slate-700">
+                  <ul className="space-y-2 text-xs sm:text-sm text-slate-700">
                     {deliverables.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-1.5">
                         <svg className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>{item}</span>
+                        <span className="leading-snug">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -216,7 +216,7 @@ export default function Step1ModelSelect() {
         <button
           type="button"
           onClick={handleContinue}
-          className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 px-8 rounded-lg shadow-sm hover:shadow transition-all duration-150"
+          className="btn-primary w-full sm:w-auto text-sm sm:text-base py-3.5 px-8 shadow-md"
         >
           <span>Tiếp tục sang Cấu hình mẫu</span>
           <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

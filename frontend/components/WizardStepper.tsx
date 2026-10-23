@@ -18,14 +18,14 @@ export default function WizardStepper() {
   return (
     <div className="w-full bg-white border border-slate-200 py-3.5 sm:py-5 px-3 sm:px-8 mb-6 sm:mb-8 shadow-xs rounded-2xl">
       {/* Mobile Top Indicator */}
-      <div className="flex sm:hidden items-center justify-between pb-3 mb-3 border-b border-slate-100 text-xs">
-        <span className="font-mono text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+      <div className="flex sm:hidden items-center justify-between pb-3 mb-3 border-b border-slate-100 text-sm">
+        <span className="font-mono text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
           {activeStep.stepCode}
         </span>
-        <span className="font-bold text-slate-800">
+        <span className="font-bold text-slate-900 text-sm">
           {activeStep.label}
         </span>
-        <span className="text-[11px] font-mono text-slate-400">
+        <span className="text-xs font-mono font-bold text-slate-500">
           {Math.min(current, 5)} / 5
         </span>
       </div>
