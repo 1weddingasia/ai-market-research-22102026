@@ -105,6 +105,10 @@ async def get_survey_results(
     db: Session = Depends(get_db),
 ):
     """Trả về JSON report đầy đủ cho Dashboard sau khi simulation hoàn tất."""
+    if survey_id.upper().startswith("DEMO"):
+        from models.demo_data import get_demo_report_payload
+        return get_demo_report_payload(survey_id)
+
     survey = db.query(Survey).filter(Survey.id == survey_id).first()
     if not survey:
         raise HTTPException(404, f"Survey {survey_id} không tìm thấy")

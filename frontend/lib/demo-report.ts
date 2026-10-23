@@ -51,6 +51,38 @@ export const DEMO_REPORT: ReportPayload = {
         { dimension: 'Khả năng mua lại (Repeat Purchase Intent)', score: 79, benchmark: 58 },
       ],
       net_promoter_score: 54,
+      deepseek_audit: {
+        auditor_model: 'DeepSeek Reasoner (Dual-AI Strategic Auditor)',
+        auditor_seal: 'DeepSeek-V3 · Strategic Economic Council Certified',
+        data_consistency_audit: 'Kiểm định 1.000 personas đối chiếu ma trận phân tầng GSO 2024: Phân phối chuẩn p < 0.05, không phát hiện dị biệt thống kê. Tương quan Spearman giữa mức độ Độc đáo và Ý định mua đạt r = 0.76 (rất mạnh).',
+        executive_verdict: 'Dự án "Trà Kombucha Xoài Cát Chu" đạt điểm khả thi 78/100 (Strong Go). Đạt ngưỡng an toàn vượt trội ở chỉ số thử nghiệm (Trial Rate), nhưng cần giải tỏa rào cản nhạy cảm giá 28.000đ bằng chiến lược combo ban đầu.',
+        strategic_pillars: [
+          {
+            pillar_name: 'Tối ưu hóa Khái niệm & USP',
+            icon: '💡',
+            recommendation: 'Khai thác tối đa bảo chứng xuất xứ "Xoài Cát Chu Đồng Tháp" và "1 tỷ lợi khuẩn Bacillus Clausii" làm Hero Claims trên mặt chính bao bì.',
+          },
+          {
+            pillar_name: 'Kích hoạt Dùng thử (Trial Rate)',
+            icon: '🎯',
+            recommendation: 'Triển khai ưu đãi ra mắt lốc 6 lon với mức giá dùng thử 149.000đ tại các chuỗi cửa hàng tiện lợi TP.HCM và Hà Nội để phá vỡ rào cản mua lần đầu.',
+          },
+          {
+            pillar_name: 'Rào chắn Giảm Rủi ro Thất bại',
+            icon: '🛡️',
+            recommendation: 'Đính chính rõ thông điệp "Đồ uống không cồn (< 0.5%)" để giải tỏa triệt để băn khoăn của 34% phụ nữ mang thai và người tiêu dùng gia đình.',
+          },
+        ],
+        strategic_recommendations: [
+          'Tối ưu hóa Khái niệm & USP: Khai thác tối đa bảo chứng xuất xứ "Xoài Cát Chu Đồng Tháp" và "1 tỷ lợi khuẩn Bacillus Clausii" làm Hero Claims trên mặt chính bao bì.',
+          'Kích hoạt Dùng thử (Trial Rate): Triển khai ưu đãi ra mắt lốc 6 lon với mức giá dùng thử 149.000đ tại các chuỗi cửa hàng tiện lợi TP.HCM và Hà Nội để phá vỡ rào cản mua lần đầu.',
+          'Rào chắn Giảm Rủi ro Thất bại: Đính chính rõ thông điệp "Đồ uống không cồn (< 0.5%)" để giải tỏa triệt để băn khoăn của 34% phụ nữ mang thai và người tiêu dùng gia đình.',
+        ],
+        critical_risks: [
+          'Rủi ro định vị nhầm lẫn: 28% người tiêu dùng lớn tuổi có thể ngộ nhận Kombucha là bia hoặc thức uống có men say nếu nhãn mác không ghi rõ không cồn.',
+          'Rủi ro cạnh tranh trên kệ lạnh: Cạnh tranh gay gắt từ các thương hiệu trà hữu cơ đóng chai có ngân sách khuyến mãi và thị phần ổn định.',
+        ],
+      },
     },
   },
   qualitative_insights: {

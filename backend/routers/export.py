@@ -33,6 +33,31 @@ async def download_pdf(
     PDF/HTML được cache sau lần đầu generate.
     """
     survey = db.query(Survey).filter(Survey.id == survey_id).first()
+    if not survey and survey_id.upper().startswith("DEMO"):
+        from models.demo_data import get_demo_report_payload
+        from services.pdf_service import generate_pdf
+        demo_payload = get_demo_report_payload(survey_id)
+        file_path = generate_pdf(
+            survey_id=survey_id,
+            result_data=demo_payload,
+            target_summary=demo_payload.get("target_summary", {}),
+        )
+        if download:
+            return FileResponse(
+                path=str(file_path),
+                media_type="application/pdf" if file_path.suffix == ".pdf" else "text/html",
+                filename=f"bao-cao-{survey_id}.{file_path.suffix[1:]}",
+                content_disposition_type="attachment",
+            )
+        elif file_path.suffix == ".pdf":
+            return FileResponse(
+                path=str(file_path),
+                media_type="application/pdf",
+                filename=f"bao-cao-{survey_id}.pdf",
+            )
+        else:
+            return HTMLResponse(content=file_path.read_text(encoding="utf-8"))
+
     if not survey:
         raise HTTPException(404, "Survey không tìm thấy")
 
