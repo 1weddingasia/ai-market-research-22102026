@@ -174,11 +174,6 @@ export const api = {
       method: 'POST',
     }),
 
-  simulatePayment: (surveyId: string) =>
-    fetchJSON<{ status: string; survey_id: string; message: string }>(`/payment/simulate/${surveyId}`, {
-      method: 'POST',
-    }),
-
   getSurveyResults: async (surveyId: string): Promise<ReportPayload> => {
     if (surveyId.toUpperCase().includes('DEMO')) {
       const { DEMO_REPORT } = await import('./demo-report');

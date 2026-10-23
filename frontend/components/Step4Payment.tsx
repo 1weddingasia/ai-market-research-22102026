@@ -22,7 +22,6 @@ export default function Step4Payment() {
 
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [simulating, setSimulating] = useState(false);
   const [activatingFree, setActivatingFree] = useState(false);
 
   // Discount code local state
@@ -154,19 +153,26 @@ export default function Step4Payment() {
     }
   };
 
-  // Nút giả lập / xác nhận chuyển khoản thủ công
-  const handleSimulatePayment = async () => {
+  // Nút kiểm tra giao dịch chuyển khoản thực tế (SePay)
+  const [checkingPayment, setCheckingPayment] = useState(false);
+  const [paymentNotice, setPaymentNotice] = useState('');
+
+  const handleCheckPaymentStatus = async () => {
     if (!surveyId) return;
-    setSimulating(true);
-    setCouponError('');
+    setCheckingPayment(true);
+    setPaymentNotice('');
     try {
-      await api.simulatePayment(surveyId);
-      setStep(5);
-      router.push(`/processing/${surveyId}`);
-    } catch (e: unknown) {
-      setCouponError(e instanceof Error ? e.message : 'Chưa thể kích hoạt khảo sát. Vui lòng thử lại sau.');
+      const s = await api.getSurveyStatus(surveyId);
+      if (s.status === 'PROCESSING' || s.status === 'COMPLETED') {
+        setStep(5);
+        router.push(`/processing/${surveyId}`);
+      } else {
+        setPaymentNotice(`Hệ thống đang đối soát với ngân hàng (thường mất 5 - 15 giây sau khi chuyển). Nếu bạn đã chuyển khoản với đúng nội dung ${surveyId}, vui lòng đợi giây lát hoặc bấm lại nút này.`);
+      }
+    } catch {
+      setPaymentNotice('Chưa thể kết nối đối soát lúc này. Vui lòng thử lại sau giây lát.');
     } finally {
-      setSimulating(false);
+      setCheckingPayment(false);
     }
   };
 
@@ -209,7 +215,7 @@ export default function Step4Payment() {
               )}
             </div>
             <p className="text-xs text-slate-600">
-              Nhập mã ưu đãi để khấu trừ trực tiếp kinh phí (ví dụ mã tài trợ kiểm thử <strong className="font-mono text-amber-800">OFF100</strong>, ưu đãi đối tác <strong className="font-mono text-amber-800">OFF50</strong>, <strong className="font-mono text-amber-800">OFF30</strong>).
+              Nhập mã ưu đãi hoặc voucher đối tác (nếu có) để được khấu trừ trực tiếp vào kinh phí khảo sát.
             </p>
           </div>
 
@@ -220,7 +226,7 @@ export default function Step4Payment() {
                   type="text"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  placeholder="Nhập mã ưu đãi..."
+                  placeholder="Nhập mã ưu đãi / voucher..."
                   disabled={couponLoading}
                   className="w-full sm:w-56 bg-white border-2 border-amber-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 font-mono font-bold tracking-wider uppercase transition-all disabled:opacity-50 shadow-inner"
                 />
@@ -434,7 +440,7 @@ export default function Step4Payment() {
         {/* Right Column (5 cols): VietQR Box OR 100% Free Activation Card */}
         <div className="lg:col-span-5 space-y-4">
           {isZeroCost ? (
-            /* ── CELEBRATORY CARD CHO MÃ GIẢM 100% (OFF100) ── */
+            /* ── CELEBRATORY CARD CHO MÃ GIẢM 100% ── */
             <div className="bg-gradient-to-b from-emerald-500/10 via-emerald-50/60 to-white border-2 border-emerald-400 rounded-2xl p-5 sm:p-6 shadow-md text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center text-3xl mx-auto shadow-inner">
                 🎁
@@ -536,18 +542,30 @@ export default function Step4Payment() {
               </div>
 
               {/* Manual Confirm Button */}
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-                <span className="text-[11px] text-slate-500 block mb-2">
-                  Sau khi chuyển khoản thành công trên app ngân hàng:
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center space-y-2">
+                <span className="text-[11px] text-slate-500 block">
+                  Sau khi quét mã VietQR và chuyển khoản thành công:
                 </span>
                 <button
                   type="button"
-                  onClick={handleSimulatePayment}
-                  disabled={simulating}
+                  onClick={handleCheckPaymentStatus}
+                  disabled={checkingPayment}
                   className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>{simulating ? 'Đang xác thực giao dịch...' : '✓ Tôi Đã Hoàn Tất Chuyển Khoản (Tiến Hành Khảo Sát)'}</span>
+                  {checkingPayment ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Đang kiểm tra giao dịch với ngân hàng...</span>
+                    </>
+                  ) : (
+                    <span>✓ Tôi Đã Chuyển Khoản Xong (Kiểm Tra Giao Dịch Ngay)</span>
+                  )}
                 </button>
+                {paymentNotice && (
+                  <p className="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200 text-left font-medium leading-relaxed">
+                    ℹ️ {paymentNotice}
+                  </p>
+                )}
               </div>
             </>
           )}

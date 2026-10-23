@@ -25,7 +25,6 @@ export default function ProcessingPage() {
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [sampleSize, setSampleSize] = useState<number>(1000);
   const [isPendingPayment, setIsPendingPayment] = useState(false);
-  const [triggeringDemo, setTriggeringDemo] = useState(false);
   const logEndRef = useRef<HTMLDivElement>(null);
 
   // Timer for elapsed seconds
@@ -129,33 +128,6 @@ export default function ProcessingPage() {
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [logs]);
-
-  const handleTriggerSimulate = async () => {
-    setTriggeringDemo(true);
-    try {
-      await fetch(`${API_URL}/payment/simulate/${surveyId}`, { method: 'POST' });
-      setIsPendingPayment(false);
-      setTimeout(async () => {
-        try {
-          const res = await fetch(`${API_URL}/survey/${surveyId}/status`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data.sample_size) setSampleSize(data.sample_size);
-            if (data.status === 'COMPLETED') {
-              setDone(true);
-              router.push(`/results/${surveyId}`);
-            }
-          }
-        } catch {
-          // ignore
-        }
-      }, 1000);
-    } catch {
-      // ignore
-    } finally {
-      setTriggeringDemo(false);
-    }
-  };
 
   // Format log with styled tags
   const renderLogMessage = (text: string) => {
@@ -273,7 +245,7 @@ export default function ProcessingPage() {
               </span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Hồ sơ <strong className="font-mono text-amber-300">{surveyId}</strong> đang ở trạng thái <em>Chờ thanh toán (PENDING_PAYMENT)</em>. Bạn có thể quay lại trang thanh toán để nhập mã ưu đãi đối tác (như <span className="font-mono font-bold text-amber-400">OFF100</span>, <span className="font-mono font-bold text-amber-400">OFF50</span>) hoặc quét mã VietQR:
+              Hồ sơ <strong className="font-mono text-amber-300">{surveyId}</strong> đang ở trạng thái <em>Chờ thanh toán (PENDING_PAYMENT)</em>. Vui lòng quay lại màn hình thanh toán để quét mã VietQR hoặc áp dụng mã ưu đãi hợp lệ để hệ thống kích hoạt khảo sát.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
@@ -281,26 +253,8 @@ export default function ProcessingPage() {
                 className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs py-2 px-4 rounded-xl transition-colors shadow-sm"
               >
                 <span>←</span>
-                <span>Quay Lại Bước 4 Thanh Toán & Nhập Mã Ưu Đãi</span>
+                <span>Quay Lại Bước 4 Thanh Toán & Áp Dụng Mã Ưu Đãi</span>
               </Link>
-              <button
-                type="button"
-                onClick={handleTriggerSimulate}
-                disabled={triggeringDemo}
-                className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2 px-4 rounded-xl transition-colors cursor-pointer shadow-sm disabled:opacity-50"
-              >
-                {triggeringDemo ? (
-                  <>
-                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Đang kích hoạt...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>⚡ Kích Hoạt Khảo Sát Ngay (Chế độ Kiểm Thử)</span>
-                    <span>→</span>
-                  </>
-                )}
-              </button>
             </div>
           </div>
         )}

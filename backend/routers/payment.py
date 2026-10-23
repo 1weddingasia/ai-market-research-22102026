@@ -131,11 +131,23 @@ async def sepay_webhook(
 @router.post("/simulate/{survey_id}")
 async def simulate_payment(
     survey_id: str,
+    request: Request,
     db: Session = Depends(get_db),
 ):
     """
-    Giả lập thanh toán thành công cho khảo sát (dành cho kiểm thử / demo).
+    Giả lập thanh toán — Chỉ cho phép quản trị viên nội bộ có token bảo mật.
+    Tuyệt đối không cho phép khách hàng tự ý kích hoạt miễn phí.
     """
+    admin_token = request.headers.get("X-Admin-Token") or request.query_params.get("token")
+    expected_token = os.getenv("SEPAY_API_TOKEN") or "dev_secret_key"
+    is_prod = os.getenv("ENVIRONMENT") == "production"
+
+    if is_prod and admin_token != expected_token:
+        raise HTTPException(
+            403,
+            "Chức năng giả lập thanh toán bị khóa trên môi trường sản xuất. Vui lòng hoàn tất thanh toán hoặc áp dụng mã ưu đãi hợp lệ."
+        )
+
     survey = db.query(Survey).filter(Survey.id == survey_id).first()
     if not survey:
         raise HTTPException(404, "Survey not found")
