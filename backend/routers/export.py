@@ -35,13 +35,12 @@ async def download_pdf(
     survey = db.query(Survey).filter(Survey.id == survey_id).first()
     if not survey and survey_id.upper().startswith("DEMO"):
         from models.demo_data import get_demo_report_payload
-        from services.pdf_service import generate_pdf
         demo_payload = get_demo_report_payload(survey_id)
-        file_path = generate_pdf(
+        file_path_str = await generate_pdf(
             survey_id=survey_id,
-            result_data=demo_payload,
-            target_summary=demo_payload.get("target_summary", {}),
+            report_data=demo_payload,
         )
+        file_path = Path(file_path_str)
         if download:
             return FileResponse(
                 path=str(file_path),
