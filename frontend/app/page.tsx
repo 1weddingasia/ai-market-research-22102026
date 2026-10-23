@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import HeroSlider from '@/components/HeroSlider';
 
 export default function HomePage() {
   const router = useRouter();
@@ -353,72 +354,8 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── Hero Section ── */}
-      <section className="relative overflow-hidden pt-10 sm:pt-16 pb-12 sm:pb-20 px-4 sm:px-6 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200">
-        <div className="max-w-4xl mx-auto text-center space-y-5 sm:space-y-6">
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] sm:text-xs font-bold">
-            <span className="text-amber-500">✦</span>
-            <span>KHO DỮ LIỆU 1.000.000 HỒ SƠ NGƯỜI TIÊU DÙNG VIỆT NAM THẬT</span>
-          </div>
-
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1.2] sm:leading-[1.15]">
-            Khảo sát thị trường <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-slate-900">
-              1.000 người tiêu dùng
-            </span> trong 60 giây
-          </h1>
-
-          <p className="text-slate-600 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Mô phỏng hành vi tiêu dùng bằng AI Synthetic Panel độc lập trên kho dữ liệu phân tầng nhân khẩu học 1.000.000 người tiêu dùng Việt Nam. Chuẩn xác theo Nielsen BASES & Van Westendorp, chi phí chỉ bằng 1/20 phương pháp truyền thống.
-          </p>
-
-          <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Link
-              href="/wizard"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm py-3.5 px-8 rounded-xl shadow-md transition-all transform hover:scale-[1.02]"
-            >
-              <span>Khởi tạo khảo sát ngay</span>
-              <span>→</span>
-            </Link>
-            <Link
-              href="/results/DEMO-NIELSEN-BASES"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm py-3.5 px-6 rounded-xl border border-slate-300 shadow-xs transition-all"
-            >
-              <span>📄 Xem Báo Cáo Mẫu Thực Tế</span>
-            </Link>
-            <a
-              href="#bang-gia"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold text-sm py-3 px-4 transition-colors"
-            >
-              Bảng giá & Chi phí
-            </a>
-          </div>
-
-          {/* Metric Highlights */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-8 sm:pt-12 border-t border-slate-200/80 text-left">
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Quy mô hồ sơ</span>
-              <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-1">1.000.000+</div>
-              <span className="text-[10px] sm:text-[11px] text-slate-500">Phân tầng 6 vùng</span>
-            </div>
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Thời gian xử lý</span>
-              <div className="text-xl sm:text-2xl font-serif font-black text-emerald-700 mt-1">&lt; 60 giây</div>
-              <span className="text-[10px] sm:text-[11px] text-slate-500">Xử lý song song</span>
-            </div>
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Độ tin cậy</span>
-              <div className="text-xl sm:text-2xl font-serif font-black text-amber-700 mt-1">95% (±3.1%)</div>
-              <span className="text-[10px] sm:text-[11px] text-slate-500">Chuẩn Cochran & ESOMAR</span>
-            </div>
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Thanh toán tự động</span>
-              <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-1">VietQR Tự Động</div>
-              <span className="text-[10px] sm:text-[11px] text-slate-500">Kích hoạt tức thì 24/7</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── Dynamic 3-Slide Hero Section ── */}
+      <HeroSlider />
 
       {/* ── 3-Step Process ── */}
       <section id="quy-trinh" className="py-12 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
