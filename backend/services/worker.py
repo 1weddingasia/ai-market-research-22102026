@@ -92,7 +92,8 @@ async def run_simulation(survey_id: str) -> None:
             region_filter = get_region_filter(survey.region or "Toàn quốc", survey.zone) if (survey.region or survey.zone) else None
             zone_filter   = get_province_filter(survey.zone) if survey.zone else None
 
-            personas_df = get_stratified_sample(
+            personas_df = await asyncio.to_thread(
+                get_stratified_sample,
                 sample_size=survey.sample_size,
                 region=region_filter,
                 zone=zone_filter,
@@ -148,7 +149,8 @@ async def run_simulation(survey_id: str) -> None:
         )
 
         # ── Milestone 5: Analysis ──────────────────────────────────────────────
-        report: ReportPayload = run_analysis(
+        report: ReportPayload = await asyncio.to_thread(
+            run_analysis,
             survey_id=survey_id,
             model_type=model_type,
             responses=llm_responses,
@@ -169,7 +171,8 @@ async def run_simulation(survey_id: str) -> None:
 
         try:
             barriers_list = [b.barrier for b in getattr(report, "barriers_identified", [])]
-            deepseek_audit = audit_survey(
+            deepseek_audit = await asyncio.to_thread(
+                audit_survey,
                 survey_id=survey_id,
                 model_type=model_type,
                 product_info=product_info,

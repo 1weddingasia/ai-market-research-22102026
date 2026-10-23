@@ -47,15 +47,18 @@ async def generate_pdf(survey_id: str, report_data: dict) -> str:
     html_content = _render_html(survey_id, report_data)
 
     if WEASYPRINT_AVAILABLE:
-        pdf_path = PDF_OUTPUT_DIR / f"{survey_id}.pdf"
-        _WP_HTML(string=html_content, base_url=str(TEMPLATE_DIR)).write_pdf(str(pdf_path))
-        log.info("PDF generated (WeasyPrint)", survey_id=survey_id, path=str(pdf_path))
-        return str(pdf_path)
+        try:
+            pdf_path = PDF_OUTPUT_DIR / f"{survey_id}.pdf"
+            _WP_HTML(string=html_content, base_url=str(TEMPLATE_DIR)).write_pdf(str(pdf_path))
+            log.info("PDF generated (WeasyPrint)", survey_id=survey_id, path=str(pdf_path))
+            return str(pdf_path)
+        except Exception as e:
+            log.warning("WeasyPrint PDF rendering failed, falling back to HTML report", error=str(e), survey_id=survey_id)
 
     # Fallback: lưu HTML — browser có thể in ra PDF
     html_path = PDF_OUTPUT_DIR / f"{survey_id}.html"
     html_path.write_text(html_content, encoding="utf-8")
-    log.info("HTML report generated (WeasyPrint not available)", survey_id=survey_id, path=str(html_path))
+    log.info("HTML report generated", survey_id=survey_id, path=str(html_path))
     return str(html_path)
 
 
