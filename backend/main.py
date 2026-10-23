@@ -83,11 +83,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers ────────────────────────────────────────────────────────────────────
+# ── Routers (Direct & /api alias for universal proxy/webhook compatibility) ──
 app.include_router(survey.router)
 app.include_router(stream.router)
 app.include_router(payment.router)
 app.include_router(export.router)
+
+app.include_router(survey.router, prefix="/api")
+app.include_router(stream.router, prefix="/api")
+app.include_router(payment.router, prefix="/api")
+app.include_router(export.router, prefix="/api")
 
 
 # ── Health check ───────────────────────────────────────────────────────────────
