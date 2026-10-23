@@ -243,6 +243,15 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
               )}
             </div>
           </div>
+          {report.quantitative_metrics?.model_specific?.deepseek_audit?.packaging_visual_audit && (
+            <div className="mt-4 p-3.5 rounded-xl bg-amber-50/60 border border-amber-200 text-xs text-slate-800 leading-relaxed">
+              <span className="font-bold text-amber-900 flex items-center gap-1.5 mb-1 font-mono uppercase text-[11px]">
+                <span>⚖️</span>
+                <span>Thẩm định nhận diện trực quan đối đầu từ DeepSeek C-Level:</span>
+              </span>
+              <p>{report.quantitative_metrics.model_specific.deepseek_audit.packaging_visual_audit}</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -263,6 +272,14 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
             <p className="text-xs text-slate-600 leading-relaxed">
               Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} personas trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và đưa ra phản hồi chân thực nhất.
             </p>
+            {report.quantitative_metrics?.model_specific?.deepseek_audit?.packaging_visual_audit && (
+              <div className="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+                <span className="font-bold text-slate-900 block mb-0.5 font-mono uppercase text-[10px] text-indigo-700">
+                  🔍 Nhận định thẩm định bao bì từ DeepSeek C-Level:
+                </span>
+                <p>{report.quantitative_metrics.model_specific.deepseek_audit.packaging_visual_audit}</p>
+              </div>
+            )}
           </div>
         </div>
       )}
