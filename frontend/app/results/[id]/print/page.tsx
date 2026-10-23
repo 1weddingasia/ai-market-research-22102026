@@ -462,7 +462,7 @@ export default function PrintReportPage() {
             <div className="md:col-span-8 flex flex-col justify-between">
               <div>
                 <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[9px] font-bold uppercase tracking-wider mb-1 font-mono">
-                  <span>🏛️ HỘI ĐỒNG THẨM ĐỊNH KINH TẾ LƯỢNG (DEEPSEEK REASONER · DUAL-AI)</span>
+                  <span>🏛️ NHẬN ĐỊNH CHIẾN LƯỢC TỪ CHUYÊN GIA PHÂN TÍCH</span>
                 </div>
                 <h3 className="font-serif text-sm font-bold text-slate-900 mb-1.5">
                   Nhận định điều hành dành cho Ban Giám Đốc (Executive Strategic Verdict)

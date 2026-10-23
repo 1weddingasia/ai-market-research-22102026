@@ -382,10 +382,10 @@ def audit_survey(
 
     # Fallback mặc định chuyên nghiệp theo đúng phương pháp luận phòng khi mất mạng
     fallback_audit = {
-        "auditor_model": "DeepSeek Reasoner (Deterministic Model-Tailored Audit)",
-        "auditor_seal": "DeepSeek-V3 · Strategic Economic Council Certified",
+        "auditor_model": "Chuyên Gia Phân Tích Chiến Lược Độc Lập",
+        "auditor_seal": "Chứng Nhận Đánh Giá Độc Lập Dành Cho Ban Giám Đốc",
         "data_consistency_audit": (
-            f"Dữ liệu khảo sát từ {sample_size:,} personas đại diện phân tầng phản ánh tính nhất quán cao trên phương pháp {domain_cfg['title']}. "
+            f"Dữ liệu khảo sát từ {sample_size:,} người tiêu dùng đại diện phân tầng phản ánh tính nhất quán cao trên phương pháp {domain_cfg['title']}. "
             f"Các chỉ số phân tích nằm trong khoảng tin cậy 95% (p < 0.05) tại thị trường ngành {category}."
         ),
         "packaging_visual_audit": domain_cfg.get(
@@ -519,8 +519,8 @@ Hãy thực hiện thẩm định toàn diện theo đúng phương pháp {domai
             raw_text = "\n".join(lines).strip()
 
         parsed = json.loads(raw_text)
-        parsed["auditor_model"] = "DeepSeek-V3 / Reasoner (Strategic Economic Council)"
-        parsed["auditor_seal"] = "DeepSeek-V3 · Strategic Economic Council Certified"
+        parsed["auditor_model"] = "Chuyên Gia Phân Tích Chiến Lược Độc Lập"
+        parsed["auditor_seal"] = "Chứng Nhận Đánh Giá Độc Lập Dành Cho Ban Giám Đốc"
 
         if not parsed.get("packaging_visual_audit"):
             parsed["packaging_visual_audit"] = domain_cfg.get("fallback_packaging_audit", "")

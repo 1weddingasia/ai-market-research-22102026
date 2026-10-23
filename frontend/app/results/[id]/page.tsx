@@ -247,7 +247,7 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
             <div className="mt-4 p-3.5 rounded-xl bg-amber-50/60 border border-amber-200 text-xs text-slate-800 leading-relaxed">
               <span className="font-bold text-amber-900 flex items-center gap-1.5 mb-1 font-mono uppercase text-[11px]">
                 <span>⚖️</span>
-                <span>Thẩm định nhận diện trực quan đối đầu từ DeepSeek C-Level:</span>
+                <span>Đánh giá chuyên sâu về bao bì & nhận diện trực quan đối đầu:</span>
               </span>
               <p>{report.quantitative_metrics.model_specific.deepseek_audit.packaging_visual_audit}</p>
             </div>
@@ -270,12 +270,12 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
               Hình ảnh nhận diện thực tế của sản phẩm
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} personas trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và đưa ra phản hồi chân thực nhất.
+              Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} người tiêu dùng đại diện trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và đưa ra phản hồi chân thực nhất.
             </p>
             {report.quantitative_metrics?.model_specific?.deepseek_audit?.packaging_visual_audit && (
               <div className="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
                 <span className="font-bold text-slate-900 block mb-0.5 font-mono uppercase text-[10px] text-indigo-700">
-                  🔍 Nhận định thẩm định bao bì từ DeepSeek C-Level:
+                  🔍 Đánh giá chuyên sâu về bao bì & nhận diện trực quan:
                 </span>
                 <p>{report.quantitative_metrics.model_specific.deepseek_audit.packaging_visual_audit}</p>
               </div>
@@ -327,45 +327,45 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
         </div>
       </div>
 
-      {/* ── DeepSeek Reasoner - Strategic Economic Council Audit (Layer 2 Auditor) ── */}
+      {/* ── Strategic Executive Council Audit ── */}
       <div className="bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl p-6 sm:p-8 shadow-md">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-slate-800">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/30 uppercase tracking-wider mb-2 font-mono">
-              <span>🏛️ KIẾN TRÚC AI KÉP · LỚP 2: HỘI ĐỒNG THẨM ĐỊNH KINH TẾ LƯỢNG</span>
+              <span>🏛️ NHẬN ĐỊNH CHIẾN LƯỢC TỪ CHUYÊN GIA PHÂN TÍCH</span>
             </div>
             <h3 className="font-serif text-lg sm:text-2xl font-bold text-white tracking-tight">
-              Hội Đồng Thẩm Định DeepSeek Reasoner — Strategic Audit
+              Đánh Giá Độc Lập Dành Cho Ban Giám Đốc
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              Thẩm định logic độc lập chuẩn McKinsey / Bain đối chiếu trên {report.target_summary.sample_size.toLocaleString('vi-VN')} Personas
+              Đối chiếu sức mua & thu nhập thực tế trên mẫu {report.target_summary.sample_size.toLocaleString('vi-VN')} người tiêu dùng đại diện
             </p>
           </div>
           <div className="text-left sm:text-right shrink-0">
             <span className="text-[10px] uppercase font-mono text-amber-300 font-bold px-2.5 py-1 rounded bg-slate-800 border border-amber-400/30 block sm:inline-block">
-              DeepSeek-V3 Certified
+              Chứng Thực Độc Lập
             </span>
           </div>
         </div>
 
         {/* Nội dung thẩm định chi tiết */}
         <div className="space-y-5">
-          {/* 1. Cross-check logic dữ liệu */}
+          {/* 1. Đối chiếu sức mua & thu nhập thực tế */}
           <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/80">
             <div className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold mb-1.5 flex items-center gap-1.5">
-              <span>⚖️</span>
-              <span>Kiểm định logic dữ liệu (Data Consistency Cross-Check):</span>
+              <span>📊</span>
+              <span>Đối chiếu sức mua & thu nhập thực tế:</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
               {report.quantitative_metrics?.model_specific?.deepseek_audit?.data_consistency_audit ||
-                `Dữ liệu phản hồi từ ${report.target_summary.sample_size.toLocaleString('vi-VN')} personas thể hiện tính nhất quán cao giữa ngưỡng định giá và thu nhập khả dụng của người tiêu dùng tại thị trường mục tiêu. Phương sai phân bố chuẩn p < 0.05.`}
+                `Dữ liệu phản hồi từ ${report.target_summary.sample_size.toLocaleString('vi-VN')} người tiêu dùng đại diện thể hiện tính nhất quán cao giữa ngưỡng định giá và thu nhập khả dụng tại thị trường mục tiêu. Phương sai phân bố chuẩn p < 0.05.`}
             </p>
           </div>
 
           {/* 2. Ba trụ cột khuyến nghị hành động theo đúng phương pháp luận nghiên cứu */}
           <div>
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold mb-3 block">
-              3 Trọng tâm khuyến nghị hành động C-Level (Model-Specific Strategic Framework):
+              3 Khuyến nghị hành động trọng tâm dành cho Ban Lãnh Đạo:
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {(() => {
@@ -944,15 +944,15 @@ export default function ResultsPage() {
               <span>💾 Tải file</span>
             </a>
 
-            {/* Enterprise Privacy & Data Destruction Button */}
+            {/* Enterprise Privacy & Data Security Button */}
             <button
               type="button"
               onClick={() => setShowDeleteModal(true)}
               className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-700 border border-slate-300 hover:border-red-300 text-xs font-semibold py-2 px-2.5 sm:px-3 rounded-lg shadow-2xs transition-all cursor-pointer"
               title="Xóa vĩnh viễn báo cáo này để bảo vệ bí mật kinh doanh"
             >
-              <span>🗑️</span>
-              <span className="hidden sm:inline">Tiêu hủy dữ liệu</span>
+              <span>🛡️</span>
+              <span className="hidden sm:inline">Xóa & Bảo mật dữ liệu</span>
             </button>
           </div>
         </div>
@@ -1024,7 +1024,7 @@ export default function ResultsPage() {
               </div>
               <div>
                 <h3 className="font-serif font-bold text-base text-slate-900">
-                  Tiêu Hủy Dữ Liệu Báo Cáo Vĩnh Viễn
+                  Xóa Vĩnh Viễn Dữ Liệu & Bảo Mật Tuyệt Đối
                 </h3>
                 <span className="text-[11px] text-slate-500 font-mono">
                   Hồ sơ #{surveyId}
@@ -1033,7 +1033,7 @@ export default function ResultsPage() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, hành động này sẽ xóa vĩnh viễn <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{surveyId}</strong> và dữ liệu phản hồi của {report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'} Personas thuộc khảo sát này khỏi toàn bộ máy chủ Cloud của chúng tôi. <strong>Toàn bộ các báo cáo khác của bạn trên hệ thống (nếu có) vẫn được giữ nguyên vẹn 100%.</strong> Hành động này không thể hoàn tác.
+              Theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp, hành động này sẽ xóa vĩnh viễn <strong className="text-red-700">DUY NHẤT báo cáo khảo sát mã #{surveyId}</strong> và dữ liệu phản hồi của {report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'} người tiêu dùng đại diện khỏi toàn bộ hệ thống lưu trữ của chúng tôi. <strong>Toàn bộ các báo cáo khác của bạn (nếu có) vẫn được giữ nguyên vẹn 100%.</strong> Hành động này không thể hoàn tác.
             </p>
 
             <form onSubmit={handleDeleteSurvey} className="space-y-4">

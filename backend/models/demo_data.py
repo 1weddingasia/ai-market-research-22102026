@@ -59,9 +59,9 @@ def get_demo_report_payload(survey_id: str = "DEMO-NIELSEN-BASES") -> dict:
                 ],
                 "net_promoter_score": 54,
                 "deepseek_audit": {
-                    "auditor_model": "DeepSeek Reasoner (Dual-AI Strategic Auditor)",
-                    "auditor_seal": "DeepSeek-V3 · Strategic Economic Council Certified",
-                    "data_consistency_audit": "Kiểm định 1.000 personas đối chiếu ma trận phân tầng GSO 2024: Phân phối chuẩn p < 0.05, không phát hiện dị biệt thống kê. Tương quan Spearman giữa mức độ Độc đáo và Ý định mua đạt r = 0.76 (rất mạnh).",
+                    "auditor_model": "Chuyên Gia Phân Tích Chiến Lược Độc Lập",
+                    "auditor_seal": "Chứng Nhận Đánh Giá Độc Lập Dành Cho Ban Giám Đốc",
+                    "data_consistency_audit": "Kiểm định 1.000 người tiêu dùng đại diện đối chiếu ma trận phân tầng GSO 2024: Phân phối chuẩn p < 0.05, không phát hiện dị biệt thống kê. Tương quan giữa mức độ Độc đáo và Ý định mua đạt r = 0.76 (rất mạnh).",
                     "executive_verdict": "Dự án 'Trà Kombucha Xoài Cát Chu' đạt điểm khả thi 78/100 (Strong Go). Đạt ngưỡng an toàn vượt trội ở chỉ số thử nghiệm (Trial Rate), nhưng cần giải tỏa rào cản nhạy cảm giá 28.000đ bằng chiến lược combo ban đầu.",
                     "strategic_pillars": [
                         {

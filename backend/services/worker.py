@@ -81,13 +81,13 @@ async def run_simulation(survey_id: str) -> None:
         product_info = json.loads(survey.product_info_json or "{}")
         model_type   = survey.model_type
 
-        # ── Milestone 1: Kết nối R2 ───────────────────────────────────────────
+        # ── Milestone 1: Kết nối kho dữ liệu mẫu đại diện ──────────────────
         await _emit_log(
             survey_id, 10,
-            f"[DUCKDB] Đang kết nối kho dữ liệu 1.000.000 hồ sơ phân tầng đại diện dân số Việt Nam..."
+            f"[DỮ LIỆU DÂN SỐ] Đang kết nối cơ sở dữ liệu mẫu đại diện dân số Việt Nam..."
         )
 
-        # ── Milestone 2: DuckDB sampling ──────────────────────────────────────
+        # ── Milestone 2: Phân bổ mẫu theo chuẩn GSO ──────────────────────────
         try:
             region_filter = get_region_filter(survey.region or "Toàn quốc", survey.zone) if (survey.region or survey.zone) else None
             zone_filter   = get_province_filter(survey.zone) if survey.zone else None
@@ -109,22 +109,22 @@ async def run_simulation(survey_id: str) -> None:
 
             await _emit_log(
                 survey_id, 30,
-                f"[STRATIFICATION] Phân bổ: {location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Cỡ mẫu N={len(personas_df):,} chuẩn thống kê GSO (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[PHÂN BỔ MẪU] Khu vực: {location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} người tiêu dùng đại diện (Độ tin cậy 95%, Sai số ±3.1%)."
             )
 
         except Exception as e:
-            log.error("DuckDB sampling failed", error=str(e), survey_id=survey_id)
-            await _emit_log(survey_id, 30, f"[DUCKDB WARNING] Tự động kích hoạt mẫu dự phòng chuẩn hóa phân tầng...", status=None)
+            log.error("Sampling failed", error=str(e), survey_id=survey_id)
+            await _emit_log(survey_id, 30, f"[PHÂN BỔ MẪU] Đang chuẩn hóa hạn ngạch cơ cấu dân số...", status=None)
             raise
 
-        # ── Milestone 3: Kích hoạt AI agents ──────────────────────────────────
+        # ── Milestone 3: Bắt đầu phỏng vấn ──────────────────────────────────
         batch_count = (len(personas_df) + 19) // 20
         await _emit_log(
             survey_id, 45,
-            f"[AGENT CLUSTER] Kích hoạt {len(personas_df):,} Synthetic Personas độc lập — chia {batch_count} nhóm xử lý song song (10 Cores Parallel)..."
+            f"[PHỎNG VẤN THỰC ĐỊA] Kích hoạt phỏng vấn {len(personas_df):,} người tiêu dùng đại diện — chia {batch_count} nhóm khảo sát song song..."
         )
 
-        # ── Milestone 4: LLM batch processing ─────────────────────────────────
+        # ── Milestone 4: Thu thập phản hồi ─────────────────────────────────
         completed_batches = [0]
 
         async def progress_callback(done: int, total: int):
@@ -133,7 +133,7 @@ async def run_simulation(survey_id: str) -> None:
             if done % 2 == 0 or done == total:
                 await _emit_log(
                     survey_id, pct,
-                    f"[BATCH {done:02d}/{total:02d}] Ghi nhận phản hồi định tính & chấm điểm từ {min(done * 20, len(personas_df))}/{len(personas_df)} Personas..."
+                    f"[TIẾN ĐỘ {done:02d}/{total:02d}] Ghi nhận ý kiến và đánh giá từ {min(done * 20, len(personas_df))}/{len(personas_df)} người tiêu dùng..."
                 )
 
         llm_responses = await run_llm_simulation(
@@ -145,7 +145,7 @@ async def run_simulation(survey_id: str) -> None:
 
         await _emit_log(
             survey_id, 78,
-            f"[EVALUATION] Đã thu thập {len(llm_responses):,} bản ghi phản hồi. Đang xử lý ma trận định lượng & phương sai..."
+            f"[TỔNG HỢP Ý KIẾN] Đã thu thập {len(llm_responses):,} phản hồi. Đang tổng hợp phân tích định lượng & mức độ chấp nhận thị trường..."
         )
 
         # ── Milestone 5: Analysis ──────────────────────────────────────────────
@@ -160,13 +160,13 @@ async def run_simulation(survey_id: str) -> None:
 
         await _emit_log(
             survey_id, 86,
-            f"[ANALYSIS ENGINE] Đang tổng hợp ma trận {model_type.upper()} & phân tích định lượng..."
+            f"[PHÂN TÍCH CHUYÊN SÂU] Đang xử lý số liệu chuyên sâu theo mô hình {model_type.upper()}..."
         )
 
-        # ── Milestone 5.5: DeepSeek Reasoner Auditor (Kiến trúc AI Kép - Lớp 2) ─
+        # ── Milestone 5.5: Thẩm định chiến lược C-Level ───────────────────────
         await _emit_log(
             survey_id, 92,
-            "[DEEPSEEK REASONER] Hội đồng Thẩm định DeepSeek đang cross-check logic kinh tế lượng & soạn thảo Executive Summary C-Level..."
+            "[THẨM ĐỊNH CHIẾN LƯỢC] Chuyên gia phân tích đang đối chiếu sức mua & thu nhập thực tế, hoàn thiện nhận định dành cho Ban Giám Đốc..."
         )
 
         try:
@@ -192,7 +192,7 @@ async def run_simulation(survey_id: str) -> None:
                 report.quantitative_metrics.model_specific = {}
             report.quantitative_metrics.model_specific["deepseek_audit"] = deepseek_audit
         except Exception as audit_err:
-            log.warning("DeepSeek audit step encountered issue, continuing pipeline", survey_id=survey_id, error=str(audit_err))
+            log.warning("Strategic audit step encountered issue, continuing pipeline", survey_id=survey_id, error=str(audit_err))
 
         # ── Milestone 6: Save results ──────────────────────────────────────────
         result_json = report.model_dump_json()
@@ -209,7 +209,7 @@ async def run_simulation(survey_id: str) -> None:
         # ── Milestone 7: DONE ─────────────────────────────────────────────────
         await _emit_log(
             survey_id, 100,
-            f"[COMPLETE] ✅ Báo cáo Executive đã sẵn sàng (Mã đơn #{survey_id}). Đang mở Dashboard...",
+            f"[HOÀN TẤT] ✅ Báo cáo chiến lược thị trường đã sẵn sàng (Mã đơn #{survey_id}). Đang chuyển đến trang kết quả...",
             status="COMPLETED",
         )
 

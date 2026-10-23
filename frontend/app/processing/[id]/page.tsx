@@ -23,6 +23,7 @@ export default function ProcessingPage() {
   const [failed, setFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [secondsElapsed, setSecondsElapsed] = useState(0);
+  const [sampleSize, setSampleSize] = useState<number>(1000);
   const logEndRef = useRef<HTMLDivElement>(null);
 
   // Timer for elapsed seconds
@@ -36,6 +37,14 @@ export default function ProcessingPage() {
 
   useEffect(() => {
     if (!surveyId) return;
+
+    // Fetch initial status to get accurate sample_size
+    fetch(`${API_URL}/survey/${surveyId}/status`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.sample_size) setSampleSize(data.sample_size);
+      })
+      .catch(() => {});
 
     // Connect to SSE stream
     const es = new EventSource(`${API_URL}/survey/${surveyId}/stream`);
@@ -86,6 +95,7 @@ export default function ProcessingPage() {
           const res = await fetch(`${API_URL}/survey/${surveyId}/status`);
           if (res.ok) {
             const s = await res.json();
+            if (s.sample_size) setSampleSize(s.sample_size);
             if (s.status === 'COMPLETED') {
               setPercent(100);
               setDone(true);
@@ -121,19 +131,21 @@ export default function ProcessingPage() {
     const [, tag, message] = tagMatch;
     let badgeClass = 'bg-slate-800 text-slate-300 border-slate-700';
 
-    if (tag.includes('DUCKDB')) {
+    if (tag.includes('DÂN SỐ') || tag.includes('DUCKDB')) {
       badgeClass = 'bg-cyan-950/80 text-cyan-300 border-cyan-700/60';
-    } else if (tag.includes('STRATIFICATION')) {
+    } else if (tag.includes('PHÂN BỔ') || tag.includes('STRATIFICATION')) {
       badgeClass = 'bg-purple-950/80 text-purple-300 border-purple-700/60';
-    } else if (tag.includes('AGENT') || tag.includes('CLUSTER')) {
+    } else if (tag.includes('PHỎNG VẤN') || tag.includes('AGENT') || tag.includes('CLUSTER')) {
       badgeClass = 'bg-blue-950/80 text-blue-300 border-blue-700/60';
-    } else if (tag.includes('BATCH')) {
+    } else if (tag.includes('TIẾN ĐỘ') || tag.includes('BATCH')) {
       badgeClass = 'bg-amber-950/80 text-amber-300 border-amber-700/60';
-    } else if (tag.includes('EVALUATION')) {
+    } else if (tag.includes('TỔNG HỢP') || tag.includes('EVALUATION')) {
       badgeClass = 'bg-violet-950/80 text-violet-300 border-violet-700/60';
-    } else if (tag.includes('ANALYSIS')) {
+    } else if (tag.includes('PHÂN TÍCH') || tag.includes('ANALYSIS')) {
       badgeClass = 'bg-indigo-950/80 text-indigo-300 border-indigo-700/60';
-    } else if (tag.includes('COMPLETE') || tag.includes('REPORT')) {
+    } else if (tag.includes('THẨM ĐỊNH') || tag.includes('DEEPSEEK')) {
+      badgeClass = 'bg-amber-950/80 text-amber-200 border-amber-500/70 font-bold';
+    } else if (tag.includes('HOÀN TẤT') || tag.includes('COMPLETE') || tag.includes('REPORT')) {
       badgeClass = 'bg-emerald-950/80 text-emerald-300 border-emerald-600/70 font-bold';
     }
 
@@ -142,7 +154,7 @@ export default function ProcessingPage() {
         <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border ${badgeClass}`}>
           [{tag}]
         </span>
-        <span className={tag.includes('COMPLETE') ? 'text-emerald-300 font-semibold' : 'text-slate-200'}>
+        <span className={tag.includes('HOÀN TẤT') || tag.includes('COMPLETE') ? 'text-emerald-300 font-semibold' : 'text-slate-200'}>
           {message}
         </span>
       </span>
@@ -193,22 +205,22 @@ export default function ProcessingPage() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
           </span>
           <span className="text-emerald-400 font-semibold tracking-wider uppercase text-[11px]">
-            HỆ THỐNG MÔ PHỎNG THỰC ĐỊA ĐANG VẬN HÀNH
+            HỆ THỐNG KHẢO SÁT THỰC ĐỊA ĐANG VẬN HÀNH
           </span>
           <span className="text-slate-500">|</span>
-          <span className="text-slate-400">TELEMETRY LIVE STREAM</span>
+          <span className="text-slate-400">TIẾN ĐỘ PHÂN TÍCH TRỰC TIẾP</span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-black tracking-tight text-white mb-3">
           {done
-            ? 'Hoàn Tất Kiểm Định Mô Phỏng Phân Tầng'
+            ? 'Hoàn Tất Khảo Sát & Báo Cáo Chiến Lược'
             : failed
-            ? 'Sự Cố Hệ Thống Giả Lập'
-            : 'Đang Thực Thi Khảo Sát N=1.000 Personas'}
+            ? 'Sự Cố Hệ Thống Khảo Sát'
+            : `Đang Thực Thi Khảo Sát N=${sampleSize.toLocaleString('vi-VN')} Người Tiêu Dùng Đại Diện`}
         </h1>
 
         <p className="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-          Khai thác hồ sơ 1.000.000 người tiêu dùng Việt Nam mô phỏng phân tầng (Stratified Sampling).
+          Khai thác mẫu đại diện phân tầng dân số Việt Nam (Stratified Sampling).
           Định lý giới hạn trung tâm bảo đảm sai số biên <span className="text-amber-400 font-semibold">±3.1%</span> ở độ tin cậy <span className="text-amber-400 font-semibold">95%</span>.
         </p>
       </div>
@@ -231,16 +243,16 @@ export default function ProcessingPage() {
               Phân bổ mẫu & Sai số
             </span>
             <div className="font-mono font-bold text-white truncate">
-              N=1.000 <span className="text-emerald-400 font-normal">| MoE ±3.1%</span>
+              N={sampleSize.toLocaleString('vi-VN')} <span className="text-emerald-400 font-normal">| MoE ±3.1%</span>
             </div>
           </div>
 
           <div className="bg-[#0A0E1A] p-3 rounded-xl border border-slate-800">
             <span className="text-[10px] uppercase font-mono text-slate-500 tracking-wider block mb-1">
-              Cụm xử lý (Engine)
+              Phương pháp khảo sát
             </span>
             <div className="font-mono font-bold text-cyan-400 truncate">
-              10 Cores Parallel
+              Phân Tầng Chuẩn GSO
             </div>
           </div>
 
@@ -287,11 +299,11 @@ export default function ProcessingPage() {
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
               <span className="text-[11px] font-mono text-slate-400 ml-2">
-                insight.1booking.asia — Luồng Phân Tích Thực Địa Theo Thời Gian Thực
+                insight.1booking.asia — Tiến Độ Khảo Sát & Phân Tích Thực Địa Trực Tiếp
               </span>
             </div>
             <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest hidden sm:block">
-              SYNTHETIC RESEARCH ENGINE
+              MARKET INTELLIGENCE ENGINE
             </div>
           </div>
 
@@ -299,7 +311,7 @@ export default function ProcessingPage() {
           <div className="p-4 sm:p-5 font-mono text-xs leading-relaxed max-h-80 overflow-y-auto space-y-2.5 scrollbar-thin scrollbar-thumb-slate-800">
             {logs.length === 0 && (
               <div className="text-slate-500 italic py-2">
-                [00:00s] [SYSTEM] Đang khởi tạo dữ liệu 1.000.000 người tiêu dùng và phân bổ hạn ngạch mẫu theo Tổng cục Thống kê (GSO)...
+                [00:00s] [DỮ LIỆU DÂN SỐ] Đang khởi tạo mẫu người tiêu dùng và phân bổ hạn ngạch theo Tổng cục Thống kê (GSO)...
               </div>
             )}
 
