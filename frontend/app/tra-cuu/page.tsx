@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { api, formatVND } from '@/lib/api';
 
 interface SurveyItem {
@@ -19,14 +20,51 @@ interface SurveyItem {
   print_url?: string;
 }
 
-export default function TraCuuPage() {
+function TraCuuContent() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESULTS'>('EMAIL');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
+  const [autoVerifying, setAutoVerifying] = useState(false);
   const [error, setError] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
   const [surveys, setSurveys] = useState<SurveyItem[]>([]);
+
+  // Tự động đọc email & otp từ searchParams nếu truy cập từ link trong Email
+  useEffect(() => {
+    const pEmail = searchParams.get('email');
+    const pOtp = searchParams.get('otp');
+
+    if (pEmail) {
+      const cleanEmail = pEmail.trim().toLowerCase();
+      setEmail(cleanEmail);
+
+      if (pOtp && pOtp.trim().length >= 6) {
+        const cleanOtp = pOtp.trim();
+        setOtp(cleanOtp);
+        setAutoVerifying(true);
+        setLoading(true);
+        setError('');
+
+        api.verifyLookupOtp(cleanEmail, cleanOtp)
+          .then((res) => {
+            setSurveys(res.surveys || []);
+            setStep('RESULTS');
+          })
+          .catch((err: any) => {
+            setError(err.message || 'Mã xác thực không chính xác hoặc đã hết hạn. Vui lòng nhập lại OTP.');
+            setStep('OTP');
+          })
+          .finally(() => {
+            setLoading(false);
+            setAutoVerifying(false);
+          });
+      } else {
+        setStep('EMAIL');
+      }
+    }
+  }, [searchParams]);
 
   // Trạng thái xóa riêng 1 báo cáo
   const [deleteSurveyId, setDeleteSurveyId] = useState<string | null>(null);
@@ -152,8 +190,21 @@ export default function TraCuuPage() {
           </p>
         </div>
 
+        {/* ── AUTO VERIFYING FROM DIRECT LINK ── */}
+        {autoVerifying && (
+          <div className="max-w-md mx-auto bg-white rounded-2xl border border-amber-300 p-8 shadow-md text-center">
+            <div className="w-12 h-12 border-3 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <h3 className="font-serif text-lg font-bold text-slate-900 mb-1">
+              Đang xác thực liên kết bảo mật...
+            </h3>
+            <p className="text-xs text-slate-500 font-medium">
+              Đang tự động đăng nhập với email <strong className="text-slate-800">{email}</strong>. Vui lòng chờ trong giây lát.
+            </p>
+          </div>
+        )}
+
         {/* ── STEP 1: NHẬP EMAIL ── */}
-        {step === 'EMAIL' && (
+        {!autoVerifying && step === 'EMAIL' && (
           <div className="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
             <form onSubmit={handleRequestOtp} className="space-y-4">
               <div>
@@ -525,5 +576,23 @@ export default function TraCuuPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function TraCuuPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+          <div className="w-10 h-10 border-3 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
+          <h3 className="font-serif text-base font-bold text-slate-900">
+            Đang tải dữ liệu tra cứu bảo mật...
+          </h3>
+          <p className="text-xs text-slate-500 mt-1">Vui lòng đợi trong giây lát</p>
+        </div>
+      }
+    >
+      <TraCuuContent />
+    </Suspense>
   );
 }

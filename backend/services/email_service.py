@@ -194,6 +194,9 @@ def send_lookup_otp_email(
 
     subject = f"[insight.1booking.asia] Mã xác thực tra cứu báo cáo: {otp_code}"
 
+    frontend_url = os.getenv("FRONTEND_URL", "https://insight.1booking.asia").rstrip("/")
+    direct_access_url = f"{frontend_url}/tra-cuu?email={to_email}&otp={otp_code}"
+
     html_content = f"""
     <!DOCTYPE html>
     <html lang="vi">
@@ -205,34 +208,49 @@ def send_lookup_otp_email(
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0f172a; padding: 40px 10px;">
             <tr>
                 <td align="center">
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; background-color: #ffffff; border-radius: 14px; overflow: hidden;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 520px; background-color: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
                         <tr>
                             <td style="background-color: #0A192F; padding: 28px 24px; text-align: center; border-bottom: 2px solid #D4AF37;">
-                                <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 800;">
+                                <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 800; letter-spacing: 0.5px;">
                                     Xác Thực Tra Cứu Báo Cáo
                                 </h2>
                                 <p style="color: #94a3b8; font-size: 12px; margin: 6px 0 0 0;">
-                                    AI Market Research Platform
+                                    AI Market Research Platform · insight.1booking.asia
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding: 32px 28px; text-align: center;">
-                                <p style="font-size: 14px; color: #334155; line-height: 1.5; margin: 0 0 20px 0;">
-                                    Bạn vừa yêu cầu tra cứu danh sách các báo cáo nghiên cứu thị trường đã thực hiện với địa chỉ email: <strong>{to_email}</strong>.
+                                <p style="font-size: 14px; color: #334155; line-height: 1.6; margin: 0 0 20px 0;">
+                                    Bạn vừa yêu cầu tra cứu danh sách các báo cáo nghiên cứu thị trường đã thực hiện với địa chỉ email: <strong style="color: #0A192F;">{to_email}</strong>.
                                 </p>
-                                <p style="font-size: 13px; color: #64748b; margin: 0 0 12px 0;">
-                                    Mã xác thực một lần (OTP) của bạn là:
+
+                                <!-- 1-CLICK DIRECT ACCESS BUTTON -->
+                                <div style="margin: 10px 0 24px 0;">
+                                    <a href="{direct_access_url}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); color: #0A192F; font-size: 14px; font-weight: 800; text-decoration: none; padding: 14px 28px; border-radius: 10px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); text-transform: uppercase; letter-spacing: 0.5px;">
+                                        👉 Nhấn Vào Đây Để Mở Báo Cáo Trực Tiếp
+                                    </a>
+                                </div>
+
+                                <p style="font-size: 13px; color: #64748b; margin: 0 0 10px 0;">
+                                    Hoặc bạn có thể nhập thủ công mã xác thực một lần (OTP):
                                 </p>
-                                <div style="display: inline-block; background-color: #f1f5f9; border: 2px dashed #D4AF37; border-radius: 10px; padding: 12px 30px; font-family: 'Courier New', Courier, monospace; font-size: 32px; font-weight: 900; letter-spacing: 8px; color: #0A192F; margin-bottom: 20px;">
+                                <div style="display: inline-block; background-color: #f8fafc; border: 2px dashed #D4AF37; border-radius: 10px; padding: 12px 32px; font-family: 'Courier New', Courier, monospace; font-size: 32px; font-weight: 900; letter-spacing: 8px; color: #0A192F; margin-bottom: 18px;">
                                     {otp_code}
                                 </div>
                                 <p style="font-size: 12px; color: #dc2626; margin: 0 0 20px 0; font-weight: 600;">
                                     Mã này có hiệu lực trong vòng 10 phút. Tuyệt đối không chia sẻ mã này cho người khác.
                                 </p>
-                                <p style="font-size: 11px; color: #94a3b8; line-height: 1.4; margin: 0;">
-                                    Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này. Dữ liệu của bạn được bảo mật tuyệt đối theo tiêu chuẩn mã hóa đám mây.
-                                </p>
+
+                                <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; margin-top: 20px;">
+                                    <p style="font-size: 11px; color: #94a3b8; line-height: 1.5; margin: 0 0 8px 0;">
+                                        Đường dẫn truy cập trực tiếp: <br>
+                                        <a href="{direct_access_url}" style="color: #2563eb; word-break: break-all; font-size: 11px;">{direct_access_url}</a>
+                                    </p>
+                                    <p style="font-size: 11px; color: #94a3b8; line-height: 1.4; margin: 0;">
+                                        Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email. Toàn bộ hồ sơ khảo sát được bảo vệ theo chuẩn mã hóa AES-256 đám mây.
+                                    </p>
+                                </div>
                             </td>
                         </tr>
                     </table>

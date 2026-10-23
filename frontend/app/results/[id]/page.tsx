@@ -67,9 +67,21 @@ const MODEL_STRATEGIC_PILLARS: Record<string, Array<{ pillar_name: string; icon:
   ],
 };
 
+const MODEL_BENCHMARK_NAMES: Record<string, string> = {
+  nielsen_bases: 'Chuẩn đánh giá chỉ số chấp nhận Nielsen BASES',
+  van_westendorp: 'Chuẩn kinh tế học Van Westendorp Price Sensitivity (PSM)',
+  ab_testing: 'Chuẩn thử nghiệm đối đầu Kantar Link Pre-testing',
+  ua_study: 'Chuẩn nghiên cứu hành vi thói quen Usage & Attitude (U&A)',
+  deal_elasticity: 'Chuẩn ma trận co giãn giá khuyến mãi Deal Elasticity',
+  monadic: 'Chuẩn thử nghiệm ý niệm đơn lập Monadic Split-sample',
+  maxdiff: 'Chuẩn xếp hạng phân cấp tiện ích Best-Worst Scaling (MaxDiff)',
+  kano: 'Chuẩn phân tầng tính năng R&D Kano Product Roadmap',
+  brand_map: 'Chuẩn định vị không gian đa chiều Brand Perceptual Mapping',
+};
+
 /* ── Helpers ─────────────────────────────────────────────── */
 
-function ScoreGauge({ score }: { score: number }) {
+function ScoreGauge({ score, modelType }: { score: number; modelType?: string }) {
   const isGo = score >= 70;
   const isCaution = score >= 50 && score < 70;
   const color = isGo ? '#059669' : isCaution ? '#D97706' : '#DC2626';
@@ -110,8 +122,8 @@ function ScoreGauge({ score }: { score: number }) {
       <div className={`px-4 py-1.5 rounded-full border text-xs font-bold tracking-wider uppercase ${verdictBg}`}>
         {verdict}
       </div>
-      <p className="text-[11px] text-slate-400 mt-2">
-        Chuẩn đánh giá chỉ số chấp nhận Nielsen BASES
+      <p className="text-[11px] text-slate-400 mt-2 font-medium">
+        {MODEL_BENCHMARK_NAMES[modelType || ''] || 'Chuẩn đánh giá chỉ số chấp nhận thị trường'}
       </p>
     </div>
   );
@@ -143,6 +155,7 @@ function SentimentBadge({ s }: { s: string }) {
 
 function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
   const exec = report.executive_summary;
+  const pInfo = report.product_info || {};
 
   return (
     <div className="space-y-6">
@@ -150,7 +163,7 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <div className="lg:col-span-5 flex">
           <div className="w-full">
-            <ScoreGauge score={exec.viability_score} />
+            <ScoreGauge score={exec.viability_score} modelType={report.model_type} />
           </div>
         </div>
 
@@ -182,6 +195,77 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
           </div>
         </div>
       </div>
+
+      {/* ── Visual Imagery Appraisal Cards (If Images Were Uploaded) ── */}
+      {report.model_type === 'ab_testing' && (pInfo.option_a_image_url || pInfo.option_b_image_url) && (
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 text-[10px] font-bold uppercase tracking-wider mb-4 border border-amber-200 font-mono">
+            📸 THIẾT KẾ BAO BÌ & HÌNH ẢNH MẪU ĐỐI ĐẦU A/B ĐÃ THẨM ĐỊNH
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 flex flex-col items-center text-center">
+              <span className="text-xs font-bold uppercase text-slate-900 mb-2">Phương án A (Concept A)</span>
+              {pInfo.option_a_image_url ? (
+                <img
+                  src={pInfo.option_a_image_url}
+                  alt="Phương án A"
+                  className="w-full max-h-56 object-contain rounded-lg border border-slate-200 bg-white mb-3 shadow-2xs"
+                />
+              ) : (
+                <div className="w-full h-36 flex items-center justify-center bg-slate-200 rounded-lg text-xs text-slate-500 mb-3">
+                  Không có file ảnh
+                </div>
+              )}
+              {pInfo.option_a_description && (
+                <p className="text-xs text-slate-600 italic leading-relaxed">
+                  {pInfo.option_a_description}
+                </p>
+              )}
+            </div>
+
+            <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 flex flex-col items-center text-center">
+              <span className="text-xs font-bold uppercase text-slate-900 mb-2">Phương án B (Concept B)</span>
+              {pInfo.option_b_image_url ? (
+                <img
+                  src={pInfo.option_b_image_url}
+                  alt="Phương án B"
+                  className="w-full max-h-56 object-contain rounded-lg border border-slate-200 bg-white mb-3 shadow-2xs"
+                />
+              ) : (
+                <div className="w-full h-36 flex items-center justify-center bg-slate-200 rounded-lg text-xs text-slate-500 mb-3">
+                  Không có file ảnh
+                </div>
+              )}
+              {pInfo.option_b_description && (
+                <p className="text-xs text-slate-600 italic leading-relaxed">
+                  {pInfo.option_b_description}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {report.model_type !== 'ab_testing' && pInfo.concept_image_url && (
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row items-center gap-6">
+          <img
+            src={pInfo.concept_image_url}
+            alt="Ảnh Concept / Bao bì"
+            className="w-full sm:w-44 h-44 object-cover rounded-xl border border-slate-200 bg-slate-100 shadow-xs shrink-0"
+          />
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold uppercase tracking-wider mb-2 border border-emerald-200 font-mono">
+              📸 TÀI SẢN HÌNH ẢNH / BAO BÌ THỰC NGHIỆM ĐÃ THẨM ĐỊNH
+            </div>
+            <h4 className="font-serif text-lg font-bold text-slate-900 mb-1">
+              Hình ảnh nhận diện thực tế của sản phẩm
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Tài sản hình ảnh thực tế này đã được đưa vào bối cảnh nghiên cứu để {report.target_summary?.sample_size?.toLocaleString('vi-VN')} personas trực quan hóa kiểu dáng bao bì, cảm nhận màu sắc thương hiệu và đưa ra phản hồi chân thực nhất.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Target Summary 4-Card Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -415,7 +499,7 @@ function Tab2Quantitative({ report }: { report: ReportPayload }) {
               </p>
             </div>
             <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200">
-              Nielsen BASES Score
+              {MODEL_BENCHMARK_NAMES[report.model_type] || 'Chỉ số định lượng chuẩn hóa'}
             </span>
           </div>
 

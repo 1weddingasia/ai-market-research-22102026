@@ -205,8 +205,23 @@ def audit_survey(
         or product_info.get("deal_description")
         or "Dự án Nghiên Cứu Thị Trường"
     )
-    category = product_info.get("category") or product_info.get("industry") or "Hàng tiêu dùng / Dịch vụ"
-    price = product_info.get("price") or product_info.get("regular_price") or product_info.get("price_amount") or "Theo phân khúc thị trường"
+    company_name = product_info.get("company_name") or product_info.get("brand_name") or "Doanh nghiệp / Khách hàng"
+    description = (
+        product_info.get("description")
+        or product_info.get("research_focus")
+        or product_info.get("test_objective")
+        or product_info.get("deal_description")
+        or product_info.get("option_a_description")
+        or ""
+    )
+    image_context = []
+    if product_info.get("concept_image_url"):
+        image_context.append(f"Ảnh Concept / Mockup: {product_info['concept_image_url']}")
+    if product_info.get("option_a_image_url"):
+        image_context.append(f"Ảnh Thiết kế Phương án A: {product_info['option_a_image_url']}")
+    if product_info.get("option_b_image_url"):
+        image_context.append(f"Ảnh Thiết kế Phương án B: {product_info['option_b_image_url']}")
+    image_text = "\n- ".join(image_context) if image_context else "Không có file ảnh đính kèm (đánh giá dựa trên mô tả ý tưởng và thuộc tính sản phẩm)"
 
     # Fallback mặc định chuyên nghiệp theo đúng phương pháp luận phòng khi mất mạng
     fallback_audit = {
@@ -290,15 +305,20 @@ Chỉ trả về JSON thuần túy (không kèm markdown ```json ```) theo đún
         user_content = f"""
 HỒ SƠ KHẢO SÁT THỊ TRƯỜNG THỰC TẾ:
 - Tên sản phẩm / Dự án: {product_name}
-- Ngành hàng: {category}
+- Đơn vị yêu cầu: {company_name}
+- Danh mục ngành hàng tại Việt Nam: {category}
+- Mô tả chi tiết ý tưởng / Mục tiêu: {description}
+- Tài sản hình ảnh / Bao bì:
+- {image_text}
 - Mức giá / Tham số: {price}
 - Phương pháp luận nghiên cứu: {domain_cfg['title']} ({model_type.upper()})
-- Quy mô mẫu thực nghiệm: N = {sample_size:,} Personas đại diện phân tầng
+- Quy mô mẫu thực nghiệm: N = {sample_size:,} Personas đại diện phân tầng dân số Việt Nam (chuẩn GSO)
 - Điểm khả thi tổng thể (Viability Score): {viability_score} / 100
 - Số liệu thống kê phương pháp tóm lược: {json.dumps(metrics, ensure_ascii=False)}
 - Rào cản & Ý kiến tiêu biểu từ người tiêu dùng: {json.dumps(barriers, ensure_ascii=False)}
 
-Hãy đóng vai Giám đốc Chiến lược McKinsey để xuất bản bản thẩm định điều hành JSON theo đúng cấu trúc trên.
+YÊU CẦU ĐẶC BIỆT:
+Hãy đóng vai Giám đốc Chiến lược C-Level am hiểu sâu sắc thị trường tiêu dùng Việt Nam, đánh giá sát chuyên môn sản phẩm, thẩm định cả khía cạnh hình ảnh/bao bì (nếu có), phân tích bối cảnh ngành hàng cạnh tranh và đưa ra các nhận định tối ưu nhất, thẳng thắn, sắc bén, hoàn toàn bằng tiếng Việt chuyên nghiệp theo đúng cấu trúc JSON yêu cầu.
 """
 
         response = client.chat.completions.create(

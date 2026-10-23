@@ -187,16 +187,19 @@ export const api = {
       body: JSON.stringify({ email }),
     }),
 
-  uploadImage: async (file: File, option: 'A' | 'B') => {
+  uploadImage: async (file: File, option: string = 'concept') => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('option', option);
-    const res = await fetch(`${API_URL}/payment/upload-image?option=${option}`, {
+    const res = await fetch(`${API_URL}/payment/upload-image?option=${encodeURIComponent(option)}`, {
       method: 'POST',
       body: formData,
     });
-    if (!res.ok) throw new Error('Upload ảnh thất bại');
-    return res.json() as Promise<{ image_url: string; option: string }>;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Upload ảnh thất bại' }));
+      throw new Error(err.detail || 'Upload ảnh thất bại');
+    }
+    return res.json() as Promise<{ status: string; image_url: string; option: string; filename: string }>;
   },
 };
 

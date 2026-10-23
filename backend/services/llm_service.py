@@ -31,18 +31,29 @@ MAX_RETRIES = 3     # Retry nếu parse JSON thất bại
 TIMEOUT_SEC = 90    # Timeout mỗi request
 
 
+INCOME_BRACKET_DESCRIPTIONS = {
+    "A": "> 25 triệu/tháng (Thu nhập cao, chi tiêu thoải mái, chú trọng đẳng cấp)",
+    "B": "15 - 25 triệu/tháng (Thu nhập khá, chuộng chất lượng và uy tín thương hiệu)",
+    "C": "7.5 - 15 triệu/tháng (Thu nhập trung bình, cân nhắc kỹ giá bán và giá trị thực tế)",
+    "D": "< 7.5 triệu/tháng (Thu nhập phổ thông/thấp, rất nhạy cảm về giá và khuyến mãi)",
+}
+
+
 def _build_persona_block(personas: list[dict], start_idx: int) -> str:
-    """Tạo đoạn mô tả 20 personas cho prompt."""
+    """Tạo đoạn mô tả personas chi tiết đầy đủ nhân khẩu học thực tế theo chuẩn GSO."""
     lines = []
     for i, p in enumerate(personas):
         pid = f"P{start_idx + i + 1:04d}"
+        raw_b = str(p.get("income_bracket", "C")).strip().upper()
+        bracket_desc = INCOME_BRACKET_DESCRIPTIONS.get(raw_b, f"Nhóm {raw_b}")
         lines.append(
-            f"[{pid}] Tuổi: {p.get('age', '?')} | "
+            f"[{pid}] "
+            f"Tuổi: {p.get('age', 28)} | "
             f"Giới tính: {'Nam' if p.get('gender') == 'male' else 'Nữ'} | "
-            f"Nghề: {p.get('occupation', 'Không rõ')} | "
-            f"Thu nhập: {p.get('income_bracket', '?')} | "
-            f"Khu vực: {p.get('zone', p.get('region', 'Việt Nam'))} | "
-            f"Phong cách sống: {p.get('lifestyle', 'Phổ thông')}"
+            f"Nghề nghiệp: {p.get('occupation', 'Nhân viên văn phòng')} | "
+            f"Thu nhập: {bracket_desc} | "
+            f"Địa bàn sinh sống: {p.get('zone', p.get('region', 'Việt Nam'))} ({p.get('region', '')}) | "
+            f"Lối sống & Thói quen: {p.get('lifestyle', 'Phổ thông')}"
         )
     return "\n".join(lines)
 
@@ -53,20 +64,21 @@ def _build_prompt(
     personas: list[dict],
     start_idx: int,
 ) -> str:
-    """Tạo prompt hoàn chỉnh gửi tới GPT-4o-mini."""
+    """Tạo prompt hoàn chỉnh gửi tới GPT-4o-mini với chỉ dẫn nhập vai nhân khẩu học nghiêm ngặt."""
     config = get_survey_config(model_type)
     instruction = config["llm_instruction"]
     response_format = json.dumps(config["response_format"], ensure_ascii=False, indent=2)
 
     # Build questions text
     questions_text = "\n".join(
-        f"  - {q['label']}: {q['text']}"
+        f"  - [{q['id']}] {q['label']}: {q['text']}"
         for q in config["questions"]
     )
+    question_keys = [q["id"] for q in config["questions"]]
 
     # Product info as formatted text
     product_text = "\n".join(
-        f"  {k}: {v}" for k, v in product_info.items() if v
+        f"  • {k}: {v}" for k, v in product_info.items() if v
     )
 
     # Personas block
@@ -76,31 +88,31 @@ def _build_prompt(
 
     prompt = f"""{instruction}
 
-━━━ THÔNG TIN SẢN PHẨM / DỊCH VỤ ━━━
+━━━ THÔNG TIN SẢN PHẨM / DỰ ÁN NGHIÊN CỨU ━━━
 {product_text}
 
-━━━ BỘ CÂU HỎI KHẢO SÁT ━━━
+━━━ BỘ CÂU HỎI KHẢO SÁT TIÊU CHUẨN (BẮT BUỘC TRẢ LỜI ĐỦ {len(question_keys)} CÂU HỎI) ━━━
 {questions_text}
 
-━━━ HỒ SƠ {len(personas)} NGƯỜI TIÊU DÙNG ━━━
+━━━ HỒ SƠ NHÂN KHẨU HỌC CỦA {len(personas)} NGƯỜI TIÊU DÙNG VIỆT NAM (CHUẨN GSO) ━━━
 {persona_block}
 
-━━━ YÊU CẦU ĐẦU RA ━━━
-Trả về JSON Object hợp lệ theo cấu trúc:
+━━━ NGUYÊN TẮC NHẬP VAI & ĐẦU RA BẮT BUỘC (STRICT PERSONA ROLEPLAY) ━━━
+1. BẠN PHẢI ĐÓNG VAI TỪNG NGƯỜI TIÊU DÙNG THỰC TẾ theo đúng nhân khẩu học:
+   - Người có mức thu nhập thấp (< 7.5tr/tháng) phải cực kỳ nhạy cảm về giá, đắn đo kỹ lưỡng từng khoản chi tiêu.
+   - Người có thu nhập cao (> 25tr/tháng) chú trọng sự an toàn, thẩm mỹ bao bì, uy tín thương hiệu và tính tiện dụng vượt trội.
+   - Người tiêu dùng trẻ (18-25 tuổi) nhạy bén với phong cách hiện đại, xu hướng mạng xã hội; người trung niên/lớn tuổi (40-65) coi trọng sức khỏe gia đình, sự bền bỉ và tính thiết thực.
+   - Người ở các đô thị lớn (TP.HCM, Hà Nội) có mức sống và tiêu chuẩn dịch vụ khác biệt so với các tỉnh thành khác.
+2. BẮT BUỘC TRẢ LỜI ĐẦY ĐỦ TẤT CẢ các câu hỏi ({', '.join(question_keys)}) cho từng người, TUYỆT ĐỐI KHÔNG BỎ SÓT bất kỳ trường dữ liệu nào.
+3. Câu trả lời định tính tiếng Việt phải chân thực, đa dạng giọng điệu tự nhiên, phản ánh đúng hoàn cảnh sống thực tế của người đó.
+4. Đầu ra là JSON thuần túy, mảng "responses" phải có đúng chính xác {len(personas)} phần tử tương ứng với các ID: {', '.join(persona_ids[:3])}...
+
+Cấu trúc JSON yêu cầu:
 {{
   "responses": [
-    ... {len(personas)} phần tử có cấu trúc:
 {response_format}
   ]
 }}
-
-Thay "string (persona id)" bằng ID thực: {', '.join(persona_ids[:5])}...
-
-QUY TẮC BẮT BUỘC:
-1. Chỉ trả về JSON thuần, KHÔNG có markdown, KHÔNG có văn bản giải thích trước hoặc sau.
-2. Mảng "responses" phải có đúng {len(personas)} phần tử — không thiếu, không thừa.
-3. Câu trả lời tiếng Việt phải chân thực, phản ánh đúng hoàn cảnh từng người.
-4. KHÔNG dùng nhận xét chung chung. Hãy cụ thể theo nghề nghiệp và thu nhập.
 """
     return prompt
 

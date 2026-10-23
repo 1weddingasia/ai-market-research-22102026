@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { api, formatVND, PRICING } from '@/lib/api';
 import { useWizard } from '@/lib/wizard-context';
+import { VIETNAM_STANDARD_INDUSTRIES } from '@/lib/vietnam-industries';
 
 interface FieldConfig {
   id: string;
@@ -78,8 +79,8 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'category',
-      label: 'Danh mục ngành hàng',
-      placeholder: 'VD: Thực phẩm & Đồ uống (FMCG / F&B)',
+      label: 'Danh mục ngành hàng (Tiêu chuẩn Việt Nam)',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -120,7 +121,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'category',
       label: 'Danh mục sản phẩm / Dịch vụ',
-      placeholder: 'VD: Giáo dục trực tuyến (EdTech) / Mỹ phẩm / Phần mềm SaaS / FMCG',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -155,6 +156,12 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       placeholder: 'VD: Công ty Cổ phần Sữa Việt Nam (Vinamilk)',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'category',
+      label: 'Danh mục ngành hàng',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
+      required: true,
     },
     {
       id: 'brand_name',
@@ -195,7 +202,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'industry',
       label: 'Ngành hàng cần nghiên cứu (Category)',
-      placeholder: 'VD: Cà phê đóng lon uống liền / Chăm sóc da mụn / Đặt xe công nghệ',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -225,6 +232,12 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
       placeholder: 'VD: Tập đoàn Bánh kẹo Kinh Đô Mondelez',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'category',
+      label: 'Danh mục ngành hàng',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
+      required: true,
     },
     {
       id: 'deal_name',
@@ -268,7 +281,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'category',
       label: 'Danh mục ngành hàng',
-      placeholder: 'VD: Nước giải khát / Mỹ phẩm hữu cơ / Thực phẩm bổ sung',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -329,7 +342,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'category',
       label: 'Danh mục sản phẩm / Ngành hàng',
-      placeholder: 'VD: Chăm sóc cá nhân / Thiết bị thông minh / Dịch vụ Tài chính',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -365,7 +378,7 @@ Thiết kế tối giản, sang trọng phong cách Bắc Âu`,
     {
       id: 'category',
       label: 'Ngành hàng / Lĩnh vực',
-      placeholder: 'VD: Phần mềm B2B / Thiết bị Gia dụng / Ô tô điện / FMCG',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
       required: true,
     },
     {
@@ -389,6 +402,12 @@ Tùy biến giao diện hóa đơn và thương hiệu riêng`,
       placeholder: 'VD: Tập đoàn Thời trang & Bán lẻ Việt Nam',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
+    },
+    {
+      id: 'category',
+      label: 'Ngành hàng / Lĩnh vực hoạt động',
+      placeholder: 'Chọn ngành nghề từ danh mục chuẩn hóa',
+      required: true,
     },
     {
       id: 'brand_name',
@@ -423,6 +442,194 @@ Thương hiệu đối thủ C (Chuỗi giá rẻ bình dân)`,
   ],
 };
 
+/* ── Component: Vietnam Standard Industry Dropdown ── */
+function IndustrySelect({
+  value,
+  onChange,
+  required,
+}: {
+  value: string;
+  onChange: (val: string) => void;
+  required?: boolean;
+}) {
+  const isCustom = Boolean(value && !VIETNAM_STANDARD_INDUSTRIES.some((ind) => ind.name === value));
+  const [showCustomInput, setShowCustomInput] = useState(isCustom);
+  const [customText, setCustomText] = useState(isCustom ? value : '');
+
+  const selectedIndustry = VIETNAM_STANDARD_INDUSTRIES.find((ind) => ind.name === value);
+
+  return (
+    <div className="space-y-2">
+      <div className="relative">
+        <select
+          value={showCustomInput ? '__custom__' : value || ''}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v === '__custom__') {
+              setShowCustomInput(true);
+              onChange(customText || '');
+            } else {
+              setShowCustomInput(false);
+              onChange(v);
+            }
+          }}
+          className="w-full bg-white border border-slate-300 rounded-lg py-2.5 px-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all cursor-pointer font-medium"
+        >
+          <option value="">-- Chọn ngành hàng theo tiêu chuẩn Việt Nam --</option>
+          {VIETNAM_STANDARD_INDUSTRIES.map((ind) => (
+            <option key={ind.id} value={ind.name}>
+              {ind.icon} {ind.name}
+            </option>
+          ))}
+          <option value="__custom__">✏️ Ngành hàng khác (Tự nhập tên ngành cụ thể)...</option>
+        </select>
+      </div>
+
+      {showCustomInput && (
+        <div className="animate-in fade-in duration-150">
+          <input
+            type="text"
+            required={required}
+            value={customText}
+            onChange={(e) => {
+              setCustomText(e.target.value);
+              onChange(e.target.value);
+            }}
+            placeholder="Nhập cụ thể tên ngành hàng / lĩnh vực của bạn..."
+            className="w-full bg-white border border-amber-300 rounded-lg py-2.5 px-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+          />
+        </div>
+      )}
+
+      {selectedIndustry && !showCustomInput && (
+        <div className="p-2.5 rounded-lg bg-amber-50/70 border border-amber-200/80 text-[11px] text-amber-900 flex items-center gap-2">
+          <span className="font-bold shrink-0">Nhóm: {selectedIndustry.sectorGroup}</span>
+          <span className="text-slate-400">·</span>
+          <span className="text-slate-600 truncate">{selectedIndustry.examples}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Component: Image Upload Dropzone ── */
+function ImageUploader({
+  label,
+  hint,
+  currentUrl,
+  slot,
+  onUploadSuccess,
+  onRemove,
+}: {
+  label: string;
+  hint?: string;
+  currentUrl?: string;
+  slot: string;
+  onUploadSuccess: (url: string) => void;
+  onRemove: () => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setError('Vui lòng chọn đúng định dạng file hình ảnh (JPG, PNG, WebP).');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Kích thước ảnh tối đa là 10MB.');
+      return;
+    }
+
+    setError('');
+    setUploading(true);
+    try {
+      const res = await api.uploadImage(file, slot);
+      onUploadSuccess(res.image_url);
+    } catch (err: any) {
+      setError(err.message || 'Lỗi khi tải ảnh lên máy chủ. Vui lòng thử lại.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-2 p-4 rounded-xl border border-slate-200 bg-slate-50/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+        <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+          <span>🖼️</span>
+          <span>{label}</span>
+        </label>
+        {hint && <span className="text-[11px] text-slate-500 font-medium">{hint}</span>}
+      </div>
+
+      {currentUrl ? (
+        <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-slate-200 shadow-2xs">
+          <img
+            src={currentUrl}
+            alt={label}
+            className="w-16 h-16 object-cover rounded-lg border border-slate-200 shrink-0 bg-slate-100"
+          />
+          <div className="flex-1 min-w-0">
+            <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+              <span>✓</span>
+              <span>Đã tải ảnh lên máy chủ thành công</span>
+            </span>
+            <p className="text-[11px] text-slate-400 truncate mt-0.5 font-mono">
+              {currentUrl}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="text-xs text-red-600 hover:text-red-800 font-semibold px-2.5 py-1.5 rounded-md hover:bg-red-50 border border-transparent hover:border-red-200 transition-colors shrink-0"
+          >
+            Xóa ảnh
+          </button>
+        </div>
+      ) : (
+        <div>
+          <label className="flex flex-col items-center justify-center p-5 border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-xl bg-white hover:bg-amber-50/20 transition-all cursor-pointer text-center group">
+            {uploading ? (
+              <div className="flex flex-col items-center gap-2 py-2">
+                <div className="w-6 h-6 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs font-semibold text-slate-700">
+                  Đang tải ảnh lên đám mây bảo mật...
+                </span>
+              </div>
+            ) : (
+              <>
+                <div className="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-800 flex items-center justify-center mb-2 transition-colors">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <span className="text-xs font-bold text-slate-800 group-hover:text-amber-800">
+                  Nhấn để tải ảnh hoặc kéo thả file vào đây
+                </span>
+                <span className="text-[11px] text-slate-400 mt-0.5">
+                  Định dạng PNG, JPG, WebP · Dung lượng tối đa 10MB
+                </span>
+              </>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              disabled={uploading}
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+          {error && <p className="text-xs text-red-600 mt-1.5 font-medium">⚠️ {error}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Step3ProductInfo() {
   const { state, updateProductInfo, updatePayment, setStep } = useWizard();
   const [formData, setFormData] = useState<Record<string, string>>(state.productInfo);
@@ -436,6 +643,38 @@ export default function Step3ProductInfo() {
 
   const handleChange = (id: string, val: string) => {
     setFormData((prev) => ({ ...prev, [id]: val }));
+  };
+
+  const handleImageUpload = (slot: string, url: string) => {
+    if (slot === 'A') {
+      setFormData((prev) => ({ ...prev, option_a_image_url: url }));
+    } else if (slot === 'B') {
+      setFormData((prev) => ({ ...prev, option_b_image_url: url }));
+    } else {
+      setFormData((prev) => ({ ...prev, concept_image_url: url }));
+    }
+  };
+
+  const handleRemoveImage = (slot: string) => {
+    if (slot === 'A') {
+      setFormData((prev) => {
+        const next = { ...prev };
+        delete next.option_a_image_url;
+        return next;
+      });
+    } else if (slot === 'B') {
+      setFormData((prev) => {
+        const next = { ...prev };
+        delete next.option_b_image_url;
+        return next;
+      });
+    } else {
+      setFormData((prev) => {
+        const next = { ...prev };
+        delete next.concept_image_url;
+        return next;
+      });
+    }
   };
 
   const handleSubmit = async () => {
@@ -542,39 +781,91 @@ export default function Step3ProductInfo() {
 
       {/* Form Fields Container */}
       <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-sm space-y-6 mb-8">
-        {fields.map((field) => (
-          <div key={field.id} className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                {field.label}
-                {field.required && <span className="text-red-500 ml-1">*</span>}
-              </label>
-              {field.hint && (
-                <span className="text-[11px] text-amber-700 font-medium italic">
-                  {field.hint}
-                </span>
+        {fields.map((field) => {
+          const isIndustry = field.id === 'category' || field.id === 'industry';
+
+          return (
+            <div key={field.id} className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  {field.label}
+                  {field.required && <span className="text-red-500 ml-1">*</span>}
+                </label>
+                {field.hint && (
+                  <span className="text-[11px] text-amber-700 font-medium italic">
+                    {field.hint}
+                  </span>
+                )}
+              </div>
+
+              {isIndustry ? (
+                <IndustrySelect
+                  value={formData[field.id] || ''}
+                  onChange={(val) => handleChange(field.id, val)}
+                  required={field.required}
+                />
+              ) : field.type === 'textarea' ? (
+                <textarea
+                  rows={4}
+                  value={formData[field.id] || ''}
+                  onChange={(e) => handleChange(field.id, e.target.value)}
+                  placeholder={field.placeholder}
+                  className="w-full bg-white border border-slate-300 rounded-lg p-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all placeholder:text-slate-400"
+                />
+              ) : (
+                <input
+                  type={field.type || 'text'}
+                  value={formData[field.id] || ''}
+                  onChange={(e) => handleChange(field.id, e.target.value)}
+                  placeholder={field.placeholder}
+                  className="w-full bg-white border border-slate-300 rounded-lg py-2.5 px-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all placeholder:text-slate-400"
+                />
               )}
             </div>
+          );
+        })}
 
-            {field.type === 'textarea' ? (
-              <textarea
-                rows={4}
-                value={formData[field.id] || ''}
-                onChange={(e) => handleChange(field.id, e.target.value)}
-                placeholder={field.placeholder}
-                className="w-full bg-white border border-slate-300 rounded-lg p-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all placeholder:text-slate-400"
-              />
-            ) : (
-              <input
-                type={field.type || 'text'}
-                value={formData[field.id] || ''}
-                onChange={(e) => handleChange(field.id, e.target.value)}
-                placeholder={field.placeholder}
-                className="w-full bg-white border border-slate-300 rounded-lg py-2.5 px-3.5 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all placeholder:text-slate-400"
-              />
-            )}
+        {/* ── IMAGE UPLOAD CAPABILITY (CRITICAL FOR VISUAL & PACKAGING APPRAISAL) ── */}
+        <div className="pt-2 border-t border-slate-100 space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+              📸 Tải Lên Hình Ảnh Để Thẩm Định Trực Quan
+            </span>
+            <span className="text-[11px] text-slate-500 font-medium">
+              Personas & Hội đồng AI sẽ đánh giá thiết kế bao bì và hình ảnh
+            </span>
           </div>
-        ))}
+
+          {currentModelKey === 'ab_testing' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ImageUploader
+                label="Bao Bì / Thiết Kế Phương Án A"
+                hint="Dành cho mẫu đối đầu A"
+                currentUrl={formData.option_a_image_url}
+                slot="A"
+                onUploadSuccess={(url) => handleImageUpload('A', url)}
+                onRemove={() => handleRemoveImage('A')}
+              />
+              <ImageUploader
+                label="Bao Bì / Thiết Kế Phương Án B"
+                hint="Dành cho mẫu đối đầu B"
+                currentUrl={formData.option_b_image_url}
+                slot="B"
+                onUploadSuccess={(url) => handleImageUpload('B', url)}
+                onRemove={() => handleRemoveImage('B')}
+              />
+            </div>
+          ) : (
+            <ImageUploader
+              label="Hình ảnh Sản Phẩm / Thiết Kế Bao Bì / Mockup (Tùy chọn)"
+              hint="Hỗ trợ tối đa 10MB (PNG, JPG, WebP)"
+              currentUrl={formData.concept_image_url}
+              slot="concept"
+              onUploadSuccess={(url) => handleImageUpload('concept', url)}
+              onRemove={() => handleRemoveImage('concept')}
+            />
+          )}
+        </div>
 
         {/* Email for PDF Delivery */}
         <div className="pt-4 border-t border-slate-100 space-y-1.5">

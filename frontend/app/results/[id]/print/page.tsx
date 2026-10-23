@@ -288,6 +288,49 @@ export default function PrintReportPage() {
             {modelInfo.subtitle}. Báo cáo được xây dựng trên cơ sở phân tầng khoa học theo cơ cấu nhân khẩu học Tổng cục Thống kê (GSO) và định lý giới hạn trung tâm bảo đảm giá trị tham chiếu cao nhất cho Ban Giám Đốc và Hội Đồng Quản Trị.
           </p>
 
+          {/* Concept Image Preview on Cover Page if uploaded */}
+          {pInfo.concept_image_url && (
+            <div className="flex items-center gap-3 p-2.5 bg-amber-50/50 border border-amber-200/60 rounded-lg">
+              <img
+                src={pInfo.concept_image_url}
+                alt="Ảnh bao bì sản phẩm"
+                className="w-16 h-16 object-cover rounded border border-slate-200 bg-white shrink-0"
+              />
+              <div className="min-w-0">
+                <span className="text-[10px] font-mono uppercase font-bold text-amber-800 tracking-wider block">
+                  TÀI SẢN HÌNH ẢNH / BAO BÌ THỰC NGHIỆM ĐÃ THẨM ĐỊNH
+                </span>
+                <p className="text-[11px] text-slate-600 truncate mt-0.5 font-medium">
+                  Đã nạp vào quy trình mô phỏng thị trường cho N={sampleN.toLocaleString('vi-VN')} personas
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* A/B Testing Images on Cover Page */}
+          {(pInfo.option_a_image_url || pInfo.option_b_image_url) && (
+            <div className="grid grid-cols-2 gap-3 p-2.5 bg-amber-50/50 border border-amber-200/60 rounded-lg">
+              <div className="flex items-center gap-2">
+                {pInfo.option_a_image_url ? (
+                  <img src={pInfo.option_a_image_url} alt="Option A" className="w-12 h-12 object-cover rounded border border-slate-200 bg-white shrink-0" />
+                ) : null}
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-slate-800 block">Phương án A</span>
+                  <span className="text-[9px] text-slate-500 truncate block max-w-[140px]">{pInfo.option_a_description || 'Mẫu thiết kế A'}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {pInfo.option_b_image_url ? (
+                  <img src={pInfo.option_b_image_url} alt="Option B" className="w-12 h-12 object-cover rounded border border-slate-200 bg-white shrink-0" />
+                ) : null}
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-slate-800 block">Phương án B</span>
+                  <span className="text-[9px] text-slate-500 truncate block max-w-[140px]">{pInfo.option_b_description || 'Mẫu thiết kế B'}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Metadata Specification Table (6 Clean Cells) */}
           <div className="pt-2">
             <div className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider mb-2">
