@@ -518,14 +518,21 @@ function Tab2Quantitative({ report }: { report: ReportPayload }) {
 
   const genderData = metrics.demographic_breakdown?.by_gender
     ? Object.entries(metrics.demographic_breakdown.by_gender).map(([name, value]) => ({
-        name: name === 'male' ? 'Nam giới' : 'Nữ giới',
-        value,
+        name: name.toLowerCase().includes('nam') || name.toLowerCase() === 'male' ? 'Nam giới' : 'Nữ giới',
+        value: Number(value || 0),
       }))
     : [];
 
+  const normalizeScale = (score?: number) => {
+    if (score == null) return null;
+    const num = Number(score);
+    if (isNaN(num)) return null;
+    return num <= 5 ? (num / 5) * 100 : Math.min(100, num);
+  };
+
   const keyMetrics = [
-    metrics.appeal_score ? { name: 'Mức độ yêu thích (Appeal)', value: (metrics.appeal_score / 5) * 100 } : null,
-    metrics.uniqueness_score ? { name: 'Độ độc đáo (Uniqueness)', value: (metrics.uniqueness_score / 5) * 100 } : null,
+    metrics.appeal_score ? { name: 'Mức độ yêu thích (Appeal)', value: normalizeScale(metrics.appeal_score)! } : null,
+    metrics.uniqueness_score ? { name: 'Độ độc đáo (Uniqueness)', value: normalizeScale(metrics.uniqueness_score)! } : null,
   ].filter(Boolean) as { name: string; value: number }[];
 
   return (

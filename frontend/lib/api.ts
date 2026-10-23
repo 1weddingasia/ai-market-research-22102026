@@ -95,6 +95,7 @@ export interface VerbatimQuote {
 
 export interface ReportPayload {
   project_id: string;
+  survey_id?: string;
   model_type: string;
   product_info?: Record<string, any>;
   target_summary: {
@@ -187,8 +188,14 @@ export const api = {
 
   getSurveyResults: async (surveyId: string): Promise<ReportPayload> => {
     if (surveyId.toUpperCase().includes('DEMO')) {
-      const { DEMO_REPORT } = await import('./demo-report');
-      return DEMO_REPORT;
+      const { getDemoReport } = await import('./demo-report');
+      try {
+        const remote = await fetchJSON<ReportPayload>(`/survey/${surveyId}/results`);
+        if (remote && remote.model_type) return remote;
+      } catch {
+        // Fallback to local demo data
+      }
+      return getDemoReport(surveyId);
     }
     return fetchJSON<ReportPayload>(`/survey/${surveyId}/results`);
   },
