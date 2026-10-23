@@ -1,0 +1,13 @@
+venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+personas_vn_1m.parquet
+surveys.db
+pdfs/
+.pytest_cache/
+.coverage
+*.tmp

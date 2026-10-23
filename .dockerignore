@@ -1,0 +1,17 @@
+.git
+.github
+frontend
+node_modules
+.next
+backend/venv
+backend/.env
+backend/.env.*
+backend/personas_vn_1m.parquet
+backend/surveys.db
+backend/pdfs
+backend/__pycache__
+personas_vn_1m.parquet
+surveys.db
+*.parquet
+*.db
+*.tmp
