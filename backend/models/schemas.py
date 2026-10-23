@@ -88,12 +88,17 @@ class SurveyCreateRequest(BaseModel):
         ...,
         pattern="^(nielsen_bases|van_westendorp|ab_testing|ua_study|deal_elasticity|monadic|maxdiff|kano|brand_map)$"
     )
-    # Phạm vi mẫu
+    # Phạm vi mẫu & Bộ lọc chuyên sâu
     region: Optional[str] = None       # None = toàn quốc
     zone: Optional[str] = None         # Tỉnh/thành cụ thể
     min_age: int = Field(default=18, ge=15, le=80)
     max_age: int = Field(default=65, ge=15, le=80)
     sample_size: int = Field(default=1000, ge=100, le=3000)
+    target_gender: Optional[str] = "all"            # "all" | "female" | "male"
+    target_income: Optional[str] = "all"            # "all" | "AB" | "A" | "CD"
+    target_marital_status: Optional[str] = "all"    # "all" | "married" | "single"
+    target_occupation: Optional[str] = "all"        # "all" | "office" | "business" | "worker"
+    target_zone: Optional[str] = "all"              # "all" | "urban" | "rural"
 
     # Thông tin sản phẩm (dạng dict, parse theo model_type)
     product_info: dict[str, Any] = Field(...)
@@ -156,6 +161,12 @@ class TargetSummary(BaseModel):
     margin_of_error: str
     location: str
     demographics: str
+    targeting_summary: Optional[str] = None
+    target_gender: Optional[str] = None
+    target_income: Optional[str] = None
+    target_marital_status: Optional[str] = None
+    target_occupation: Optional[str] = None
+    target_zone: Optional[str] = None
 
 
 class ExecutiveSummary(BaseModel):

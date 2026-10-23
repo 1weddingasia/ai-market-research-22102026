@@ -107,62 +107,97 @@ def get_stratified_sample(
     max_age: int = 65,
     gender: Optional[str] = None,
     income_bracket: Optional[str] = None,
+    target_gender: Optional[str] = "all",
+    target_income: Optional[str] = "all",
+    target_marital_status: Optional[str] = "all",
+    target_occupation: Optional[str] = "all",
+    target_zone: Optional[str] = "all",
     seed: int = 42,
 ) -> pd.DataFrame:
     """
-    Lấy mẫu ngẫu nhiên phân tầng từ Parquet file trên R2.
-
-    Args:
-        sample_size: Số mẫu cần lấy (500, 1000, 2000, 3000)
-        region: Vùng địa lý (e.g. "Đông Nam Bộ") — None = toàn quốc
-        zone: Tỉnh/thành cụ thể — None = không lọc tỉnh
-        min_age: Tuổi nhỏ nhất
-        max_age: Tuổi lớn nhất
-        gender: "male" | "female" | None = không lọc
-        income_bracket: "A" | "B" | "C" | "D" | None = không lọc
-        seed: Random seed để reproducible
-
-    Returns:
-        DataFrame với các cột: age, gender, occupation, income_bracket,
-                                region, zone, culinary_persona, lifestyle
+    Lấy mẫu ngẫu nhiên phân tầng từ Parquet file với 6 bộ lọc đối tượng mục tiêu chuyên sâu:
+    - Khu vực & Tỉnh thành (region, zone)
+    - Dải tuổi (min_age, max_age)
+    - Giới tính (target_gender: all, female, male)
+    - Mức thu nhập (target_income: all, AB, A, CD)
+    - Môi trường sống (target_zone: all, urban, rural)
+    - Tình trạng hôn nhân (target_marital_status: all, married, single)
+    - Nhóm nghề nghiệp (target_occupation: all, office, business, worker)
     """
     con = _get_connection()
     parquet = _get_parquet_path()
 
-    # ── Build WHERE clause ────────────────────────────────────────────────────
+    # ── Chuẩn hóa và xây dựng các điều kiện WHERE ─────────────────────────────
     conditions = [f"age BETWEEN {min_age} AND {max_age}"]
 
+    # 1. Khu vực vùng miền
     if region:
         conditions.append(f"region = '{region}'")
-    if zone:
-        conditions.append(f"zone = '{zone}'")
-    if gender:
-        conditions.append(f"gender = '{gender}'")
-    if income_bracket:
+
+    # 2. Môi trường sống / Tỉnh thành
+    eff_zone = None
+    if target_zone == "urban":
+        eff_zone = "Đô Thị"
+    elif target_zone == "rural":
+        eff_zone = "Nông Thôn"
+    elif zone:
+        eff_zone = zone
+
+    if eff_zone:
+        conditions.append(f"zone = '{eff_zone}'")
+
+    # 3. Giới tính
+    eff_gender = None
+    if target_gender in ("female", "male"):
+        eff_gender = target_gender
+    elif gender:
+        eff_gender = gender
+
+    if eff_gender:
+        conditions.append(f"gender = '{eff_gender}'")
+
+    # 4. Thu nhập
+    if target_income == "AB":
+        conditions.append("income_bracket IN ('A', 'B')")
+    elif target_income == "A":
+        conditions.append("income_bracket = 'A'")
+    elif target_income == "CD":
+        conditions.append("income_bracket IN ('C', 'D')")
+    elif income_bracket:
         conditions.append(f"income_bracket = '{income_bracket}'")
+
+    # 5. Tình trạng hôn nhân
+    if target_marital_status == "married":
+        conditions.append("marital_status = 'Đã kết hôn'")
+    elif target_marital_status == "single":
+        conditions.append("marital_status = 'Độc thân'")
+
+    # 6. Nhóm nghề nghiệp
+    if target_occupation == "office":
+        conditions.append("(occupation ILIKE '%văn phòng%' OR occupation ILIKE '%lập trình%' OR occupation ILIKE '%kế toán%' OR occupation ILIKE '%chuyên viên%' OR occupation ILIKE '%kỹ sư%')")
+    elif target_occupation == "business":
+        conditions.append("(occupation ILIKE '%kinh doanh%' OR occupation ILIKE '%chủ quán%' OR occupation ILIKE '%tiểu thương%' OR occupation ILIKE '%bán lẻ%')")
+    elif target_occupation == "worker":
+        conditions.append("(occupation ILIKE '%công nhân%' OR occupation ILIKE '%lao động%' OR occupation ILIKE '%kỹ thuật viên%' OR occupation ILIKE '%tài xế%')")
 
     where_clause = " AND ".join(conditions)
 
-    query = f"""
-    SELECT
+    cols = """
         age,
         gender,
         occupation,
         income_bracket,
         region,
         zone,
+        marital_status,
         culinary_persona,
         lifestyle
+    """
+
+    query = f"""
+    SELECT {cols}
     FROM (
-        SELECT
-            age,
-            gender,
-            occupation,
-            income_bracket,
-            region,
-            zone,
-            culinary_persona,
-            lifestyle
+        SELECT {cols}
         FROM '{parquet}'
         WHERE {where_clause}
     )
@@ -170,12 +205,16 @@ def get_stratified_sample(
     """
 
     log.info(
-        "DuckDB sampling",
+        "DuckDB targeting sampling",
         sample_size=sample_size,
         region=region,
-        zone=zone,
+        zone=eff_zone,
         min_age=min_age,
         max_age=max_age,
+        target_gender=target_gender,
+        target_income=target_income,
+        target_marital_status=target_marital_status,
+        target_occupation=target_occupation,
     )
 
     start = time.perf_counter()
@@ -183,23 +222,53 @@ def get_stratified_sample(
         df = con.execute(query).df()
         elapsed = time.perf_counter() - start
 
+        # ── Fallback an toàn nhiều cấp độ nếu kết hợp bộ lọc quá hẹp ─────────
         if len(df) == 0:
-            log.warning("duckdb_filter_zero_rows_relaxing", region=region, zone=zone)
-            fallback_conditions = [f"age BETWEEN {min_age} AND {max_age}"]
+            log.warning("duckdb_filter_zero_rows_relaxing_level_1", region=region, zone=eff_zone)
+            # Level 1: Nới lỏng nghề nghiệp và hôn nhân, giữ lại tuổi, khu vực, giới tính, thu nhập
+            fb1_conds = [f"age BETWEEN {min_age} AND {max_age}"]
             if region:
-                fallback_conditions.append(f"region = '{region}'")
-            fallback_where = " AND ".join(fallback_conditions)
-            fallback_query = f"""
-            SELECT age, gender, occupation, income_bracket, region, zone, culinary_persona, lifestyle
-            FROM (SELECT age, gender, occupation, income_bracket, region, zone, culinary_persona, lifestyle FROM '{parquet}' WHERE {fallback_where})
+                fb1_conds.append(f"region = '{region}'")
+            if eff_zone:
+                fb1_conds.append(f"zone = '{eff_zone}'")
+            if eff_gender:
+                fb1_conds.append(f"gender = '{eff_gender}'")
+            if target_income in ("AB", "A", "CD"):
+                if target_income == "AB":
+                    fb1_conds.append("income_bracket IN ('A', 'B')")
+                elif target_income == "A":
+                    fb1_conds.append("income_bracket = 'A'")
+                elif target_income == "CD":
+                    fb1_conds.append("income_bracket IN ('C', 'D')")
+            
+            fb1_where = " AND ".join(fb1_conds)
+            fb1_query = f"""
+            SELECT {cols}
+            FROM (SELECT {cols} FROM '{parquet}' WHERE {fb1_where})
             USING SAMPLE {sample_size} (reservoir, {seed});
             """
-            df = con.execute(fallback_query).df()
+            df = con.execute(fb1_query).df()
 
             if len(df) == 0:
+                log.warning("duckdb_filter_zero_rows_relaxing_level_2", region=region)
+                # Level 2: Giữ tuổi và khu vực
+                fb2_conds = [f"age BETWEEN {min_age} AND {max_age}"]
+                if region:
+                    fb2_conds.append(f"region = '{region}'")
+                fb2_where = " AND ".join(fb2_conds)
+                fb2_query = f"""
+                SELECT {cols}
+                FROM (SELECT {cols} FROM '{parquet}' WHERE {fb2_where})
+                USING SAMPLE {sample_size} (reservoir, {seed});
+                """
+                df = con.execute(fb2_query).df()
+
+            if len(df) == 0:
+                log.warning("duckdb_filter_zero_rows_relaxing_level_3")
+                # Level 3: Toàn quốc theo tuổi
                 nat_query = f"""
-                SELECT age, gender, occupation, income_bracket, region, zone, culinary_persona, lifestyle
-                FROM (SELECT age, gender, occupation, income_bracket, region, zone, culinary_persona, lifestyle FROM '{parquet}' WHERE age BETWEEN {min_age} AND {max_age})
+                SELECT {cols}
+                FROM (SELECT {cols} FROM '{parquet}' WHERE age BETWEEN {min_age} AND {max_age})
                 USING SAMPLE {sample_size} (reservoir, {seed});
                 """
                 df = con.execute(nat_query).df()
@@ -209,18 +278,17 @@ def get_stratified_sample(
                     f"Không tìm thấy dữ liệu trong Parquet cho dải tuổi {min_age}-{max_age}."
                 )
 
-        # Nếu dữ liệu lọc ít hơn yêu cầu, log warning nhưng vẫn trả về
         if len(df) < sample_size:
             log.warning(
-                "Mẫu ít hơn yêu cầu — filter quá hẹp",
+                "Mẫu lọc ít hơn yêu cầu do tiêu chí rất hẹp",
                 requested=sample_size,
                 got=len(df),
                 region=region,
-                zone=zone,
+                zone=eff_zone,
             )
 
         log.info(
-            "DuckDB sample done",
+            "DuckDB targeting sample done",
             rows=len(df),
             elapsed_ms=round(elapsed * 1000, 1),
         )
@@ -253,6 +321,12 @@ def get_demographic_summary(df: pd.DataFrame) -> dict:
     # Income distribution
     income_dist = df["income_bracket"].value_counts(normalize=True) * 100
 
+    # Marital status distribution
+    marital_dist = df["marital_status"].value_counts(normalize=True) * 100 if "marital_status" in df.columns else {}
+
+    # Top occupations
+    top_occupations = df["occupation"].value_counts().head(5).to_dict() if "occupation" in df.columns else {}
+
     # Location summary
     top_zone = df["zone"].value_counts().head(3).to_dict() if "zone" in df.columns else {}
 
@@ -266,6 +340,8 @@ def get_demographic_summary(df: pd.DataFrame) -> dict:
             label: round(age_dist.get(label, 0), 1) for label in age_labels
         },
         "income_distribution": income_dist.to_dict(),
+        "marital_distribution": marital_dist.to_dict() if hasattr(marital_dist, "to_dict") else marital_dist,
+        "top_occupations": top_occupations,
         "top_zones": top_zone,
         "avg_age": round(df["age"].mean(), 1),
     }

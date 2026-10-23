@@ -60,16 +60,21 @@ class Survey(Base):
     # PENDING_PAYMENT → PROCESSING → COMPLETED → FAILED
 
     # Config
-    region            = Column(String(100), nullable=True)
-    zone              = Column(String(100), nullable=True)
-    min_age           = Column(Integer, default=18)
-    max_age           = Column(Integer, default=65)
-    sample_size       = Column(Integer, default=1000)
-    product_info_json = Column(Text, nullable=True)   # JSON string
-    price_amount      = Column(Integer, nullable=False)  # VND (Số tiền thực tế cần thanh toán)
-    original_price    = Column(Integer, nullable=True)   # VND (Số tiền gốc trước giảm giá)
-    discount_code     = Column(String(50), nullable=True) # Mã giảm giá đã áp dụng
-    discount_amount   = Column(Integer, default=0)       # Số tiền được giảm
+    region                = Column(String(100), nullable=True)
+    zone                  = Column(String(100), nullable=True)
+    min_age               = Column(Integer, default=18)
+    max_age               = Column(Integer, default=65)
+    sample_size           = Column(Integer, default=1000)
+    target_gender         = Column(String(20), nullable=True, default="all")
+    target_income         = Column(String(50), nullable=True, default="all")
+    target_marital_status = Column(String(50), nullable=True, default="all")
+    target_occupation     = Column(String(50), nullable=True, default="all")
+    target_zone           = Column(String(50), nullable=True, default="all")
+    product_info_json     = Column(Text, nullable=True)   # JSON string
+    price_amount          = Column(Integer, nullable=False)  # VND (Số tiền thực tế cần thanh toán)
+    original_price        = Column(Integer, nullable=True)   # VND (Số tiền gốc trước giảm giá)
+    discount_code         = Column(String(50), nullable=True) # Mã giảm giá đã áp dụng
+    discount_amount       = Column(Integer, default=0)       # Số tiền được giảm
 
     # Kết quả
     result_json = Column(Text, nullable=True)   # Full report JSON

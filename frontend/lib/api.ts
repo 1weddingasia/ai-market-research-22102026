@@ -28,6 +28,11 @@ export interface SurveyCreateRequest {
   zone?: string;
   min_age?: number;
   max_age?: number;
+  target_gender?: string;
+  target_income?: string;
+  target_marital_status?: string;
+  target_occupation?: string;
+  target_zone?: string;
   sample_size: number;
   product_info: Record<string, unknown>;
   customer_email?: string;
@@ -97,6 +102,12 @@ export interface ReportPayload {
     margin_of_error: string;
     location: string;
     demographics: string;
+    targeting_summary?: string;
+    target_gender?: string;
+    target_income?: string;
+    target_marital_status?: string;
+    target_occupation?: string;
+    target_zone?: string;
   };
   executive_summary: {
     viability_score: number;

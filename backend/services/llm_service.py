@@ -50,9 +50,10 @@ def _build_persona_block(personas: list[dict], start_idx: int) -> str:
             f"[{pid}] "
             f"Tuổi: {p.get('age', 28)} | "
             f"Giới tính: {'Nam' if p.get('gender') == 'male' else 'Nữ'} | "
+            f"Hôn nhân: {p.get('marital_status', 'Đã kết hôn')} | "
             f"Nghề nghiệp: {p.get('occupation', 'Nhân viên văn phòng')} | "
             f"Thu nhập: {bracket_desc} | "
-            f"Địa bàn sinh sống: {p.get('zone', p.get('region', 'Việt Nam'))} ({p.get('region', '')}) | "
+            f"Địa bàn: {p.get('zone', p.get('region', 'Việt Nam'))} ({p.get('region', '')}) | "
             f"Lối sống & Thói quen: {p.get('lifestyle', 'Phổ thông')}"
         )
     return "\n".join(lines)
@@ -99,12 +100,12 @@ def _build_prompt(
 
 ━━━ NGUYÊN TẮC PHÂN VAI TÁC TỬ & ĐẦU RA BẮT BUỘC (MULTI-AGENT ROLEPLAY) ━━━
 1. BẠN PHẢI ĐÓNG VAI TỪNG TÁC TỬ TIÊU DÙNG ĐỘC LẬP theo đúng hồ sơ nhân khẩu học GSO được gán:
-   - Người có mức thu nhập thấp (< 7.5tr/tháng) phải cực kỳ nhạy cảm về giá, đắn đo kỹ lưỡng từng khoản chi tiêu.
-   - Người có thu nhập cao (> 25tr/tháng) chú trọng sự an toàn, thẩm mỹ bao bì, uy tín thương hiệu và tính tiện dụng vượt trội.
-   - Người tiêu dùng trẻ (18-25 tuổi) nhạy bén với phong cách hiện đại, xu hướng mạng xã hội; người trung niên/lớn tuổi (40-65) coi trọng sức khỏe gia đình, sự bền bỉ và tính thiết thực.
-   - Người ở các đô thị lớn (TP.HCM, Hà Nội) có mức sống và tiêu chuẩn dịch vụ khác biệt so với các tỉnh thành khác.
+   - Thu nhập: Nhóm D (< 7.5tr) đắn đo từng nghìn đồng, nhạy cảm giá cao; Nhóm A (> 25tr) chi tiêu phóng khoáng, đòi hỏi chất lượng thượng hạng, mẫu mã sang trọng.
+   - Hôn nhân & Gia đình: Người đã kết hôn ưu tiên an toàn, kinh tế gia đình và sức khỏe con cái; Người độc thân cởi mở trải nghiệm mới, tiện lợi cá nhân, giao lưu xã hội.
+   - Nhóm nghề nghiệp: Giới văn phòng chuộng sự tinh tế, tiện dụng; Người kinh doanh quan tâm thực chất, hiệu quả; Công nhân, lao động chuộng sự bền bỉ, tiết kiệm.
+   - Địa bàn sinh sống: Người Đô Thị chuộng lối sống hiện đại, thương hiệu lớn; Người Nông Thôn chuộng sự giản dị, gần gũi, vừa túi tiền.
 2. BẮT BUỘC TRẢ LỜI ĐẦY ĐỦ TẤT CẢ các câu hỏi ({', '.join(question_keys)}) cho từng người, TUYỆT ĐỐI KHÔNG BỎ SÓT bất kỳ trường dữ liệu nào.
-3. Câu trả lời định tính tiếng Việt phải chân thực, đa dạng giọng điệu tự nhiên, phản ánh đúng hoàn cảnh sống thực tế của người đó.
+3. Câu trả lời định tính tiếng Việt phải chân thực, mang sắc thái tự nhiên của người tiêu dùng Việt Nam, phản ánh đúng hoàn cảnh sống thực tế.
 4. Đầu ra là JSON thuần túy, mảng "responses" phải có đúng chính xác {len(personas)} phần tử tương ứng với các ID: {', '.join(persona_ids[:3])}...
 
 Cấu trúc JSON yêu cầu:

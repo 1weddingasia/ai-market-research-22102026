@@ -122,6 +122,149 @@ export default function Step2SampleConfig() {
             </div>
           </div>
 
+          {/* Advanced Audience Targeting Card */}
+          <div className="bg-white border border-amber-200/80 rounded-xl p-6 shadow-sm space-y-5 relative overflow-hidden">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span className="text-xs uppercase font-bold tracking-wider text-amber-900">
+                  ✦ BỘ LỌC ĐỐI TƯỢNG MỤC TIÊU CHUYÊN SÂU (ADVANCED TARGETING)
+                </span>
+              </div>
+              <span className="text-[10px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full font-semibold border border-amber-200">
+                DuckDB 1M Personas
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              Thu hẹp tệp tác tử AI theo đúng khách hàng mục tiêu của sản phẩm. Tác tử AI sẽ nhập vai theo đúng mức thu nhập, gia đình và nghề nghiệp đã chọn.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 1. Target Gender */}
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
+                  1. Giới tính mục tiêu
+                </label>
+                <div className="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-lg">
+                  {[
+                    { id: 'all', label: 'Cả hai' },
+                    { id: 'female', label: 'Chỉ Nữ' },
+                    { id: 'male', label: 'Chỉ Nam' },
+                  ].map((g) => (
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => updateSampleConfig({ targetGender: g.id })}
+                      className={`py-1.5 px-2 text-xs font-semibold rounded-md transition-all ${
+                        (state.targetGender || 'all') === g.id
+                          ? 'bg-slate-900 text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                      }`}
+                    >
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. Target Income */}
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
+                  2. Phân khúc thu nhập
+                </label>
+                <select
+                  value={state.targetIncome || 'all'}
+                  onChange={(e) => updateSampleConfig({ targetIncome: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg py-2 px-3 text-slate-900 font-medium text-xs focus:ring-2 focus:ring-slate-900 focus:bg-white"
+                >
+                  <option value="all">Toàn bộ phân khúc (Đại diện tự nhiên)</option>
+                  <option value="AB">Trung & Thượng lưu A-B (&gt;15 triệu/tháng)</option>
+                  <option value="A">Cao cấp Hạng A (&gt;25 triệu/tháng)</option>
+                  <option value="CD">Bình dân & Phổ thông C-D (&lt;15 triệu/tháng)</option>
+                </select>
+              </div>
+
+              {/* 3. Target Marital Status */}
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
+                  3. Tình trạng hôn nhân / Gia đình
+                </label>
+                <select
+                  value={state.targetMaritalStatus || 'all'}
+                  onChange={(e) => updateSampleConfig({ targetMaritalStatus: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg py-2 px-3 text-slate-900 font-medium text-xs focus:ring-2 focus:ring-slate-900 focus:bg-white"
+                >
+                  <option value="all">Tất cả tình trạng (Độc thân & Có gia đình)</option>
+                  <option value="married">Đã kết hôn / Gia đình &amp; Có con</option>
+                  <option value="single">Độc thân / Chưa lập gia đình</option>
+                </select>
+              </div>
+
+              {/* 4. Target Occupation */}
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
+                  4. Nhóm nghề nghiệp ưu tiên
+                </label>
+                <select
+                  value={state.targetOccupation || 'all'}
+                  onChange={(e) => updateSampleConfig({ targetOccupation: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg py-2 px-3 text-slate-900 font-medium text-xs focus:ring-2 focus:ring-slate-900 focus:bg-white"
+                >
+                  <option value="all">Đa dạng mọi ngành nghề (Chuẩn GSO)</option>
+                  <option value="office">Dân văn phòng &amp; Trí thức (IT, tài chính, chuyên viên)</option>
+                  <option value="business">Kinh doanh &amp; Thương mại (Chủ quán, tiểu thương)</option>
+                  <option value="worker">Công nhân &amp; Sản xuất (Kỹ thuật viên, vận hành)</option>
+                </select>
+              </div>
+
+              {/* 5. Target Zone (Môi trường sống) */}
+              <div className="sm:col-span-2">
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
+                  5. Môi trường địa bàn sinh sống
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'all', label: 'Tự nhiên theo địa bàn' },
+                    { id: 'urban', label: 'Chỉ Đô Thị (Thành phố)' },
+                    { id: 'rural', label: 'Chỉ Nông Thôn' },
+                  ].map((z) => (
+                    <button
+                      key={z.id}
+                      type="button"
+                      onClick={() => updateSampleConfig({ targetZone: z.id })}
+                      className={`py-2 px-3 text-xs font-semibold rounded-lg border text-center transition-all ${
+                        (state.targetZone || 'all') === z.id
+                          ? 'border-amber-500 bg-amber-50/80 text-amber-900 shadow-xs'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100'
+                      }`}
+                    >
+                      {z.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Live Targeting Portrait Box */}
+            <div className="bg-amber-500/10 border border-amber-300/60 rounded-xl p-3.5 flex items-start gap-3 mt-2">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-700 flex items-center justify-center shrink-0 font-bold text-sm">
+                🎯
+              </div>
+              <div className="text-xs">
+                <div className="font-bold text-amber-950 uppercase tracking-wide text-[10px]">
+                  Chân dung mẫu tác tử AI trích xuất mục tiêu:
+                </div>
+                <div className="font-bold text-slate-900 mt-0.5 text-xs sm:text-sm">
+                  {state.sampleSize.toLocaleString('vi-VN')} Tác tử AI {state.targetGender === 'female' ? 'Nữ giới' : state.targetGender === 'male' ? 'Nam giới' : 'Đại diện Nam & Nữ'} | Tuổi {state.minAge}-{state.maxAge} | {state.region} {state.targetZone === 'urban' ? '(Đô Thị)' : state.targetZone === 'rural' ? '(Nông Thôn)' : ''} {state.targetIncome && state.targetIncome !== 'all' ? `| Thu nhập ${state.targetIncome === 'AB' ? 'Trung & Thượng lưu A-B' : state.targetIncome === 'A' ? 'Cao cấp Hạng A' : 'Phổ thông C-D'}` : ''} {state.targetMaritalStatus && state.targetMaritalStatus !== 'all' ? `| ${state.targetMaritalStatus === 'married' ? 'Đã kết hôn / Gia đình' : 'Độc thân'}` : ''} {state.targetOccupation && state.targetOccupation !== 'all' ? `| ${state.targetOccupation === 'office' ? 'Văn phòng & Trí thức' : state.targetOccupation === 'business' ? 'Kinh doanh & Tiểu thương' : 'Công nhân & Sản xuất'}` : ''}
+                </div>
+                <div className="text-[11px] text-slate-500 mt-1">
+                  Đảm bảo tác tử AI bóc tách đúng hành vi mua sắm và phản hồi đúng bối cảnh thực tế.
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Sample Size Slider & Price Picker */}
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -250,6 +393,21 @@ export default function Step2SampleConfig() {
                 <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
                   Mẫu được trích xuất ngẫu nhiên từ kho 1.000.000 chân dung tiêu dùng tổng hợp (Synthetic Personas), phân bổ cân bằng theo cơ cấu độ tuổi, giới tính và thu nhập thực tế của Việt Nam. Dữ liệu mô phỏng tuân thủ nghiêm ngặt nguyên tắc Privacy-by-Design, ẩn danh 100%, không chứa thông tin định danh cá nhân (PII-free) theo Nghị định 13/2023/NĐ-CP.
                 </p>
+              </div>
+
+              {/* Target Audience Quota */}
+              <div className="bg-amber-50/60 p-3 rounded-lg border border-amber-200/80 shadow-xs">
+                <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider block">
+                  Bộ lọc phân khúc mục tiêu (Target Quota)
+                </span>
+                <div className="text-xs font-bold text-slate-900 mt-1">
+                  {state.targetGender === 'female' ? 'Nữ giới' : state.targetGender === 'male' ? 'Nam giới' : 'Nam & Nữ'} · Tuổi {state.minAge}-{state.maxAge} · {state.region} {state.targetZone === 'urban' ? '(Đô Thị)' : state.targetZone === 'rural' ? '(Nông Thôn)' : ''}
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  {state.targetIncome && state.targetIncome !== 'all' ? `Thu nhập: ${state.targetIncome} · ` : ''}
+                  {state.targetMaritalStatus && state.targetMaritalStatus !== 'all' ? `Hôn nhân: ${state.targetMaritalStatus === 'married' ? 'Có gia đình' : 'Độc thân'} · ` : ''}
+                  {state.targetOccupation && state.targetOccupation !== 'all' ? `Ngành: ${state.targetOccupation}` : 'Đa ngành'}
+                </div>
               </div>
 
               {/* Academic Positioning Box */}

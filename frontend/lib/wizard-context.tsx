@@ -13,6 +13,11 @@ export interface WizardState {
   sampleSize: number;
   minAge: number;
   maxAge: number;
+  targetGender: string;
+  targetIncome: string;
+  targetMaritalStatus: string;
+  targetOccupation: string;
+  targetZone: string;
   productInfo: Record<string, string>;
   customerEmail: string;
   surveyId: string;
@@ -58,6 +63,11 @@ const INITIAL_STATE: WizardState = {
   sampleSize: 1000,
   minAge: 18,
   maxAge: 65,
+  targetGender: 'all',
+  targetIncome: 'all',
+  targetMaritalStatus: 'all',
+  targetOccupation: 'all',
+  targetZone: 'all',
   productInfo: {},
   customerEmail: '',
   surveyId: '',

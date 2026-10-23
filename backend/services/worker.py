@@ -91,11 +91,64 @@ async def run_simulation(survey_id: str) -> None:
         try:
             region_filter, zone_filter, display_location = resolve_sampling_filters(survey.region, survey.zone)
 
-            # Cung cấp đầy đủ thông tin vị trí và quy mô cho product_info để cả 9 analyzer sử dụng
+            # Xử lý các bộ lọc mục tiêu chuyên sâu
+            tgt_gender = getattr(survey, "target_gender", "all") or "all"
+            tgt_income = getattr(survey, "target_income", "all") or "all"
+            tgt_marital = getattr(survey, "target_marital_status", "all") or "all"
+            tgt_occupation = getattr(survey, "target_occupation", "all") or "all"
+            tgt_zone = getattr(survey, "target_zone", "all") or "all"
+
+            # Xây dựng chuỗi mô tả chân dung mẫu chuẩn chuyên nghiệp
+            target_parts = []
+            gender_map = {"female": "Nữ giới 100%", "male": "Nam giới 100%", "all": "Toàn bộ (Nam & Nữ)"}
+            if tgt_gender in ("female", "male"):
+                target_parts.append(gender_map.get(tgt_gender, ""))
+            
+            target_parts.append(f"Tuổi {survey.min_age}-{survey.max_age}")
+            target_parts.append(display_location)
+
+            zone_map = {"urban": "Khu vực Đô Thị", "rural": "Khu vực Nông Thôn"}
+            if tgt_zone in zone_map:
+                target_parts.append(zone_map[tgt_zone])
+
+            income_map = {
+                "A": "Thu nhập Hạng A (>25tr)",
+                "AB": "Trung & Thượng lưu A-B (>15tr)",
+                "CD": "Phổ thông C-D (<15tr)",
+            }
+            if tgt_income in income_map:
+                target_parts.append(income_map[tgt_income])
+
+            marital_map = {
+                "married": "Đã kết hôn / Gia đình",
+                "single": "Độc thân",
+            }
+            if tgt_marital in marital_map:
+                target_parts.append(marital_map[tgt_marital])
+
+            occ_map = {
+                "office": "Văn phòng & Trí thức",
+                "business": "Kinh doanh & Tiểu thương",
+                "worker": "Công nhân & Lao động",
+            }
+            if tgt_occupation in occ_map:
+                target_parts.append(occ_map[tgt_occupation])
+
+            targeting_summary_str = " | ".join(target_parts)
+            targeting_sentence = f"{survey.sample_size:,} Tác tử AI ({targeting_summary_str})"
+
+            # Cung cấp đầy đủ thông tin vị trí, quy mô và chân dung mục tiêu cho product_info để cả 9 analyzer sử dụng
             product_info["region"] = survey.region
             product_info["zone"] = survey.zone
             product_info["display_location"] = display_location
             product_info["sample_size"] = survey.sample_size
+            product_info["target_gender"] = tgt_gender
+            product_info["target_income"] = tgt_income
+            product_info["target_marital_status"] = tgt_marital
+            product_info["target_occupation"] = tgt_occupation
+            product_info["target_zone"] = tgt_zone
+            product_info["targeting_summary"] = targeting_summary_str
+            product_info["targeting_sentence"] = targeting_sentence
 
             personas_df = await asyncio.to_thread(
                 get_stratified_sample,
@@ -104,6 +157,11 @@ async def run_simulation(survey_id: str) -> None:
                 zone=zone_filter,
                 min_age=survey.min_age,
                 max_age=survey.max_age,
+                target_gender=tgt_gender,
+                target_income=tgt_income,
+                target_marital_status=tgt_marital,
+                target_occupation=tgt_occupation,
+                target_zone=tgt_zone,
             )
 
             demo = get_demographic_summary(personas_df)
@@ -113,7 +171,7 @@ async def run_simulation(survey_id: str) -> None:
 
             await _emit_log(
                 survey_id, 30,
-                f"[PHÂN BỔ MẪU GSO] Khu vực: {display_location} (Nam {male_pct:.0f}% - Nữ {female_pct:.0f}% | Tuổi TB: {avg_age:.0f}) | Quy mô N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[PHÂN BỔ MẪU GSO] Mục tiêu: {targeting_summary_str} (Mẫu thực: Nam {male_pct:.0f}% - Nữ {female_pct:.0f}%, Tuổi TB {avg_age:.0f}) | N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
             )
 
         except Exception as e:

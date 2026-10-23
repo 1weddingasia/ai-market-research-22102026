@@ -123,6 +123,21 @@ export default function PrintReportPage() {
     viabilityBadgeClass = 'text-red-800 bg-red-50 border-red-300';
   }
 
+  // Gender representation calculation
+  const targetGender = report.target_summary?.target_gender;
+  const isAllFemale = targetGender === 'female';
+  const isAllMale = targetGender === 'male';
+  const maleDisplay = isAllFemale
+    ? '0.0%'
+    : isAllMale
+    ? '100.0%'
+    : `${(report.quantitative_metrics?.demographic_breakdown?.by_gender?.male ?? 49.2).toFixed(1)}%`;
+  const femaleDisplay = isAllFemale
+    ? '100.0%'
+    : isAllMale
+    ? '0.0%'
+    : `${(report.quantitative_metrics?.demographic_breakdown?.by_gender?.female ?? 50.8).toFixed(1)}%`;
+
   // Split quotes into 3 groups
   const quotes: VerbatimQuote[] = report.qualitative_insights?.verbatim_quotes || [];
   const positiveQuotes = quotes.filter((q) => q.sentiment === 'positive');
@@ -391,6 +406,14 @@ export default function PrintReportPage() {
                 </span>
               </div>
             </div>
+
+            {/* Target Audience Profile Ribbon on Cover Page */}
+            {report.target_summary?.demographics && (
+              <div className="mt-2.5 p-2 bg-amber-50/80 border border-amber-200/90 rounded-lg text-left flex items-start gap-2">
+                <span className="text-amber-800 font-bold text-[10px] shrink-0 font-mono">🎯 ĐỐI TƯỢNG MỤC TIÊU:</span>
+                <span className="text-slate-800 font-semibold text-[10.5px] leading-snug">{report.target_summary.demographics}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -593,6 +616,40 @@ export default function PrintReportPage() {
             </div>
           </div>
 
+          {/* Target Audience Specification Card */}
+          <div className="bg-amber-50/70 border-2 border-amber-300 p-3 rounded-xl">
+            <div className="flex items-center justify-between mb-1 text-amber-900 font-mono text-[9.5px] font-bold uppercase tracking-wider">
+              <span className="flex items-center gap-1.5">
+                <span>🎯</span>
+                <span>HỒ SƠ PHÂN KHÚC MỤC TIÊU ĐÃ THẨM ĐỊNH (AUDIENCE TARGETING PROFILE)</span>
+              </span>
+              <span className="text-[9px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-mono">
+                DuckDB 1M Personas
+              </span>
+            </div>
+            <div className="text-slate-900 font-bold text-xs font-serif">
+              {report.target_summary?.demographics || `${sampleN.toLocaleString('vi-VN')} Tác tử AI phân vai theo chuẩn phân tầng GSO`}
+            </div>
+            <div className="grid grid-cols-4 gap-2 mt-2 pt-2 border-t border-amber-200 text-center font-mono text-[9px]">
+              <div className="bg-white p-1 rounded border border-amber-100">
+                <span className="text-slate-400 block">Địa bàn</span>
+                <strong className="text-slate-800 truncate block">{report.target_summary?.location}</strong>
+              </div>
+              <div className="bg-white p-1 rounded border border-amber-100">
+                <span className="text-slate-400 block">Giới tính</span>
+                <strong className="text-slate-800 block">{isAllFemale ? '100% Nữ giới' : isAllMale ? '100% Nam giới' : 'Đại diện Nam & Nữ'}</strong>
+              </div>
+              <div className="bg-white p-1 rounded border border-amber-100">
+                <span className="text-slate-400 block">Thu nhập</span>
+                <strong className="text-slate-800 truncate block">{report.target_summary?.target_income === 'AB' ? 'Hạng A-B (>15tr)' : report.target_summary?.target_income === 'A' ? 'Hạng A (>25tr)' : report.target_summary?.target_income === 'CD' ? 'Hạng C-D (<15tr)' : 'Đa dạng phân khúc'}</strong>
+              </div>
+              <div className="bg-white p-1 rounded border border-amber-100">
+                <span className="text-slate-400 block">Môi trường</span>
+                <strong className="text-slate-800 truncate block">{report.target_summary?.target_zone === 'urban' ? 'Khu vực Đô Thị' : report.target_summary?.target_zone === 'rural' ? 'Khu vực Nông Thôn' : 'Toàn địa bàn'}</strong>
+              </div>
+            </div>
+          </div>
+
           {/* Demographic Breakdown Grid */}
           <div className="grid grid-cols-2 gap-3">
             {/* Age Pyramid / Breakdown */}
@@ -681,17 +738,17 @@ export default function PrintReportPage() {
                 <h4 className="font-serif font-bold text-xs text-slate-900 mb-0.5">
                   Cân đối giới tính & Nghề nghiệp
                 </h4>
-                <p className="text-[10px] text-slate-500 mb-1.5">Tỷ lệ cân đối đại diện tự nhiên</p>
+                <p className="text-[10px] text-slate-500 mb-1.5">Tỷ lệ theo phân vai thực tế của mẫu</p>
               </div>
 
               <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
                 <div className="flex-1 text-center border-r border-slate-200">
                   <span className="text-[9.5px] text-slate-400 font-mono block">NAM GIỚI</span>
-                  <span className="font-serif text-base font-bold text-slate-900">49.2%</span>
+                  <span className="font-serif text-base font-bold text-slate-900">{maleDisplay}</span>
                 </div>
                 <div className="flex-1 text-center">
                   <span className="text-[9.5px] text-slate-400 font-mono block">NỮ GIỚI</span>
-                  <span className="font-serif text-base font-bold text-amber-700">50.8%</span>
+                  <span className="font-serif text-base font-bold text-amber-700">{femaleDisplay}</span>
                 </div>
               </div>
             </div>

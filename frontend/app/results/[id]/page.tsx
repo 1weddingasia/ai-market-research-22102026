@@ -328,6 +328,76 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
         </div>
       </div>
 
+      {/* ── Target Audience Specification Card ── */}
+      <div className="bg-white border border-amber-200/80 rounded-2xl p-6 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <h4 className="font-serif font-bold text-base text-slate-900">
+              Đặc Tả Phân Khúc Đối Tượng Mục Tiêu (Target Audience Specification)
+            </h4>
+          </div>
+          <span className="text-[10px] font-mono bg-amber-50 text-amber-900 font-bold px-2.5 py-1 rounded-full border border-amber-200 shrink-0">
+            DuckDB 1.000.000 Personas Filtered
+          </span>
+        </div>
+
+        <div className="p-3.5 bg-amber-50/40 rounded-xl border border-amber-200/60 flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-700 font-bold text-sm flex items-center justify-center shrink-0">
+            🎯
+          </div>
+          <div>
+            <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-900">
+              Chân dung phân khúc tiêu dùng trích xuất:
+            </div>
+            <div className="font-bold text-slate-900 text-sm mt-0.5">
+              {report.target_summary.demographics || `${report.target_summary.sample_size.toLocaleString('vi-VN')} Tác tử AI phân vai | ${report.target_summary.location}`}
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              Các tác tử AI đã được nạp đúng các tham số nhân khẩu học trên từ kho Parquet 1.000.000 hồ sơ để đưa ra phản hồi thực tế, bóc tách chính xác tâm lý chi tiêu và rào cản mua hàng.
+            </p>
+          </div>
+        </div>
+
+        {/* Breakdown Tags Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs">
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Địa bàn</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">{report.target_summary.location}</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Giới tính</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5">
+              {report.target_summary.target_gender === 'female' ? 'Nữ giới 100%' : report.target_summary.target_gender === 'male' ? 'Nam giới 100%' : 'Toàn bộ (Nam & Nữ)'}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Thu nhập</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+              {report.target_summary.target_income === 'AB' ? 'Hạng A-B (>15tr)' : report.target_summary.target_income === 'A' ? 'Hạng A (>25tr)' : report.target_summary.target_income === 'CD' ? 'Hạng C-D (<15tr)' : 'Đa dạng phân khúc'}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Hôn nhân</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+              {report.target_summary.target_marital_status === 'married' ? 'Có gia đình / Con cái' : report.target_summary.target_marital_status === 'single' ? 'Độc thân' : 'Tất cả tình trạng'}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Nghề nghiệp</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+              {report.target_summary.target_occupation === 'office' ? 'Văn phòng / Trí thức' : report.target_summary.target_occupation === 'business' ? 'Kinh doanh / Buôn bán' : report.target_summary.target_occupation === 'worker' ? 'Công nhân / Sản xuất' : 'Đa dạng mọi ngành'}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[10px] text-slate-400 font-mono uppercase block">Môi trường</span>
+            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+              {report.target_summary.target_zone === 'urban' ? 'Chỉ Đô Thị' : report.target_summary.target_zone === 'rural' ? 'Chỉ Nông Thôn' : 'Toàn địa bàn'}
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* ── Strategic Executive Council Audit ── */}
       <div className="bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl p-6 sm:p-8 shadow-md">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-slate-800">
@@ -1021,6 +1091,12 @@ export default function ResultsPage() {
             <p className="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
               Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} Personas</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số thống kê: <span className="text-amber-400 font-semibold">{report.target_summary.margin_of_error || '±3.1%'}</span> (Chuẩn phân tầng GSO)
             </p>
+            {report.target_summary.demographics && (
+              <div className="mt-2.5 inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-400/10 border border-amber-400/25 text-amber-300 text-xs">
+                <span className="text-amber-400 font-bold">🎯 Đối tượng mục tiêu:</span>
+                <span className="text-slate-100">{report.target_summary.demographics}</span>
+              </div>
+            )}
           </div>
 
           <div className="text-left md:text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
