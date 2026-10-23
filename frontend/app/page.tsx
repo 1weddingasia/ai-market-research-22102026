@@ -424,31 +424,60 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {METHODS.map((m) => (
-              <div key={m.id} className="bg-slate-800/80 border border-slate-700 p-5 sm:p-6 rounded-2xl hover:border-amber-400/50 transition-all flex flex-col justify-between">
-                <div>
-                  <span className="text-[10px] font-mono font-bold text-amber-400 block mb-2">
-                    {m.code}
-                  </span>
-                  <h3 className="font-serif text-base font-bold text-white mb-2">
-                    {m.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    {m.desc}
-                  </p>
+            {METHODS.map((m) => {
+              const demoUrl = {
+                nielsen_bases: '/results/DEMO-NIELSEN-BASES',
+                van_westendorp: '/results/DEMO-VAN-WESTENDORP',
+                ab_testing: '/results/DEMO-AB-TESTING',
+                monadic: '/results/DEMO-MONADIC',
+                maxdiff: '/results/DEMO-MAXDIFF',
+                kano: '/results/DEMO-KANO',
+                brand_map: '/results/DEMO-BRAND-MAP',
+                ua_study: '/results/DEMO-UA-STUDY',
+                deal_elasticity: '/results/DEMO-DEAL-ELASTICITY',
+              }[m.id] || '/results/DEMO-NIELSEN-BASES';
+
+              return (
+                <div key={m.id} className="bg-slate-800/80 border border-slate-700 p-5 sm:p-6 rounded-2xl hover:border-amber-400/50 transition-all flex flex-col justify-between group">
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-amber-400 block mb-2">
+                      {m.code}
+                    </span>
+                    <h3 className="font-serif text-base font-bold text-white mb-2">
+                      {m.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {m.desc}
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-slate-700/60 flex flex-col gap-2.5 text-xs">
+                    <Link
+                      href={demoUrl}
+                      target="_blank"
+                      className="w-full inline-flex items-center justify-between px-3 py-2 rounded-lg bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold transition-all group/btn"
+                      title="Mở xem báo cáo mẫu thực tế trong tab mới (gồm 4 Tab tương tác & Bản in 6 Trang A4)"
+                    >
+                      <span className="inline-flex items-center gap-1.5">
+                        <span>📊</span>
+                        <span>Xem Báo Cáo Mẫu (Live Demo)</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-amber-400 group-hover/btn:translate-x-0.5 transition-transform">Mở ↗</span>
+                    </Link>
+
+                    <div className="flex items-center justify-between pt-0.5">
+                      <span className="text-slate-400">Báo cáo chuẩn hóa</span>
+                      <Link
+                        href={`/wizard?model=${m.id}`}
+                        className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
+                      >
+                        <span>Khởi tạo gói này</span>
+                        <span>→</span>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between text-xs">
-                  <span className="text-slate-400">Báo cáo chuẩn hóa</span>
-                  <Link
-                    href={`/wizard?model=${m.id}`}
-                    className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
-                  >
-                    <span>Khởi tạo gói này</span>
-                    <span>→</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
