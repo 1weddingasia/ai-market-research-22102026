@@ -139,8 +139,14 @@ export default function HomePage() {
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">Bảng giá</a>
             <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Cơ sở khoa học</a>
             <Link
-              href="/bach-thu"
+              href="/minh-bach-khoa-hoc"
               className="text-amber-800 hover:text-amber-950 font-bold transition-colors whitespace-nowrap"
+            >
+              Minh bạch thống kê
+            </Link>
+            <Link
+              href="/bach-thu"
+              className="hover:text-slate-900 transition-colors whitespace-nowrap"
             >
               Bạch thư C-Level
             </Link>
@@ -212,6 +218,18 @@ export default function HomePage() {
               <span className="flex items-center gap-2">
                 <span>📄</span>
                 <span>Xem Báo Cáo Mẫu Thực Tế (DEMO)</span>
+              </span>
+              <span>→</span>
+            </Link>
+
+            <Link
+              href="/minh-bach-khoa-hoc"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl bg-amber-500/15 text-amber-900 font-bold text-xs border border-amber-400/40"
+            >
+              <span className="flex items-center gap-2">
+                <span>⚖️</span>
+                <span>Minh Bạch Khoa Học &amp; Thống Kê (MoE ±3.1%)</span>
               </span>
               <span>→</span>
             </Link>
@@ -598,13 +616,22 @@ export default function HomePage() {
                   Tìm hiểu chi tiết cơ sở toán học Cochran, độ tương quan 75%–85% theo chuẩn Stanford &amp; Harvard, cơ chế bảo mật theo Luật 91/2025/QH15 và cách loại bỏ 80% rủi ro dòng vốn trước khi sản xuất đại trà.
                 </p>
               </div>
-              <Link
-                href="/bach-thu"
-                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all shrink-0"
-              >
-                <span>Đọc Bạch Thư (Lookbook)</span>
-                <span className="text-amber-400">→</span>
-              </Link>
+              <div className="flex flex-col sm:flex-row items-center gap-2 shrink-0 w-full sm:w-auto">
+                <Link
+                  href="/minh-bach-khoa-hoc"
+                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all"
+                >
+                  <span>Minh Bạch Khoa Học &amp; Thống Kê</span>
+                  <span>→</span>
+                </Link>
+                <Link
+                  href="/bach-thu"
+                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all"
+                >
+                  <span>Đọc Bạch Thư</span>
+                  <span className="text-amber-400">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -733,13 +760,15 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
-            <Link href="/bach-thu" className="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-4 transition-colors">
-              Bạch Thư Phương Pháp Luận
+            <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 transition-colors">
+              ✦ Minh Bạch Khoa Học &amp; Thống Kê
             </Link>
             <span>·</span>
-            <span>Bảo mật dữ liệu tuyệt đối</span>
+            <Link href="/bach-thu" className="text-slate-300 hover:text-amber-300 font-semibold underline underline-offset-4 transition-colors">
+              Bạch Thư C-Level
+            </Link>
             <span>·</span>
-            <span>Chuẩn Thống Kê ESOMAR</span>
+            <span>Bảo chứng Cochran 95%</span>
             <span>·</span>
             <span>VietQR Pro Certified</span>
           </div>

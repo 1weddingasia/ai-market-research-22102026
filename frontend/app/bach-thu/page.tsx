@@ -29,6 +29,12 @@ export default function BachThuPage() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
+              href="/minh-bach-khoa-hoc"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-300 hover:text-white px-3 py-1.5 rounded-lg border border-amber-500/40 hover:bg-amber-500/10 transition-all"
+            >
+              <span>⚖️ Minh bạch thống kê</span>
+            </Link>
+            <Link
               href="/results/DEMO-NIELSEN-BASES"
               className="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 hover:border-amber-500/50 transition-all"
             >
@@ -725,8 +731,14 @@ export default function BachThuPage() {
             <Logo variant="footer" href="/" />
             <span className="text-[11px] text-slate-400 mt-1">insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
           </div>
-          <div className="text-[11px] font-mono text-slate-400">
-            Tuân thủ Luật 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP · Chuẩn Cochran 95%
+          <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-slate-400">
+            <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 underline font-semibold">
+              Minh bạch thống kê MoE ±3.1%
+            </Link>
+            <span>·</span>
+            <span>Tuân thủ Luật 91/2025/QH15</span>
+            <span>·</span>
+            <span>Chuẩn Cochran 95%</span>
           </div>
           <div>© 2026 INSIGHT AI Platform. All rights reserved.</div>
         </div>
