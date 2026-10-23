@@ -1,55 +1,60 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#0B132B" />
-      <stop offset="50%" stopColor="#0F172A" />
+    <!-- Radiant Imperial Gold Gradient Background -->
+    <linearGradient id="goldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#FDE68A" />
+      <stop offset="25%" stopColor="#FBBF24" />
+      <stop offset="70%" stopColor="#D97706" />
+      <stop offset="100%" stopColor="#B45309" />
+    </linearGradient>
+
+    <!-- Deep Navy & White Contrast Filters -->
+    <linearGradient id="navyFacet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#0F172A" />
       <stop offset="100%" stopColor="#1E293B" />
     </linearGradient>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#FEF08A" />
-      <stop offset="40%" stopColor="#F59E0B" />
-      <stop offset="80%" stopColor="#D97706" />
-      <stop offset="100%" stopColor="#92400E" />
-    </linearGradient>
-    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#FBBF24" stop-opacity="0.3" />
-      <stop offset="100%" stopColor="#D97706" stop-opacity="0" />
-    </linearGradient>
+
+    <filter id="goldShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#78350F" flood-opacity="0.3" />
+    </filter>
   </defs>
 
-  <!-- Background rounded squircle with subtle border -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="#D97706" stroke-width="1.5" stroke-opacity="0.4" />
-  
-  <!-- Subtle golden ambient glow inside -->
-  <circle cx="32" cy="32" r="22" fill="url(#glowGrad)" />
+  <!-- Golden Squircle Background -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#goldBg)" stroke="#FEF3C7" stroke-width="1.5" />
 
-  <!-- Outer Faceted Diamond / Hexagon of Insight -->
-  <path
-    d="M32 8L52 19.5V44.5L32 56L12 44.5V19.5L32 8Z"
-    stroke="url(#goldGrad)"
-    stroke-width="2.6"
-    stroke-linejoin="round"
-  />
+  <!-- Inner Diamond Symbol in Deep Slate Navy & Crisp White (High Contrast, Bold, Ultra Legible) -->
+  <g filter="url(#goldShadow)">
+    <!-- Outer Faceted Diamond / Hexagon -->
+    <path
+      d="M32 9L51 20V44L32 55L13 44V20L32 9Z"
+      fill="url(#navyFacet)"
+      stroke="#FFFFFF"
+      stroke-width="2"
+      stroke-linejoin="round"
+    />
 
-  <!-- Inner Refraction Lines (Synthesis of Data) -->
-  <path
-    d="M22 25L32 20L42 25"
-    stroke="url(#goldGrad)"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path
-    d="M18 34L32 39L46 34"
-    stroke="url(#goldGrad)"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+    <!-- Diamond facets refraction lines in gold -->
+    <path
+      d="M32 9L32 55"
+      stroke="#FBBF24"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M13 20L32 32L51 20"
+      stroke="#FDE68A"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M13 44L32 32L51 44"
+      stroke="#F59E0B"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
 
-  <!-- Central Spine / Monogram I -->
-  <line x1="32" y1="16" x2="32" y2="48" stroke="url(#goldGrad)" stroke-width="3.2" stroke-linecap="round" />
-
-  <!-- Core Radiant Node -->
-  <circle cx="32" cy="32" r="3.5" fill="#FEF3C7" />
+    <!-- Radiant Central Core Star in Pure White -->
+    <circle cx="32" cy="32" r="4.5" fill="#FFFFFF" />
+    <circle cx="32" cy="32" r="2.2" fill="#D97706" />
+  </g>
 </svg>

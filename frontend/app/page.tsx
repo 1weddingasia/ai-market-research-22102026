@@ -133,22 +133,19 @@ export default function HomePage() {
           {/* Logo INSIGHT AI chuẩn hóa */}
           <Logo href="/" />
 
-          <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-semibold text-slate-600 shrink-0">
             <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">Phương pháp</a>
             <a href="#quy-trinh" className="hover:text-slate-900 transition-colors">Quy trình</a>
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">Bảng giá</a>
             <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Cơ sở khoa học</a>
             <Link
               href="/bach-thu"
-              className="text-amber-800 hover:text-amber-950 font-bold flex items-center gap-1 transition-colors"
+              className="text-amber-800 hover:text-amber-950 font-bold transition-colors whitespace-nowrap"
             >
-              <span>Bạch thư</span>
-              <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-mono font-bold">
-                C-Level
-              </span>
+              Bạch thư C-Level
             </Link>
             <a href="#faq" className="hover:text-slate-900 transition-colors">FAQ</a>
-            <Link href="/results/DEMO-NIELSEN-BASES" className="text-amber-700 hover:text-amber-900 font-bold transition-colors">
+            <Link href="/results/DEMO-NIELSEN-BASES" className="text-amber-700 hover:text-amber-900 font-bold transition-colors whitespace-nowrap">
               📄 Báo cáo mẫu
             </Link>
           </nav>

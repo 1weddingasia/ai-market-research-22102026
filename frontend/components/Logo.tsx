@@ -14,84 +14,71 @@ export default function Logo({
   showSubtitle = true,
   href = '/',
 }: LogoProps) {
-  const isLight = variant === 'light'; // Dùng trên nền tối (slate-900 / navy)
-  const isCompact = variant === 'compact'; // Chỉ hiển thị icon
-  const isFooter = variant === 'footer';
+  const isDarkBg = variant === 'light' || variant === 'footer'; // Dùng trên nền tối (slate-900 / navy)
+  const isCompact = variant === 'compact';
 
-  const textColorMain = isLight || isFooter ? 'text-white' : 'text-slate-900';
-  const textColorSub = isLight || isFooter ? 'text-slate-400' : 'text-slate-500';
+  const textColorMain = isDarkBg ? 'text-white' : 'text-slate-900';
+  const textColorSub = isDarkBg ? 'text-slate-400' : 'text-slate-500';
 
   const content = (
     <div className={`inline-flex items-center gap-2.5 sm:gap-3 group select-none ${className}`}>
-      {/* ── Emblem Symbol Icon ── */}
+      {/* ── Emblem Symbol Icon: Radiant Imperial Gold Badge (High Contrast, Ultra Visible) ── */}
       <div className="relative shrink-0 flex items-center justify-center">
-        {/* Glow halo on hover */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 blur-[6px] opacity-40 group-hover:opacity-75 transition-opacity duration-300" />
-        
-        {/* Diamond / Faceted Icon Container */}
-        <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-[1.5px] shadow-md border border-amber-500/30 group-hover:border-amber-400/80 transition-all duration-300 group-hover:scale-105">
-          <div className="w-full h-full rounded-[10px] bg-gradient-to-br from-[#0F172A] to-[#1E293B] flex items-center justify-center overflow-hidden">
+        {/* Ambient Warm Golden Glow */}
+        <div className="absolute inset-0 rounded-xl bg-amber-400/40 blur-[5px] group-hover:bg-amber-400/70 transition-all duration-300" />
+
+        {/* Golden Medallion Squircle (Bright & Luxurious) */}
+        <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-[1.5px] shadow-md shadow-amber-500/25 border border-amber-300/80 group-hover:shadow-lg group-hover:shadow-amber-500/40 transition-all duration-300 group-hover:scale-105">
+          <div className="w-full h-full rounded-[10px] bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 flex items-center justify-center overflow-hidden p-1.5">
             <svg
               viewBox="0 0 36 36"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 transform group-hover:rotate-6 transition-transform duration-300"
+              className="w-full h-full transform group-hover:rotate-6 transition-transform duration-300 drop-shadow-sm"
             >
-              <defs>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FDE68A" />
-                  <stop offset="50%" stopColor="#F59E0B" />
-                  <stop offset="100%" stopColor="#B45309" />
-                </linearGradient>
-                <linearGradient id="prismGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#D97706" />
-                  <stop offset="100%" stopColor="#FBBF24" />
-                </linearGradient>
-              </defs>
-              
-              {/* Outer faceted geometric shield / diamond */}
+              {/* Outer Faceted Diamond in Deep Midnight Navy */}
               <path
-                d="M18 3L30 10V22L18 33L6 22V10L18 3Z"
-                stroke="url(#goldGrad)"
-                strokeWidth="1.8"
+                d="M18 4L31 11.5V24.5L18 32L5 24.5V11.5L18 4Z"
+                fill="#0F172A"
+                stroke="#FFFFFF"
+                strokeWidth="1.6"
                 strokeLinejoin="round"
-                className="opacity-80"
               />
-              {/* Central Pillar of Insight / Letter I & Tech node */}
+
+              {/* Diamond Facet Refractions in Warm Gold & White */}
               <path
-                d="M18 9V27"
-                stroke="url(#goldGrad)"
-                strokeWidth="2.4"
+                d="M18 4V32"
+                stroke="#FDE68A"
+                strokeWidth="1.6"
                 strokeLinecap="round"
               />
-              {/* Horizontal radar pulses */}
               <path
-                d="M12 15L18 12L24 15"
-                stroke="url(#prismGrad)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
+                d="M5 11.5L18 18L31 11.5"
+                stroke="#FEF3C7"
+                strokeWidth="1.4"
                 strokeLinejoin="round"
               />
               <path
-                d="M10 21L18 24L26 21"
-                stroke="url(#prismGrad)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
+                d="M5 24.5L18 18L31 24.5"
+                stroke="#F59E0B"
+                strokeWidth="1.4"
                 strokeLinejoin="round"
               />
-              {/* Core Star / Node */}
-              <circle cx="18" cy="18" r="2.2" fill="#FEF3C7" className="animate-pulse" />
+
+              {/* Central Radiant White Star Node */}
+              <circle cx="18" cy="18" r="3.2" fill="#FFFFFF" />
+              <circle cx="18" cy="18" r="1.6" fill="#D97706" />
             </svg>
           </div>
         </div>
       </div>
 
-      {/* ── Brand Typography ── */}
+      {/* ── Brand Typography: INSIGHT AI ── */}
       {!isCompact && (
         <div className="flex flex-col text-left">
           <div className="flex items-baseline gap-1.5 leading-none">
             <span
-              className={`font-sans font-extrabold tracking-[0.12em] text-base sm:text-lg uppercase transition-colors ${textColorMain} group-hover:text-amber-500`}
+              className={`font-sans font-black tracking-[0.14em] text-base sm:text-lg uppercase transition-colors ${textColorMain} group-hover:text-amber-600`}
             >
               INSIGHT
             </span>
@@ -101,17 +88,11 @@ export default function Logo({
           </div>
 
           {showSubtitle && (
-            <div className="flex items-center gap-1.5 mt-1 leading-none">
-              <span
-                className={`text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] uppercase ${textColorSub} group-hover:text-amber-400/90 transition-colors`}
-              >
-                Nghiên Cứu Thị Trường
-              </span>
-              <span className="w-1 h-1 rounded-full bg-amber-500/60 hidden sm:inline-block" />
-              <span className="text-[9px] font-mono font-bold text-amber-600/90 dark:text-amber-400/80 uppercase hidden sm:inline-block">
-                Tier-1
-              </span>
-            </div>
+            <span
+              className={`text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase mt-1 leading-tight ${textColorSub} group-hover:text-amber-600 transition-colors hidden sm:block`}
+            >
+              Nghiên Cứu Thị Trường AI
+            </span>
           )}
         </div>
       )}
@@ -120,7 +101,10 @@ export default function Logo({
 
   if (href) {
     return (
-      <Link href={href} className="inline-flex focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-lg">
+      <Link
+        href={href}
+        className="inline-flex focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-lg shrink-0"
+      >
         {content}
       </Link>
     );
