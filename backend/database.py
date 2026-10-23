@@ -6,7 +6,7 @@ Auto-tạo tables khi khởi động server.
 from datetime import datetime
 
 from sqlalchemy import (
-    Column, DateTime, Integer, String, Text, create_engine
+    Boolean, Column, DateTime, Integer, String, Text, create_engine
 )
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -66,7 +66,10 @@ class Survey(Base):
     max_age           = Column(Integer, default=65)
     sample_size       = Column(Integer, default=1000)
     product_info_json = Column(Text, nullable=True)   # JSON string
-    price_amount      = Column(Integer, nullable=False)  # VND
+    price_amount      = Column(Integer, nullable=False)  # VND (Số tiền thực tế cần thanh toán)
+    original_price    = Column(Integer, nullable=True)   # VND (Số tiền gốc trước giảm giá)
+    discount_code     = Column(String(50), nullable=True) # Mã giảm giá đã áp dụng
+    discount_amount   = Column(Integer, default=0)       # Số tiền được giảm
 
     # Kết quả
     result_json = Column(Text, nullable=True)   # Full report JSON
@@ -82,6 +85,18 @@ class Survey(Base):
     created_at   = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime, nullable=True)
     error_msg    = Column(Text, nullable=True)
+
+
+class DiscountCode(Base):
+    __tablename__ = "discount_codes"
+
+    code             = Column(String(50), primary_key=True)   # "OFF100", "OFF50", "OFF30"
+    discount_percent = Column(Integer, nullable=False)        # 100, 50, 30
+    is_active        = Column(Boolean, default=True)
+    max_uses         = Column(Integer, nullable=True)          # NULL = không giới hạn
+    used_count       = Column(Integer, default=0)
+    description      = Column(String(255), nullable=True)
+    created_at       = Column(DateTime, default=datetime.utcnow)
 
 
 class SurveyLog(Base):

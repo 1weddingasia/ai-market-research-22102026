@@ -6,17 +6,39 @@ import { api, formatVND } from '@/lib/api';
 import { useWizard } from '@/lib/wizard-context';
 
 export default function Step4Payment() {
-  const { state, setStep } = useWizard();
-  const { surveyId, priceAmount, qrData, sampleSize, region, modelName } = state;
+  const { state, setStep, setDiscountState } = useWizard();
+  const {
+    surveyId,
+    priceAmount,
+    qrData,
+    sampleSize,
+    region,
+    modelName,
+    originalPrice,
+    discountCode,
+    discountAmount,
+    isFree,
+  } = state;
+
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [simulating, setSimulating] = useState(false);
+  const [activatingFree, setActivatingFree] = useState(false);
+
+  // Discount code local state
+  const [couponCode, setCouponCode] = useState('');
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState('');
+  const [couponSuccess, setCouponSuccess] = useState('');
+
   const router = useRouter();
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // 5-minute countdown
+  // 5-minute countdown (only active if payment required)
   useEffect(() => {
+    if (isFree || priceAmount === 0) return;
+
     timerRef.current = setInterval(() => {
       setTimeLeft((t) => {
         if (t <= 1) {
@@ -26,8 +48,10 @@ export default function Step4Payment() {
         return t - 1;
       });
     }, 1000);
-    return () => clearInterval(timerRef.current!);
-  }, []);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isFree, priceAmount]);
 
   // Poll backend status every 2.5s for SePay webhook confirmation
   useEffect(() => {
@@ -45,7 +69,9 @@ export default function Step4Payment() {
       }
     }, 2500);
 
-    return () => clearInterval(pollRef.current!);
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
   }, [surveyId, setStep, router]);
 
   const copyToClipboard = (text: string, fieldName: string) => {
@@ -54,11 +80,85 @@ export default function Step4Payment() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
+  // Áp dụng mã giảm giá
+  const handleApplyCoupon = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!couponCode.trim() || !surveyId) return;
+
+    setCouponLoading(true);
+    setCouponError('');
+    setCouponSuccess('');
+
+    try {
+      const res = await api.applyDiscount(surveyId, couponCode.trim());
+      if (res.success) {
+        setDiscountState({
+          priceAmount: res.final_amount,
+          originalPrice: res.original_price,
+          discountCode: res.discount_code,
+          discountAmount: res.discount_amount,
+          qrData: res.qr_data || null,
+          isFree: res.is_free,
+        });
+        setCouponSuccess(res.message);
+        setCouponCode('');
+      } else {
+        setCouponError(res.message || 'Mã ưu đãi không hợp lệ.');
+      }
+    } catch (err: unknown) {
+      setCouponError(err instanceof Error ? err.message : 'Mã ưu đãi không hợp lệ hoặc đã hết hạn.');
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  // Hủy mã giảm giá
+  const handleRemoveCoupon = async () => {
+    if (!surveyId) return;
+    setCouponLoading(true);
+    setCouponError('');
+    setCouponSuccess('');
+
+    try {
+      const res = await api.removeDiscount(surveyId);
+      if (res.success) {
+        setDiscountState({
+          priceAmount: res.final_amount,
+          originalPrice: res.original_price,
+          discountCode: null,
+          discountAmount: 0,
+          qrData: res.qr_data || null,
+          isFree: false,
+        });
+        setCouponSuccess('Đã hủy mã ưu đãi, khôi phục giá gốc.');
+        setTimeout(() => setCouponSuccess(''), 3000);
+      }
+    } catch (err: unknown) {
+      setCouponError(err instanceof Error ? err.message : 'Có lỗi khi hủy mã ưu đãi.');
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  // Kích hoạt khảo sát miễn phí 100%
+  const handleActivateFree = async () => {
+    if (!surveyId) return;
+    setActivatingFree(true);
+    try {
+      await api.activateFreeSurvey(surveyId);
+      setStep(5);
+      router.push(`/processing/${surveyId}`);
+    } catch (err: unknown) {
+      setCouponError(err instanceof Error ? err.message : 'Kích hoạt thất bại. Vui lòng thử lại.');
+      setActivatingFree(false);
+    }
+  };
+
+  // Nút giả lập / xác nhận chuyển khoản thủ công
   const handleSimulatePayment = async () => {
     if (!surveyId) return;
     setSimulating(true);
     try {
-      // Call test webhook simulation or trigger status directly
       const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       await fetch(`${API_URL}/payment/simulate/${surveyId}`, {
         method: 'POST',
@@ -68,7 +168,6 @@ export default function Step4Payment() {
       router.push(`/processing/${surveyId}`);
     } catch (e) {
       console.error(e);
-      // Fallback redirect directly
       setStep(5);
       router.push(`/processing/${surveyId}`);
     } finally {
@@ -79,6 +178,8 @@ export default function Step4Payment() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   const projectCode = surveyId ? `#PANEL-${surveyId.slice(0, 8).toUpperCase()}` : '#PANEL-PREVIEW';
+  const effectiveOriginalPrice = originalPrice > 0 ? originalPrice : (priceAmount + discountAmount) || 300000;
+  const isZeroCost = isFree || priceAmount === 0;
 
   return (
     <div className="w-full max-w-4xl mx-auto">
@@ -88,10 +189,12 @@ export default function Step4Payment() {
           <span>✦ BƯỚC 04 / 04</span>
         </div>
         <h2 className="font-serif text-3xl font-bold text-slate-900 tracking-tight">
-          Phiếu thanh toán & Kích hoạt khảo sát
+          {isZeroCost ? 'Xác nhận hồ sơ & Kích hoạt khảo sát' : 'Phiếu thanh toán & Kích hoạt khảo sát'}
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống sẽ tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.
+          {isZeroCost
+            ? 'Hồ sơ đã được áp dụng mã ưu đãi 100%. Bạn có thể bấm kích hoạt để cụm AI bắt đầu khảo sát ngay lập tức.'
+            : 'Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống sẽ tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.'}
         </p>
       </div>
 
@@ -116,8 +219,14 @@ export default function Step4Payment() {
               <span className="font-mono font-bold text-amber-400 text-xs sm:text-sm tracking-wider">
                 {projectCode}
               </span>
-              <div className="sm:mt-2 inline-block px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/30">
-                CHỜ THANH TOÁN
+              <div
+                className={`sm:mt-2 inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${
+                  isZeroCost
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+                    : 'bg-amber-400/20 text-amber-300 border-amber-400/30'
+                }`}
+              >
+                {isZeroCost ? 'MIỄN PHÍ 100%' : 'CHỜ THANH TOÁN'}
               </div>
             </div>
           </div>
@@ -157,129 +266,277 @@ export default function Step4Payment() {
               </div>
             </div>
 
-            {/* Total Section */}
-            <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200 mt-4 flex items-center justify-between">
-              <div>
-                <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">
-                  Tổng kinh phí trọn gói
-                </span>
-                <span className="text-[11px] text-slate-400">Không phát sinh phụ phí</span>
-              </div>
-              <div className="text-right">
-                <span className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
-                  {formatVND(priceAmount || 300000)}
-                </span>
+            {/* ── MÃ GIẢM GIÁ / ƯU ĐÃI (DISCREET & DYNAMIC FROM DATABASE) ── */}
+            <div className="pt-2 border-t border-slate-100">
+              <div className="bg-slate-50/80 p-3 sm:p-3.5 rounded-xl border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <span>🏷️</span> Mã ưu đãi đối tác (Nếu có)
+                  </span>
+                  {discountCode && (
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
+                      ĐÃ ÁP DỤNG: {discountCode}
+                    </span>
+                  )}
+                </div>
+
+                {!discountCode ? (
+                  <form onSubmit={handleApplyCoupon} className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="Nhập mã ưu đãi..."
+                      disabled={couponLoading}
+                      className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 font-mono tracking-wider uppercase transition-all disabled:opacity-50"
+                    />
+                    <button
+                      type="submit"
+                      disabled={couponLoading || !couponCode.trim()}
+                      className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-40 cursor-pointer flex items-center gap-1.5 shrink-0"
+                    >
+                      {couponLoading ? (
+                        <>
+                          <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>Kiểm tra...</span>
+                        </>
+                      ) : (
+                        <span>Áp dụng</span>
+                      )}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg p-2.5">
+                    <div className="text-xs text-emerald-900">
+                      <span className="font-bold">Mã ưu đãi: {discountCode}</span>
+                      <span className="text-emerald-700 ml-1.5 font-medium">
+                        (Tiết kiệm {formatVND(discountAmount)})
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRemoveCoupon}
+                      disabled={couponLoading}
+                      className="text-[11px] font-semibold text-red-600 hover:text-red-800 hover:underline px-2 py-1 rounded transition-colors cursor-pointer"
+                    >
+                      {couponLoading ? 'Đang hủy...' : 'Hủy mã'}
+                    </button>
+                  </div>
+                )}
+
+                {/* Coupon Feedback Messages */}
+                {couponError && (
+                  <p className="text-[11px] text-red-600 font-medium mt-1.5 flex items-center gap-1">
+                    <span>⚠️</span> {couponError}
+                  </p>
+                )}
+                {couponSuccess && (
+                  <p className="text-[11px] text-emerald-700 font-medium mt-1.5 flex items-center gap-1">
+                    <span>✓</span> {couponSuccess}
+                  </p>
+                )}
               </div>
             </div>
 
-            {/* Account Info Pill */}
-            <div className="space-y-2 pt-2">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
-                <span className="text-slate-500">Số tài khoản:</span>
-                <div className="flex items-center justify-between sm:justify-end gap-2">
-                  <span className="font-mono font-bold text-slate-900">
-                    {qrData?.accountNumber || '0987654321'}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(qrData?.accountNumber || '0987654321', 'acc')}
-                    className="text-[10px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition-colors"
-                  >
-                    {copiedField === 'acc' ? 'Đã sao chép ✓' : 'Sao chép'}
-                  </button>
-                </div>
-              </div>
+            {/* Total Section with breakdown if discounted */}
+            <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200 space-y-2">
+              {discountAmount > 0 && (
+                <>
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span>Kinh phí gốc:</span>
+                    <span className="line-through">{formatVND(effectiveOriginalPrice)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-emerald-700 font-semibold">
+                    <span>Ưu đãi khấu trừ ({discountCode}):</span>
+                    <span>- {formatVND(discountAmount)}</span>
+                  </div>
+                  <div className="border-t border-slate-200/80 pt-2" />
+                </>
+              )}
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
-                <span className="text-slate-500">Nội dung chuyển khoản:</span>
-                <div className="flex items-center justify-between sm:justify-end gap-2">
-                  <span className="font-mono font-bold text-slate-900">
-                    {qrData?.addInfo || surveyId}
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs uppercase font-bold text-slate-700 tracking-wider block">
+                    {discountAmount > 0 ? 'Kinh phí thực tế cần thanh toán' : 'Tổng kinh phí trọn gói'}
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(qrData?.addInfo || surveyId, 'info')}
-                    className="text-[10px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition-colors"
+                  <span className="text-[11px] text-slate-400">Không phát sinh phụ phí</span>
+                </div>
+                <div className="text-right">
+                  <span
+                    className={`text-xl sm:text-2xl font-serif font-bold ${
+                      isZeroCost ? 'text-emerald-700' : 'text-slate-900'
+                    }`}
                   >
-                    {copiedField === 'info' ? 'Đã sao chép ✓' : 'Sao chép'}
-                  </button>
+                    {formatVND(priceAmount || 0)}
+                  </span>
+                  {isZeroCost && (
+                    <span className="text-[11px] font-bold text-emerald-700 block">
+                      (Tài trợ toàn bộ 100%)
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
+
+            {/* Account Info Pill (Only when payment > 0) */}
+            {!isZeroCost && (
+              <div className="space-y-2 pt-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+                  <span className="text-slate-500">Số tài khoản:</span>
+                  <div className="flex items-center justify-between sm:justify-end gap-2">
+                    <span className="font-mono font-bold text-slate-900">
+                      {qrData?.accountNumber || '0987654321'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(qrData?.accountNumber || '0987654321', 'acc')}
+                      className="text-[10px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition-colors"
+                    >
+                      {copiedField === 'acc' ? 'Đã sao chép ✓' : 'Sao chép'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+                  <span className="text-slate-500">Nội dung chuyển khoản:</span>
+                  <div className="flex items-center justify-between sm:justify-end gap-2">
+                    <span className="font-mono font-bold text-slate-900">
+                      {qrData?.addInfo || surveyId}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(qrData?.addInfo || surveyId, 'info')}
+                      className="text-[10px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition-colors"
+                    >
+                      {copiedField === 'info' ? 'Đã sao chép ✓' : 'Sao chép'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Right Column (5 cols): VietQR Box + Status */}
+        {/* Right Column (5 cols): VietQR Box OR 100% Free Activation Card */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-white border-2 border-amber-300 rounded-2xl p-4 sm:p-6 shadow-md text-center">
-            {/* Bank Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <span className="text-xs font-bold text-slate-900">
-                {qrData?.bankName || 'Ngân Hàng MB Bank'}
-              </span>
-              <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                VietQR Pro
-              </span>
-            </div>
+          {isZeroCost ? (
+            /* ── CELEBRATORY CARD CHO MÃ GIẢM 100% (OFF100) ── */
+            <div className="bg-gradient-to-b from-emerald-500/10 via-emerald-50/60 to-white border-2 border-emerald-400 rounded-2xl p-5 sm:p-6 shadow-md text-center space-y-4">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center text-3xl mx-auto shadow-inner">
+                🎁
+              </div>
 
-            {/* QR Code Container */}
-            <div className="bg-amber-50/50 p-4 rounded-xl border border-amber-200 inline-block mb-3">
-              {qrData?.qrDataURL ? (
-                <img
-                  src={qrData.qrDataURL}
-                  alt="VietQR Code"
-                  className="w-48 h-48 object-contain mx-auto rounded-lg shadow-xs"
-                />
-              ) : (
-                <div className="w-48 h-48 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-xs font-mono">
-                  [VietQR Image]
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300 inline-block mb-2">
+                  ƯU ĐÃI ĐẶC BIỆT 100%
+                </span>
+                <h3 className="font-serif text-xl font-bold text-slate-900">
+                  Hồ Sơ Đủ Điều Kiện Kích Hoạt Miễn Phí
+                </h3>
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  Bạn đã kích hoạt thành công mã ưu đãi toàn phần <strong>{discountCode}</strong> (0đ). Bạn không cần chuyển khoản ngân hàng. Hãy bấm nút dưới đây để hệ thống AI bắt đầu mô phỏng ngay lập tức!
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={handleActivateFree}
+                  disabled={activatingFree}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all transform hover:scale-[1.02] cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {activatingFree ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Đang kích hoạt hệ thống AI...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🚀 Bắt Đầu Khảo Sát Ngay</span>
+                      <span>→</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="text-[11px] text-slate-500 pt-1">
+                Tốc độ xử lý: ~60 giây · Báo cáo gửi trực tiếp về email
+              </div>
+            </div>
+          ) : (
+            /* ── VIETQR BOX BÌNH THƯỜNG / SAU GIẢM GIÁ 30%, 50% ── */
+            <>
+              <div className="bg-white border-2 border-amber-300 rounded-2xl p-4 sm:p-6 shadow-md text-center">
+                {/* Bank Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                  <span className="text-xs font-bold text-slate-900">
+                    {qrData?.bankName || 'Ngân Hàng MB Bank'}
+                  </span>
+                  <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                    VietQR Pro
+                  </span>
                 </div>
-              )}
-            </div>
 
-            {/* Account Owner */}
-            <div className="text-xs text-slate-600 mb-4">
-              Chủ TK: <strong className="text-slate-900">{qrData?.accountName || 'CONG TY CP AI RESEARCH'}</strong>
-            </div>
+                {/* QR Code Container */}
+                <div className="bg-amber-50/50 p-4 rounded-xl border border-amber-200 inline-block mb-3">
+                  {qrData?.qrDataURL ? (
+                    <img
+                      src={qrData.qrDataURL}
+                      alt="VietQR Code"
+                      className="w-48 h-48 object-contain mx-auto rounded-lg shadow-xs"
+                    />
+                  ) : (
+                    <div className="w-48 h-48 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-xs font-mono">
+                      [Đang tạo mã VietQR...]
+                    </div>
+                  )}
+                </div>
 
-            {/* Countdown Timer */}
-            <div className="bg-slate-50 py-3 px-4 rounded-xl border border-slate-200 mb-4">
-              <div className="text-[11px] text-slate-500 mb-1">Hiệu lực giao dịch còn lại</div>
-              <div className="font-mono text-2xl font-bold text-slate-900 tracking-wider">
-                {minutes}:{seconds}
+                {/* Account Owner */}
+                <div className="text-xs text-slate-600 mb-4">
+                  Chủ TK: <strong className="text-slate-900">{qrData?.accountName || 'CONG TY CP AI RESEARCH'}</strong>
+                </div>
+
+                {/* Countdown Timer */}
+                <div className="bg-slate-50 py-3 px-4 rounded-xl border border-slate-200 mb-4">
+                  <div className="text-[11px] text-slate-500 mb-1">Hiệu lực giao dịch còn lại</div>
+                  <div className="font-mono text-2xl font-bold text-slate-900 tracking-wider">
+                    {minutes}:{seconds}
+                  </div>
+                  <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-2">
+                    <div
+                      className="bg-amber-600 h-full transition-all duration-1000"
+                      style={{ width: `${(timeLeft / 300) * 100}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Transfer Confirmation Pulse */}
+                <div className="flex items-center justify-center gap-2 text-xs text-slate-600 font-medium">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                  </span>
+                  <span>Hệ thống đang tự động lắng nghe xác nhận chuyển khoản...</span>
+                </div>
               </div>
-              <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-2">
-                <div
-                  className="bg-amber-600 h-full transition-all duration-1000"
-                  style={{ width: `${(timeLeft / 300) * 100}%` }}
-                />
+
+              {/* Manual Confirm Button */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
+                <span className="text-[11px] text-slate-500 block mb-2">
+                  Sau khi chuyển khoản thành công trên app ngân hàng:
+                </span>
+                <button
+                  type="button"
+                  onClick={handleSimulatePayment}
+                  disabled={simulating}
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>{simulating ? 'Đang xác thực giao dịch...' : '✓ Tôi Đã Hoàn Tất Chuyển Khoản (Tiến Hành Khảo Sát)'}</span>
+                </button>
               </div>
-            </div>
-
-            {/* Transfer Confirmation Pulse */}
-            <div className="flex items-center justify-center gap-2 text-xs text-slate-600 font-medium">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-              </span>
-              <span>Hệ thống đang tự động lắng nghe xác nhận chuyển khoản...</span>
-            </div>
-          </div>
-
-          {/* Manual Confirm Button */}
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-            <span className="text-[11px] text-slate-500 block mb-2">
-              Sau khi chuyển khoản thành công trên app ngân hàng:
-            </span>
-            <button
-              type="button"
-              onClick={handleSimulatePayment}
-              disabled={simulating}
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              <span>{simulating ? 'Đang xác thực giao dịch...' : '✓ Tôi Đã Hoàn Tất Chuyển Khoản (Tiến Hành Khảo Sát)'}</span>
-            </button>
-          </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -288,7 +545,7 @@ export default function Step4Payment() {
         <button
           type="button"
           onClick={() => setStep(3)}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 py-2.5 px-4 rounded-lg border border-slate-300 hover:bg-slate-50 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 py-2.5 px-4 rounded-lg border border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
         >
           ← Quay lại chỉnh sửa thông tin SP
         </button>

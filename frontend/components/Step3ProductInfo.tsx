@@ -706,7 +706,12 @@ export default function Step3ProductInfo() {
         customer_email: email.trim(),
       });
 
-      updatePayment(result.survey_id, result.price_amount, result.qr_data);
+      updatePayment(result.survey_id, result.price_amount, result.qr_data, {
+        originalPrice: result.original_price ?? result.price_amount,
+        discountCode: result.discount_code,
+        discountAmount: result.discount_amount,
+        isFree: result.is_free,
+      });
       setStep(4);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Có lỗi xảy ra khi tạo khảo sát. Vui lòng thử lại.');

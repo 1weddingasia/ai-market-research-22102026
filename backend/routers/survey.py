@@ -1,19 +1,19 @@
-"""
-Router: Survey — POST /survey/create, GET /survey/{id}, GET /survey/configs
-"""
-
+import asyncio
 import json
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from database import Survey, get_db
+from database import Survey, DiscountCode, get_db
 from models.schemas import (
     SurveyCreateRequest, SurveyCreateResponse, SurveyStatusResponse,
+    ApplyDiscountRequest, ApplyDiscountResponse,
 )
 from models.survey_configs import get_all_configs_summary
 from services.payment_service import calculate_price, generate_survey_id, generate_vietqr
+from services.worker import run_simulation
 
 router = APIRouter(prefix="/survey", tags=["Survey"])
 
@@ -34,14 +34,30 @@ async def create_survey(
 ):
     """
     Bước 3 → Bước 4: Tạo survey record và sinh mã QR thanh toán.
+    Hỗ trợ mã giảm giá tùy chọn (OFF100, OFF50, OFF30...).
     Status: PENDING_PAYMENT
     """
     # Validate age range
     if request.min_age >= request.max_age:
         raise HTTPException(400, "min_age phải nhỏ hơn max_age")
 
-    survey_id    = generate_survey_id()
-    price_amount = calculate_price(request.sample_size)
+    survey_id      = generate_survey_id()
+    original_price = calculate_price(request.sample_size)
+    price_amount   = original_price
+    discount_amount = 0
+    applied_code   = None
+
+    # Kiểm tra mã giảm giá nếu có gửi kèm từ request
+    if request.discount_code:
+        clean_code = request.discount_code.strip().upper()
+        discount = db.query(DiscountCode).filter(
+            func.upper(DiscountCode.code) == clean_code,
+            DiscountCode.is_active == True,
+        ).first()
+        if discount:
+            discount_amount = int(original_price * (discount.discount_percent / 100))
+            price_amount = max(0, original_price - discount_amount)
+            applied_code = discount.code
 
     # Lưu vào DB
     survey = Survey(
@@ -55,6 +71,9 @@ async def create_survey(
         sample_size       = request.sample_size,
         product_info_json = json.dumps(request.product_info, ensure_ascii=False),
         price_amount      = price_amount,
+        original_price    = original_price,
+        discount_code     = applied_code,
+        discount_amount   = discount_amount,
         customer_email    = request.customer_email,
         created_at        = datetime.utcnow(),
     )
@@ -62,20 +81,178 @@ async def create_survey(
     db.commit()
     db.refresh(survey)
 
-    # Tạo VietQR
-    qr_data = await generate_vietqr(
-        survey_id=survey_id,
-        amount=price_amount,
-        description=survey_id,  # Nội dung CK = mã survey
-    )
+    is_free = (price_amount == 0)
+    qr_data = None
+    if not is_free:
+        # Tạo VietQR nếu cần thanh toán
+        qr_data = await generate_vietqr(
+            survey_id=survey_id,
+            amount=price_amount,
+            description=survey_id,  # Nội dung CK = mã survey
+        )
 
     return SurveyCreateResponse(
-        survey_id    = survey_id,
-        price_amount = price_amount,
-        qr_data      = qr_data,
-        status       = "PENDING_PAYMENT",
-        created_at   = survey.created_at,
+        survey_id       = survey_id,
+        price_amount    = price_amount,
+        original_price  = original_price,
+        discount_code   = applied_code,
+        discount_amount = discount_amount,
+        qr_data         = qr_data,
+        status          = "PENDING_PAYMENT",
+        is_free         = is_free,
+        created_at      = survey.created_at,
     )
+
+
+@router.post("/{survey_id}/apply-discount", response_model=ApplyDiscountResponse)
+async def apply_discount_code(
+    survey_id: str,
+    payload: ApplyDiscountRequest,
+    db: Session = Depends(get_db),
+):
+    """
+    Áp dụng mã giảm giá cho khảo sát tại Bước 4 (Thanh toán).
+    Dữ liệu mã lấy từ CSDL (OFF100, OFF50, OFF30...), không hardcode.
+    """
+    survey = db.query(Survey).filter(Survey.id == survey_id).first()
+    if not survey:
+        raise HTTPException(404, f"Khảo sát {survey_id} không tìm thấy")
+
+    if survey.status != "PENDING_PAYMENT":
+        raise HTTPException(400, "Không thể áp dụng mã ưu đãi cho khảo sát đã thanh toán hoặc đang xử lý")
+
+    clean_code = payload.code.strip().upper()
+    discount = db.query(DiscountCode).filter(
+        func.upper(DiscountCode.code) == clean_code,
+        DiscountCode.is_active == True,
+    ).first()
+
+    if not discount:
+        raise HTTPException(400, "Mã ưu đãi không hợp lệ hoặc đã hết hạn")
+
+    if discount.max_uses is not None and discount.used_count >= discount.max_uses:
+        raise HTTPException(400, "Mã ưu đãi đã vượt quá số lượt sử dụng tối đa")
+
+    # Xác định giá gốc (nếu trước đó đã lưu original_price thì dùng, ngược lại dùng price_amount)
+    original_price = survey.original_price or survey.price_amount
+    discount_amount = int(original_price * (discount.discount_percent / 100))
+    final_amount = max(0, original_price - discount_amount)
+    is_free = (final_amount == 0)
+
+    # Cập nhật survey record
+    survey.original_price  = original_price
+    survey.discount_code   = discount.code
+    survey.discount_amount = discount_amount
+    survey.price_amount    = final_amount
+    db.commit()
+
+    # Sinh mã QR mới tương ứng với số tiền sau giảm
+    qr_data = None
+    if not is_free:
+        qr_data = await generate_vietqr(
+            survey_id=survey_id,
+            amount=final_amount,
+            description=survey_id,
+        )
+
+    msg = (
+        f"Áp dụng thành công mã {discount.code}: Giảm 100% (-{discount_amount:,.0f}đ). Bạn có thể kích hoạt khảo sát ngay mà không cần chuyển khoản!"
+        if is_free
+        else f"Áp dụng thành công mã {discount.code}: Giảm {discount.discount_percent}% (-{discount_amount:,.0f}đ). Đã cập nhật mã VietQR mới."
+    )
+
+    return ApplyDiscountResponse(
+        success=True,
+        survey_id=survey_id,
+        discount_code=discount.code,
+        discount_percent=discount.discount_percent,
+        original_price=original_price,
+        discount_amount=discount_amount,
+        final_amount=final_amount,
+        qr_data=qr_data,
+        is_free=is_free,
+        message=msg,
+    )
+
+
+@router.post("/{survey_id}/remove-discount", response_model=ApplyDiscountResponse)
+async def remove_discount_code(
+    survey_id: str,
+    db: Session = Depends(get_db),
+):
+    """Hủy áp dụng mã giảm giá và khôi phục giá gốc."""
+    survey = db.query(Survey).filter(Survey.id == survey_id).first()
+    if not survey:
+        raise HTTPException(404, f"Khảo sát {survey_id} không tìm thấy")
+
+    if survey.status != "PENDING_PAYMENT":
+        raise HTTPException(400, "Không thể hủy mã ưu đãi cho khảo sát đã thanh toán")
+
+    original_price = survey.original_price or survey.price_amount
+    survey.price_amount    = original_price
+    survey.discount_code   = None
+    survey.discount_amount = 0
+    db.commit()
+
+    qr_data = await generate_vietqr(
+        survey_id=survey_id,
+        amount=original_price,
+        description=survey_id,
+    )
+
+    return ApplyDiscountResponse(
+        success=True,
+        survey_id=survey_id,
+        discount_code="",
+        discount_percent=0,
+        original_price=original_price,
+        discount_amount=0,
+        final_amount=original_price,
+        qr_data=qr_data,
+        is_free=False,
+        message="Đã hủy mã ưu đãi, khôi phục giá gốc thành công",
+    )
+
+
+@router.post("/{survey_id}/activate-free")
+async def activate_free_survey(
+    survey_id: str,
+    db: Session = Depends(get_db),
+):
+    """
+    Kích hoạt khảo sát miễn phí 100% (sau khi áp dụng mã như OFF100).
+    Tự động chuyển status sang PROCESSING và kích hoạt worker phân tích ngầm.
+    """
+    survey = db.query(Survey).filter(Survey.id == survey_id).first()
+    if not survey:
+        raise HTTPException(404, f"Khảo sát {survey_id} không tìm thấy")
+
+    if survey.status != "PENDING_PAYMENT":
+        return {"status": survey.status, "message": "Khảo sát đã được kích hoạt trước đó"}
+
+    if survey.price_amount > 0:
+        raise HTTPException(400, f"Khảo sát này yêu cầu thanh toán {survey.price_amount:,}đ")
+
+    survey.status = "PROCESSING"
+    survey.paid_at = datetime.utcnow()
+    survey.sepay_transaction_id = f"FREE_{survey.discount_code or 'PROMO'}_{survey_id}"
+
+    # Tăng lượt dùng của mã giảm giá
+    if survey.discount_code:
+        discount = db.query(DiscountCode).filter(DiscountCode.code == survey.discount_code).first()
+        if discount:
+            discount.used_count += 1
+
+    db.commit()
+
+    # Kích hoạt worker mô phỏng ngầm
+    asyncio.create_task(run_simulation(survey_id))
+
+    return {
+        "status": "ok",
+        "survey_id": survey_id,
+        "message": "Khảo sát miễn phí 100% đã được kích hoạt thành công! Đang tiến hành mô phỏng...",
+    }
 
 
 @router.get("/{survey_id}/status", response_model=SurveyStatusResponse)

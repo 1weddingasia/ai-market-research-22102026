@@ -47,9 +47,26 @@ export interface QrData {
 export interface SurveyCreateResponse {
   survey_id: string;
   price_amount: number;
+  original_price?: number;
+  discount_code?: string;
+  discount_amount?: number;
   qr_data: QrData;
   status: string;
+  is_free?: boolean;
   created_at: string;
+}
+
+export interface ApplyDiscountResponse {
+  success: boolean;
+  survey_id: string;
+  discount_code: string;
+  discount_percent: number;
+  original_price: number;
+  discount_amount: number;
+  final_amount: number;
+  qr_data?: QrData;
+  is_free: boolean;
+  message: string;
 }
 
 export interface SurveyStatus {
@@ -140,6 +157,22 @@ export const api = {
 
   getSurveyStatus: (surveyId: string) =>
     fetchJSON<SurveyStatus>(`/survey/${surveyId}/status`),
+
+  applyDiscount: (surveyId: string, code: string) =>
+    fetchJSON<ApplyDiscountResponse>(`/survey/${surveyId}/apply-discount`, {
+      method: 'POST',
+      body: JSON.stringify({ code }),
+    }),
+
+  removeDiscount: (surveyId: string) =>
+    fetchJSON<ApplyDiscountResponse>(`/survey/${surveyId}/remove-discount`, {
+      method: 'POST',
+    }),
+
+  activateFreeSurvey: (surveyId: string) =>
+    fetchJSON<{ status: string; survey_id: string; message: string }>(`/survey/${surveyId}/activate-free`, {
+      method: 'POST',
+    }),
 
   getSurveyResults: async (surveyId: string): Promise<ReportPayload> => {
     if (surveyId.toUpperCase().includes('DEMO')) {

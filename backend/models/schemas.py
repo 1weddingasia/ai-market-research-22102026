@@ -101,14 +101,40 @@ class SurveyCreateRequest(BaseModel):
     # Email nhận kết quả
     customer_email: Optional[str] = None
 
+    # Mã giảm giá tùy chọn
+    discount_code: Optional[str] = None
+
 
 class SurveyCreateResponse(BaseModel):
     """Response sau khi tạo survey."""
     survey_id: str          # e.g. "PANEL892"
-    price_amount: int       # VND
-    qr_data: dict           # Data để generate VietQR
+    price_amount: int       # VND (số tiền cần thanh toán)
+    original_price: Optional[int] = None # Giá gốc trước giảm
+    discount_code: Optional[str] = None
+    discount_amount: int = 0
+    qr_data: Optional[dict] = None  # Data để generate VietQR (None nếu miễn phí 100%)
     status: str             # "PENDING_PAYMENT"
+    is_free: bool = False   # True nếu giảm 100%
     created_at: datetime
+
+
+class ApplyDiscountRequest(BaseModel):
+    """Request áp dụng mã giảm giá."""
+    code: str = Field(..., min_length=1, max_length=50)
+
+
+class ApplyDiscountResponse(BaseModel):
+    """Response kết quả áp dụng mã giảm giá."""
+    success: bool
+    survey_id: str
+    discount_code: str
+    discount_percent: int
+    original_price: int
+    discount_amount: int
+    final_amount: int
+    qr_data: Optional[dict] = None
+    is_free: bool = False
+    message: str
 
 
 # ─── Survey Status ─────────────────────────────────────────────────────────────

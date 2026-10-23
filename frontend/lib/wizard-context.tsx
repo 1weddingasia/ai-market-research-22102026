@@ -17,6 +17,10 @@ export interface WizardState {
   customerEmail: string;
   surveyId: string;
   priceAmount: number;
+  originalPrice: number;
+  discountCode: string | null;
+  discountAmount: number;
+  isFree: boolean;
   qrData: QrData | null;
   currentStep: number;
 }
@@ -27,7 +31,20 @@ interface WizardContextType {
   updateModel: (id: string, name: string, framework: string) => void;
   updateSampleConfig: (config: Partial<WizardState>) => void;
   updateProductInfo: (info: Record<string, string>, email?: string) => void;
-  updatePayment: (surveyId: string, price: number, qr: QrData) => void;
+  updatePayment: (
+    surveyId: string,
+    price: number,
+    qr: QrData | null,
+    meta?: { originalPrice?: number; discountCode?: string | null; discountAmount?: number; isFree?: boolean }
+  ) => void;
+  setDiscountState: (meta: {
+    priceAmount: number;
+    originalPrice?: number;
+    discountCode?: string | null;
+    discountAmount?: number;
+    qrData?: QrData | null;
+    isFree?: boolean;
+  }) => void;
   reset: () => void;
 }
 
@@ -45,6 +62,10 @@ const INITIAL_STATE: WizardState = {
   customerEmail: '',
   surveyId: '',
   priceAmount: 0,
+  originalPrice: 0,
+  discountCode: null,
+  discountAmount: 0,
+  isFree: false,
   qrData: null,
   currentStep: 1,
 };
@@ -74,14 +95,47 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
-  const updatePayment = useCallback((surveyId: string, price: number, qr: QrData) => {
-    setState(prev => ({ ...prev, surveyId, priceAmount: price, qrData: qr }));
+  const updatePayment = useCallback((
+    surveyId: string,
+    price: number,
+    qr: QrData | null,
+    meta?: { originalPrice?: number; discountCode?: string | null; discountAmount?: number; isFree?: boolean }
+  ) => {
+    setState(prev => ({
+      ...prev,
+      surveyId,
+      priceAmount: price,
+      originalPrice: meta?.originalPrice ?? price,
+      discountCode: meta?.discountCode ?? null,
+      discountAmount: meta?.discountAmount ?? 0,
+      isFree: meta?.isFree ?? (price === 0),
+      qrData: qr,
+    }));
+  }, []);
+
+  const setDiscountState = useCallback((meta: {
+    priceAmount: number;
+    originalPrice?: number;
+    discountCode?: string | null;
+    discountAmount?: number;
+    qrData?: QrData | null;
+    isFree?: boolean;
+  }) => {
+    setState(prev => ({
+      ...prev,
+      priceAmount: meta.priceAmount,
+      originalPrice: meta.originalPrice ?? prev.originalPrice,
+      discountCode: meta.discountCode !== undefined ? meta.discountCode : prev.discountCode,
+      discountAmount: meta.discountAmount ?? prev.discountAmount,
+      qrData: meta.qrData !== undefined ? meta.qrData : prev.qrData,
+      isFree: meta.isFree !== undefined ? meta.isFree : (meta.priceAmount === 0),
+    }));
   }, []);
 
   const reset = useCallback(() => setState(INITIAL_STATE), []);
 
   return (
-    <WizardContext.Provider value={{ state, setStep, updateModel, updateSampleConfig, updateProductInfo, updatePayment, reset }}>
+    <WizardContext.Provider value={{ state, setStep, updateModel, updateSampleConfig, updateProductInfo, updatePayment, setDiscountState, reset }}>
       {children}
     </WizardContext.Provider>
   );
