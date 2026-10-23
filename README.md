@@ -144,7 +144,7 @@ Mở: http://localhost:3000
 
 | Method | URL | Mô tả |
 |--------|-----|-------|
-| GET | `/survey/configs` | Danh sách 5 gói khảo sát |
+| GET | `/survey/configs` | Danh sách 9 mô hình khảo sát chuyên sâu |
 | POST | `/survey/create` | Tạo survey + nhận QR |
 | GET | `/survey/{id}/status` | Check trạng thái |
 | GET | `/survey/{id}/stream` | SSE realtime logs |

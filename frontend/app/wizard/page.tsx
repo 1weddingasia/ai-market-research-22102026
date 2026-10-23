@@ -66,7 +66,7 @@ export default function WizardPage() {
             <span className="text-amber-400">🔬</span> N = 1.000.000 hồ sơ người tiêu dùng Việt Nam
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">📊</span> 5 phương pháp chuẩn quốc tế (Nielsen, Kantar, Van Westendorp)
+            <span className="text-amber-400">📊</span> 9 phương pháp chuẩn quốc tế (Nielsen, Kantar, Van Westendorp, MaxDiff, Kano...)
           </span>
           <span className="flex items-center gap-1.5">
             <span className="text-amber-400">⚡</span> Mô phỏng tức thì bằng AI trong 60 giây

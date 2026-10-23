@@ -378,7 +378,7 @@ export default function HomePage() {
             </div>
             <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 mb-2">Chọn gói & Cấu hình mẫu</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Chọn 1 trong 5 phương pháp nghiên cứu chuẩn quốc tế. Tùy chọn khu vực địa lý (TP.HCM, Hà Nội, Toàn quốc) và độ tuổi mục tiêu.
+              Chọn 1 trong 9 phương pháp nghiên cứu chuẩn quốc tế. Tùy chọn khu vực địa lý (TP.HCM, Hà Nội, Toàn quốc) và độ tuổi mục tiêu.
             </p>
           </div>
 
@@ -404,7 +404,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 5 Frameworks Section ── */}
+      {/* ── 9 Frameworks Section ── */}
       <section id="phuong-phap" className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900 text-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-14">
@@ -412,10 +412,10 @@ export default function HomePage() {
               CHUẨN PHƯƠNG PHÁP LUẬN QUỐC TẾ
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white mt-3">
-              5 Mô hình nghiên cứu chuyên sâu
+              9 Mô hình nghiên cứu chuyên sâu
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
-              Được thiết kế dựa trên các bộ khung phương pháp luận được các tập đoàn FMCG toàn cầu tin dùng.
+              Được thiết kế dựa trên 9 bộ khung phương pháp luận được các tập đoàn FMCG & tư vấn chiến lược toàn cầu tin dùng.
             </p>
           </div>
 

@@ -21,8 +21,8 @@ router = APIRouter(prefix="/survey", tags=["Survey"])
 @router.get("/configs")
 async def list_survey_configs():
     """
-    Trả về danh sách 5 gói khảo sát cho Step 1 của Wizard.
-    Frontend dùng để render 5 thẻ + preview câu hỏi.
+    Trả về danh sách 9 gói khảo sát chuyên sâu cho Step 1 của Wizard.
+    Frontend dùng để render 9 thẻ + preview câu hỏi.
     """
     return {"configs": get_all_configs_summary()}
 
