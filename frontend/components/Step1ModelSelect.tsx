@@ -106,7 +106,7 @@ export default function Step1ModelSelect() {
           Chọn phương pháp nghiên cứu
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Bảo trợ bởi mô hình <span className="font-semibold text-slate-900">1.000.000 hồ sơ người tiêu dùng Việt Nam</span> — Chuẩn phương pháp luận McKinsey, Nielsen, Kantar.
+          Bảo trợ bởi mô hình <span className="font-semibold text-slate-900">1.000.000 chân dung người tiêu dùng tổng hợp (Synthetic Personas)</span> — Chuẩn phương pháp luận McKinsey, Nielsen, Kantar.
         </p>
       </div>
 

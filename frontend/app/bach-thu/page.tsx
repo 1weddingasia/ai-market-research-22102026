@@ -285,7 +285,7 @@ export default function BachThuPage() {
               {
                 step: '01',
                 title: 'Trích mẫu ngẫu nhiên có phân tầng (Stratified Random Sampling)',
-                desc: 'Từ kho 1.000.000 hồ sơ phân tầng GSO, thuật toán trích xuất ngẫu nhiên đúng quy mô mẫu doanh nghiệp lựa chọn (N = 500, 1.000, 2.000 hoặc 3.000 hồ sơ). Mẫu trích xuất phản ánh chính xác tỷ lệ phân bổ địa lý, lứa tuổi và thu nhập của thị trường mục tiêu, bảo đảm tính đại diện thống kê cao nhất.',
+                desc: 'Từ kho 1.000.000 chân dung tổng hợp (Synthetic Personas) phân tầng GSO, thuật toán trích xuất ngẫu nhiên đúng quy mô mẫu doanh nghiệp lựa chọn (N = 500, 1.000, 2.000 hoặc 3.000 tác tử). Mẫu trích xuất phản ánh chính xác tỷ lệ phân bổ địa lý, lứa tuổi và thu nhập của thị trường mục tiêu, bảo đảm tính đại diện thống kê cao nhất.',
                 tech: 'DuckDB In-Memory Parquet Engine + Stratified Quota Sampler',
               },
               {

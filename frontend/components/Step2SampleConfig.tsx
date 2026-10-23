@@ -83,7 +83,7 @@ export default function Step2SampleConfig() {
               </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-2">
-              Bộ lọc sẽ tự động đối sánh tọa độ và địa bàn sinh sống trong kho dữ liệu 1.000.000 người tiêu dùng Việt Nam.
+              Bộ lọc sẽ tự động đối sánh tọa độ và địa bàn sinh sống trong kho 1.000.000 chân dung tiêu dùng tổng hợp (Synthetic Personas).
             </p>
           </div>
 
@@ -188,19 +188,19 @@ export default function Step2SampleConfig() {
           </div>
         </div>
 
-        {/* Right Column (40% ~ 5 cols): Statistical Confidence Panel */}
+        {/* Right Column (40% ~ 5 cols): Statistical Sampling Precision Panel */}
         <div className="lg:col-span-5">
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-sm sticky top-8 space-y-6">
             {/* Panel Header */}
             <div className="border-b border-slate-200 pb-4">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-800 text-[10px] font-bold uppercase tracking-wider mb-2">
-                🏛️ HỘP BẢO CHỨNG HỌC THUẬT
+                🏛️ THÔNG SỐ KIỂM ĐỊNH MẪU PHÂN TẦNG
               </div>
               <h3 className="font-serif text-lg font-bold text-slate-900">
-                Statistical Confidence Panel
+                Statistical Sampling Precision Panel
               </h3>
               <p className="text-xs text-slate-500 mt-1">
-                Các thông số kỹ thuật đo lường theo chuẩn quốc tế ESOMAR & AAPOR.
+                Quy chuẩn độ chuẩn xác thống kê chọn mẫu ngẫu nhiên theo tiêu chuẩn Cochran & ESOMAR.
               </p>
             </div>
 
@@ -208,43 +208,57 @@ export default function Step2SampleConfig() {
             <div className="space-y-4">
               <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                  Cỡ mẫu thực nghiệm
+                  Quy mô mẫu mô phỏng (Sample Size)
                 </span>
                 <div className="text-2xl font-serif font-bold text-slate-900 mt-0.5">
-                  N = {state.sampleSize.toLocaleString('vi-VN')} <span className="text-xs font-sans font-normal text-slate-500">người tiêu dùng</span>
+                  N = {state.sampleSize.toLocaleString('vi-VN')} <span className="text-xs font-sans font-normal text-slate-500">Synthetic Personas</span>
                 </div>
+                <span className="text-[11px] text-slate-500">Mô phỏng đa tác tử độc lập (Multi-Agent Panel)</span>
               </div>
 
               <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                  Khoảng tin cậy (Confidence Interval)
+                  Khoảng tin cậy thống kê (Confidence Level)
                 </span>
                 <div className="text-lg font-bold text-emerald-700 mt-0.5">
                   95% Confidence Interval (z = 1.96)
                 </div>
-              </div>
-
-              <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
-                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                  Sai số biên dự tính (Margin of Error)
-                </span>
-                <div className="text-2xl font-serif font-bold text-amber-700 mt-0.5">
-                  {currentTier.moe}
-                </div>
                 <p className="text-[11px] text-slate-400 mt-1">
-                  Đảm bảo độ lệch kết quả tối đa không vượt quá ngưỡng cho phép của nghiên cứu thị trường thực địa.
+                  Ngưỡng ý nghĩa thống kê chuẩn quốc tế cho phân bổ xác suất chọn mẫu.
                 </p>
               </div>
 
               <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                  Phương pháp lấy mẫu
+                  Sai số chọn mẫu biên (Margin of Sampling Error)
+                </span>
+                <div className="text-2xl font-serif font-bold text-amber-700 mt-0.5">
+                  {currentTier.moe}
+                </div>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Đo lường độ lệch biên tối đa về mặt xác suất thống kê đối với quy mô mẫu được chọn.
+                </p>
+              </div>
+
+              <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+                  Phương pháp lấy mẫu & Nguồn cơ cấu
                 </span>
                 <div className="text-xs font-bold text-slate-900 mt-0.5">
-                  Stratified Random Sampling (Phân tầng theo tuổi, giới tính và thu nhập thực tế)
+                  Stratified Random Sampling · Chuẩn Niên giám Thống kê GSO 6 vùng kinh tế
                 </div>
                 <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                  Trích xuất ngẫu nhiên từ kho dữ liệu 1.000.000 hồ sơ người tiêu dùng Việt Nam, tự động cân bằng phương sai nhân khẩu học.
+                  Mẫu được trích xuất ngẫu nhiên từ kho 1.000.000 chân dung tiêu dùng tổng hợp (Synthetic Personas), phân bổ cân bằng theo cơ cấu độ tuổi, giới tính và thu nhập thực tế của Việt Nam. Dữ liệu mô phỏng tuân thủ nghiêm ngặt nguyên tắc Privacy-by-Design, ẩn danh 100%, không chứa thông tin định danh cá nhân (PII-free) theo Nghị định 13/2023/NĐ-CP.
+                </p>
+              </div>
+
+              {/* Academic Positioning Box */}
+              <div className="bg-slate-100/90 p-3 rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+                <span className="font-bold text-slate-800 flex items-center gap-1">
+                  <span>💡</span> Định vị phương pháp luận (Methodology Fit):
+                </span>
+                <p className="leading-relaxed text-slate-600">
+                  Nền tảng AI Synthetic Panel đóng vai trò là công cụ <strong>Sàng lọc & Giả lập thị trường tốc độ cao (Pre-market Simulation)</strong>, giúp ban điều hành loại bỏ rủi ro và tối ưu mức giá trước khi rót vốn sản xuất đại trà.
                 </p>
               </div>
             </div>

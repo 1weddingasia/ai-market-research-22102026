@@ -63,7 +63,7 @@ export default function WizardPage() {
       <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-10 font-medium">
           <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">🔬</span> N = 1.000.000 hồ sơ người tiêu dùng Việt Nam
+            <span className="text-amber-400">🔬</span> 1.000.000 Chân dung người tiêu dùng tổng hợp (Synthetic Personas)
           </span>
           <span className="flex items-center gap-1.5">
             <span className="text-amber-400">📊</span> 9 phương pháp chuẩn quốc tế (Nielsen, Kantar, Van Westendorp, MaxDiff, Kano...)

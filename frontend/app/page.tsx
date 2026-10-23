@@ -652,10 +652,12 @@ export default function HomePage() {
           <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-2xs">
             <h3 className="font-serif text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-start gap-2">
               <span className="text-amber-600 font-sans font-black shrink-0">02.</span>
-              <span>Dữ liệu 1.000.000 hồ sơ người tiêu dùng lấy từ đâu và có đại diện được cho thị trường?</span>
+              <span>Dữ liệu 1.000.000 chân dung người tiêu dùng tổng hợp (Synthetic Personas) được xây dựng thế nào và có an toàn pháp lý không?</span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
-              Kho dữ liệu được phân tầng khoa học (Stratified Sampling) theo cơ cấu dân số học thực tế của Việt Nam từ Tổng cục Thống kê (GSO): tỷ lệ giới tính (49.8% Nam / 50.2% Nữ), phân bổ độ tuổi 18 - 65, và 6 vùng kinh tế trọng điểm (Đồng bằng sông Hồng, Đông Nam Bộ, Đồng bằng sông Cửu Long, Duyên hải miền Trung, Tây Nguyên, Trung du miền núi phía Bắc). Nhờ đó, mẫu khảo sát phản ánh chân thực các rào cản tài chính, khẩu vị chi tiêu và đặc thù văn hóa tiêu dùng địa phương.
+              Kho dữ liệu được xây dựng dưới dạng <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> phân tầng theo tỷ lệ Niên giám Thống kê Quốc gia (GSO): phân bổ 6 vùng kinh tế trọng điểm, tỷ lệ giới tính cân bằng (49.8% Nam / 50.2% Nữ), các bậc tuổi 18 - 65 và 4 phân tầng thu nhập (A, B, C, D). 
+              <br className="mb-1" />
+              <strong>Đặc biệt an toàn pháp lý:</strong> Hệ thống tuân thủ nghiêm ngặt nguyên tắc <em>Privacy-by-Design</em>, hoàn toàn không thu thập hay lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>. Doanh nghiệp hoàn toàn an tâm khi sử dụng dữ liệu trong các báo cáo chiến lược.
             </p>
           </div>
 
