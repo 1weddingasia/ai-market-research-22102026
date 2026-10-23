@@ -11,7 +11,11 @@ from sqlalchemy.orm import Session
 
 from database import Survey, get_db
 from models.schemas import SepayWebhookPayload
-from services.payment_service import extract_survey_id_from_content, verify_sepay_webhook
+from services.payment_service import (
+    extract_survey_id_from_content,
+    verify_sepay_webhook,
+    verify_sepay_hmac,
+)
 from services.worker import run_simulation
 
 log = structlog.get_logger(__name__)
@@ -26,20 +30,38 @@ async def sepay_webhook(
 ):
     """
     Endpoint nhận webhook từ SePay khi có giao dịch chuyển khoản.
-    SePay gọi vào đây ngay sau khi xác nhận tiền về tài khoản.
-
-    Headers:
-        Authorization: Apikey {SEPAY_API_TOKEN}
+    Hỗ trợ 2 phương thức xác thực chuẩn mực của SePay:
+    1. HMAC-SHA256: Header X-SePay-Signature + X-SePay-Timestamp (Khuyên dùng)
+    2. API Key: Header Authorization: Apikey {SEPAY_API_TOKEN}
     """
-    # 1. Verify token
+    raw_body = await request.body()
     auth_header = request.headers.get("Authorization", "")
-    if not verify_sepay_webhook(auth_header, {}):
-        log.warning("Invalid SePay webhook token")
-        raise HTTPException(401, "Unauthorized")
+    sig_header = request.headers.get("X-SePay-Signature", "") or request.headers.get("x-sepay-signature", "")
+    ts_header = request.headers.get("X-SePay-Timestamp", "") or request.headers.get("x-sepay-timestamp", "")
 
-    # 2. Parse payload
+    is_verified = False
+
+    # 1. Ưu tiên kiểm tra HMAC-SHA256 nếu có chữ ký
+    if sig_header and ts_header:
+        if verify_sepay_hmac(sig_header, ts_header, raw_body):
+            is_verified = True
+            log.info("SePay webhook verified successfully via HMAC-SHA256")
+
+    # 2. Kiểm tra API Key nếu chưa verify qua HMAC
+    if not is_verified and auth_header:
+        if verify_sepay_webhook(auth_header, {}):
+            is_verified = True
+            log.info("SePay webhook verified successfully via API Key")
+
+    # 3. Nếu cả 2 đều không khớp, từ chối
+    if not is_verified:
+        log.warning("SePay webhook verification failed (neither HMAC nor API Key matched)")
+        raise HTTPException(401, "Unauthorized SePay webhook")
+
+    # 4. Parse payload từ raw_body
+    import json
     try:
-        body = await request.json()
+        body = json.loads(raw_body.decode("utf-8"))
         payload = SepayWebhookPayload(**body)
     except Exception as e:
         log.error("Webhook payload parse error", error=str(e))

@@ -111,12 +111,54 @@ def _fallback_qr_data(survey_id: str, amount: int, add_info: str) -> dict:
     }
 
 
+def verify_sepay_hmac(
+    signature: str,
+    timestamp: str,
+    raw_body: bytes,
+) -> bool:
+    """
+    Xác minh chữ ký HMAC-SHA256 từ SePay theo tài liệu chính thức.
+    Headers:
+        X-SePay-Signature: sha256={computed_hash}
+        X-SePay-Timestamp: {unix_timestamp}
+    Message: {timestamp}.{raw_body}
+    """
+    secret = os.getenv("SEPAY_WEBHOOK_SECRET", "").strip()
+    if not secret:
+        log.warning("SEPAY_WEBHOOK_SECRET is not configured in environment variables")
+        return False
+
+    if not signature or not timestamp:
+        return False
+
+    try:
+        # Tái tạo message: {timestamp}.{raw_body}
+        message = f"{timestamp}.".encode("utf-8") + raw_body
+        computed_hash = hmac.new(
+            secret.encode("utf-8"),
+            msg=message,
+            digestmod=hashlib.sha256
+        ).hexdigest()
+
+        expected_sig1 = f"sha256={computed_hash}"
+        expected_sig2 = computed_hash
+
+        if hmac.compare_digest(expected_sig1, signature) or hmac.compare_digest(expected_sig2, signature):
+            return True
+
+        log.warning("SePay HMAC signature mismatch")
+        return False
+    except Exception as e:
+        log.error("SePay HMAC verification exception", error=str(e))
+        return False
+
+
 def verify_sepay_webhook(
     token: str,
     payload: dict,
 ) -> bool:
     """
-    Xác thực webhook từ SePay.
+    Xác thực webhook từ SePay bằng API Key.
     SePay có thể gửi header Authorization dưới dạng:
     - 'Apikey {SEPAY_API_TOKEN}'
     - 'Bearer {SEPAY_API_TOKEN}'
