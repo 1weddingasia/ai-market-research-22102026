@@ -203,74 +203,74 @@ export default function VanWestendorpChart({ modelSpecific }: VanWestendorpChart
 
           {/* ── 4 Dedicated Strategic Legend Cards (Never overlaps) ── */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 pt-3 border-t border-slate-100">
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-blue-50/70 border border-blue-200">
-              <span className="w-3 h-3 rounded-full bg-blue-500 shrink-0 shadow-2xs" />
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-blue-50/70 border border-blue-200">
+              <span className="w-3.5 h-3.5 rounded-full bg-blue-500 shrink-0 shadow-2xs" />
               <div className="min-w-0">
-                <div className="font-bold text-blue-900 text-xs truncate">Quá rẻ</div>
-                <div className="text-[10px] text-blue-700/80 truncate">Nghi ngờ chất lượng</div>
+                <div className="font-bold text-blue-900 text-xs sm:text-sm truncate">Quá rẻ</div>
+                <div className="text-xs text-blue-700/90 truncate">Nghi ngờ chất lượng</div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-emerald-50/70 border border-emerald-200">
-              <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0 shadow-2xs" />
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 shrink-0 shadow-2xs" />
               <div className="min-w-0">
-                <div className="font-bold text-emerald-900 text-xs truncate">Rẻ (Giá hời)</div>
-                <div className="text-[10px] text-emerald-700/80 truncate">Kích cầu thâm nhập</div>
+                <div className="font-bold text-emerald-900 text-xs sm:text-sm truncate">Rẻ (Giá hời)</div>
+                <div className="text-xs text-emerald-700/90 truncate">Kích cầu thâm nhập</div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-amber-50/70 border border-amber-200">
-              <span className="w-3 h-3 rounded-full bg-amber-500 shrink-0 shadow-2xs" />
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50/70 border border-amber-200">
+              <span className="w-3.5 h-3.5 rounded-full bg-amber-500 shrink-0 shadow-2xs" />
               <div className="min-w-0">
-                <div className="font-bold text-amber-900 text-xs truncate">Đắt</div>
-                <div className="text-[10px] text-amber-700/80 truncate">Vẫn cân nhắc mua</div>
+                <div className="font-bold text-amber-900 text-xs sm:text-sm truncate">Đắt</div>
+                <div className="text-xs text-amber-700/90 truncate">Vẫn cân nhắc mua</div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-rose-50/70 border border-rose-200">
-              <span className="w-3 h-3 rounded-full bg-rose-500 shrink-0 shadow-2xs" />
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50/70 border border-rose-200">
+              <span className="w-3.5 h-3.5 rounded-full bg-rose-500 shrink-0 shadow-2xs" />
               <div className="min-w-0">
-                <div className="font-bold text-rose-900 text-xs truncate">Quá đắt</div>
-                <div className="text-[10px] text-rose-700/80 truncate">Cự tuyệt mua</div>
+                <div className="font-bold text-rose-900 text-xs sm:text-sm truncate">Quá đắt</div>
+                <div className="text-xs text-rose-700/90 truncate">Cự tuyệt mua</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* ── Price Recommendations Strategic Panel (4 cols) ── */}
-        <div className="lg:col-span-4 flex flex-col justify-between space-y-3">
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 shadow-2xs">
-            <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">
+        <div className="lg:col-span-4 flex flex-col justify-between space-y-3.5">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 sm:p-5 shadow-2xs">
+            <span className="text-xs uppercase font-bold text-emerald-900 tracking-wider block">
               ĐIỂM GIÁ TỐI ƯU (OPP)
             </span>
-            <div className="text-2xl font-serif font-black text-emerald-900 mt-1">
+            <div className="text-2xl sm:text-3xl font-serif font-black text-emerald-900 mt-1">
               {opp.toLocaleString('vi-VN')} đ
             </div>
-            <p className="text-[11px] text-emerald-800/80 mt-1.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-950 mt-2 leading-relaxed font-normal">
               Giao điểm giữa "Quá rẻ" và "Quá đắt". Mức giá tối đa hóa doanh số thâm nhập thị trường với lực cản tâm lý thấp nhất.
             </p>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-2xs">
-            <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 shadow-2xs">
+            <span className="text-xs uppercase font-bold text-slate-700 tracking-wider block">
               ĐIỂM GIÁ CÂN BẰNG (IPP)
             </span>
-            <div className="text-xl font-serif font-bold text-slate-900 mt-1">
+            <div className="text-2xl sm:text-3xl font-serif font-black text-slate-900 mt-1">
               {ipp.toLocaleString('vi-VN')} đ
             </div>
-            <p className="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-700 mt-2 leading-relaxed font-normal">
               Giao điểm giữa "Hời" và "Đắt". Mức giá giúp định vị thương hiệu ở phân khúc cao cấp hơn mà không làm mất lòng khách hàng.
             </p>
           </div>
 
-          <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 shadow-2xs">
-            <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider block">
+          <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 sm:p-5 shadow-2xs">
+            <span className="text-xs uppercase font-bold text-amber-900 tracking-wider block">
               KHOẢNG GIÁ CHẤP NHẬN ĐƯỢC (RAP)
             </span>
-            <div className="text-base font-mono font-bold text-amber-900 mt-1">
+            <div className="text-lg sm:text-xl font-mono font-bold text-amber-900 mt-1">
               {range[0].toLocaleString('vi-VN')} đ — {range[1].toLocaleString('vi-VN')} đ
             </div>
-            <p className="text-[11px] text-amber-800/80 mt-1.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-amber-950 mt-2 leading-relaxed font-normal">
               Mọi mức giá nằm ngoài khoảng này sẽ chịu sụt giảm mạnh về doanh thu hoặc biên lợi nhuận.
             </p>
           </div>

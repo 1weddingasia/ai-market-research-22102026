@@ -170,26 +170,26 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
 
         <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider mb-3">
               🏛️ KẾT LUẬN TỪ HỘI ĐỒNG CHIẾN LƯỢC AI
             </div>
-            <h3 className="font-serif text-xl font-bold text-slate-900 mb-3">
+            <h3 className="font-serif text-2xl font-bold text-slate-900 mb-3">
               Nhận định điều hành (Executive Verdict)
             </h3>
-            <p className="text-slate-700 text-sm leading-relaxed italic bg-slate-50 p-4 rounded-xl border border-slate-200/80 mb-5">
+            <p className="text-slate-900 font-serif italic text-base sm:text-lg leading-relaxed bg-slate-50/90 p-4 sm:p-5 rounded-xl border border-slate-200 shadow-2xs mb-5 font-semibold">
               "{exec.verdict}"
             </p>
           </div>
 
           <div>
-            <span className="text-[11px] uppercase font-bold text-slate-400 tracking-wider block mb-2">
+            <span className="text-xs sm:text-sm uppercase font-bold text-slate-600 tracking-wider block mb-3">
               Top 3 phát hiện thị trường quan trọng nhất
             </span>
-            <ul className="space-y-2 text-xs text-slate-700">
+            <ul className="space-y-3 text-sm sm:text-[15px] text-slate-700">
               {exec.top_findings.map((f, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-amber-600 font-bold mt-0.5">✦</span>
-                  <span className="leading-relaxed">{f}</span>
+                <li key={i} className="flex items-start gap-2.5">
+                  <span className="text-amber-600 font-bold mt-0.5 text-base shrink-0">✦</span>
+                  <span className="leading-relaxed font-normal">{f}</span>
                 </li>
               ))}
             </ul>
@@ -338,44 +338,44 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
 
       {/* Target Summary 4-Card Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+        <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">
             Cỡ mẫu thực nghiệm
           </span>
-          <div className="text-xl font-serif font-bold text-slate-900 mt-1">
+          <div className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mt-1">
             N = {report.target_summary.sample_size.toLocaleString('vi-VN')}
           </div>
-          <span className="text-[11px] text-slate-500 font-medium">Personas mô phỏng phân tầng</span>
+          <span className="text-xs sm:text-sm text-slate-600 font-medium">Personas mô phỏng phân tầng</span>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-amber-200 bg-amber-50/20 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider block">
+        <div className="bg-white p-4 sm:p-5 rounded-xl border border-amber-200 bg-amber-50/20 shadow-xs">
+          <span className="text-xs uppercase font-bold text-amber-900 tracking-wider block">
             Độ tin cậy & Sai số biên
           </span>
-          <div className="text-xl font-serif font-bold text-amber-700 mt-1">
+          <div className="text-xl sm:text-2xl font-serif font-bold text-amber-700 mt-1">
             95% <span className="text-sm font-sans font-normal text-slate-600">({report.target_summary.margin_of_error || '±3.1%'})</span>
           </div>
-          <span className="text-[11px] text-slate-500 font-medium">Định lý Giới hạn Trung tâm</span>
+          <span className="text-xs sm:text-sm text-slate-600 font-medium">Định lý Giới hạn Trung tâm</span>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+        <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">
             Cơ sở phân tầng dân số
           </span>
-          <div className="text-base font-bold text-slate-900 mt-1 truncate">
+          <div className="text-base sm:text-lg font-bold text-slate-900 mt-1 truncate">
             Niên giám Thống kê GSO
           </div>
-          <span className="text-[11px] text-slate-500 font-medium">{report.target_summary.location} (Khung đối chuẩn)</span>
+          <span className="text-xs sm:text-sm text-slate-600 font-medium">{report.target_summary.location} (Khung đối chuẩn)</span>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+        <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-xs">
+          <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">
             Mô hình phân tích
           </span>
-          <div className="text-base font-bold text-slate-900 mt-1 truncate">
+          <div className="text-base sm:text-lg font-bold text-slate-900 mt-1 truncate">
             {report.model_type.replace(/_/g, ' ').toUpperCase()}
           </div>
-          <span className="text-[11px] text-slate-500 font-medium">Chuẩn ESOMAR / Kantar</span>
+          <span className="text-xs sm:text-sm text-slate-600 font-medium">Chuẩn ESOMAR / Kantar</span>
         </div>
       </div>
 
@@ -384,45 +384,45 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
-            <h4 className="font-serif font-bold text-base text-slate-900">
+            <h4 className="font-serif font-bold text-base sm:text-lg text-slate-900">
               Đặc Tả Phân Khúc Đối Tượng Mục Tiêu (Target Audience Specification)
             </h4>
           </div>
-          <span className="text-[10px] font-mono bg-amber-50 text-amber-900 font-bold px-2.5 py-1 rounded-full border border-amber-200 shrink-0">
+          <span className="text-xs font-mono bg-amber-50 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-200 shrink-0">
             DuckDB 1.000.000 Personas Filtered
           </span>
         </div>
 
-        <div className="p-4 bg-amber-50/40 rounded-xl border border-amber-200/60 space-y-3">
+        <div className="p-4 sm:p-5 bg-amber-50/40 rounded-xl border border-amber-200/60 space-y-3">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-700 font-bold text-sm flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-800 font-bold text-base flex items-center justify-center shrink-0">
               🎯
             </div>
             <div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-900">
+              <div className="text-xs font-mono font-bold uppercase tracking-wider text-amber-900">
                 Chân dung phân khúc tiêu dùng trích xuất:
               </div>
-              <div className="font-bold text-slate-900 text-sm mt-0.5">
+              <div className="font-bold text-slate-900 text-sm sm:text-base mt-0.5">
                 {report.target_summary.demographics || `${report.target_summary.sample_size.toLocaleString('vi-VN')} Tác tử AI phân vai | ${report.target_summary.location}`}
               </div>
             </div>
           </div>
 
           {/* 2 Tầng Khoa Học Chuẩn Mực */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-2 border-t border-amber-200/50 text-xs">
-            <div className="bg-white/80 p-2.5 rounded-lg border border-amber-200/50">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 block font-mono">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-amber-200/50 text-xs sm:text-sm">
+            <div className="bg-white/80 p-3 rounded-lg border border-amber-200/50">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-950 block font-mono">
                 🏛️ Tầng 1: Khung nhân khẩu học (Cơ cấu dân số)
               </span>
-              <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
                 Khung mẫu phân tầng nhân khẩu học được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), đảm bảo cơ cấu độ tuổi, giới tính, vùng miền và phân tầng thu nhập phản ánh sát thực tế dân số.
               </p>
             </div>
-            <div className="bg-white/80 p-2.5 rounded-lg border border-amber-200/50">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 block font-mono">
+            <div className="bg-white/80 p-3 rounded-lg border border-amber-200/50">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-950 block font-mono">
                 🛒 Tầng 2: Hành vi tiêu dùng & Tâm lý mua sắm
               </span>
-              <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
                 Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
               </p>
             </div>
@@ -430,38 +430,38 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
         </div>
 
         {/* Breakdown Tags Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs">
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Địa bàn</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">{report.target_summary.location}</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Địa bàn</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1 truncate">{report.target_summary.location}</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Giới tính</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Giới tính</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1">
               {report.target_summary.target_gender === 'female' ? 'Nữ giới 100%' : report.target_summary.target_gender === 'male' ? 'Nam giới 100%' : 'Toàn bộ (Nam & Nữ)'}
             </span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Thu nhập</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Thu nhập</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1 truncate">
               {report.target_summary.target_income === 'AB' ? 'Hạng A-B (>15tr)' : report.target_summary.target_income === 'A' ? 'Hạng A (>25tr)' : report.target_summary.target_income === 'CD' ? 'Hạng C-D (<15tr)' : 'Đa dạng phân khúc'}
             </span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Hôn nhân</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Hôn nhân</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1 truncate">
               {report.target_summary.target_marital_status === 'married' ? 'Có gia đình / Con cái' : report.target_summary.target_marital_status === 'single' ? 'Độc thân' : 'Tất cả tình trạng'}
             </span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Nghề nghiệp</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Nghề nghiệp</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1 truncate">
               {report.target_summary.target_occupation === 'office' ? 'Văn phòng / Trí thức' : report.target_summary.target_occupation === 'business' ? 'Kinh doanh / Buôn bán' : report.target_summary.target_occupation === 'worker' ? 'Công nhân / Sản xuất' : 'Đa dạng mọi ngành'}
             </span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[10px] text-slate-400 font-mono uppercase block">Môi trường</span>
-            <span className="font-bold text-slate-800 text-[11px] block mt-0.5 truncate">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-xs text-slate-500 font-mono uppercase block font-semibold">Môi trường</span>
+            <span className="font-bold text-slate-800 text-xs sm:text-sm block mt-1 truncate">
               {report.target_summary.target_zone === 'urban' ? 'Chỉ Đô Thị' : report.target_summary.target_zone === 'rural' ? 'Chỉ Nông Thôn' : 'Toàn địa bàn'}
             </span>
           </div>
@@ -838,14 +838,14 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Drivers */}
         <div className="bg-white border border-emerald-200 rounded-xl p-6 shadow-sm">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full mb-4">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-900 bg-emerald-50 px-3 py-1 rounded-full mb-4">
             <span>✅ ĐỘNG LỰC THÚC ĐẨY MUA HÀNG (DRIVERS)</span>
           </div>
-          <ul className="space-y-3 text-xs text-slate-700">
+          <ul className="space-y-3.5 text-sm sm:text-base text-slate-800">
             {top_drivers.map((d, i) => (
-              <li key={i} className="flex items-start gap-2.5 bg-emerald-50/30 p-2.5 rounded-lg border border-emerald-100">
-                <span className="text-emerald-600 font-bold">›</span>
-                <span className="leading-relaxed font-medium">{d}</span>
+              <li key={i} className="flex items-start gap-2.5 bg-emerald-50/40 p-3 rounded-xl border border-emerald-100/80">
+                <span className="text-emerald-700 font-bold text-lg leading-none shrink-0">›</span>
+                <span className="leading-relaxed font-normal">{d}</span>
               </li>
             ))}
           </ul>
@@ -853,14 +853,14 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
 
         {/* Barriers */}
         <div className="bg-white border border-red-200 rounded-xl p-6 shadow-sm">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-800 bg-red-50 px-2.5 py-1 rounded-full mb-4">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-900 bg-red-50 px-3 py-1 rounded-full mb-4">
             <span>⛔ RÀO CẢN & ĐIỂM NGẦN NGẠI (BARRIERS)</span>
           </div>
-          <ul className="space-y-3 text-xs text-slate-700">
+          <ul className="space-y-3.5 text-sm sm:text-base text-slate-800">
             {top_barriers.map((b, i) => (
-              <li key={i} className="flex items-start gap-2.5 bg-red-50/30 p-2.5 rounded-lg border border-red-100">
-                <span className="text-red-600 font-bold">›</span>
-                <span className="leading-relaxed font-medium">{b}</span>
+              <li key={i} className="flex items-start gap-2.5 bg-red-50/40 p-3 rounded-xl border border-red-100/80">
+                <span className="text-red-700 font-bold text-lg leading-none shrink-0">›</span>
+                <span className="leading-relaxed font-normal">{b}</span>
               </li>
             ))}
           </ul>
@@ -871,14 +871,14 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="font-serif text-lg font-bold text-slate-900">
+            <h3 className="font-serif text-xl font-bold text-slate-900">
               Ý kiến định tính trích xuất từ Tác tử AI phân vai (Synthetic VoC Verbatim)
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
               Các phản hồi định tính mô phỏng góc nhìn tâm lý học của người tiêu dùng đối chuẩn theo khung phân tầng nhân khẩu học GSO
             </p>
           </div>
-          <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200">
+          <span className="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200 shrink-0">
             {verbatim_quotes.length} Phản hồi tiêu biểu
           </span>
         </div>
@@ -887,7 +887,7 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
           {verbatim_quotes.map((q, i) => (
             <div
               key={i}
-              className={`p-5 rounded-xl border bg-white shadow-xs flex flex-col justify-between transition-all ${
+              className={`p-5 sm:p-6 rounded-xl border bg-white shadow-xs flex flex-col justify-between transition-all ${
                 q.sentiment === 'positive'
                   ? 'border-emerald-200 hover:border-emerald-400'
                   : q.sentiment === 'negative'
@@ -896,18 +896,18 @@ function Tab3VoiceOfConsumer({ report }: { report: ReportPayload }) {
               }`}
             >
               <div className="mb-4">
-                <span className="font-serif text-3xl text-amber-300 leading-none block select-none mb-1">
+                <span className="font-serif text-3xl text-amber-400 leading-none block select-none mb-1">
                   “
                 </span>
-                <p className="text-slate-800 text-xs sm:text-sm leading-relaxed italic pl-1">
+                <p className="text-slate-900 text-sm sm:text-base leading-relaxed italic pl-1 font-normal">
                   {q.quote}
                 </p>
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-xs text-slate-900">{q.name}</div>
-                  <div className="text-[11px] text-slate-500">
+                  <div className="font-bold text-xs sm:text-sm text-slate-900">{q.name}</div>
+                  <div className="text-xs text-slate-500 mt-0.5">
                     {q.age} tuổi · {q.job} {q.income ? `· Thu nhập ${q.income}` : ''}
                   </div>
                 </div>
@@ -929,23 +929,23 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
     <div className="space-y-6">
       {/* 3 Numbered Action Steps */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
           📋 CHIẾN LƯỢC HÀNH ĐỘNG DOANH NGHIỆP
         </div>
-        <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+        <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mb-2">
           3 Khuyến nghị thực thi dành cho Ban Điều Hành & Marketing
         </h3>
-        <p className="text-xs text-slate-500 mb-6">
+        <p className="text-xs sm:text-sm text-slate-500 mb-6">
           Được tổng hợp tự động từ ma trận đánh giá rào cản và khoảng trống thị trường.
         </p>
 
         <div className="space-y-4">
           {recs.map((rec, i) => (
-            <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-              <div className="w-8 h-8 rounded-full bg-slate-900 text-amber-400 font-serif font-bold text-sm flex items-center justify-center shrink-0">
+            <div key={i} className="flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div className="w-9 h-9 rounded-full bg-slate-900 text-amber-400 font-serif font-bold text-base flex items-center justify-center shrink-0 shadow-2xs">
                 0{i + 1}
               </div>
-              <div className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+              <div className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal">
                 {rec}
               </div>
             </div>

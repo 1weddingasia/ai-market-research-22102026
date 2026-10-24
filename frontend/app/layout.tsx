@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
+import { Playfair_Display, Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css';
 import { WizardProvider } from '@/lib/wizard-context';
 import BackToTop from '@/components/BackToTop';
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+const beVietnam = Be_Vietnam_Pro({
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
 const playfair = Playfair_Display({
-  subsets: ['latin'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-serif',
   weight: ['400', '600', '700', '900'],
   display: 'swap',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="vi" className={`${jakarta.variable} ${playfair.variable}`}>
+    <html lang="vi" className={`${beVietnam.variable} ${playfair.variable}`}>
       <body className="antialiased selection:bg-amber-500 selection:text-slate-950">
         <WizardProvider>
           {children}
