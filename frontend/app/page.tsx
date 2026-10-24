@@ -127,59 +127,61 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-amber-100 selection:text-amber-900">
-      {/* ── Top Bar / Header ── */}
+      {/* ── Top Bar / Header Tinh Gọn & Sang Trọng ── */}
       <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          {/* Logo INSIGHT AI chuẩn hóa */}
+          {/* Logo INSIGHT AI */}
           <Logo href="/" />
 
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-semibold text-slate-600 shrink-0">
-            <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">Phương pháp</a>
-            <a href="#quy-trinh" className="hover:text-slate-900 transition-colors">Quy trình</a>
-            <a href="#bang-gia" className="hover:text-slate-900 transition-colors">Bảng giá</a>
-            <a href="#tieu-chuan-khoa-hoc" className="hover:text-slate-900 transition-colors">Cơ sở khoa học</a>
+          {/* Navigation Tinh Gọn (4 mục cốt lõi, không rối mắt) */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold text-slate-600 shrink-0">
+            <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">
+              Mô hình nghiên cứu
+            </a>
+            <Link
+              href="/results/DEMO-NIELSEN-BASES"
+              className="inline-flex items-center gap-1.5 text-amber-700 hover:text-amber-900 font-bold transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              <span>Báo cáo mẫu</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">Demo</span>
+            </Link>
+            <a href="#bang-gia" className="hover:text-slate-900 transition-colors">
+              Bảng giá
+            </a>
             <Link
               href="/minh-bach-khoa-hoc"
-              className="text-amber-800 hover:text-amber-950 font-bold transition-colors whitespace-nowrap"
+              className="hover:text-slate-900 transition-colors"
             >
-              Minh bạch thống kê
-            </Link>
-            <Link
-              href="/bach-thu"
-              className="hover:text-slate-900 transition-colors whitespace-nowrap"
-            >
-              Bạch thư C-Level
-            </Link>
-            <a href="#faq" className="hover:text-slate-900 transition-colors">FAQ</a>
-            <Link href="/results/DEMO-NIELSEN-BASES" className="text-amber-700 hover:text-amber-900 font-bold transition-colors whitespace-nowrap">
-              📄 Báo cáo mẫu
+              Minh bạch khoa học
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Actions bên phải */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <Link
               href="/tra-cuu"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 py-2 px-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition-all cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 py-2 px-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition-all cursor-pointer"
             >
               <svg className="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span>Tra cứu báo cáo</span>
+              <span>Tra cứu</span>
             </Link>
 
             <Link
               href="/wizard"
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-5 rounded-xl shadow-xs transition-all"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4.5 rounded-xl shadow-xs transition-all"
             >
-              <span>Bắt đầu</span>
-              <span className="text-amber-400">→</span>
+              <span>Khởi tạo khảo sát</span>
+              <span className="text-amber-400 font-bold">→</span>
             </Link>
 
             {/* Mobile Menu Toggle Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
               aria-label="Mở menu"
             >
               {mobileMenuOpen ? (
@@ -195,19 +197,16 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Drawer */}
+        {/* Mobile Dropdown Drawer Tinh Gọn */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
+          <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-2.5 shadow-lg animate-in slide-in-from-top-2 duration-150">
             <Link
-              href="/tra-cuu"
+              href="/wizard"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl bg-slate-100 text-slate-900 font-bold text-xs border border-slate-300"
+              className="flex items-center justify-between p-3 rounded-xl bg-slate-900 text-white font-bold text-xs"
             >
-              <span className="flex items-center gap-2">
-                <span>🔍</span>
-                <span>Tra Cứu Báo Cáo Doanh Nghiệp (Không cần mật khẩu)</span>
-              </span>
-              <span>→</span>
+              <span>🚀 Khởi tạo khảo sát mới ngay</span>
+              <span className="text-amber-400">→</span>
             </Link>
 
             <Link
@@ -216,82 +215,53 @@ export default function HomePage() {
               className="flex items-center justify-between p-3 rounded-xl bg-amber-50 text-amber-900 font-bold text-xs border border-amber-200"
             >
               <span className="flex items-center gap-2">
-                <span>📄</span>
-                <span>Xem Báo Cáo Mẫu Thực Tế (DEMO)</span>
+                <span>📊</span>
+                <span>Xem Báo Cáo Mẫu Thực Tế (Live Demo)</span>
               </span>
               <span>→</span>
             </Link>
 
             <Link
-              href="/minh-bach-khoa-hoc"
+              href="/tra-cuu"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl bg-amber-500/15 text-amber-900 font-bold text-xs border border-amber-400/40"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-semibold text-xs border border-slate-200"
             >
               <span className="flex items-center gap-2">
-                <span>⚖️</span>
-                <span>Minh Bạch Khoa Học &amp; Thống Kê (MoE ±3.1%)</span>
+                <span>🔍</span>
+                <span>Tra cứu báo cáo khảo sát</span>
               </span>
               <span>→</span>
             </Link>
 
-            <Link
-              href="/bach-thu"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl bg-slate-900 text-amber-300 font-bold text-xs border border-amber-500/30"
-            >
-              <span className="flex items-center gap-2">
-                <span>📚</span>
-                <span>Bạch Thư Phương Pháp Luận (C-Level)</span>
-              </span>
-              <span className="text-amber-400">→</span>
-            </Link>
-
-            <div className="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700 pt-1">
+            <div className="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700 pt-1 border-t border-slate-100">
               <a
                 href="#phuong-phap"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100"
+                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-center font-semibold"
               >
-                ✦ Phương pháp
-              </a>
-              <a
-                href="#quy-trinh"
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100"
-              >
-                ✦ Quy trình
+                Mô hình nghiên cứu
               </a>
               <a
                 href="#bang-gia"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100"
+                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-center font-semibold"
               >
-                ✦ Bảng giá
+                Bảng giá trọn gói
               </a>
-              <a
-                href="#tieu-chuan-khoa-hoc"
+              <Link
+                href="/minh-bach-khoa-hoc"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100"
+                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-center font-semibold"
               >
-                ✦ Cơ sở khoa học
-              </a>
-              <a
-                href="#faq"
+                Minh bạch khoa học
+              </Link>
+              <Link
+                href="/bach-thu"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100"
+                className="p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-center font-semibold"
               >
-                ✦ FAQ
-              </a>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowLookupModal(true);
-                }}
-                className="p-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-left text-slate-900 font-semibold"
-              >
-                🔍 Tra cứu báo cáo
-              </button>
+                Bạch thư C-Level
+              </Link>
             </div>
           </div>
         )}
@@ -734,14 +704,14 @@ export default function HomePage() {
           </div>
 
           <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-            Sẵn sàng kiểm chứng sản phẩm của bạn <br className="hidden sm:inline" />
+            Kiểm thử ý tưởng với 1.000 khách hàng tiềm năng giả lập <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
-              trong 60 giây?
+              trong 60 giây
             </span>
           </h2>
 
           <p className="text-slate-300 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Tiết kiệm hàng trăm triệu đồng và hàng tuần chờ đợi phỏng vấn thực địa. Kiểm tra ngay phản ứng thị trường qua cụm 1.000 tác tử AI phân vai độc lập theo ma trận nhân khẩu học người tiêu dùng Việt Nam trước khi đưa ra quyết định sản xuất lớn.
+            Giúp doanh nghiệp tiết kiệm 95% chi phí và thời gian trước khi tung sản phẩm thật ra thị trường. Thử sai nhanh, định giá chuẩn xác và loại bỏ rủi ro chôn vốn bằng cụm tác tử AI mô phỏng người tiêu dùng Việt Nam.
           </p>
 
           <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -756,7 +726,7 @@ export default function HomePage() {
               href="/results/DEMO-NIELSEN-BASES"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-800 text-white font-bold text-sm py-3.5 sm:py-4 px-6 sm:px-7 rounded-xl border border-slate-700 hover:border-slate-500 transition-all"
             >
-              <span>📄 Xem Báo Cáo Mẫu Thực Tế</span>
+              <span>📊 Xem Báo Cáo Mẫu Thực Tế</span>
             </Link>
           </div>
 
@@ -771,39 +741,164 @@ export default function HomePage() {
               <span className="text-emerald-400">✓</span> Xuất báo cáo PDF A4 6 trang
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400">✓</span> Bảo mật dữ liệu tuyệt đối
+              <span className="text-emerald-400">✓</span> Bảo mật dữ liệu tuyệt đối (PII-Free)
             </span>
           </div>
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="bg-slate-900 text-white border-t border-slate-800 py-8 sm:py-12 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left">
-          {/* Logo INSIGHT AI Footer */}
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <Logo variant="footer" href="/" />
-            <span className="text-[11px] text-slate-400 mt-1">
-              insight.1booking.asia · Nền tảng mô phỏng thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas)
+      {/* ── Footer Tinh Gọn, Đẳng Cấp & Chuẩn Pháp Lý ── */}
+      <footer className="bg-slate-950 text-white border-t border-slate-800 pt-12 sm:pt-16 pb-10 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
+          {/* 4-Column Structured Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 text-xs">
+            {/* Col 1: Brand & Media Positioning */}
+            <div className="space-y-3.5 lg:pr-4">
+              <Logo variant="footer" href="/" />
+              <p className="text-slate-400 text-xs leading-relaxed">
+                Chúng tôi giúp bạn kiểm thử ý tưởng với 1.000 khách hàng tiềm năng giả lập trong 60 giây, giúp tiết kiệm 95% chi phí và thời gian trước khi tung sản phẩm thật ra thị trường.
+              </p>
+              <div className="pt-1 flex flex-wrap gap-2 text-[10px] font-mono">
+                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">
+                  Cochran 95%
+                </span>
+                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-emerald-400">
+                  Privacy-by-Design
+                </span>
+                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
+                  VietQR Pro
+                </span>
+              </div>
+            </div>
+
+            {/* Col 2: Models & Solutions */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
+                Mô Hình Nghiên Cứu
+              </h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <a href="#phuong-phap" className="hover:text-white transition-colors">
+                    Nielsen BASES (Kiểm định ý tưởng)
+                  </a>
+                </li>
+                <li>
+                  <a href="#phuong-phap" className="hover:text-white transition-colors">
+                    Van Westendorp (Định giá tối ưu)
+                  </a>
+                </li>
+                <li>
+                  <a href="#phuong-phap" className="hover:text-white transition-colors">
+                    Kantar Link (Thử nghiệm A/B bao bì)
+                  </a>
+                </li>
+                <li>
+                  <a href="#phuong-phap" className="hover:text-white transition-colors">
+                    U&amp;A Study (Hành vi &amp; Thói quen)
+                  </a>
+                </li>
+                <li className="pt-1">
+                  <Link
+                    href="/results/DEMO-NIELSEN-BASES"
+                    className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>Xem toàn bộ 9 ca mẫu</span>
+                    <span>→</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Academic & Documentation */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
+                Cơ Sở Khoa Học
+              </h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link href="/minh-bach-khoa-hoc" className="hover:text-white transition-colors">
+                    Minh Bạch Khoa Học &amp; Thống Kê
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/bach-thu" className="hover:text-white transition-colors">
+                    Bạch Thư Phương Pháp Luận C-Level
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/minh-bach-khoa-hoc" className="hover:text-white transition-colors">
+                    Khung đối chuẩn Niên giám GSO
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tra-cuu" className="hover:text-white transition-colors">
+                    Tra cứu báo cáo bảo mật
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 4: Support & Operations */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
+                Vận Hành &amp; Hỗ Trợ
+              </h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link href="/wizard" className="hover:text-white transition-colors">
+                    Khởi tạo khảo sát trực tuyến
+                  </Link>
+                </li>
+                <li>
+                  <span className="text-slate-400">Cổng thanh toán: </span>
+                  <span className="text-slate-200">VietQR 24/7 (SePay)</span>
+                </li>
+                <li>
+                  <span className="text-slate-400">Email: </span>
+                  <a href="mailto:hi@1booking.asia" className="text-amber-400 hover:underline">
+                    hi@1booking.asia
+                  </a>
+                </li>
+                <li>
+                  <span className="text-slate-400">Hệ sinh thái: </span>
+                  <a href="https://1booking.asia" target="_blank" rel="noreferrer" className="text-slate-300 hover:text-white">
+                    1booking.asia
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Legal Disclaimer Box — Điều khoản Khước từ Trách nhiệm Pháp lý */}
+          <div className="pt-6 border-t border-slate-900">
+            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 text-slate-400 text-xs leading-relaxed space-y-2 shadow-inner">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
+                <span>⚖️</span>
+                <span>Điều khoản khước từ trách nhiệm (Legal Disclaimer)</span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
+                INSIGHT AI là công cụ mô phỏng giả lập tác tử AI hỗ trợ thử nghiệm ý tưởng và tối ưu hóa chi phí nghiên cứu ban đầu. Kết quả khảo sát mang tính chất tham khảo khoa học, không thay thế hoàn toàn cho các quyết định đầu tư tài chính hoặc pháp lý thực tế của doanh nghiệp.
+              </p>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Hệ thống vận hành theo nguyên tắc <em>Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>.
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Copyright Bar */}
+          <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400 text-center sm:text-left">
+            <span>
+              © 2026 INSIGHT AI Platform · Nền tảng Nghiên cứu Thị trường bằng Tác tử AI Mô phỏng. All rights reserved.
             </span>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
-            <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 transition-colors">
-              ✦ Minh Bạch Khoa Học &amp; Thống Kê
-            </Link>
-            <span>·</span>
-            <Link href="/bach-thu" className="text-slate-300 hover:text-amber-300 font-semibold underline underline-offset-4 transition-colors">
-              Bạch Thư C-Level
-            </Link>
-            <span>·</span>
-            <span>Bảo chứng Cochran 95%</span>
-            <span>·</span>
-            <span>VietQR Pro Certified</span>
-          </div>
-
-          <div className="text-[11px] text-slate-400">
-            © 2026 INSIGHT AI Platform. All rights reserved.
+            <div className="flex items-center gap-4 text-slate-400">
+              <Link href="/minh-bach-khoa-hoc" className="hover:text-amber-400 transition-colors">
+                Bảo vệ dữ liệu PII-Free
+              </Link>
+              <span>·</span>
+              <Link href="/bach-thu" className="hover:text-amber-400 transition-colors">
+                Chuẩn Cochran 95%
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

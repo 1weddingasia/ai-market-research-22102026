@@ -58,18 +58,18 @@ export default function HeroSlider() {
     {
       id: 'nielsen_bases',
       tabTitle: '1. Khảo Sát Ý Tưởng',
-      tabSubtitle: 'Nielsen BASES · 1.000 Mẫu',
+      tabSubtitle: 'Nielsen BASES · 1.000 Khách Hàng Giả Lập',
       badge: {
         icon: '✦',
         text: 'ĐỐI CHUẨN PHÂN TẦNG NIÊN GIÁM THỐNG KÊ GSO · ESOMAR',
         color: 'bg-amber-500/10 text-amber-900 border-amber-300/60',
       },
-      headlinePrefix: 'Mô phỏng thị trường qua ',
-      headlineHighlight: '1.000 tác tử AI phân vai',
+      headlinePrefix: 'Kiểm thử ý tưởng với ',
+      headlineHighlight: '1.000 khách hàng tiềm năng giả lập',
       headlineHighlightClass: 'from-amber-600 via-amber-700 to-slate-900',
       headlineSuffix: ' trong 60 giây',
       description:
-        'Tác tử AI phân vai độc lập đối chuẩn theo khung phân tầng nhân khẩu học Niên giám Thống kê GSO (6 vùng kinh tế, độ tuổi, thu nhập) kết hợp mô hình hành vi mua sắm thị trường. Đo lường mức độ độc đáo, tỷ lệ dùng thử dự báo và rào cản thất bại trước khi xuất xưởng.',
+        'Giúp bạn kiểm thử ý tưởng với 1.000 khách hàng tiềm năng giả lập trong 60 giây, tiết kiệm 95% chi phí và thời gian trước khi tung sản phẩm thật ra thị trường. Đối chuẩn theo khung phân tầng Niên giám Thống kê GSO (6 vùng kinh tế, độ tuổi, thu nhập), đo lường mức độ đón nhận và rào cản thất bại trước khi sản xuất lớn.',
       primaryCta: {
         label: 'Khởi tạo khảo sát ngay',
         href: '/wizard?model=nielsen_bases',

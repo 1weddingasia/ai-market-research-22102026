@@ -1239,6 +1239,32 @@ export default function ResultsPage() {
           </div>
         </div>
       )}
+
+      {/* ── Footer & Legal Disclaimer ── */}
+      <footer className="mt-16 pt-8 pb-12 border-t border-slate-200">
+        <div className="bg-slate-100/80 border border-slate-200 rounded-2xl p-4 sm:p-5 text-slate-600 text-xs leading-relaxed space-y-2">
+          <div className="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider">
+            <span>⚖️</span>
+            <span>Điều khoản khước từ trách nhiệm (Legal Disclaimer)</span>
+          </div>
+          <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+            INSIGHT AI là công cụ mô phỏng giả lập tác tử AI hỗ trợ thử nghiệm ý tưởng và tối ưu hóa chi phí nghiên cứu ban đầu. Kết quả khảo sát mang tính chất tham khảo khoa học, không thay thế hoàn toàn cho các quyết định đầu tư tài chính hoặc pháp lý thực tế của doanh nghiệp.
+          </p>
+          <p className="text-[11px] text-slate-500 leading-relaxed">
+            Hệ thống vận hành theo nguyên tắc <em>Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>.
+          </p>
+        </div>
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400 font-mono">
+          <span>Hệ thống báo cáo INSIGHT AI · Mã hồ sơ: #{surveyId}</span>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="hover:text-slate-700 transition-colors">Trang chủ</Link>
+            <span>·</span>
+            <Link href="/minh-bach-khoa-hoc" className="hover:text-slate-700 transition-colors">Minh bạch khoa học</Link>
+            <span>·</span>
+            <Link href="/tra-cuu" className="hover:text-slate-700 transition-colors">Tra cứu</Link>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

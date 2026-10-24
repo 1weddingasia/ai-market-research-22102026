@@ -1664,17 +1664,18 @@ export default function PrintReportPage() {
             </div>
           </div>
 
-          {/* Legal Non-Disclosure & Digital Certification Seal (Clean for B&W print) */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-300 flex items-center justify-between gap-4">
+          {/* Legal Non-Disclosure, Disclaimer & Digital Certification Seal */}
+          <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-300 flex items-center justify-between gap-4">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[9.5px] font-mono font-bold uppercase tracking-wider">
-                <span>🛡️ CAM KẾT BẢO MẬT & TÍNH KHÁCH QUAN THỐNG KÊ</span>
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[9px] font-mono font-bold uppercase tracking-wider">
+                <span>⚖️</span>
+                <span>ĐIỀU KHOẢN KHƯỚC TỪ TRÁCH NHIỆM & BẢO MẬT (DISCLAIMER)</span>
               </div>
-              <p className="text-[10.5px] text-slate-600 leading-relaxed max-w-md">
-                Báo cáo này được kết xuất độc quyền cho khách hàng sở hữu mã dự án <strong>#{surveyId}</strong>. Toàn bộ thông tin ý tưởng và phân tích dữ liệu được bảo vệ nghiêm ngặt theo tiêu chuẩn bảo mật dữ liệu doanh nghiệp (Enterprise Confidentiality NDA).
+              <p className="text-[9.5px] text-slate-600 leading-relaxed max-w-md">
+                <strong>Khước từ trách nhiệm:</strong> INSIGHT AI là công cụ mô phỏng giả lập tác tử AI hỗ trợ thử nghiệm ý tưởng và tối ưu hóa chi phí nghiên cứu ban đầu. Kết quả khảo sát mang tính chất tham khảo khoa học, không thay thế hoàn toàn cho các quyết định đầu tư tài chính hoặc pháp lý thực tế của doanh nghiệp. Toàn bộ hồ sơ giả lập tuân thủ nguyên tắc Privacy-by-Design theo Nghị định 13/2023/NĐ-CP (PII-free).
               </p>
-              <div className="text-[9.5px] font-mono text-slate-400 pt-0.5">
-                Mã xác thực chữ ký số: SHA256-{(surveyId + '-VERIFIED-KANTAR-MCKINSEY').slice(0, 24).toUpperCase()}
+              <div className="text-[8.5px] font-mono text-slate-400 pt-0.5">
+                Mã dự án: #{surveyId} · Chữ ký số SHA256-{(surveyId + '-VERIFIED-KANTAR-MCKINSEY').slice(0, 20).toUpperCase()}
               </div>
             </div>
 
