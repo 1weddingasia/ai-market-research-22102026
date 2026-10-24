@@ -979,10 +979,10 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
 
           <a
             href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
-            download={`bao-cao-khao-sat-${surveyId}.html`}
+            download={`bao-cao-khao-sat-${surveyId}.pdf`}
             className="inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-white text-xs py-3 px-4 rounded-xl transition-colors font-medium"
           >
-            <span>💾 Tải file báo cáo (.html / .pdf)</span>
+            <span>💾 Tải Báo Cáo PDF (A4)</span>
           </a>
         </div>
       </div>
@@ -1132,10 +1132,10 @@ export default function ResultsPage() {
 
             <a
               href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
-              download={`bao-cao-khao-sat-${surveyId}.html`}
+              download={`bao-cao-khao-sat-${surveyId}.pdf`}
               className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-3 rounded-lg shadow-xs transition-colors hidden sm:inline-flex"
             >
-              <span>💾 Tải file</span>
+              <span>💾 Tải PDF</span>
             </a>
 
             {/* Enterprise Privacy & Data Security Button */}

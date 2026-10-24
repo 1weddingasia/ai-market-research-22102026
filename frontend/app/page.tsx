@@ -328,8 +328,61 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── Dynamic 3-Slide Hero Section ── */}
+      {/* ── Dynamic 3-Slide Hero Section (Full-Width, High Impact) ── */}
       <HeroSlider />
+
+      {/* ── Executive Trust Metrics Strip ── */}
+      <section className="bg-white border-b border-slate-200 py-6 px-4 sm:px-6 relative z-20 shadow-xs">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
+          <div className="pt-2 lg:pt-0 lg:px-4 first:pl-0">
+            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+              QUY MÔ MẪU PHÂN TẦNG
+            </span>
+            <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-0.5">
+              1.000.000+
+            </div>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Chuẩn hóa theo Niên giám Thống kê GSO Việt Nam
+            </p>
+          </div>
+
+          <div className="pt-2 lg:pt-0 lg:px-4">
+            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+              TỐC ĐỘ PHỎNG VẤN AI
+            </span>
+            <div className="text-xl sm:text-2xl font-serif font-black text-emerald-700 mt-0.5">
+              &lt; 60 Giây
+            </div>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Mô phỏng hàng ngàn tác tử phản hồi song song
+            </p>
+          </div>
+
+          <div className="pt-2 lg:pt-0 lg:px-4">
+            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+              ĐỘ TIN CẬY THỐNG KÊ
+            </span>
+            <div className="text-xl sm:text-2xl font-serif font-black text-amber-700 mt-0.5">
+              95.0% · MoE ±3.1%
+            </div>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Công thức Cochran & chuẩn mực ESOMAR quốc tế
+            </p>
+          </div>
+
+          <div className="pt-2 lg:pt-0 lg:px-4">
+            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+              BÁO CÁO THẨM ĐỊNH
+            </span>
+            <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-0.5">
+              PDF 6 Trang A4
+            </div>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Hồ sơ chiến lược độc bản trình trực tiếp HĐQT
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* ── 3-Step Process ── */}
       <section id="quy-trinh" className="py-12 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">

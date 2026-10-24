@@ -241,10 +241,10 @@ export default function PrintReportPage() {
 
             <a
               href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${surveyId}/pdf?download=true`}
-              download={`bao-cao-khao-sat-${surveyId}.html`}
+              download={`bao-cao-khao-sat-${surveyId}.pdf`}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs font-medium transition-colors"
             >
-              <span>💾 Tải file về máy</span>
+              <span>💾 Tải Báo Cáo PDF (A4)</span>
             </a>
 
             <button

@@ -458,10 +458,10 @@ function TraCuuContent() {
                               </Link>
                               <a
                                 href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${s.survey_id}/pdf?download=true`}
-                                download={`bao-cao-khao-sat-${s.survey_id}.html`}
+                                download={`bao-cao-khao-sat-${s.survey_id}.pdf`}
                                 className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs py-1.5 px-3 rounded-lg border border-slate-300 transition-all text-center"
                               >
-                                <span>💾 Tải file</span>
+                                <span>💾 Tải PDF</span>
                               </a>
                             </div>
                             <button

@@ -27,10 +27,8 @@ async def download_pdf(
     db: Session = Depends(get_db),
 ):
     """
-    Trả về file báo cáo.
-    - WeasyPrint có sẵn → PDF (application/pdf)
-    - WeasyPrint không có → HTML printable (text/html)
-    PDF/HTML được cache sau lần đầu generate.
+    Trả về file báo cáo PDF chuẩn in ấn A4 (application/pdf).
+    Khách hàng doanh nghiệp nhận trực tiếp file .pdf.
     """
     survey = db.query(Survey).filter(Survey.id == survey_id).first()
     if not survey and survey_id.upper().startswith("DEMO"):
@@ -41,18 +39,12 @@ async def download_pdf(
             report_data=demo_payload,
         )
         file_path = Path(file_path_str)
-        if download:
-            return FileResponse(
-                path=str(file_path),
-                media_type="application/pdf" if file_path.suffix == ".pdf" else "text/html",
-                filename=f"bao-cao-{survey_id}.{file_path.suffix[1:]}",
-                content_disposition_type="attachment",
-            )
-        elif file_path.suffix == ".pdf":
+        if file_path.suffix == ".pdf":
             return FileResponse(
                 path=str(file_path),
                 media_type="application/pdf",
-                filename=f"bao-cao-{survey_id}.pdf",
+                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                content_disposition_type="attachment" if download else "inline",
             )
         else:
             return HTMLResponse(content=file_path.read_text(encoding="utf-8"))
@@ -66,22 +58,13 @@ async def download_pdf(
     # Kiểm tra cache (nếu không yêu cầu refresh)
     if survey.pdf_path and not refresh:
         cached = Path(survey.pdf_path)
-        if cached.exists():
-            if cached.suffix == ".pdf":
-                return FileResponse(
-                    path=str(cached),
-                    media_type="application/pdf",
-                    filename=f"bao-cao-{survey_id}.pdf",
-                )
-            elif download:
-                return FileResponse(
-                    path=str(cached),
-                    media_type="text/html",
-                    filename=f"bao-cao-{survey_id}.html",
-                    content_disposition_type="attachment",
-                )
-            else:
-                return HTMLResponse(content=cached.read_text(encoding="utf-8"))
+        if cached.exists() and cached.suffix == ".pdf":
+            return FileResponse(
+                path=str(cached),
+                media_type="application/pdf",
+                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                content_disposition_type="attachment" if download else "inline",
+            )
 
     # Sinh file mới
     try:
@@ -92,7 +75,7 @@ async def download_pdf(
             except Exception:
                 pass
 
-        file_path   = await generate_pdf(survey_id=survey_id, report_data=result_data)
+        file_path = await generate_pdf(survey_id=survey_id, report_data=result_data)
 
         survey.pdf_path = file_path
         db.commit()
@@ -102,26 +85,12 @@ async def download_pdf(
             return FileResponse(
                 path=file_path,
                 media_type="application/pdf",
-                filename=f"bao-cao-{survey_id}.pdf",
-            )
-        elif download:
-            return FileResponse(
-                path=file_path,
-                media_type="text/html",
-                filename=f"bao-cao-{survey_id}.html",
-                content_disposition_type="attachment",
+                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                content_disposition_type="attachment" if download else "inline",
             )
         else:
-            # HTML mode — trả về HTML với nút Print
-            html = p.read_text(encoding="utf-8")
-            print_script = """<script>
-              window.addEventListener('load', function(){
-                document.title = 'Bao cao AI Market Research';
-                if(!window._printed){ window._printed=true; window.print(); }
-              });
-            </script>"""
-            return HTMLResponse(content=html.replace("</body>", print_script + "</body>"))
+            return HTMLResponse(content=p.read_text(encoding="utf-8"))
 
     except Exception as e:
         log.error("Report generation failed", error=str(e), survey_id=survey_id)
-        raise HTTPException(500, f"Không thể tạo báo cáo: {e}")
+        raise HTTPException(500, f"Không thể tạo báo cáo PDF: {e}")
