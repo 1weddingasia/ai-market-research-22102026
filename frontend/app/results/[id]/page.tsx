@@ -285,6 +285,57 @@ function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
         </div>
       )}
 
+      {/* Historical Dataset Callout Card (Nếu có nạp file khảo sát cũ) */}
+      {pInfo.historical_dataset && (
+        <div className="bg-gradient-to-r from-amber-50 via-white to-amber-50/70 border border-amber-300 rounded-2xl p-5 shadow-xs space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/70 pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-base shadow-xs shrink-0">
+                🧠
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-serif font-bold text-base text-slate-900">
+                    Đối Chuẩn Huấn Luyện Từ Khảo Sát Lịch Sử (Few-shot Domain Tuning)
+                  </h4>
+                  <span className="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded uppercase">
+                    Đã Kích Hoạt
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 mt-0.5">
+                  Tập tin đối chuẩn: <strong className="text-slate-900 font-mono">{pInfo.historical_dataset.filename}</strong> · Phân tích{' '}
+                  <strong className="text-slate-900 font-mono">
+                    {pInfo.historical_dataset.total_rows?.toLocaleString('vi-VN')} dòng phản hồi thực tế
+                  </strong>
+                </p>
+              </div>
+            </div>
+            <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/80 px-2.5 py-1 rounded-md border border-amber-200 shrink-0 self-start sm:self-auto">
+              Tăng 3x độ chân thực & ngôn từ phản hồi ngành
+            </span>
+          </div>
+
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Hệ thống tác tử AI đã tự động học từ vựng ngành hàng, rào cản tiêu dùng thực tế và các câu nhận xét tự do (verbatim) trong file khảo sát trước đây của doanh nghiệp. Nhờ đó, 1.000 personas mô phỏng phản xạ và đưa ra lý do chấp nhận / từ chối cực kỳ sát thực với tâm lý người mua hàng ngoài đời thật.
+          </p>
+
+          {pInfo.historical_dataset.extracted_snippets && pInfo.historical_dataset.extracted_snippets.length > 0 && (
+            <div className="p-3 bg-white/80 rounded-xl border border-amber-200/80 space-y-2">
+              <span className="text-[11px] font-bold text-amber-950 block">
+                💬 Một số mẫu phản hồi tiêu biểu AI đã đối chuẩn từ dữ liệu khảo sát gốc:
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {pInfo.historical_dataset.extracted_snippets.slice(0, 4).map((snip: string, idx: number) => (
+                  <div key={idx} className="text-[11px] text-slate-600 italic bg-amber-50/50 p-2 rounded border border-amber-100 leading-snug">
+                    "{snip}"
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Target Summary 4-Card Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">

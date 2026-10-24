@@ -18,7 +18,7 @@ export interface WizardState {
   targetMaritalStatus: string;
   targetOccupation: string;
   targetZone: string;
-  productInfo: Record<string, string>;
+  productInfo: Record<string, any>;
   customerEmail: string;
   surveyId: string;
   priceAmount: number;
@@ -35,7 +35,7 @@ interface WizardContextType {
   setStep: (step: number) => void;
   updateModel: (id: string, name: string, framework: string) => void;
   updateSampleConfig: (config: Partial<WizardState>) => void;
-  updateProductInfo: (info: Record<string, string>, email?: string) => void;
+  updateProductInfo: (info: Record<string, any>, email?: string) => void;
   updatePayment: (
     surveyId: string,
     price: number,

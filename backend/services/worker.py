@@ -179,6 +179,16 @@ async def run_simulation(survey_id: str) -> None:
             await _emit_log(survey_id, 30, f"[ĐỐI CHUẨN MẪU GSO] Đang chuẩn hóa hạn ngạch cơ cấu dân số theo Niên giám Thống kê GSO...", status=None)
             raise
 
+        # ── Milestone 2.5: Huấn luyện đặc thù ngành từ dữ liệu lịch sử nếu có ──
+        ds_info = product_info.get("historical_dataset")
+        if ds_info and isinstance(ds_info, dict):
+            ds_name = ds_info.get("filename", "dữ liệu ngành")
+            ds_cnt = ds_info.get("total_rows", 0)
+            await _emit_log(
+                survey_id, 38,
+                f"[HUẤN LUYỆN ĐẶC THÙ NGÀNH] Đã đối sánh {ds_cnt:,} phản hồi thực tế từ file {ds_name} — Đang tinh chỉnh tiêu chuẩn đánh giá của 1.000 tác tử AI..."
+            )
+
         # ── Milestone 3: Bắt đầu phỏng vấn ──────────────────────────────────
         batch_count = (len(personas_df) + 19) // 20
         await _emit_log(
@@ -219,6 +229,11 @@ async def run_simulation(survey_id: str) -> None:
             personas_df=personas_df,
             product_info=product_info,
         )
+
+        if ds_info and isinstance(ds_info, dict):
+            if not getattr(report, "product_info", None):
+                report.product_info = {}
+            report.product_info["historical_dataset"] = ds_info
 
         await _emit_log(
             survey_id, 86,

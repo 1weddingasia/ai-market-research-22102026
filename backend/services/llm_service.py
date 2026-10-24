@@ -77,10 +77,28 @@ def _build_prompt(
     )
     question_keys = [q["id"] for q in config["questions"]]
 
-    # Product info as formatted text
+    # Product info as formatted text (loại trừ historical_dataset để định dạng riêng)
     product_text = "\n".join(
-        f"  • {k}: {v}" for k, v in product_info.items() if v
+        f"  • {k}: {v}" for k, v in product_info.items() if v and k != "historical_dataset"
     )
+
+    # Khối huấn luyện Few-Shot Domain Tuning từ file khảo sát cũ nếu có
+    dataset_info = product_info.get("historical_dataset")
+    dataset_block = ""
+    if dataset_info and isinstance(dataset_info, dict):
+        ds_context = dataset_info.get("dataset_context", "")
+        ds_filename = dataset_info.get("filename", "Khảo sát ngành")
+        ds_rows = dataset_info.get("total_rows", 0)
+        dataset_block = f"""
+━━━ HỒ SƠ HUẤN LUYỆN ĐẶC THÙ NGÀNH TỪ KHẢO SÁT LỊCH SỬ (FEW-SHOT DOMAIN BENCHMARK) ━━━
+Doanh nghiệp đã cung cấp bộ dữ liệu khảo sát thực tế gồm {ds_rows:,} phản hồi từ khách hàng ({ds_filename}).
+Ngữ cảnh & các mẫu phản hồi thực tế trong quá khứ:
+{ds_context}
+
+CHỈ DẪN HUẤN LUYỆN BẮT BUỘC:
+• Các tác tử AI hãy hiệu chỉnh mức độ khó tính, giọng điệu nhận xét và các rào cản mua sắm tương thích với tệp dữ liệu quá khứ này.
+• Tránh đưa ra nhận xét chung chung; hãy phản ánh sát thực tế các tiêu chuẩn chọn hàng của người tiêu dùng thực tế trong ngành hàng này.
+"""
 
     # Personas block
     persona_block = _build_persona_block(personas, start_idx)
@@ -91,6 +109,7 @@ def _build_prompt(
 
 ━━━ THÔNG TIN SẢN PHẨM / DỰ ÁN NGHIÊN CỨU ━━━
 {product_text}
+{dataset_block}
 
 ━━━ BỘ CÂU HỎI KHẢO SÁT TIÊU CHUẨN (BẮT BUỘC TRẢ LỜI ĐỦ {len(question_keys)} CÂU HỎI) ━━━
 {questions_text}

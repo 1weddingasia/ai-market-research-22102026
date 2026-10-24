@@ -1,8 +1,10 @@
 import asyncio
 import json
+import os
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException
+import structlog
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -550,5 +552,35 @@ async def get_survey_history(
             for s in surveys
         ],
     }
+
+
+@router.post("/upload-historical-dataset")
+async def upload_historical_dataset(
+    file: UploadFile = File(...),
+):
+    """
+    Tải lên file dữ liệu khảo sát cũ (CSV, XLSX, XLS) để AI học phong cách
+    phản hồi và rào cản tiêu dùng đặc thù của ngành hàng (Few-shot Domain Tuning).
+    """
+    filename = file.filename or "dataset.csv"
+    ext = os.path.splitext(filename)[1].lower()
+    if ext not in [".csv", ".xlsx", ".xls"]:
+        raise HTTPException(400, "Chỉ hỗ trợ file định dạng .CSV hoặc .XLSX / .XLS")
+
+    content = await file.read()
+    if len(content) > 15 * 1024 * 1024:
+        raise HTTPException(400, "Dung lượng file tối đa là 15MB")
+
+    try:
+        from services.dataset_service import parse_and_extract_survey_dataset
+        result = parse_and_extract_survey_dataset(content, filename)
+        return result
+    except ValueError as ve:
+        raise HTTPException(400, str(ve))
+    except Exception as e:
+        log = structlog.get_logger(__name__)
+        log.error("Failed to parse historical dataset", error=str(e), filename=filename)
+        raise HTTPException(500, f"Lỗi khi xử lý file dữ liệu: {str(e)}")
+
 
 

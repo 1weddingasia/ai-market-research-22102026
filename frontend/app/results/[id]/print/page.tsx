@@ -414,6 +414,21 @@ export default function PrintReportPage() {
                 <span className="text-slate-800 font-semibold text-[10.5px] leading-snug">{report.target_summary.demographics}</span>
               </div>
             )}
+
+            {/* Historical Survey Calibration Badge on Cover Page */}
+            {pInfo.historical_dataset && (
+              <div className="mt-2 p-2 bg-gradient-to-r from-amber-100/90 to-amber-50 border border-amber-300 rounded-lg text-left flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="text-amber-900 font-bold text-[10px] shrink-0 font-mono">🧠 ĐỐI CHUẨN KHẢO SÁT LỊCH SỬ:</span>
+                  <span className="text-slate-800 font-semibold text-[10px] truncate">
+                    {pInfo.historical_dataset.filename} ({pInfo.historical_dataset.total_rows?.toLocaleString('vi-VN')} dòng mẫu)
+                  </span>
+                </div>
+                <span className="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shrink-0">
+                  FEW-SHOT TUNED
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -631,16 +646,22 @@ export default function PrintReportPage() {
               {report.target_summary?.demographics || `${sampleN.toLocaleString('vi-VN')} Tác tử AI đối chuẩn theo khung phân tầng Niên giám GSO`}
             </div>
 
-            {/* 2 Tầng Khoa Học Chuẩn Mực Trong Bản In */}
-            <div className="grid grid-cols-2 gap-2 pt-1 border-t border-amber-200/80 text-[9.5px] leading-tight">
+            {/* Các Tầng Khoa Học Chuẩn Mực Trong Bản In */}
+            <div className={`grid ${pInfo.historical_dataset ? 'grid-cols-3' : 'grid-cols-2'} gap-2 pt-1 border-t border-amber-200/80 text-[9.5px] leading-tight`}>
               <div className="bg-white/80 p-1.5 rounded border border-amber-200/80">
                 <strong className="text-amber-950 font-mono block text-[9px] uppercase">🏛️ Tầng 1: Khung nhân khẩu học GSO</strong>
-                <span className="text-slate-600">Khung mẫu phân tầng được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), phản ánh sát cơ cấu độ tuổi, giới tính, vùng miền và thu nhập.</span>
+                <span className="text-slate-600">Khung mẫu phân tầng được chuẩn hóa và đối chuẩn theo Niên giám Thống kê GSO, phản ánh sát cơ cấu độ tuổi, giới tính, vùng miền và thu nhập.</span>
               </div>
               <div className="bg-white/80 p-1.5 rounded border border-amber-200/80">
                 <strong className="text-amber-950 font-mono block text-[9px] uppercase">🛒 Tầng 2: Hành vi & Tâm lý mua sắm</strong>
                 <span className="text-slate-600">Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.</span>
               </div>
+              {pInfo.historical_dataset && (
+                <div className="bg-amber-100/70 p-1.5 rounded border border-amber-300">
+                  <strong className="text-amber-950 font-mono block text-[9px] uppercase">🧠 Tầng 3: Đối chuẩn ngành thực chiến</strong>
+                  <span className="text-slate-700">Đã nạp {pInfo.historical_dataset.total_rows?.toLocaleString('vi-VN')} dòng dữ liệu từ {pInfo.historical_dataset.filename} để hiệu chỉnh văn phong và rào cản từ chối sát thực tế nhất.</span>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-4 gap-2 pt-1.5 border-t border-amber-200 text-center font-mono text-[9px]">

@@ -252,6 +252,29 @@ export const api = {
     }
     return res.json() as Promise<{ status: string; image_url: string; option: string; filename: string }>;
   },
+
+  uploadHistoricalDataset: async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch(`${API_URL}/survey/upload-historical-dataset`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Tải file dữ liệu khảo sát thất bại' }));
+      throw new Error(err.detail || 'Tải file dữ liệu khảo sát thất bại');
+    }
+    return res.json() as Promise<{
+      status: string;
+      filename: string;
+      total_rows: number;
+      total_raw_rows: number;
+      columns: string[];
+      text_columns: string[];
+      extracted_snippets: string[];
+      dataset_context: string;
+    }>;
+  },
 };
 
 export const PRICING: Record<number, number> = {

@@ -630,9 +630,150 @@ function ImageUploader({
   );
 }
 
+/* ── Component: Historical Survey Dataset Uploader (CSV / Excel) ── */
+function DatasetUploader({
+  dataset,
+  onUploadSuccess,
+  onRemove,
+}: {
+  dataset: any;
+  onUploadSuccess: (data: any) => void;
+  onRemove: () => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    if (!['csv', 'xlsx', 'xls'].includes(ext || '')) {
+      setError('Vui lòng chọn file dữ liệu định dạng .CSV hoặc .XLSX / .XLS.');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      setError('Dung lượng file tối đa là 15MB.');
+      return;
+    }
+
+    setError('');
+    setUploading(true);
+    try {
+      const res = await api.uploadHistoricalDataset(file);
+      onUploadSuccess(res);
+    } catch (err: any) {
+      setError(err.message || 'Lỗi khi phân tích file khảo sát cũ. Vui lòng kiểm tra lại định dạng.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-3 p-4 sm:p-5 rounded-xl border border-amber-300/80 bg-gradient-to-r from-amber-50/70 via-white to-amber-50/50 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+        <label className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+          <span>🧠</span>
+          <span>Huấn Luyện Nâng Cao Theo Khảo Sát Quá Khứ (Tùy chọn)</span>
+          <span className="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.2 rounded">Tăng 3x độ sát thực</span>
+        </label>
+        <span className="text-[11px] text-amber-800 font-medium">Hỗ trợ file .CSV, .XLSX, .XLS (Tối đa 15MB)</span>
+      </div>
+
+      <p className="text-xs text-slate-600 leading-relaxed">
+        Tải lên file khảo sát cũ hoặc kết quả phỏng vấn trước đây trong ngành hàng của bạn. AI sẽ phân tích dữ liệu thực tế, học các rào cản và trích xuất phong cách phản hồi để 1.000 tác tử AI trả lời chuẩn sát với thực chiến ngành hàng nhất.
+      </p>
+
+      {dataset ? (
+        <div className="bg-white p-4 rounded-xl border border-emerald-300 shadow-2xs space-y-2.5 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm font-bold">
+                ✓
+              </span>
+              <div>
+                <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                  <span>{dataset.filename}</span>
+                  <span className="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-semibold">
+                    ĐÃ NẠP THÀNH CÔNG
+                  </span>
+                </span>
+                <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+                  Phát hiện {dataset.total_rows?.toLocaleString('vi-VN')} dòng phản hồi thực tế · {dataset.columns?.length || 0} cột dữ liệu
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onRemove}
+              className="text-xs text-red-600 hover:text-red-800 font-semibold px-2.5 py-1 rounded-md hover:bg-red-50 border border-transparent hover:border-red-200 transition-colors"
+            >
+              Hủy bỏ file này
+            </button>
+          </div>
+
+          {dataset.extracted_snippets && dataset.extracted_snippets.length > 0 && (
+            <div className="pt-1">
+              <span className="text-[11px] font-semibold text-slate-700 block mb-1">
+                💬 Một số mẫu phản hồi tiêu biểu AI đã trích xuất để học phong cách ngành:
+              </span>
+              <div className="space-y-1">
+                {dataset.extracted_snippets.slice(0, 2).map((snip: string, i: number) => (
+                  <div key={i} className="text-[11px] text-slate-600 italic bg-slate-50 p-2 rounded border border-slate-200">
+                    "{snip}"
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div>
+          <label className="flex flex-col items-center justify-center p-5 border-2 border-dashed border-amber-300 hover:border-amber-600 rounded-xl bg-white hover:bg-amber-50/30 transition-all cursor-pointer text-center group">
+            {uploading ? (
+              <div className="flex flex-col items-center gap-2 py-2">
+                <div className="w-6 h-6 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs font-bold text-slate-800">
+                  Đang phân tích cấu trúc cột và học phong cách phản hồi từ file...
+                </span>
+                <span className="text-[11px] text-slate-500">Vui lòng đợi vài giây</span>
+              </div>
+            ) : (
+              <>
+                <div className="w-10 h-10 rounded-full bg-amber-100 group-hover:bg-amber-200 text-amber-800 flex items-center justify-center mb-2 transition-colors">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <span className="text-xs font-bold text-slate-800 group-hover:text-amber-900">
+                  Nhấn để tải lên file khảo sát cũ (.CSV, .XLSX, .XLS)
+                </span>
+                <span className="text-[11px] text-slate-400 mt-0.5">
+                  Tối đa 15MB · Tự động đọc và học phong cách ngành hàng
+                </span>
+              </>
+            )}
+            <input
+              type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              disabled={uploading}
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+          {error && <p className="text-xs text-red-600 mt-1.5 font-medium">⚠️ {error}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Step3ProductInfo() {
   const { state, updateProductInfo, updatePayment, setStep } = useWizard();
   const [formData, setFormData] = useState<Record<string, string>>(state.productInfo);
+  const [historicalDataset, setHistoricalDataset] = useState<any>(
+    (state.productInfo as any)?.historical_dataset || null
+  );
   const [email, setEmail] = useState(state.customerEmail || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -694,7 +835,12 @@ export default function Step3ProductInfo() {
 
     setLoading(true);
     try {
-      updateProductInfo(formData, email);
+      const finalProductInfo = {
+        ...formData,
+        ...(historicalDataset ? { historical_dataset: historicalDataset } : {}),
+      };
+
+      updateProductInfo(finalProductInfo, email);
 
       const result = await api.createSurvey({
         model_type: state.selectedModel || 'nielsen_bases',
@@ -708,7 +854,7 @@ export default function Step3ProductInfo() {
         target_occupation: state.targetOccupation || 'all',
         target_zone: state.targetZone || 'all',
         sample_size: state.sampleSize,
-        product_info: formData,
+        product_info: finalProductInfo,
         customer_email: email.trim(),
       });
 
@@ -877,6 +1023,13 @@ export default function Step3ProductInfo() {
             />
           )}
         </div>
+
+        {/* Historical Survey Dataset Upload (CSV/Excel) for Few-Shot Domain Tuning */}
+        <DatasetUploader
+          dataset={historicalDataset}
+          onUploadSuccess={(ds) => setHistoricalDataset(ds)}
+          onRemove={() => setHistoricalDataset(null)}
+        />
 
         {/* Email for PDF Delivery */}
         <div className="pt-4 border-t border-slate-100 space-y-1.5">
