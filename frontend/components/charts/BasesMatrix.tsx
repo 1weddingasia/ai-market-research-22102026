@@ -178,7 +178,11 @@ export default function BasesMatrix({
               {/* Floating Tooltip Callout Card */}
               {showTooltip && (
                 <div
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900/95 backdrop-blur-md text-white p-2.5 rounded-xl shadow-xl text-xs z-30 pointer-events-none border border-slate-700 animate-in fade-in zoom-in-95 duration-200"
+                  className={`absolute ${
+                    yPercent > 55 ? 'top-full mt-3' : 'bottom-full mb-3'
+                  } ${
+                    xPercent > 65 ? 'right-0' : xPercent < 35 ? 'left-0' : 'left-1/2 -translate-x-1/2'
+                  } w-48 bg-slate-900/95 backdrop-blur-md text-white p-2.5 rounded-xl shadow-xl text-xs z-30 pointer-events-none border border-slate-700 animate-in fade-in zoom-in-95 duration-200`}
                 >
                   <div className="font-bold text-amber-400 text-[11px] truncate flex items-center gap-1">
                     <span>📍</span>
@@ -199,7 +203,15 @@ export default function BasesMatrix({
                     </div>
                   </div>
                   {/* Tooltip triangle arrow */}
-                  <div className="w-2 h-2 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2 border-r border-b border-slate-700" />
+                  <div
+                    className={`w-2.5 h-2.5 bg-slate-900 rotate-45 absolute ${
+                      yPercent > 55
+                        ? '-top-1.5 border-l border-t border-slate-700'
+                        : '-bottom-1.5 border-r border-b border-slate-700'
+                    } ${
+                      xPercent > 65 ? 'right-3' : xPercent < 35 ? 'left-3' : 'left-1/2 -translate-x-1/2'
+                    }`}
+                  />
                 </div>
               )}
             </div>
@@ -287,7 +299,7 @@ export default function BasesMatrix({
             <div className="flex items-center justify-between text-[9px] font-mono text-rose-700">
               <span>0% An toàn tuyệt đối</span>
               <span className="font-bold">
-                {flopRiskIndex <= 20 ? 'Ngưỡng an toàn cao (&lt;20%)' : 'Cần cảnh giác (&gt;20%)'}
+                {flopRiskIndex <= 20 ? 'Ngưỡng an toàn cao (< 20%)' : 'Cần cảnh giác (> 20%)'}
               </span>
               <span>100% Cực kỳ nguy hiểm</span>
             </div>
