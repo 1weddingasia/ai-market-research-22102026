@@ -96,6 +96,23 @@ async def create_survey(
             description=survey_id,  # Nội dung CK = mã survey
         )
 
+    # Bắn thông báo Telegram về đơn hàng mới (không block response)
+    try:
+        from services.telegram_service import notify_new_survey
+        asyncio.create_task(
+            notify_new_survey(
+                survey_id=survey_id,
+                product_name=request.product_info.product_name,
+                category=request.product_info.category,
+                sample_size=request.sample_size,
+                price_amount=price_amount,
+                location=request.region,
+                customer_email=request.customer_email,
+            )
+        )
+    except Exception as tele_err:
+        log.warning("Telegram new survey notify error", error=str(tele_err))
+
     return SurveyCreateResponse(
         survey_id       = survey_id,
         price_amount    = price_amount,

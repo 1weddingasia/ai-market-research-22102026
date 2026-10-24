@@ -278,6 +278,20 @@ async def run_simulation(survey_id: str) -> None:
         # Gửi email hoàn tất kèm đầy đủ thông số báo cáo
         await _send_completion_email(survey_id, db, report=report)
 
+        # Bắn thông báo Telegram khi báo cáo hoàn tất
+        try:
+            from services.telegram_service import notify_survey_completed
+            await notify_survey_completed(
+                survey_id=survey_id,
+                product_name=report.product_name,
+                model_type=report.model_type,
+                sample_size=report.target_summary.sample_size,
+                viability_score=report.executive_summary.viability_score,
+                verdict=report.executive_summary.verdict,
+            )
+        except Exception as tele_err:
+            log.warning("Telegram completion notify error", error=str(tele_err))
+
     except Exception as e:
         log.error("Simulation failed", survey_id=survey_id, error=str(e))
         # Update DB status

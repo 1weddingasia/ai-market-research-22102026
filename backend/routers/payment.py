@@ -3,6 +3,7 @@ Router: Payment — POST /payment/webhook (SePay), POST /payment/upload-image
 """
 
 import asyncio
+import json
 import os
 
 import structlog
@@ -121,6 +122,26 @@ async def sepay_webhook(
     db.commit()
 
     log.info("Payment confirmed, starting simulation", survey_id=survey_id)
+
+    # Bắn thông báo Telegram khi SePay ghi nhận thanh toán thành công
+    try:
+        from services.telegram_service import notify_payment_received
+        p_name = "Khảo sát thị trường"
+        if survey.product_info_json:
+            try:
+                p_name = json.loads(survey.product_info_json).get("product_name", survey.product_name or survey_id)
+            except Exception:
+                pass
+        asyncio.create_task(
+            notify_payment_received(
+                survey_id=survey_id,
+                product_name=p_name,
+                amount=received_amount,
+                transaction_id=str(payload.id),
+            )
+        )
+    except Exception as tele_err:
+        log.warning("Telegram payment notify error", error=str(tele_err))
 
     # 9. Trigger background worker (không block response)
     asyncio.create_task(run_simulation(survey_id))

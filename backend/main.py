@@ -26,7 +26,7 @@ from slowapi.util import get_remote_address
 load_dotenv()
 
 from database import init_db
-from routers import export, payment, stream, survey
+from routers import export, payment, stream, survey, telegram
 
 log = structlog.get_logger(__name__)
 
@@ -88,11 +88,13 @@ app.include_router(survey.router)
 app.include_router(stream.router)
 app.include_router(payment.router)
 app.include_router(export.router)
+app.include_router(telegram.router)
 
 app.include_router(survey.router, prefix="/api")
 app.include_router(stream.router, prefix="/api")
 app.include_router(payment.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
+app.include_router(telegram.router, prefix="/api")
 
 
 # ── Health check ───────────────────────────────────────────────────────────────
@@ -111,6 +113,7 @@ async def health_check():
             "sepay_api_token": bool(os.getenv("SEPAY_API_TOKEN")),
             "r2_configured": bool(os.getenv("R2_ACCESS_KEY_ID") and os.getenv("R2_SECRET_ACCESS_KEY")),
             "resend_api_key": bool(os.getenv("RESEND_API_KEY")),
+            "telegram_bot_token": bool(os.getenv("TELEGRAM_BOT_TOKEN")),
         },
     }
 
