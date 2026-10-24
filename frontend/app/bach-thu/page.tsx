@@ -354,7 +354,7 @@ export default function BachThuPage() {
           <p className="text-slate-700 leading-relaxed text-justify">
             Nền tảng được xây dựng dựa trên nguyên lý xác suất thống kê nghiêm ngặt, loại bỏ hoàn toàn các con số cảm tính.
             Các chỉ số sai số biên (<strong>Margin of Error - MoE</strong>) được tính toán chuẩn tắc theo Định lý Giới hạn
-            Trung tâm và Công thức chọn mẫu ngẫu nhiên của Cochran ở khoảng tin cậy 95% ($Z = 1.96$):
+            Trung tâm và Công thức chọn mẫu ngẫu nhiên của Cochran ở khoảng tin cậy 95% (với hệ số Z = 1.96):
           </p>
 
           {/* Mathematical Formula Callout */}

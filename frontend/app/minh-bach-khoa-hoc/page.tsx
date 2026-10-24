@@ -103,7 +103,7 @@ export default function MinhBachKhoaHocPage() {
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
-            Trong khoa học thống kê toàn cầu (từ William G. Cochran, 1977), mọi cuộc khảo sát xác suất đều xây dựng trên <strong>Định lý Giới hạn Trung tâm (Central Limit Theorem)</strong>: Khi kích thước mẫu đủ lớn, phân phối trung bình mẫu sẽ tiệm cận phân phối chuẩn Gauss $N(0, 1)$.
+            Trong khoa học thống kê toàn cầu (từ William G. Cochran, 1977), mọi cuộc khảo sát xác suất đều xây dựng trên <strong>Định lý Giới hạn Trung tâm (Central Limit Theorem)</strong>: Khi kích thước mẫu đủ lớn, phân phối trung bình mẫu sẽ tiệm cận phân phối chuẩn Gauss chuẩn tắc N(0, 1).
           </p>
 
           <div className="bg-slate-900 text-amber-300 p-6 rounded-2xl shadow-xl font-mono text-center space-y-3">
@@ -185,7 +185,7 @@ export default function MinhBachKhoaHocPage() {
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
-            Sai số toán học $\pm 3.10\%$ ở độ tin cậy 95% áp dụng <strong>CHÍNH XÁC 100%</strong> cho <strong>Sai số chọn mẫu nội tại (Internal Sampling Error)</strong> của tập tác tử AI được rút ra từ kho ma trận nhân khẩu học:
+            Sai số toán học <strong>±3.10%</strong> ở độ tin cậy 95% áp dụng <strong>CHÍNH XÁC 100%</strong> cho <strong>Sai số chọn mẫu nội tại (Internal Sampling Error)</strong> của tập tác tử AI được rút ra từ kho ma trận nhân khẩu học:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -203,7 +203,7 @@ export default function MinhBachKhoaHocPage() {
                 ✓ Tính Lặp Lại Thống Kê (Reproducibility)
               </span>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Khi kích hoạt khảo sát $N=1.000$, hệ thống rút ngẫu nhiên có phân tầng (Stratified Sampling). Về mặt toán xác suất, phương sai giữa các lần chạy ngẫu nhiên độc lập được bảo chứng không vượt quá $\pm 3.10\%$.
+                Khi kích hoạt khảo sát với quy mô N = 1.000 mẫu, hệ thống rút ngẫu nhiên có phân tầng (Stratified Sampling). Về mặt toán xác suất, phương sai giữa các lần chạy ngẫu nhiên độc lập được kiểm soát chặt chẽ không vượt quá ±3.10%.
               </p>
             </div>
           </div>

@@ -605,7 +605,7 @@ export default function HomePage() {
                   Công thức tính Sai số biên (Margin of Error - MoE)
                 </h4>
                 <p>
-                  Sai số biên được tính toán nghiêm ngặt theo công thức chọn mẫu xác suất của nhà thống kê <strong>William G. Cochran (1977)</strong> cho tổng thể dân số lớn ($N &gt; 100.000$ người):
+                  Sai số biên được tính toán nghiêm ngặt theo công thức chọn mẫu xác suất của nhà thống kê <strong>William G. Cochran (1977)</strong> cho tổng thể dân số lớn (quy mô N &gt; 100.000 người):
                 </p>
                 <div className="bg-slate-900 text-amber-300 p-4 rounded-xl font-mono text-center text-sm sm:text-base shadow-inner font-bold">
                   MoE = Z × √[ p × (1 - p) / n ]
