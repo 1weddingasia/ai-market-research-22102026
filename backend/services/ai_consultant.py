@@ -9,6 +9,9 @@ import os
 import httpx
 import structlog
 from typing import List, Dict, Any, Optional
+from dotenv import load_dotenv
+
+load_dotenv()
 
 log = structlog.get_logger(__name__)
 
