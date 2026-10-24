@@ -627,7 +627,7 @@ export default function HomePage() {
                   </table>
                 </div>
                 <p className="text-[11px] text-slate-500 italic">
-                  * Dữ liệu personas được phân tầng (Stratified Sampling) theo cơ cấu nhân khẩu học Việt Nam: Giới tính (49.8% Nam / 50.2% Nữ), Độ tuổi 18 - 65, và 6 vùng kinh tế theo Tổng cục Thống kê (GSO).
+                  * Khung mẫu phân tầng nhân khẩu học được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO): Giới tính (49.8% Nam / 50.2% Nữ), Độ tuổi 18 - 65, và 6 vùng kinh tế. Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
                 </p>
               </div>
             </div>
@@ -687,7 +687,7 @@ export default function HomePage() {
               <span>Tại sao AI Synthetic Panel chuẩn xác và khách quan hơn việc tự hỏi ChatGPT thông thường?</span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
-              Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Mỗi Persona được nạp một bộ tham số nhân khẩu học thực tế (độ tuổi, giới tính, thu nhập gia đình, thói quen mua sắm, vùng miền sinh sống theo Niên giám Thống kê GSO). Từng tác tử AI phân vai độc lập và đưa ra phản hồi đa chiều, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, phản ánh khách quan phản ứng của thị trường.
+              Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Khung mẫu phân tầng nhân khẩu học được đối chuẩn theo Niên giám Thống kê (GSO) về cơ cấu vùng miền, độ tuổi, giới tính và thu nhập, kết hợp cùng mô hình hành vi mua sắm thương mại điện tử thực tế tại Việt Nam. Từng tác tử AI phân vai độc lập và đưa ra phản hồi đa chiều, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, phản ánh khách quan phản ứng của thị trường.
             </p>
           </div>
 
@@ -697,7 +697,7 @@ export default function HomePage() {
               <span>Dữ liệu 1.000.000 chân dung người tiêu dùng tổng hợp (Synthetic Personas) được xây dựng thế nào và có an toàn pháp lý không?</span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
-              Kho dữ liệu được xây dựng dưới dạng <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> phân tầng theo tỷ lệ Niên giám Thống kê Quốc gia (GSO): phân bổ 6 vùng kinh tế trọng điểm, tỷ lệ giới tính cân bằng (49.8% Nam / 50.2% Nữ), các bậc tuổi 18 - 65 và 4 phân tầng thu nhập (A, B, C, D). 
+              Kho dữ liệu được xây dựng dưới dạng <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> vận hành theo 2 tầng khoa học: (1) <em>Tầng khung nhân khẩu học:</em> Chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê Quốc gia (GSO) về tỷ lệ 6 vùng kinh tế trọng điểm, giới tính và ngũ phân vị thu nhập; (2) <em>Tầng hành vi & tâm lý:</em> Mô phỏng phản ứng mua sắm từ thói quen thương mại điện tử, chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
               <br className="mb-1" />
               <strong>Đặc biệt an toàn pháp lý:</strong> Hệ thống tuân thủ nghiêm ngặt nguyên tắc <em>Privacy-by-Design</em>, hoàn toàn không thu thập hay lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>. Doanh nghiệp hoàn toàn an tâm khi sử dụng dữ liệu trong các báo cáo chiến lược.
             </p>

@@ -61,7 +61,7 @@ export default function HeroSlider() {
       tabSubtitle: 'Nielsen BASES · 1.000 Mẫu',
       badge: {
         icon: '✦',
-        text: 'PHÂN TẦNG DÂN SỐ VIỆT NAM CHUẨN GSO · ESOMAR',
+        text: 'ĐỐI CHUẨN PHÂN TẦNG NIÊN GIÁM THỐNG KÊ GSO · ESOMAR',
         color: 'bg-amber-500/10 text-amber-900 border-amber-300/60',
       },
       headlinePrefix: 'Mô phỏng thị trường qua ',
@@ -69,7 +69,7 @@ export default function HeroSlider() {
       headlineHighlightClass: 'from-amber-600 via-amber-700 to-slate-900',
       headlineSuffix: ' trong 60 giây',
       description:
-        'Tác tử AI phân vai độc lập dựa trên ma trận phân tầng nhân khẩu học người tiêu dùng Việt Nam (chuẩn GSO: 6 vùng kinh tế, độ tuổi, thu nhập). Đo lường mức độ độc đáo, tỷ lệ dùng thử dự báo và rào cản thất bại trước khi xuất xưởng.',
+        'Tác tử AI phân vai độc lập đối chuẩn theo khung phân tầng nhân khẩu học Niên giám Thống kê GSO (6 vùng kinh tế, độ tuổi, thu nhập) kết hợp mô hình hành vi mua sắm thị trường. Đo lường mức độ độc đáo, tỷ lệ dùng thử dự báo và rào cản thất bại trước khi xuất xưởng.',
       primaryCta: {
         label: 'Khởi tạo khảo sát ngay',
         href: '/wizard?model=nielsen_bases',
@@ -97,7 +97,7 @@ export default function HeroSlider() {
         subtext: 'Dự báo dùng thử 74.2% · Strong Go',
         color: 'bg-slate-900/90 text-white border-emerald-500/50',
       },
-      bannerFootnote: 'Dữ liệu phân tầng nhân khẩu học theo Tổng cục Thống kê (GSO)',
+      bannerFootnote: 'Khung phân tầng đối chuẩn theo Niên giám Thống kê (GSO)',
     },
     {
       id: 'van_westendorp',
@@ -448,7 +448,7 @@ export default function HeroSlider() {
           <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
             <span className="text-[10px] uppercase font-bold text-slate-400 block">Quy mô mẫu phân tầng</span>
             <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-1">1.000.000+</div>
-            <span className="text-[10px] sm:text-[11px] text-slate-500">Chuẩn GSO 6 vùng kinh tế</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-500">Đối chuẩn Niên giám GSO</span>
           </div>
           <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
             <span className="text-[10px] uppercase font-bold text-slate-400 block">Tốc độ xuất kết quả</span>

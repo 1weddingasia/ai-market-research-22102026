@@ -394,7 +394,7 @@ def audit_survey(
         ),
         "executive_verdict": (
             f"Dự án '{product_name}' của {company_name} đạt điểm khả thi {viability_score}/100 trên mô hình {domain_cfg['title']}. "
-            f"Dữ liệu mô phỏng từ {sample_size:,} tác tử AI phân vai theo ma trận GSO cung cấp cơ sở vững chắc cho các quyết định đầu tư và định hướng điều hành của Ban Lãnh Đạo trong ngành {category}."
+            f"Dữ liệu mô phỏng từ {sample_size:,} tác tử AI đối chuẩn theo khung phân tầng Niên giám Thống kê GSO cung cấp cơ sở vững chắc cho các quyết định đầu tư và định hướng điều hành của Ban Lãnh Đạo trong ngành {category}."
         ),
         "strategic_pillars": [
             {
@@ -426,7 +426,7 @@ def audit_survey(
 
         system_prompt = f"""
 Bạn là Giám đốc Chiến lược cao cấp (Chief Strategy Officer) tại McKinsey / Bain kiêm Chủ tịch Hội đồng Thẩm định Kinh tế lượng độc lập.
-Nhiệm vụ của bạn là kiểm định chéo độc lập (Layer 2 Strategic Auditor) bản báo cáo nghiên cứu thị trường thực nghiệm vừa được thực hiện bởi N = {sample_size:,} AI Personas đại diện phân tầng dân số Việt Nam (chuẩn Tổng cục Thống kê GSO).
+Nhiệm vụ của bạn là kiểm định chéo độc lập (Layer 2 Strategic Auditor) bản báo cáo nghiên cứu thị trường thực nghiệm vừa được thực hiện bởi N = {sample_size:,} AI Personas đối chuẩn theo khung phân tầng Niên giám Thống kê GSO kết hợp mô hình hành vi tiêu dùng Việt Nam.
 
 NGUYÊN TẮC CỐT TỬ THEO PHƯƠNG PHÁP LUẬN:
 1. BẠN ĐANG THẨM ĐỊNH MÔ HÌNH: {domain_cfg['title']} ({domain_cfg['methodology_code']}).
@@ -478,7 +478,7 @@ HỒ SƠ KHẢO SÁT THỊ TRƯỜNG THỰC TẾ:
 - Tên sản phẩm / Dự án: {product_name}
 - Ngành nghề tiêu chuẩn Việt Nam: {category}
 - Phương pháp luận nghiên cứu: {domain_cfg['title']} ({domain_cfg['methodology_code']})
-- Quy mô mẫu thực nghiệm: N = {sample_size:,} Personas đại diện phân tầng dân số Việt Nam (chuẩn GSO)
+- Quy mô mẫu thực nghiệm: N = {sample_size:,} Personas đối chuẩn theo khung phân tầng Niên giám Thống kê GSO
 - Điểm khả thi tổng thể (Viability Score): {viability_score} / 100
 - Mức giá / Tham số phân khúc: {price}
 

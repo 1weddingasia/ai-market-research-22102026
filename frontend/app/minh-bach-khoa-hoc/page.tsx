@@ -67,7 +67,7 @@ export default function MinhBachKhoaHocPage() {
             </span>
             <span>·</span>
             <span className="flex items-center gap-1.5">
-              <span className="text-amber-400">✦</span> Ma trận Niên giám GSO Việt Nam
+              <span className="text-amber-400">✦</span> Khung đối chuẩn Niên giám GSO Việt Nam
             </span>
             <span>·</span>
             <span className="flex items-center gap-1.5">
@@ -191,10 +191,10 @@ export default function MinhBachKhoaHocPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-5 rounded-xl bg-white border border-slate-300 space-y-2">
               <span className="text-emerald-700 font-bold text-sm block">
-                ✓ Kho Dữ Liệu Nhân Khẩu Học GSO
+                ✓ Khung Mẫu Đối Chuẩn Niên Giám Thống Kê GSO
               </span>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Hệ thống lưu trữ 1.000.000 hồ sơ nhân khẩu học tổng hợp (Synthetic Profiles) phản ánh tỷ lệ Niên giám Thống kê Quốc gia: phân tầng 6 vùng kinh tế, độ tuổi 18 - 65, cân bằng giới tính (49.8% Nam / 50.2% Nữ) và 4 nhóm thu nhập.
+                Khung mẫu phân tầng nhân khẩu học được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), đảm bảo cơ cấu độ tuổi, giới tính, vùng miền và phân tầng thu nhập phản ánh sát thực tế dân số. Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
               </p>
             </div>
 

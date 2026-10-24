@@ -91,7 +91,7 @@ export const DEMO_NIELSEN_BASES: ReportPayload = {
       "deepseek_audit": {
         "auditor_model": "Chuyên Gia Phân Tích Chiến Lược Độc Lập",
         "auditor_seal": "Chứng Nhận Đánh Giá Độc Lập Dành Cho Ban Giám Đốc",
-        "data_consistency_audit": "Kiểm định 1.000 tác tử AI đại diện đối chiếu ma trận phân tầng GSO: Phân phối chuẩn p < 0.05. Tương quan giữa tính Độc đáo và Ý định mua đạt r = 0.76 (rất mạnh).",
+        "data_consistency_audit": "Kiểm định 1.000 tác tử AI đại diện đối chiếu khung đối chuẩn phân tầng Niên giám GSO: Phân phối chuẩn p < 0.05. Tương quan giữa tính Độc đáo và Ý định mua đạt r = 0.76 (rất mạnh).",
         "executive_verdict": "Dự án 'Trà Kombucha Xoài Cát Chu' đạt điểm khả thi 78/100 (Strong Go). Đạt ngưỡng an toàn vượt trội ở chỉ số thử nghiệm (Trial Rate), nhưng cần giải tỏa rào cản nhạy cảm giá 28.000đ bằng chiến lược combo ban đầu.",
         "strategic_pillars": [
           {
@@ -1640,8 +1640,8 @@ export const DEMO_DEAL_ELASTICITY: ReportPayload = {
     "sample_size": 1000,
     "margin_of_error": "±3.10%",
     "location": "Toàn quốc (TP.HCM, Hà Nội, Đà Nẵng, Cần Thơ, Hải Phòng...)",
-    "demographics": "1.000 Tác tử AI Phân Tầng GSO | Tuổi 24-55 | Người quyết định ngân sách mua sắm quà Tết gia đình & công ty",
-    "targeting_summary": "1.000 Tác tử AI Phân Tầng GSO | Tuổi 24-55 | Người quyết định ngân sách mua sắm quà Tết gia đình & công ty",
+    "demographics": "1.000 Tác tử AI Đối Chuẩn Phân Tầng GSO | Tuổi 24-55 | Người quyết định ngân sách mua sắm quà Tết gia đình & công ty",
+    "targeting_summary": "1.000 Tác tử AI Đối Chuẩn Phân Tầng GSO | Tuổi 24-55 | Người quyết định ngân sách mua sắm quà Tết gia đình & công ty",
     "target_gender": "all",
     "target_income": "all",
     "target_marital_status": "married",

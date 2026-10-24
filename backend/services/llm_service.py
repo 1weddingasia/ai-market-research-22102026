@@ -40,7 +40,7 @@ INCOME_BRACKET_DESCRIPTIONS = {
 
 
 def _build_persona_block(personas: list[dict], start_idx: int) -> str:
-    """Tạo đoạn mô tả personas chi tiết đầy đủ nhân khẩu học thực tế theo chuẩn GSO."""
+    """Tạo đoạn mô tả personas chi tiết đầy đủ nhân khẩu học đối chuẩn theo khung Niên giám Thống kê GSO."""
     lines = []
     for i, p in enumerate(personas):
         pid = f"P{start_idx + i + 1:04d}"
@@ -95,11 +95,11 @@ def _build_prompt(
 ━━━ BỘ CÂU HỎI KHẢO SÁT TIÊU CHUẨN (BẮT BUỘC TRẢ LỜI ĐỦ {len(question_keys)} CÂU HỎI) ━━━
 {questions_text}
 
-━━━ MA TRẬN NHÂN KHẨU HỌC CỦA {len(personas)} TÁC TỬ AI MÔ PHỎNG (CHUẨN GSO) ━━━
+━━━ MA TRẬN NHÂN KHẨU HỌC CỦA {len(personas)} TÁC TỬ AI (ĐỐI CHUẨN KHUNG NIÊN GIÁM GSO) ━━━
 {persona_block}
 
 ━━━ NGUYÊN TẮC PHÂN VAI TÁC TỬ & ĐẦU RA BẮT BUỘC (MULTI-AGENT ROLEPLAY) ━━━
-1. BẠN PHẢI ĐÓNG VAI TỪNG TÁC TỬ TIÊU DÙNG ĐỘC LẬP theo đúng hồ sơ nhân khẩu học GSO được gán:
+1. BẠN PHẢI ĐÓNG VAI TỪNG TÁC TỬ TIÊU DÙNG ĐỘC LẬP theo đúng khung nhân khẩu học đối chuẩn Niên giám GSO được gán:
    - Thu nhập: Nhóm D (< 7.5tr) đắn đo từng nghìn đồng, nhạy cảm giá cao; Nhóm A (> 25tr) chi tiêu phóng khoáng, đòi hỏi chất lượng thượng hạng, mẫu mã sang trọng.
    - Hôn nhân & Gia đình: Người đã kết hôn ưu tiên an toàn, kinh tế gia đình và sức khỏe con cái; Người độc thân cởi mở trải nghiệm mới, tiện lợi cá nhân, giao lưu xã hội.
    - Nhóm nghề nghiệp: Giới văn phòng chuộng sự tinh tế, tiện dụng; Người kinh doanh quan tâm thực chất, hiệu quả; Công nhân, lao động chuộng sự bền bỉ, tiết kiệm.

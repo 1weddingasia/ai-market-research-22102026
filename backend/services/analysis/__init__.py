@@ -44,7 +44,7 @@ def build_standard_target_summary(
     demographics_str = (
         tgt_summary
         if tgt_summary
-        else f"Nam {male_pct:.0f}%, Nữ {female_pct:.0f}% | Tuổi trung bình {avg_age:.0f} | Phân tầng Quota chuẩn GSO"
+        else f"Nam {male_pct:.0f}%, Nữ {female_pct:.0f}% | Tuổi trung bình {avg_age:.0f} | Khung đối chuẩn phân tầng Niên giám GSO"
     )
 
     return TargetSummary(

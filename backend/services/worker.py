@@ -87,7 +87,7 @@ async def run_simulation(survey_id: str) -> None:
             f"[DỮ LIỆU DÂN SỐ] Đang kết nối cơ sở dữ liệu mẫu đại diện dân số Việt Nam..."
         )
 
-        # ── Milestone 2: Phân bổ mẫu theo chuẩn GSO ──────────────────────────
+        # ── Milestone 2: Đối chuẩn phân tầng mẫu Niên giám GSO ──────────────────────────
         try:
             region_filter, zone_filter, display_location = resolve_sampling_filters(survey.region, survey.zone)
 
@@ -171,12 +171,12 @@ async def run_simulation(survey_id: str) -> None:
 
             await _emit_log(
                 survey_id, 30,
-                f"[PHÂN BỔ MẪU GSO] Mục tiêu: {targeting_summary_str} (Mẫu thực: Nam {male_pct:.0f}% - Nữ {female_pct:.0f}%, Tuổi TB {avg_age:.0f}) | N={len(personas_df):,} tác tử AI phân vai (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[ĐỐI CHUẨN MẪU GSO] Mục tiêu: {targeting_summary_str} (Mẫu thực: Nam {male_pct:.0f}% - Nữ {female_pct:.0f}%, Tuổi TB {avg_age:.0f}) | N={len(personas_df):,} tác tử AI đối chuẩn theo khung phân tầng Niên giám GSO (Độ tin cậy 95%, Sai số ±3.1%)."
             )
 
         except Exception as e:
             log.error("Sampling failed", error=str(e), survey_id=survey_id)
-            await _emit_log(survey_id, 30, f"[PHÂN BỔ MẪU GSO] Đang chuẩn hóa hạn ngạch cơ cấu dân số...", status=None)
+            await _emit_log(survey_id, 30, f"[ĐỐI CHUẨN MẪU GSO] Đang chuẩn hóa hạn ngạch cơ cấu dân số theo Niên giám Thống kê GSO...", status=None)
             raise
 
         # ── Milestone 3: Bắt đầu phỏng vấn ──────────────────────────────────

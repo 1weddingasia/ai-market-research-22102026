@@ -93,7 +93,7 @@ export default function WizardPage() {
             </Link>
             <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              Phân tầng GSO
+              Khung đối chuẩn GSO
             </span>
             <span className="hidden sm:inline-flex text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
               Chuẩn ESOMAR v2.0
@@ -112,7 +112,7 @@ export default function WizardPage() {
       <footer className="border-t border-slate-200 bg-white py-5 px-6 text-center text-xs text-slate-500 mt-12">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
-            Hệ thống vận hành bởi Cụm AI Synthetic Personas Việt Nam · Phân tầng thống kê GSO · Cổng thanh toán VietQR tự động
+            Hệ thống vận hành bởi Cụm AI Synthetic Personas Việt Nam · Khung phân tầng đối chuẩn Niên giám GSO · Cổng thanh toán VietQR tự động
           </div>
           <div className="text-slate-400">
             © 2026 INSIGHT AI Platform. All rights reserved.

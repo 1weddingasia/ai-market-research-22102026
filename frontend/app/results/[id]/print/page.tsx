@@ -268,7 +268,7 @@ export default function PrintReportPage() {
                   INSIGHT AI — MARKET RESEARCH PLATFORM
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block">
-                  Hệ thống mô phỏng phản ứng thị trường bằng Tác tử AI Đa Nhân Khẩu (GSO Stratified Synthetic Panel)
+                  Hệ thống mô phỏng phản ứng thị trường bằng Tác tử AI Đa Nhân Khẩu (GSO Benchmark Stratified Synthetic Panel)
                 </span>
               </div>
             </div>
@@ -300,7 +300,7 @@ export default function PrintReportPage() {
           </div>
 
           <p className="text-slate-600 text-xs leading-relaxed max-w-xl">
-            {modelInfo.subtitle}. Báo cáo được xây dựng trên cơ sở phân tầng khoa học theo cơ cấu nhân khẩu học Tổng cục Thống kê (GSO) và định lý giới hạn trung tâm bảo đảm giá trị tham chiếu cao nhất cho Ban Giám Đốc và Hội Đồng Quản Trị.
+            {modelInfo.subtitle}. Báo cáo được xây dựng trên cơ sở đối chuẩn phân tầng khoa học theo Niên giám Thống kê của Tổng cục Thống kê (GSO) kết hợp mô hình hành vi mua sắm thị trường và Định lý Giới hạn Trung tâm, bảo đảm giá trị tham chiếu cao nhất cho Ban Giám Đốc và Hội Đồng Quản Trị.
           </p>
 
           {/* Concept Image Preview on Cover Page if uploaded */}
@@ -422,7 +422,7 @@ export default function PrintReportPage() {
           <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-              <span>Chứng nhận phân tầng: Niên giám Thống kê GSO Việt Nam</span>
+              <span>Khung phân tầng đối chuẩn: Niên giám Thống kê GSO Việt Nam</span>
               <span>·</span>
               <span>SHA256: {(surveyId + '-KANTAR-NIELSEN-CERT').slice(0, 20).toUpperCase()}</span>
             </div>
@@ -610,27 +610,40 @@ export default function PrintReportPage() {
                 <span className="text-sm font-bold text-amber-700">{moe}</span>
               </div>
               <div className="bg-white p-2 rounded border border-slate-200">
-                <span className="text-[9px] text-slate-500 uppercase block">Dữ liệu nguồn phân tầng</span>
-                <span className="text-sm font-bold text-slate-900">Tổng cục Thống kê (GSO)</span>
+                <span className="text-[9px] text-slate-500 uppercase block">Khung đối chuẩn phân tầng</span>
+                <span className="text-sm font-bold text-slate-900">Niên giám Thống kê GSO</span>
               </div>
             </div>
           </div>
 
           {/* Target Audience Specification Card */}
-          <div className="bg-amber-50/70 border-2 border-amber-300 p-3 rounded-xl">
+          <div className="bg-amber-50/70 border-2 border-amber-300 p-3 rounded-xl space-y-2">
             <div className="flex items-center justify-between mb-1 text-amber-900 font-mono text-[9.5px] font-bold uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
                 <span>🎯</span>
-                <span>HỒ SƠ PHÂN KHÚC MỤC TIÊU ĐÃ THẨM ĐỊNH (AUDIENCE TARGETING PROFILE)</span>
+                <span>HỒ SƠ ĐỐI CHUẨN PHÂN TẦNG MỤC TIÊU (AUDIENCE TARGETING & BENCHMARK PROFILE)</span>
               </span>
               <span className="text-[9px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-mono">
                 DuckDB 1M Personas
               </span>
             </div>
             <div className="text-slate-900 font-bold text-xs font-serif">
-              {report.target_summary?.demographics || `${sampleN.toLocaleString('vi-VN')} Tác tử AI phân vai theo chuẩn phân tầng GSO`}
+              {report.target_summary?.demographics || `${sampleN.toLocaleString('vi-VN')} Tác tử AI đối chuẩn theo khung phân tầng Niên giám GSO`}
             </div>
-            <div className="grid grid-cols-4 gap-2 mt-2 pt-2 border-t border-amber-200 text-center font-mono text-[9px]">
+
+            {/* 2 Tầng Khoa Học Chuẩn Mực Trong Bản In */}
+            <div className="grid grid-cols-2 gap-2 pt-1 border-t border-amber-200/80 text-[9.5px] leading-tight">
+              <div className="bg-white/80 p-1.5 rounded border border-amber-200/80">
+                <strong className="text-amber-950 font-mono block text-[9px] uppercase">🏛️ Tầng 1: Khung nhân khẩu học GSO</strong>
+                <span className="text-slate-600">Khung mẫu phân tầng được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), phản ánh sát cơ cấu độ tuổi, giới tính, vùng miền và thu nhập.</span>
+              </div>
+              <div className="bg-white/80 p-1.5 rounded border border-amber-200/80">
+                <strong className="text-amber-950 font-mono block text-[9px] uppercase">🛒 Tầng 2: Hành vi & Tâm lý mua sắm</strong>
+                <span className="text-slate-600">Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-2 pt-1.5 border-t border-amber-200 text-center font-mono text-[9px]">
               <div className="bg-white p-1 rounded border border-amber-100">
                 <span className="text-slate-400 block">Địa bàn</span>
                 <strong className="text-slate-800 truncate block">{report.target_summary?.location}</strong>
@@ -757,7 +770,7 @@ export default function PrintReportPage() {
 
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
-          <span>Quy chuẩn phân tầng: Tổng cục Thống kê (GSO) & Synthetic Engine</span>
+          <span>Khung phân tầng đối chuẩn: Niên giám Thống kê GSO & Synthetic Consumer Engine</span>
           <span className="font-bold text-slate-600">TRANG 03 / 06</span>
         </div>
       </section>
@@ -1478,7 +1491,7 @@ export default function PrintReportPage() {
               TRANG 05 / 06 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
-              Ý Kiến Định Tính Trích Xuất Từ Tác Tử AI Phân Vai Theo Phân Tầng GSO
+              Ý Kiến Định Tính Trích Xuất Từ Tác Tử AI Đối Chuẩn Theo Khung Phân Tầng GSO
             </h2>
           </div>
           <div className="text-[11px] font-mono text-slate-400">MÃ: #{surveyId}</div>

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://insight.1booking.asia'),
   title: 'INSIGHT AI — Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng',
   description:
-    'Nền tảng nghiên cứu thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas) phân vai theo ma trận dân số Việt Nam (chuẩn GSO). Bảo chứng học thuật Cochran 95% (±3.10%), 9 mô hình chuyên sâu chuẩn ESOMAR & AAPOR.',
+    'Nền tảng nghiên cứu thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas) đối chuẩn theo khung phân tầng Niên giám Thống kê GSO. Bảo chứng học thuật Cochran 95% (±3.10%), 9 mô hình chuyên sâu chuẩn ESOMAR & AAPOR.',
   keywords:
     'INSIGHT AI, nghiên cứu thị trường, AI Market Research, tác tử AI, synthetic personas, consumer simulation, Nielsen BASES, Van Westendorp, Kantar, Vietnam synthetic panel',
   authors: [{ name: 'INSIGHT AI Platform' }],

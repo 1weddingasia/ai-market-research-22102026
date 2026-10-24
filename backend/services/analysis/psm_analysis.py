@@ -139,7 +139,7 @@ def analyze(
             sample_size=total,
             margin_of_error=margin_map.get(total, "±3.1%"),
             location=location,
-            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Phân tầng Quota GSO",
+            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),
         executive_summary=ExecutiveSummary(
             viability_score=viability_score,

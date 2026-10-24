@@ -102,7 +102,7 @@ export default function BachThuPage() {
             <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Quy mô cơ sở dữ liệu</div>
               <div className="text-xl sm:text-2xl font-serif font-bold text-amber-400 mt-1">1.000.000</div>
-              <div className="text-[11px] text-slate-400">Hồ sơ phân tầng GSO</div>
+              <div className="text-[11px] text-slate-400">Khung đối chuẩn Niên giám GSO</div>
             </div>
             <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Độ tin cậy toán học</div>
@@ -228,10 +228,7 @@ export default function BachThuPage() {
             </h3>
             <ul className="list-disc pl-5 space-y-2 text-slate-700">
               <li>
-                <strong>Kho dữ liệu phân tầng 1.000.000 hồ sơ (Synthetic Demographics Pool):</strong> Được chuẩn hóa
-                chặt chẽ theo cơ cấu dân số học của Tổng cục Thống kê Việt Nam (GSO), phản ánh chính xác phân bổ tại 6 vùng
-                kinh tế trọng điểm, tỷ lệ giới tính cân bằng (~49.8% Nam / 50.2% Nữ), các bậc tuổi từ 18 đến 65 và 4 phân
-                tầng mức sống / thu nhập (Nhóm A, B, C, D).
+                <strong>Kho dữ liệu phân tầng 1.000.000 chân dung tổng hợp (Synthetic Personas Pool):</strong> Vận hành theo 2 tầng khoa học: (1) <em>Tầng khung nhân khẩu học:</em> Được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), phản ánh chính xác cơ cấu dân số tại 6 vùng kinh tế trọng điểm, giới tính cân bằng (~49.8% Nam / 50.2% Nữ), các bậc tuổi từ 18 đến 65 và ngũ phân vị thu nhập; (2) <em>Tầng hành vi tiêu dùng:</em> Mô phỏng phản xạ mua sắm được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
               </li>
               <li>
                 <strong>Công nghệ đa tác tử độc lập (Multi-Agent Simulation):</strong> Mỗi hồ sơ hoạt động như một cá thể
@@ -292,7 +289,7 @@ export default function BachThuPage() {
               {
                 step: '01',
                 title: 'Trích mẫu ngẫu nhiên có phân tầng (Stratified Random Sampling)',
-                desc: 'Từ kho 1.000.000 chân dung tổng hợp (Synthetic Personas) phân tầng GSO, thuật toán trích xuất ngẫu nhiên đúng quy mô mẫu doanh nghiệp lựa chọn (N = 500, 1.000, 2.000 hoặc 3.000 tác tử). Mẫu trích xuất phản ánh chính xác tỷ lệ phân bổ địa lý, lứa tuổi và thu nhập của thị trường mục tiêu, bảo đảm tính đại diện thống kê cao nhất.',
+                desc: 'Từ kho 1.000.000 chân dung tổng hợp (Synthetic Personas) đối chuẩn theo khung phân tầng Niên giám GSO, thuật toán trích xuất ngẫu nhiên đúng quy mô mẫu doanh nghiệp lựa chọn (N = 500, 1.000, 2.000 hoặc 3.000 tác tử). Mẫu trích xuất phản ánh chính xác tỷ lệ phân bổ địa lý, lứa tuổi và thu nhập của thị trường mục tiêu, bảo đảm tính đại diện thống kê cao nhất.',
                 tech: 'DuckDB In-Memory Parquet Engine + Stratified Quota Sampler',
               },
               {
@@ -507,7 +504,7 @@ export default function BachThuPage() {
                   <td className="py-3.5 px-4 font-bold text-slate-900 font-mono">Độ bao phủ địa lý</td>
                   <td className="py-3.5 px-4">Thường bị giới hạn ở 2 đô thị lớn (Hà Nội, TP.HCM) do chi phí đi lại</td>
                   <td className="py-3.5 px-4 font-bold text-slate-900 bg-amber-50/30">
-                    Bao phủ toàn diện 6 vùng kinh tế trọng điểm cả nước theo đúng tỷ lệ GSO
+                    Bao phủ toàn diện 6 vùng kinh tế trọng điểm cả nước đối chuẩn theo tỷ lệ Niên giám Thống kê GSO
                   </td>
                 </tr>
               </tbody>

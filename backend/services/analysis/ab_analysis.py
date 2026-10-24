@@ -168,7 +168,7 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         target_summary=TargetSummary(
             sample_size=total, margin_of_error="±3.1%",
             location=location,
-            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Phân tầng Quota GSO",
+            demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),
         executive_summary=ExecutiveSummary(
             viability_score=viability_score,

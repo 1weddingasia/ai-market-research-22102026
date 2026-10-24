@@ -122,7 +122,7 @@ def analyze(
     demographics_str = (
         f"Nam {male_pct:.0f}%, Nữ {female_pct:.0f}% | "
         f"Tuổi trung bình {demo.get('avg_age', 30):.0f} | "
-        f"Phân tầng Quota chuẩn GSO"
+        f"Khung đối chuẩn phân tầng Niên giám GSO"
     )
 
     margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}

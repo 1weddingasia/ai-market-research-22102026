@@ -51,7 +51,7 @@ export default function Step2SampleConfig() {
           Cấu hình quy mô & Phạm vi mẫu
         </h2>
         <p className="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
-          Chọn địa bàn và quy mô tác tử AI mô phỏng mục tiêu. Hệ thống sẽ áp dụng thuật toán phân tầng nhân khẩu học GSO tức thì.
+          Chọn địa bàn và quy mô tác tử AI mô phỏng mục tiêu. Hệ thống sẽ áp dụng thuật toán phân tầng đối chuẩn theo Niên giám Thống kê GSO tức thì.
         </p>
       </div>
 
@@ -211,7 +211,7 @@ export default function Step2SampleConfig() {
                   onChange={(e) => updateSampleConfig({ targetOccupation: e.target.value })}
                   className="w-full bg-slate-50 border border-slate-300 rounded-lg py-2 px-3 text-slate-900 font-medium text-xs focus:ring-2 focus:ring-slate-900 focus:bg-white"
                 >
-                  <option value="all">Đa dạng mọi ngành nghề (Chuẩn GSO)</option>
+                  <option value="all">Đa dạng mọi ngành nghề (Đối chuẩn cơ cấu GSO)</option>
                   <option value="office">Dân văn phòng &amp; Trí thức (IT, tài chính, chuyên viên)</option>
                   <option value="business">Kinh doanh &amp; Thương mại (Chủ quán, tiểu thương)</option>
                   <option value="worker">Công nhân &amp; Sản xuất (Kỹ thuật viên, vận hành)</option>
@@ -383,15 +383,32 @@ export default function Step2SampleConfig() {
                 </p>
               </div>
 
-              <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs">
+              <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 shadow-xs space-y-2">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                  Phương pháp lấy mẫu & Nguồn cơ cấu
+                  Phương pháp phân tầng & Cơ sở đối chuẩn 2 tầng khoa học
                 </span>
                 <div className="text-xs font-bold text-slate-900 mt-0.5">
-                  Stratified Random Sampling · Chuẩn Niên giám Thống kê GSO 6 vùng kinh tế
+                  Stratified Random Sampling · Đối chuẩn Niên giám Thống kê GSO 6 vùng kinh tế
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                  Mẫu được trích xuất ngẫu nhiên từ kho 1.000.000 chân dung tiêu dùng tổng hợp (Synthetic Personas), phân bổ cân bằng theo cơ cấu độ tuổi, giới tính và thu nhập thực tế của Việt Nam. Dữ liệu mô phỏng tuân thủ nghiêm ngặt nguyên tắc Privacy-by-Design, ẩn danh 100%, không chứa thông tin định danh cá nhân (PII-free) theo Nghị định 13/2023/NĐ-CP.
+                
+                {/* 2 Tầng Khoa Học Chuẩn Mực */}
+                <div className="space-y-1.5 pt-1 text-[11px] leading-relaxed">
+                  <div className="bg-slate-50 p-2 rounded border border-slate-100">
+                    <strong className="text-slate-800 font-mono text-[10px] uppercase block">🏛️ Tầng 1: Khung nhân khẩu học (Cơ cấu dân số)</strong>
+                    <p className="text-slate-600 mt-0.5">
+                      Khung mẫu phân tầng nhân khẩu học được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO), đảm bảo cơ cấu độ tuổi, giới tính, vùng miền và phân tầng thu nhập phản ánh sát thực tế dân số.
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 p-2 rounded border border-slate-100">
+                    <strong className="text-slate-800 font-mono text-[10px] uppercase block">🛒 Tầng 2: Hành vi tiêu dùng & Tâm lý mua sắm</strong>
+                    <p className="text-slate-600 mt-0.5">
+                      Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-slate-400 mt-1 leading-normal italic">
+                  * Mô phỏng vận hành trên 1.000.000 chân dung tổng hợp (Synthetic Personas), tuân thủ nghiêm ngặt nguyên tắc Privacy-by-Design, ẩn danh 100%, không chứa thông tin định danh cá nhân (PII-free) theo Nghị định 13/2023/NĐ-CP.
                 </p>
               </div>
 

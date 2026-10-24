@@ -228,7 +228,7 @@ export default function ProcessingPage() {
         </h1>
 
         <p className="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-          Phân vai tác tử AI theo ma trận phân tầng nhân khẩu học người tiêu dùng Việt Nam (chuẩn GSO).
+          Phân vai tác tử AI đối chuẩn theo khung phân tầng nhân khẩu học Niên giám Thống kê GSO kết hợp mô hình hành vi mua sắm thị trường.
           Định lý giới hạn trung tâm bảo đảm sai số biên <span className="text-amber-400 font-semibold">±3.1%</span> ở độ tin cậy <span className="text-amber-400 font-semibold">95%</span>.
         </p>
       </div>
@@ -284,7 +284,7 @@ export default function ProcessingPage() {
               Phương pháp khảo sát
             </span>
             <div className="font-mono font-bold text-cyan-400 truncate">
-              Phân Tầng Chuẩn GSO
+              Đối Chuẩn Phân Tầng GSO
             </div>
           </div>
 
@@ -343,7 +343,7 @@ export default function ProcessingPage() {
           <div className="p-4 sm:p-5 font-mono text-xs leading-relaxed max-h-80 overflow-y-auto space-y-2.5 scrollbar-thin scrollbar-thumb-slate-800">
             {logs.length === 0 && (
               <div className="text-slate-500 italic py-2">
-                [00:00s] [DÂN SỐ HỌC GSO] Đang khởi tạo ma trận tác tử AI và phân bổ hạn ngạch nhân khẩu học theo Tổng cục Thống kê...
+                [00:00s] [ĐỐI CHUẨN GSO] Đang khởi tạo ma trận tác tử AI và phân bổ hạn ngạch phân tầng theo Niên giám Thống kê GSO...
               </div>
             )}
 
