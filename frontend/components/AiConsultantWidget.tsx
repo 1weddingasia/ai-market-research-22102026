@@ -11,20 +11,20 @@ interface Message {
   time: string;
 }
 
-const INITIAL_GREETING = `Xin chào! Tôi là **Cố Vấn Chiến Lược INSIGHT AI**.
+const INITIAL_GREETING = `Xin chào! Tôi là **Trợ lý Cố Vấn INSIGHT AI**.
 
-Tôi luôn trực tuyến **24/7** để hỗ trợ bạn:
-• 🏛️ **Bảo chứng nguồn gốc dữ liệu:** Bộ dữ liệu 1 triệu hồ sơ *Nemotron-Personas-Vietnam* của **FPT & NVIDIA** ([Báo Nhân Dân 17/10/2026](https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html)), PII-Free 100% Nghị định 13/2023/NĐ-CP.
-• 📊 **9 Mô hình nghiên cứu chuẩn quốc tế:** Nielsen BASES, Van Westendorp, Kantar Link, Monadic...
-• 🧪 **Gói kiểm thử thực tế:** Chỉ **10.000đ** (50 mẫu) để bạn test quét VietQR thật và nhận báo cáo ngay.
+Tôi trực tuyến 24/7 để đồng hành và hỗ trợ bạn:
+• 🎯 **Tư vấn chọn mô hình khảo sát phù hợp** với sản phẩm/ngành hàng của bạn (kiểm định ý tưởng, định giá tối ưu, test bao bì...).
+• 💰 **Giải đáp bảng giá & quy trình:** Nhận kết quả chỉ sau 60 giây, hỗ trợ gói trải nghiệm 10.000đ và gói chuẩn 1.000 mẫu.
+• 📊 **Hướng dẫn xem Báo cáo mẫu A4:** Trải nghiệm trước bản in chiến lược 6 trang chuẩn trình Ban Giám đốc & Nhà đầu tư.
 
-Bạn đang quan tâm đến nội dung nào?`;
+Bạn đang chuẩn bị ra mắt sản phẩm mới, cần tìm điểm giá hay muốn khảo sát thói quen tiêu dùng? Hãy chia sẻ với tôi nhé!`;
 
 const QUICK_PROMPTS = [
-  '🏛️ Nguồn dữ liệu FPT-NVIDIA & Tính pháp lý?',
-  '🧪 Tôi muốn thử gói 10k test thanh toán thật',
-  '📊 Xem báo cáo mẫu thực tế chuẩn HĐQT',
-  '💎 Mô hình Van Westendorp định giá ra sao?',
+  '🎯 Tôi nên chọn mô hình khảo sát nào?',
+  '💰 Bảng giá & Gói trải nghiệm 10k?',
+  '📊 Xem Báo cáo mẫu Executive A4',
+  '⏱️ Quy trình khảo sát mất bao lâu?',
 ];
 
 export default function AiConsultantWidget() {
