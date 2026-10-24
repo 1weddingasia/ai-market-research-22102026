@@ -26,7 +26,7 @@ from slowapi.util import get_remote_address
 load_dotenv()
 
 from database import init_db
-from routers import export, payment, stream, survey, telegram
+from routers import export, payment, stream, survey, telegram, chat
 
 log = structlog.get_logger(__name__)
 
@@ -89,12 +89,14 @@ app.include_router(stream.router)
 app.include_router(payment.router)
 app.include_router(export.router)
 app.include_router(telegram.router)
+app.include_router(chat.router)
 
 app.include_router(survey.router, prefix="/api")
 app.include_router(stream.router, prefix="/api")
 app.include_router(payment.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
 app.include_router(telegram.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
 
 # ── Health check ───────────────────────────────────────────────────────────────

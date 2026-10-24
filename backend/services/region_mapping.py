@@ -85,6 +85,7 @@ INCOME_MAP: dict[str, str] = {
 
 # ─── Sample size → Price mapping ──────────────────────────────────────────────
 PRICING: dict[int, int] = {
+    50:   10_000,    # 10.000đ (Gói kiểm thử thực tế / Test VietQR)
     500:  200_000,   # 200.000đ
     1000: 300_000,   # 300.000đ (gói khuyên dùng)
     2000: 500_000,   # 500.000đ

@@ -3,6 +3,7 @@ import { Playfair_Display, Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css';
 import { WizardProvider } from '@/lib/wizard-context';
 import BackToTop from '@/components/BackToTop';
+import AiConsultantWidget from '@/components/AiConsultantWidget';
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <WizardProvider>
           {children}
           <BackToTop />
+          <AiConsultantWidget />
         </WizardProvider>
       </body>
     </html>

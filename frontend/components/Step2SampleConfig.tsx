@@ -16,6 +16,7 @@ const REGIONS = [
 ];
 
 const SAMPLE_TIERS = [
+  { size: 50, price: 10_000, moe: '±13.8%', label: '50 mẫu (Test)', sublabel: 'Gói kiểm thử thanh toán VietQR thật', isTest: true },
   { size: 500, price: 200_000, moe: '±4.38%', label: '500 mẫu', sublabel: 'Cấp địa phương / Thử nghiệm nhanh' },
   { size: 1000, price: 300_000, moe: '±3.10%', label: '1.000 mẫu', sublabel: 'Chuẩn quốc tế (Đề xuất)', isRecommended: true },
   { size: 2000, price: 500_000, moe: '±2.19%', label: '2.000 mẫu', sublabel: 'Đại diện phân khúc sâu' },
@@ -294,7 +295,7 @@ export default function Step2SampleConfig() {
             />
 
             {/* Quick-Pick Pills with Price */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mt-5">
               {SAMPLE_TIERS.map((tier) => {
                 const isSelected = state.sampleSize === tier.size;
                 return (
@@ -313,6 +314,13 @@ export default function Step2SampleConfig() {
                         isSelected ? 'bg-amber-400 text-slate-900' : 'bg-amber-100 text-amber-800 border border-amber-300'
                       }`}>
                         Đề xuất
+                      </span>
+                    )}
+                    {(tier as any).isTest && (
+                      <span className={`absolute -top-2.5 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider ${
+                        isSelected ? 'bg-emerald-400 text-slate-900' : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                      }`}>
+                        Test 10k
                       </span>
                     )}
                     <div className="font-bold text-sm leading-tight">

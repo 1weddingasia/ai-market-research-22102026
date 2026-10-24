@@ -170,16 +170,25 @@ async def handle_telegram_webhook(update: dict, db: Optional[Session] = None) ->
     admin_chat_id = str(os.getenv("TELEGRAM_ADMIN_CHAT_ID", "584207194")).strip()
 
     # =========================================================================
-    # LỚP BẢO MẬT: Chặn mọi người ngoài, CHỈ CHO ANH LỢI SỬ DỤNG
+    # NẾU LÀ KHÁCH HÀNG / NGƯỜI DÙNG CÔNG CỘNG: AI CONSULTANT TƯ VẤN 24/7
     # =========================================================================
     if chat_id != admin_chat_id:
-        deny_msg = (
-            "⛔ <b>TRUY CẬP BỊ TỪ CHỐI</b>\n\n"
-            "Đây là Bot điều hành nội bộ của Ban Quản Trị INSIGHT AI. Bot không phục vụ khách hàng công cộng.\n"
-            f"Vui lòng truy cập nền tảng chính thức tại: <a href='{FRONTEND_URL}'>{FRONTEND_URL}</a>"
-        )
-        await send_telegram_message(deny_msg, chat_id=chat_id)
-        return {"status": "forbidden", "reason": "unauthorized_user"}
+        from services.ai_consultant import get_ai_consultant_reply
+        ai_reply = await get_ai_consultant_reply(text)
+        inline_keyboard = {
+            "inline_keyboard": [
+                [
+                    {"text": "🌐 Nền Tảng Insight AI", "url": FRONTEND_URL},
+                    {"text": "🚀 Khởi Tạo Khảo Sát", "url": f"{FRONTEND_URL}/wizard"},
+                ],
+                [
+                    {"text": "🧪 Gói Test VietQR 10k", "url": f"{FRONTEND_URL}/wizard?sample=50"},
+                    {"text": "📊 Xem Live Demo A4", "url": f"{FRONTEND_URL}/results/DEMO-NIELSEN-BASES"},
+                ]
+            ]
+        }
+        await send_telegram_message(ai_reply, chat_id=chat_id, reply_markup=inline_keyboard)
+        return {"status": "ok", "action": "public_consultant_reply"}
 
     # =========================================================================
     # CÁC LỆNH DÀNH RIÊNG CHO ANH LỢI

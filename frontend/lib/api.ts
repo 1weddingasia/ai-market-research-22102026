@@ -275,9 +275,23 @@ export const api = {
       dataset_context: string;
     }>;
   },
+
+  askAiConsultant: async (message: string, history: Array<{ role: string; content: string }> = []) => {
+    const res = await fetch(`${API_URL}/chat/ask`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, history }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Không thể kết nối đến Trợ lý AI' }));
+      throw new Error(err.detail || 'Không thể kết nối đến Trợ lý AI');
+    }
+    return res.json() as Promise<{ reply: string; status: string }>;
+  },
 };
 
 export const PRICING: Record<number, number> = {
+  50:   10_000,
   500:  200_000,
   1000: 300_000,
   2000: 500_000,

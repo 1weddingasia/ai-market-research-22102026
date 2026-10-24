@@ -365,6 +365,52 @@ export default function MinhBachKhoaHocPage() {
                 </p>
               </div>
             </div>
+
+            {/* Khối chứng minh nguồn gốc dữ liệu FPT & NVIDIA theo Báo Nhân Dân */}
+            <div className="mt-6 pt-5 border-t-2 border-amber-500/20 bg-amber-50/60 rounded-xl p-5 border border-amber-200">
+              <div className="flex items-center gap-2 text-amber-900 font-bold text-sm mb-2">
+                <span>📰</span>
+                <span>Bảo Chứng Nguồn Gốc Dữ Liệu Quốc Gia: FPT &amp; NVIDIA (Báo Nhân Dân 17/10/2026)</span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                Theo thông tin công bố chính thức trên{' '}
+                <a
+                  href="https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-amber-800 font-bold underline hover:text-amber-950"
+                >
+                  Báo Nhân Dân (ngày 17/10/2026)
+                </a>
+                , Tập đoàn <strong>FPT</strong> và <strong>NVIDIA</strong> đã hoàn tất mở rộng bộ dữ liệu người dùng giả lập Việt Nam{' '}
+                <strong>Nemotron-Personas-Vietnam</strong> lên quy mô <strong>1 triệu bản ghi</strong> (phát triển bởi Viện Quantum AI &amp; Cyber Security - QACI thuộc FPT phối hợp cùng NVIDIA).
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 text-xs text-slate-700">
+                <div className="p-3 bg-white rounded-lg border border-amber-200">
+                  <div className="font-bold text-amber-900 mb-1">Cấu trúc 21 trường dữ liệu</div>
+                  Gồm 6 trường chân dung nhân khẩu học (tuổi, giới tính, học vấn, nghề nghiệp, cư trú) và 15 trường bối cảnh (kỹ năng, sở thích, mô tả công việc, ẩm thực, du lịch, thể thao...).
+                </div>
+                <div className="p-3 bg-white rounded-lg border border-amber-200">
+                  <div className="font-bold text-amber-900 mb-1">Cơ sở phân bổ dân số GSO</div>
+                  Xây dựng dựa trên số liệu chính thức từ Điều tra dân số và nhà ở giữa kỳ 2024 &amp; Khảo sát mức sống dân cư 2024 của Tổng cục Thống kê (GSO).
+                </div>
+                <div className="p-3 bg-white rounded-lg border border-amber-200">
+                  <div className="font-bold text-amber-900 mb-1">Bản quyền mở CC BY 4.0</div>
+                  Được công bố công khai trên nền tảng quốc tế Hugging Face, phục vụ phát triển các hệ thống Tác tử AI (Agentic AI) và mô phỏng phản ứng thị trường.
+                </div>
+              </div>
+              <div className="mt-3 pt-2 text-[11px] text-slate-500 italic flex items-center justify-between">
+                <span>Trích dẫn nguồn báo: Báo Nhân Dân (Cơ quan Trung ương của Đảng Cộng sản Việt Nam)</span>
+                <a
+                  href="https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-amber-800 font-semibold underline"
+                >
+                  Xem bài viết gốc ↗
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
