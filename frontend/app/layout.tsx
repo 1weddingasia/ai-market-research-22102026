@@ -6,14 +6,14 @@ import BackToTop from '@/components/BackToTop';
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-sans',
+  variable: '--font-be-vietnam',
   weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-serif',
+  variable: '--font-playfair',
   weight: ['400', '600', '700', '900'],
   display: 'swap',
 });

@@ -332,52 +332,52 @@ export default function HomePage() {
       <HeroSlider />
 
       {/* ── Executive Trust Metrics Strip ── */}
-      <section className="bg-white border-b border-slate-200 py-6 px-4 sm:px-6 relative z-20 shadow-xs">
+      <section className="bg-white border-b border-slate-200 py-7 px-4 sm:px-6 relative z-20 shadow-xs">
         <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
           <div className="pt-2 lg:pt-0 lg:px-4 first:pl-0">
-            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+            <span className="text-xs font-mono uppercase font-bold text-slate-500 block tracking-wider">
               QUY MÔ MẪU PHÂN TẦNG
             </span>
-            <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-0.5">
+            <div className="text-2xl sm:text-3xl font-sans font-black text-slate-900 mt-1">
               1.000.000+
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
               Chuẩn hóa theo Niên giám Thống kê GSO Việt Nam
             </p>
           </div>
 
           <div className="pt-2 lg:pt-0 lg:px-4">
-            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+            <span className="text-xs font-mono uppercase font-bold text-slate-500 block tracking-wider">
               TỐC ĐỘ PHỎNG VẤN AI
             </span>
-            <div className="text-xl sm:text-2xl font-serif font-black text-emerald-700 mt-0.5">
+            <div className="text-2xl sm:text-3xl font-sans font-black text-emerald-700 mt-1">
               &lt; 60 Giây
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
               Mô phỏng hàng ngàn tác tử phản hồi song song
             </p>
           </div>
 
           <div className="pt-2 lg:pt-0 lg:px-4">
-            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+            <span className="text-xs font-mono uppercase font-bold text-slate-500 block tracking-wider">
               ĐỘ TIN CẬY THỐNG KÊ
             </span>
-            <div className="text-xl sm:text-2xl font-serif font-black text-amber-700 mt-0.5">
+            <div className="text-2xl sm:text-3xl font-sans font-black text-amber-700 mt-1">
               95.0% · MoE ±3.1%
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5">
-              Công thức Cochran & chuẩn mực ESOMAR quốc tế
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
+              Công thức Cochran &amp; chuẩn mực ESOMAR quốc tế
             </p>
           </div>
 
           <div className="pt-2 lg:pt-0 lg:px-4">
-            <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block tracking-wider">
+            <span className="text-xs font-mono uppercase font-bold text-slate-500 block tracking-wider">
               BÁO CÁO THẨM ĐỊNH
             </span>
-            <div className="text-xl sm:text-2xl font-serif font-black text-slate-900 mt-0.5">
+            <div className="text-2xl sm:text-3xl font-sans font-black text-slate-900 mt-1">
               PDF 6 Trang A4
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
               Hồ sơ chiến lược độc bản trình trực tiếp HĐQT
             </p>
           </div>
@@ -385,46 +385,52 @@ export default function HomePage() {
       </section>
 
       {/* ── 3-Step Process ── */}
-      <section id="quy-trinh" className="py-12 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-8 sm:mb-14">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+      <section id="quy-trinh" className="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-12 sm:mb-16">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-4 py-1.5 rounded-full border border-amber-300">
             QUY TRÌNH TINH GỌN
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-3">
+          <h2 className="font-sans text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mt-4 tracking-tight">
             Khảo sát thực chiến chỉ với 3 bước
           </h2>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+          <p className="text-slate-700 text-base sm:text-lg mt-3 max-w-2xl mx-auto font-normal leading-relaxed">
             Không cần chờ đợi hàng tuần, không phát sinh chi phí phỏng vấn viên.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs relative">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 font-serif font-bold text-base flex items-center justify-center mb-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-7 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative">
+            <div className="w-14 h-14 rounded-2xl bg-slate-900 text-amber-400 font-sans font-black text-xl sm:text-2xl flex items-center justify-center mb-6 shadow-xs">
               01
             </div>
-            <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 mb-2">Chọn gói & Cấu hình mẫu</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Chọn 1 trong 9 phương pháp nghiên cứu chuẩn quốc tế. Tùy chọn khu vực địa lý (TP.HCM, Hà Nội, Toàn quốc) và độ tuổi mục tiêu.
+            <h3 className="font-sans text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+              Chọn gói &amp; Cấu hình mẫu
+            </h3>
+            <p className="text-base sm:text-[17px] text-slate-800 leading-relaxed font-normal">
+              Chọn 1 trong 9 phương pháp nghiên cứu chuẩn quốc tế. Tùy chọn khu vực địa lý (TP.HCM, Hà Nội, Toàn quốc) và độ tuổi mục tiêu theo nhu cầu.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs relative">
-            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white font-serif font-bold text-base flex items-center justify-center mb-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-7 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative">
+            <div className="w-14 h-14 rounded-2xl bg-amber-600 text-white font-sans font-black text-xl sm:text-2xl flex items-center justify-center mb-6 shadow-xs">
               02
             </div>
-            <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 mb-2">Quét mã VietQR thanh toán</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức.
+            <h3 className="font-sans text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+              Quét mã VietQR thanh toán
+            </h3>
+            <p className="text-base sm:text-[17px] text-slate-800 leading-relaxed font-normal">
+              Quét mã VietQR bằng ứng dụng ngân hàng bất kỳ. Hệ thống tự động ghi nhận chuyển khoản và kích hoạt khảo sát ngay lập tức 24/7.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs relative">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white font-serif font-bold text-base flex items-center justify-center mb-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-7 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-700 text-white font-sans font-black text-xl sm:text-2xl flex items-center justify-center mb-6 shadow-xs">
               03
             </div>
-            <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 mb-2">Nhận Dashboard & Tải PDF A4</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h3 className="font-sans text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+              Nhận Dashboard &amp; Tải PDF A4
+            </h3>
+            <p className="text-base sm:text-[17px] text-slate-800 leading-relaxed font-normal">
               Theo dõi luồng phân tích trực tiếp theo thời gian thực (Live Stream). Nhận báo cáo chiến lược điều hành 4 tab và xuất file báo cáo chiến lược chuẩn Executive Summary (A4) sẵn sàng thuyết trình.
             </p>
           </div>
@@ -432,21 +438,21 @@ export default function HomePage() {
       </section>
 
       {/* ── 9 Frameworks Section ── */}
-      <section id="phuong-phap" className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900 text-white">
+      <section id="phuong-phap" className="py-14 sm:py-24 px-4 sm:px-6 bg-slate-900 text-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-14">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
+          <div className="text-center mb-10 sm:mb-16">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-400 bg-amber-400/20 px-3.5 py-1.5 rounded-full border border-amber-400/30">
               CHUẨN PHƯƠNG PHÁP LUẬN QUỐC TẾ
             </span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white mt-3">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-4">
               9 Mô hình nghiên cứu chuyên sâu
             </h2>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+            <p className="text-slate-300 text-sm sm:text-base mt-2 max-w-xl mx-auto font-normal">
               Được thiết kế dựa trên 9 bộ khung phương pháp luận được các tập đoàn FMCG & tư vấn chiến lược toàn cầu tin dùng.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
             {METHODS.map((m) => {
               const demoUrl = {
                 nielsen_bases: '/results/DEMO-NIELSEN-BASES',
@@ -461,37 +467,37 @@ export default function HomePage() {
               }[m.id] || '/results/DEMO-NIELSEN-BASES';
 
               return (
-                <div key={m.id} className="bg-slate-800/80 border border-slate-700 p-5 sm:p-6 rounded-2xl hover:border-amber-400/50 transition-all flex flex-col justify-between group">
+                <div key={m.id} className="bg-slate-800/90 border border-slate-700/80 p-6 sm:p-7 rounded-2xl hover:border-amber-400/60 transition-all flex flex-col justify-between group shadow-sm hover:shadow-md">
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-amber-400 block mb-2">
+                    <span className="text-xs font-mono font-bold text-amber-400 block mb-2.5 tracking-wider">
                       {m.code}
                     </span>
-                    <h3 className="font-serif text-base font-bold text-white mb-2">
+                    <h3 className="font-serif text-lg sm:text-xl font-bold text-white mb-2.5 leading-snug">
                       {m.title}
                     </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
+                    <p className="text-sm sm:text-[15px] text-slate-300 leading-relaxed font-normal">
                       {m.desc}
                     </p>
                   </div>
-                  <div className="mt-5 pt-4 border-t border-slate-700/60 flex flex-col gap-2.5 text-xs">
+                  <div className="mt-6 pt-4 border-t border-slate-700 flex flex-col gap-3 text-sm">
                     <Link
                       href={demoUrl}
                       target="_blank"
-                      className="w-full inline-flex items-center justify-between px-3 py-2 rounded-lg bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold transition-all group/btn"
+                      className="w-full inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/40 text-xs sm:text-sm font-bold transition-all group/btn"
                       title="Mở xem báo cáo mẫu thực tế trong tab mới (gồm 4 Tab tương tác & Bản in 6 Trang A4)"
                     >
-                      <span className="inline-flex items-center gap-1.5">
+                      <span className="inline-flex items-center gap-2">
                         <span>📊</span>
                         <span>Xem Báo Cáo Mẫu (Live Demo)</span>
                       </span>
-                      <span className="text-[11px] font-mono text-amber-400 group-hover/btn:translate-x-0.5 transition-transform">Mở ↗</span>
+                      <span className="font-mono text-amber-400 group-hover/btn:translate-x-1 transition-transform">Mở ↗</span>
                     </Link>
 
-                    <div className="flex items-center justify-between pt-0.5">
-                      <span className="text-slate-400">Báo cáo chuẩn hóa</span>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-slate-400 text-xs sm:text-sm">Báo cáo chuẩn hóa</span>
                       <Link
                         href={`/wizard?model=${m.id}`}
-                        className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
+                        className="text-amber-400 hover:text-amber-300 font-bold text-xs sm:text-sm inline-flex items-center gap-1 transition-colors"
                       >
                         <span>Khởi tạo gói này</span>
                         <span>→</span>
@@ -506,15 +512,15 @@ export default function HomePage() {
       </section>
 
       {/* ── Pricing Table ── */}
-      <section id="bang-gia" className="py-12 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-8 sm:mb-14">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+      <section id="bang-gia" className="py-14 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-10 sm:mb-16">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-300">
             BẢNG GIÁ MINH BẠCH
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-3">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mt-4">
             Chi phí khảo sát trọn gói
           </h2>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+          <p className="text-slate-600 text-sm sm:text-base mt-2 max-w-xl mx-auto font-normal">
             Không phí ẩn, không duy trì hàng tháng. Chỉ trả tiền theo số lượng mẫu khảo sát thực tế.
           </p>
         </div>
@@ -523,34 +529,34 @@ export default function HomePage() {
           {PACKAGES.map((pkg, idx) => (
             <div
               key={idx}
-              className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-between transition-all ${
+              className={`p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-all ${
                 pkg.recommended
-                  ? 'bg-white border-2 border-amber-400 shadow-lg ring-4 ring-amber-400/10'
-                  : 'bg-white border-slate-200 shadow-xs'
+                  ? 'bg-white border-2 border-amber-500 shadow-xl ring-4 ring-amber-400/15'
+                  : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
               }`}
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500">
                     {pkg.sample}
                   </span>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                    pkg.recommended ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'
+                  <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                    pkg.recommended ? 'bg-amber-100 text-amber-900 font-bold border border-amber-300' : 'bg-slate-100 text-slate-700'
                   }`}>
                     {pkg.badge}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-lg font-bold text-slate-900 mb-1">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mb-2">
                   {pkg.name}
                 </h3>
-                <div className="text-2xl font-serif font-black text-slate-900 my-3">
-                  {pkg.price} <span className="text-xs font-sans font-normal text-slate-500">đ / khảo sát</span>
+                <div className="text-3xl sm:text-4xl font-serif font-black text-slate-900 my-3">
+                  {pkg.price} <span className="text-xs sm:text-sm font-sans font-normal text-slate-500">đ / khảo sát</span>
                 </div>
-                <div className="text-xs text-amber-700 font-semibold mb-4">
-                  Sai số thống kê trên cỡ mẫu (MoE): {pkg.moe} (Độ tin cậy 95%)
+                <div className="text-xs sm:text-sm text-amber-800 font-bold mb-4 bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200">
+                  Sai số biên: {pkg.moe} (Độ tin cậy 95%)
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                <p className="text-sm sm:text-[15px] text-slate-700 leading-relaxed border-t border-slate-100 pt-3.5 font-normal">
                   {pkg.desc}
                 </p>
               </div>
@@ -558,10 +564,10 @@ export default function HomePage() {
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <Link
                   href={`/wizard?sample=${pkg.sampleSize}`}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold block text-center transition-colors ${
+                  className={`w-full py-3 px-4 rounded-xl text-sm font-bold block text-center transition-all ${
                     pkg.recommended
-                      ? 'bg-slate-900 hover:bg-slate-800 text-white'
-                      : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
+                      ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-md'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold'
                   }`}
                 >
                   Chọn gói này →
@@ -573,38 +579,38 @@ export default function HomePage() {
       </section>
 
       {/* ── Tiêu chuẩn Khoa học & Cơ sở Thống kê (Academic Methodology Section) ── */}
-      <section id="tieu-chuan-khoa-hoc" className="py-12 sm:py-16 px-4 sm:px-6 bg-slate-100 border-t border-slate-200">
+      <section id="tieu-chuan-khoa-hoc" className="py-14 sm:py-24 px-4 sm:px-6 bg-slate-100 border-t border-slate-200">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-8 shadow-xs">
-            <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 pb-5 mb-6">
+          <div className="bg-white rounded-3xl border border-slate-300 p-6 sm:p-10 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6 mb-7">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-md border border-amber-300">
                   PHƯƠNG PHÁP LUẬN HỌC THUẬT QUỐC TẾ
                 </span>
-                <h3 className="font-serif text-lg sm:text-2xl font-bold text-slate-900 mt-2">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-2.5">
                   Cơ sở Toán học của Sai số biên & Độ tin cậy 95%
                 </h3>
               </div>
-              <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+              <div className="flex items-center gap-2 text-xs sm:text-sm font-mono font-bold text-slate-600 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200">
                 <span>Chuẩn Cochran (1977)</span>
                 <span>•</span>
                 <span>ESOMAR / AAPOR</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-xs text-slate-600 leading-relaxed">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               <div className="space-y-4">
-                <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                <h4 className="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                   Công thức tính Sai số biên (Margin of Error - MoE)
                 </h4>
                 <p>
                   Sai số biên được tính toán nghiêm ngặt theo công thức chọn mẫu xác suất của nhà thống kê <strong>William G. Cochran (1977)</strong> cho tổng thể dân số lớn ($N &gt; 100.000$ người):
                 </p>
-                <div className="bg-slate-900 text-amber-300 p-3.5 sm:p-4 rounded-xl font-mono text-center text-xs sm:text-sm shadow-inner">
+                <div className="bg-slate-900 text-amber-300 p-4 rounded-xl font-mono text-center text-sm sm:text-base shadow-inner font-bold">
                   MoE = Z × √[ p × (1 - p) / n ]
                 </div>
-                <ul className="space-y-1.5 list-disc list-inside text-slate-600">
+                <ul className="space-y-2 list-disc list-inside text-slate-700">
                   <li><strong>Z = 1.96:</strong> Hệ số độ tin cậy tương ứng với ngưỡng <strong>95%</strong> (Confidence Level chuẩn quốc tế).</li>
                   <li><strong>p = 0.5:</strong> Giả định phương sai tối đa (50/50), bảo đảm sai số tính ra là mức an toàn và khắt khe nhất.</li>
                   <li><strong>n:</strong> Quy mô số lượng hồ sơ được giả lập ngẫu nhiên có phân tầng.</li>
@@ -612,73 +618,73 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-600" />
+                <h4 className="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
                   Đối sánh thực nghiệm theo từng cỡ mẫu
                 </h4>
                 <div className="overflow-x-auto -mx-2 sm:mx-0">
-                  <table className="w-full text-left border-collapse border border-slate-200 rounded-lg text-xs">
+                  <table className="w-full text-left border-collapse border border-slate-200 rounded-xl text-sm">
                     <thead>
-                      <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
-                        <th className="p-2 sm:p-2.5">Cỡ mẫu (n)</th>
-                        <th className="p-2 sm:p-2.5">Sai số biên</th>
-                        <th className="p-2 sm:p-2.5">Mục đích sử dụng thực tế</th>
+                      <tr className="bg-slate-50 border-b border-slate-200 text-slate-800 font-bold">
+                        <th className="p-3">Cỡ mẫu (n)</th>
+                        <th className="p-3">Sai số biên</th>
+                        <th className="p-3">Mục đích sử dụng thực tế</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 text-slate-600">
+                    <tbody className="divide-y divide-slate-100 text-slate-700">
                       <tr>
-                        <td className="p-2 sm:p-2.5 font-bold font-mono">500 mẫu</td>
-                        <td className="p-2 sm:p-2.5 font-bold text-amber-700">±4.38%</td>
-                        <td className="p-2 sm:p-2.5">Thăm dò nhanh concept ban đầu</td>
+                        <td className="p-3 font-bold font-mono">500 mẫu</td>
+                        <td className="p-3 font-bold text-amber-700">±4.38%</td>
+                        <td className="p-3">Thăm dò nhanh concept ban đầu</td>
                       </tr>
-                      <tr className="bg-amber-50/40">
-                        <td className="p-2 sm:p-2.5 font-bold font-mono text-slate-900">1.000 mẫu</td>
-                        <td className="p-2 sm:p-2.5 font-bold text-emerald-700">±3.10%</td>
-                        <td className="p-2 sm:p-2.5 font-semibold text-slate-900">Chuẩn vàng quốc tế (Nielsen/Kantar)</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 sm:p-2.5 font-bold font-mono">2.000 mẫu</td>
-                        <td className="p-2 sm:p-2.5 font-bold text-amber-700">±2.19%</td>
-                        <td className="p-2 sm:p-2.5">Phân tích chéo nhóm tuổi & tỉnh thành</td>
+                      <tr className="bg-amber-50/50">
+                        <td className="p-3 font-bold font-mono text-slate-900">1.000 mẫu</td>
+                        <td className="p-3 font-bold text-emerald-700">±3.10%</td>
+                        <td className="p-3 font-semibold text-slate-900">Chuẩn vàng quốc tế (Nielsen/Kantar)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 sm:p-2.5 font-bold font-mono">3.000 mẫu</td>
-                        <td className="p-2 sm:p-2.5 font-bold text-amber-700">±1.79%</td>
-                        <td className="p-2 sm:p-2.5">Đại diện toàn diện 6 vùng kinh tế</td>
+                        <td className="p-3 font-bold font-mono">2.000 mẫu</td>
+                        <td className="p-3 font-bold text-amber-700">±2.19%</td>
+                        <td className="p-3">Phân tích chéo nhóm tuổi & tỉnh thành</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 font-bold font-mono">3.000 mẫu</td>
+                        <td className="p-3 font-bold text-amber-700">±1.79%</td>
+                        <td className="p-3">Đại diện toàn diện 6 vùng kinh tế</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <p className="text-[11px] text-slate-500 italic">
+                <p className="text-xs sm:text-sm text-slate-600 italic">
                   * Khung mẫu phân tầng nhân khẩu học được chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê của Tổng cục Thống kê Việt Nam (GSO): Giới tính (49.8% Nam / 50.2% Nữ), Độ tuổi 18 - 65, và 6 vùng kinh tế. Mô hình hành vi tiêu dùng được tổng hợp từ dữ liệu thói quen thương mại điện tử, mức chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
                 </p>
               </div>
             </div>
 
             {/* Bạch thư Callout Box */}
-            <div className="mt-6 pt-5 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-amber-50/70 p-4 sm:p-5 rounded-xl border border-amber-300/80">
-              <div className="space-y-1">
-                <span className="inline-block text-[10px] font-mono font-bold text-amber-900 bg-amber-200/60 px-2 py-0.5 rounded uppercase">
+            <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 bg-amber-50/80 p-5 sm:p-6 rounded-2xl border border-amber-300">
+              <div className="space-y-1.5">
+                <span className="inline-block text-xs font-mono font-bold text-amber-950 bg-amber-200/80 px-2.5 py-1 rounded uppercase">
                   TÀI LIỆU TOÀN VĂN CHÍNH THỨC DÀNH CHO C-LEVEL & R&D
                 </span>
-                <h4 className="font-serif font-bold text-slate-900 text-sm sm:text-base">
+                <h4 className="font-serif font-bold text-slate-900 text-base sm:text-lg">
                   Bạch Thư Phương Pháp Luận: Nền Tảng Nghiên Cứu Thị Trường Bằng Tác Tử AI Mô Phỏng
                 </h4>
-                <p className="text-xs text-slate-600 max-w-2xl">
+                <p className="text-sm text-slate-700 max-w-2xl font-normal">
                   Tìm hiểu chi tiết cơ sở toán học Cochran, độ tương quan 75%–85% theo chuẩn Stanford &amp; Harvard, cơ chế bảo mật theo Luật 91/2025/QH15 và cách loại bỏ 80% rủi ro dòng vốn trước khi sản xuất đại trà.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row items-center gap-2 shrink-0 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
                 <Link
                   href="/minh-bach-khoa-hoc"
-                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all"
+                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 px-5 rounded-xl shadow-sm transition-all"
                 >
                   <span>Minh Bạch Khoa Học &amp; Thống Kê</span>
                   <span>→</span>
                 </Link>
                 <Link
                   href="/bach-thu"
-                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl shadow-xs transition-all"
+                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-3 px-5 rounded-xl shadow-sm transition-all"
                 >
                   <span>Đọc Bạch Thư</span>
                   <span className="text-amber-400">→</span>
@@ -690,58 +696,58 @@ export default function HomePage() {
       </section>
 
       {/* ── FAQ Section (Giải Tỏa Hoài Nghi) ── */}
-      <section id="faq" className="py-12 sm:py-20 px-4 sm:px-6 max-w-5xl mx-auto">
-        <div className="text-center mb-8 sm:mb-14">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+      <section id="faq" className="py-14 sm:py-24 px-4 sm:px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-10 sm:mb-16">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-300">
             GIẢI ĐÁP DOANH NGHIỆP
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-3">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mt-4">
             Câu hỏi thường gặp của Nhà Sáng Lập & Giám Đốc
           </h2>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+          <p className="text-slate-600 text-sm sm:text-base mt-2 max-w-xl mx-auto font-normal">
             Mọi thắc mắc về tính chuẩn xác, nguồn dữ liệu và giá trị thực tế của báo cáo.
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-2xs">
-            <h3 className="font-serif text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-start gap-2">
+        <div className="space-y-5">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-sm">
+            <h3 className="font-serif text-base sm:text-lg lg:text-xl font-bold text-slate-900 mb-3 flex items-start gap-2.5">
               <span className="text-amber-600 font-sans font-black shrink-0">01.</span>
               <span>Tại sao AI Synthetic Panel chuẩn xác và khách quan hơn việc tự hỏi ChatGPT thông thường?</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
               Khi bạn tự hỏi ChatGPT với 1 câu prompt đơn lẻ, AI chỉ đưa ra một góc nhìn tổng quát mang tính chủ quan của một thực thể AI duy nhất. Ngược lại, hệ thống của chúng tôi vận hành một cụm <strong>1.000 AI Personas độc lập</strong>. Khung mẫu phân tầng nhân khẩu học được đối chuẩn theo Niên giám Thống kê (GSO) về cơ cấu vùng miền, độ tuổi, giới tính và thu nhập, kết hợp cùng mô hình hành vi mua sắm thương mại điện tử thực tế tại Việt Nam. Từng tác tử AI phân vai độc lập và đưa ra phản hồi đa chiều, sau đó thuật toán tổng hợp ma trận Top-2-Box, Van Westendorp PSM và độ lệch chuẩn để loại bỏ hoàn toàn thiên kiến, phản ánh khách quan phản ứng của thị trường.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-2xs">
-            <h3 className="font-serif text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-start gap-2">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-sm">
+            <h3 className="font-serif text-base sm:text-lg lg:text-xl font-bold text-slate-900 mb-3 flex items-start gap-2.5">
               <span className="text-amber-600 font-sans font-black shrink-0">02.</span>
               <span>Dữ liệu 1.000.000 chân dung người tiêu dùng tổng hợp (Synthetic Personas) được xây dựng thế nào và có an toàn pháp lý không?</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
               Kho dữ liệu được xây dựng dưới dạng <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> vận hành theo 2 tầng khoa học: (1) <em>Tầng khung nhân khẩu học:</em> Chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê Quốc gia (GSO) về tỷ lệ 6 vùng kinh tế trọng điểm, giới tính và ngũ phân vị thu nhập; (2) <em>Tầng hành vi & tâm lý:</em> Mô phỏng phản ứng mua sắm từ thói quen thương mại điện tử, chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
-              <br className="mb-1" />
+              <br className="mb-2" />
               <strong>Đặc biệt an toàn pháp lý:</strong> Hệ thống tuân thủ nghiêm ngặt nguyên tắc <em>Privacy-by-Design</em>, hoàn toàn không thu thập hay lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>. Doanh nghiệp hoàn toàn an tâm khi sử dụng dữ liệu trong các báo cáo chiến lược.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-2xs">
-            <h3 className="font-serif text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-start gap-2">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-sm">
+            <h3 className="font-serif text-base sm:text-lg lg:text-xl font-bold text-slate-900 mb-3 flex items-start gap-2.5">
               <span className="text-amber-600 font-sans font-black shrink-0">03.</span>
               <span>Khi nào doanh nghiệp nên sử dụng nền tảng này?</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
               Nền tảng phát huy hiệu quả cao nhất ở 4 giai đoạn quan trọng: (1) <strong>Kiểm định ý tưởng mới</strong> trước khi đầu tư khuôn mẫu hoặc nhập hàng số lượng lớn; (2) <strong>Tìm điểm giá tối ưu (OPP)</strong> để không bán quá rẻ làm mất biên lợi nhuận hoặc quá đắt làm tắc thanh khoản; (3) <strong>Thử nghiệm bao bì & thông điệp A/B</strong> trước khi chi ngân sách chạy quảng cáo; (4) <strong>Đo độ co giãn khuyến mãi</strong> để thiết kế combo quà tặng có tỷ lệ chốt đơn cao nhất.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-2xs">
-            <h3 className="font-serif text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-start gap-2">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-sm">
+            <h3 className="font-serif text-base sm:text-lg lg:text-xl font-bold text-slate-900 mb-3 flex items-start gap-2.5">
               <span className="text-amber-600 font-sans font-black shrink-0">04.</span>
               <span>Báo cáo có đủ tiêu chuẩn để trình Hội Đồng Quản Trị hoặc Nhà Đầu Tư không?</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-0 sm:pl-7 pt-1 sm:pt-0">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
               Hoàn toàn đủ tiêu chuẩn. Báo cáo được xây dựng theo chuẩn <strong>Executive Briefing 4 Phân mục</strong> (Tóm lược điều hành, Phân tích định lượng, Tiếng nói thị trường và Đề xuất hành động). Hệ thống cung cấp nút bấm <strong>Xuất Báo Cáo 6 Trang (A4)</strong> với bố cục sang trọng, có thông tin doanh nghiệp, mã độc bản bảo mật và biểu đồ trực quan, sẵn sàng in ấn hoặc đính kèm vào hồ sơ gọi vốn.
             </p>
           </div>
@@ -749,52 +755,52 @@ export default function HomePage() {
       </section>
 
       {/* ── Bottom High-Converting CTA Section ── */}
-      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-br from-slate-900 via-[#0A192F] to-slate-950 text-white relative overflow-hidden">
+      <section className="py-14 sm:py-24 px-4 sm:px-6 bg-gradient-to-br from-slate-900 via-[#0A192F] to-slate-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_0%,rgba(217,119,6,0.15),transparent_60%)]" />
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-5 sm:space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold tracking-wider uppercase">
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6 sm:space-y-7">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-mono font-bold tracking-wider uppercase">
             TỐI ƯU HÓA QUYẾT ĐỊNH KINH DOANH
           </div>
 
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
             Kiểm thử ý tưởng với 1.000 khách hàng tiềm năng giả lập <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
               trong 60 giây
             </span>
           </h2>
 
-          <p className="text-slate-300 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-200 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed font-normal">
             Giúp doanh nghiệp tiết kiệm 95% chi phí và thời gian trước khi tung sản phẩm thật ra thị trường. Thử sai nhanh, định giá chuẩn xác và loại bỏ rủi ro chôn vốn bằng cụm tác tử AI mô phỏng người tiêu dùng Việt Nam.
           </p>
 
-          <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <div className="pt-3 sm:pt-5 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/wizard"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm py-3.5 sm:py-4 px-8 sm:px-9 rounded-xl shadow-xl transition-all transform hover:scale-105"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm sm:text-base py-4 px-8 sm:px-10 rounded-xl shadow-xl transition-all transform hover:scale-105"
             >
               <span>Khởi tạo khảo sát ngay</span>
               <span>→</span>
             </Link>
             <Link
               href="/results/DEMO-NIELSEN-BASES"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-800 text-white font-bold text-sm py-3.5 sm:py-4 px-6 sm:px-7 rounded-xl border border-slate-700 hover:border-slate-500 transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-800 text-white font-bold text-sm sm:text-base py-4 px-7 sm:px-8 rounded-xl border border-slate-700 hover:border-slate-500 transition-all"
             >
               <span>📊 Xem Báo Cáo Mẫu Thực Tế</span>
             </Link>
           </div>
 
-          <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-10 text-[11px] sm:text-xs font-mono text-slate-400 border-t border-slate-800/80">
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400">✓</span> Kích hoạt VietQR tức thì
+          <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs sm:text-sm font-mono text-slate-300 border-t border-slate-800/80">
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400 font-bold">✓</span> Kích hoạt VietQR tức thì
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400">✓</span> Độ tin cậy 95% chuẩn Cochran
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400 font-bold">✓</span> Độ tin cậy 95% chuẩn Cochran
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400">✓</span> Xuất báo cáo PDF A4 6 trang
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400 font-bold">✓</span> Xuất báo cáo PDF A4 6 trang
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400">✓</span> Bảo mật dữ liệu tuyệt đối (PII-Free)
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400 font-bold">✓</span> Bảo mật dữ liệu tuyệt đối (PII-Free)
             </span>
           </div>
         </div>
@@ -924,26 +930,26 @@ export default function HomePage() {
 
           {/* Legal Disclaimer Box — Điều khoản Khước từ Trách nhiệm Pháp lý */}
           <div className="pt-6 border-t border-slate-900">
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 text-slate-400 text-xs leading-relaxed space-y-2 shadow-inner">
-              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 text-slate-300 text-xs sm:text-sm leading-relaxed space-y-3 shadow-inner">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                 <span>⚖️</span>
                 <span>Điều khoản khước từ trách nhiệm (Legal Disclaimer)</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                 INSIGHT AI là công cụ mô phỏng giả lập tác tử AI hỗ trợ thử nghiệm ý tưởng và tối ưu hóa chi phí nghiên cứu ban đầu. Kết quả khảo sát mang tính chất tham khảo khoa học, không thay thế hoàn toàn cho các quyết định đầu tư tài chính hoặc pháp lý thực tế của doanh nghiệp.
               </p>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
-                Hệ thống vận hành theo nguyên tắc <em>Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>.
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
+                Hệ thống vận hành theo nguyên tắc <em className="text-slate-200">Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em className="text-slate-200">Nghị định 13/2023/NĐ-CP</em> và <em className="text-slate-200">Luật Bảo vệ dữ liệu cá nhân</em>.
               </p>
             </div>
           </div>
 
           {/* Bottom Copyright Bar */}
-          <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400 text-center sm:text-left">
+          <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-400 text-center sm:text-left">
             <span>
               © 2026 INSIGHT AI Platform · Nền tảng Nghiên cứu Thị trường bằng Tác tử AI Mô phỏng. All rights reserved.
             </span>
-            <div className="flex items-center gap-4 text-slate-400">
+            <div className="flex items-center gap-4 text-slate-400 font-medium">
               <Link href="/minh-bach-khoa-hoc" className="hover:text-amber-400 transition-colors">
                 Bảo vệ dữ liệu PII-Free
               </Link>
