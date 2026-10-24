@@ -15,14 +15,14 @@ const INITIAL_GREETING = `Xin chào! Tôi là **Trợ lý Cố Vấn INSIGHT AI*
 
 Tôi trực tuyến 24/7 để đồng hành và hỗ trợ bạn:
 • 🎯 **Tư vấn chọn mô hình khảo sát phù hợp** với sản phẩm/ngành hàng của bạn (kiểm định ý tưởng, định giá tối ưu, test bao bì...).
-• 💰 **Giải đáp bảng giá & quy trình:** Nhận kết quả chỉ sau 60 giây, hỗ trợ gói trải nghiệm 10.000đ và gói chuẩn 1.000 mẫu.
+• 💰 **Bảng giá trọn gói minh bạch:** Từ gói Thăm dò 200.000đ (500 mẫu) đến gói Chuẩn vàng 300.000đ (1.000 mẫu), nhận kết quả sau 60 giây.
 • 📊 **Hướng dẫn xem Báo cáo mẫu A4:** Trải nghiệm trước bản in chiến lược 6 trang chuẩn trình Ban Giám đốc & Nhà đầu tư.
 
 Bạn đang chuẩn bị ra mắt sản phẩm mới, cần tìm điểm giá hay muốn khảo sát thói quen tiêu dùng? Hãy chia sẻ với tôi nhé!`;
 
 const QUICK_PROMPTS = [
   '🎯 Tôi nên chọn mô hình khảo sát nào?',
-  '💰 Bảng giá & Gói trải nghiệm 10k?',
+  '💰 Bảng giá & Các gói khảo sát?',
   '📊 Xem Báo cáo mẫu Executive A4',
   '⏱️ Quy trình khảo sát mất bao lâu?',
 ];
@@ -147,18 +147,12 @@ export default function AiConsultantWidget() {
 
           <span className="font-bold text-xs sm:text-sm tracking-tight text-white flex items-center gap-1.5">
             <span>💬</span>
-            <span className="hidden sm:inline">Trợ lý Cố vấn AI</span>
-            <span className="sm:hidden">Hỏi AI</span>
+            <span className="hidden sm:inline">Hỏi đáp Phương Pháp Luận</span>
+            <span className="sm:hidden">Cố vấn AI</span>
             <span className="text-amber-400 font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-400/15 border border-amber-400/30">
               24/7
             </span>
           </span>
-
-          {hasNewBadge && !isOpen && (
-            <span className="absolute -top-2 -left-2 bg-amber-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full shadow-md animate-bounce">
-              Tư vấn FPT·NVIDIA
-            </span>
-          )}
         </button>
       </div>
 
@@ -173,13 +167,13 @@ export default function AiConsultantWidget() {
               </div>
               <div>
                 <div className="font-bold text-sm text-white flex items-center gap-2">
-                  <span>Cố Vấn Chiến Lược AI</span>
+                  <span>Cố Vấn Phương Pháp Luận AI</span>
                   <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono px-1.5 py-0.2 rounded">
                     ONLINE
                   </span>
                 </div>
                 <div className="text-[11px] text-slate-400">
-                  Nguồn dữ liệu FPT &amp; NVIDIA · 1M Hồ sơ
+                  Tư vấn giải pháp nghiên cứu thị trường 24/7
                 </div>
               </div>
             </div>
@@ -195,17 +189,14 @@ export default function AiConsultantWidget() {
           </div>
 
           {/* Quick Info Bar */}
-          <div className="bg-amber-50 border-b border-amber-200/80 px-3.5 py-2 text-[11px] text-amber-900 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 font-medium">
-              <span>📰</span>
-              <span>Được bảo chứng bởi Báo Nhân Dân &amp; GSO</span>
+          <div className="bg-slate-800/90 border-b border-slate-700/80 px-3.5 py-2 text-[11px] text-slate-300 flex items-center justify-between">
+            <span className="flex items-center gap-1.5 font-medium text-amber-300">
+              <span>⚡</span>
+              <span>Khảo sát thần tốc 60s • Chuẩn nhân khẩu học GSO</span>
             </span>
-            <Link
-              href="/wizard?sample=50"
-              className="text-amber-800 font-bold underline hover:text-amber-950 text-[11px]"
-            >
-              Test 10k →
-            </Link>
+            <span className="text-[10px] font-mono text-slate-400">
+              Cochran 95%
+            </span>
           </div>
 
           {/* Messages Body */}

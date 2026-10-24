@@ -34,7 +34,7 @@ class ChatConsultantResponse(BaseModel):
 async def ask_consultant(req: ChatConsultantRequest):
     """
     Tiếp nhận câu hỏi từ khách hàng trên Website 24/7 và trả lời tư vấn bằng AI
-    dựa trên Knowledge Base độc quyền của INSIGHT AI (GSO, FPT-NVIDIA, Cochran, 9 mô hình).
+    dựa trên Knowledge Base độc quyền của INSIGHT AI (GSO, chuẩn Cochran 95%, 9 mô hình nghiên cứu).
     """
     msg = (req.message or "").strip()
     if not msg:

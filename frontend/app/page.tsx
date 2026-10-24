@@ -576,34 +576,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-
-        {/* ── Callout Gói Thử Nghiệm 10k (50 mẫu) ── */}
-        <div className="mt-8 bg-gradient-to-r from-amber-500/10 via-amber-50 to-emerald-500/10 border-2 border-dashed border-amber-400 rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs">
-          <div className="space-y-1.5 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-950 text-xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-              <span>⚡ DÀNH CHO FOUNDER &amp; DOANH NGHIỆP TRẢI NGHIỆM</span>
-            </div>
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900">
-              Gói Thử Nghiệm Thực Tế: 50 Mẫu Phân Tầng — Chỉ 10.000 VNĐ
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl font-normal leading-relaxed">
-              Quét mã <strong>VietQR 10.000đ</strong> thật từ bất kỳ ứng dụng ngân hàng nào (Techcombank, Vietcombank, MB, Momo...). Hệ thống tự động kích hoạt khảo sát ngay lập tức và trả về trọn bộ Dashboard 4 Tab + File PDF A4 sau 60 giây.
-            </p>
-          </div>
-          <div className="shrink-0 w-full md:w-auto flex flex-col sm:flex-row items-center gap-3">
-            <div className="text-center md:text-right hidden sm:block">
-              <div className="text-2xl font-black font-serif text-slate-900">10.000 đ</div>
-              <div className="text-[11px] text-slate-500 font-medium">Chi phí 1 ly trà đá</div>
-            </div>
-            <Link
-              href="/wizard?sample=50"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition-all group"
-            >
-              <span>Trải nghiệm Test 10k ngay</span>
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* ── Tiêu chuẩn Khoa học & Cơ sở Thống kê (Academic Methodology Section) ── */}
@@ -754,20 +726,13 @@ export default function HomePage() {
               <span>Dữ liệu 1.000.000 chân dung người tiêu dùng tổng hợp (Synthetic Personas) được xây dựng thế nào và có an toàn pháp lý không?</span>
             </h3>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
-              Kho dữ liệu được xây dựng dưới dạng <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> vận hành theo 2 tầng khoa học: (1) <em>Tầng khung nhân khẩu học:</em> Chuẩn hóa và đối chuẩn (benchmark) theo Niên giám Thống kê Quốc gia (GSO) về tỷ lệ 6 vùng kinh tế trọng điểm, giới tính và ngũ phân vị thu nhập; (2) <em>Tầng hành vi & tâm lý:</em> Mô phỏng phản ứng mua sắm từ thói quen thương mại điện tử, chi tiêu khả dụng và văn hóa bán lẻ bản địa tại Việt Nam.
+              Kho dữ liệu vận hành theo mô hình <strong>Chân dung người tiêu dùng tổng hợp (Synthetic Personas)</strong> độc quyền, kết hợp hài hòa giữa hai tầng khoa học:
+              <br className="mb-1.5" />
+              • <strong>Khung nhân khẩu học chuẩn quốc gia:</strong> Đối chuẩn trực tiếp theo Niên giám thống kê dân số và Khảo sát mức sống dân cư (VHLSS) của Tổng cục Thống kê Việt Nam (GSO 2024), phản ánh chính xác cơ cấu độ tuổi 18–65, giới tính và 6 vùng kinh tế trọng điểm.
+              <br className="mb-1.5" />
+              • <strong>Tác tử mô phỏng hành vi:</strong> Ứng dụng mô hình tác tử AI phân vai độc lập, mô phỏng phản ứng mua sắm thực tế dựa trên dữ liệu thương mại điện tử, thói quen bán lẻ và phản ứng giá bản địa.
               <br className="mb-2" />
-              <strong>Được bảo chứng khoa học &amp; công bố toàn quốc:</strong> Phương pháp luận này tương đồng với sáng kiến quốc gia của <strong>FPT &amp; NVIDIA</strong> khi mở rộng bộ dữ liệu <em>Nemotron-Personas-Vietnam</em> lên quy mô <strong>1 triệu hồ sơ giả lập</strong> (được đưa tin chính thức trên{' '}
-              <a
-                href="https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html"
-                target="_blank"
-                rel="noreferrer"
-                className="text-amber-800 font-bold underline hover:text-amber-950"
-              >
-                Báo Nhân Dân ngày 17/10/2026
-              </a>
-              ). Toàn bộ 21 trường dữ liệu nhân khẩu học và bối cảnh hành vi được AI tạo lập dựa trên Điều tra dân số &amp; mức sống dân cư 2024 của Tổng cục Thống kê.
-              <br className="mb-2" />
-              <strong>Đặc biệt an toàn pháp lý:</strong> Hệ thống tuân thủ nghiêm ngặt nguyên tắc <em>Privacy-by-Design</em>, hoàn toàn không thu thập hay lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>. Doanh nghiệp hoàn toàn an tâm khi sử dụng dữ liệu trong các báo cáo chiến lược.
+              <strong>An toàn pháp lý 100%:</strong> Toàn bộ quá trình xử lý được thiết kế theo nguyên tắc <em>Privacy-by-Design</em>, hoàn toàn không thu thập hay lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em>Nghị định 13/2023/NĐ-CP</em> và <em>Luật Bảo vệ dữ liệu cá nhân</em>. Doanh nghiệp hoàn toàn an tâm khi đưa số liệu vào các báo cáo chiến lược điều hành.
             </p>
           </div>
 
@@ -980,8 +945,8 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
                 Hệ thống vận hành theo nguyên tắc <em className="text-slate-200">Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em className="text-slate-200">Nghị định 13/2023/NĐ-CP</em> và <em className="text-slate-200">Luật Bảo vệ dữ liệu cá nhân</em>.
               </p>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal italic pt-2.5 border-t border-slate-800">
-                <strong className="text-slate-300 not-italic">Tuyên bố độc lập &amp; Miễn trừ:</strong> &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal pt-2.5 border-t border-slate-800">
+                <strong className="text-slate-300 not-italic">Tuyên bố độc lập:</strong> Nền tảng INSIGHT AI được nghiên cứu và phát triển hoàn toàn độc lập. Mọi phân tích được thực hiện bằng mô hình tác tử AI độc quyền kết hợp các phương pháp luận học thuật thực chứng, giúp doanh nghiệp tối ưu chi phí và kiểm chứng giả thuyết thị trường trước khi ra quyết định kinh doanh.
               </p>
             </div>
           </div>

@@ -28,18 +28,18 @@ VAI TRÒ VÀ NGUYÊN TẮC CỐ VẤN:
    - Lắng nghe ý tưởng hoặc sản phẩm/dịch vụ của khách hàng.
    - Tư vấn chọn 1 trong 9 mô hình khảo sát phù hợp nhất với mục tiêu của họ.
    - Hướng dẫn quy trình 3 bước thực hiện trên web (Chọn mẫu -> Quét mã VietQR -> Nhận kết quả Dashboard & tải PDF A4 trong 60 giây).
-   - Giải đáp thắc mắc về bảng giá (gói trải nghiệm 10k, gói chuẩn 300k...), thời gian thực hiện, cách đọc báo cáo.
+   - Giải đáp thắc mắc về bảng giá minh bạch (gói Thăm dò nhanh 200k, gói Chuẩn học thuật 300k, gói Chuyên sâu 500k...), thời gian thực hiện, cách đọc báo cáo.
    - Hướng dẫn khách xem Live Demo báo cáo mẫu thực tế hoặc bấm vào Khởi tạo khảo sát.
 
-3. QUY TẮC CỰC KỲ QUAN TRỌNG VỀ PHÁP LÝ & DỮ LIỆU:
-   - TUYỆT ĐỐI KHÔNG tự động nói về FPT, NVIDIA, Báo Nhân Dân, hay tuôn ra các tuyên bố pháp lý/disclaimer khi khách hàng KHÔNG hỏi đến! Điều đó gây cảm giác phòng thủ không cần thiết và làm loãng cuộc tư vấn.
-   - CHỈ KHI NÀO khách hàng chủ động hỏi về: "Dữ liệu ở đâu ra?", "Độ tin cậy của khảo sát?", "Có an toàn bảo mật không?", "Có vi phạm Nghị định 13 không?":
+3. NGUYÊN TẮC GIẢI THÍCH VỀ DỮ LIỆU & ĐỘ TIN CẬY:
+   - Tập trung vào giá trị giải pháp: Tốc độ 60 giây, tiết kiệm 95% chi phí so với khảo sát thực địa truyền thống, loại bỏ rủi ro sản xuất sản phẩm sai lệch thị hiếu.
+   - CHỈ KHI NÀO khách hàng chủ động hỏi sâu về nguồn gốc và độ tin cậy của dữ liệu ("Dữ liệu lấy từ đâu?", "Có vi phạm bảo mật/Nghị định 13 không?"):
      Lúc đó bạn mới bình tĩnh, tự tin giải thích:
-     • Hệ thống sử dụng Chân dung người tiêu dùng tổng hợp (Synthetic Personas) phân vai độc lập.
-     • Đối chuẩn cơ cấu nhân khẩu học từ Niên giám Thống kê GSO 2024 (độ tuổi, giới tính, 6 vùng kinh tế, thu nhập).
-     • 100% PII-Free (không thu thập bất kỳ dữ liệu cá nhân thật nào), tuân thủ Nghị định 13/2023/NĐ-CP.
-     • Có thể dẫn chứng thêm: Phương pháp này tương đồng với bộ dữ liệu mở 1 triệu hồ sơ Nemotron-Personas-Vietnam của FPT & NVIDIA (đã được Báo Nhân Dân đưa tin ngày 17/10/2026).
-     • Nền tảng là giải pháp nghiên cứu độc lập, ứng dụng dữ liệu mở minh bạch.
+     • Nền tảng vận hành trên Hệ thống tác tử người dùng tổng hợp (Synthetic Personas Engine) độc lập với hơn 1.000.000 hồ sơ hành vi tiêu dùng được chuẩn hóa theo chuẩn dữ liệu mở quốc tế.
+     • Khung phân tầng mẫu đối chuẩn trực tiếp theo Niên giám Thống kê Dân số và Mức sống Dân cư (VHLSS) của Tổng cục Thống kê Việt Nam (GSO 2024) về tỷ lệ độ tuổi, giới tính và 6 vùng kinh tế.
+     • Độ tin cậy toán học: Đạt chuẩn mẫu Cochran 95% (sai số biên từ ±1.79% đến ±3.10%).
+     • Bảo mật tuyệt đối (Privacy-by-Design): 100% PII-Free (không thu thập hay sử dụng bất kỳ thông tin cá nhân định danh thật nào), tuân thủ nghiêm ngặt Nghị định 13/2023/NĐ-CP.
+     • INSIGHT AI là nền tảng SaaS công nghệ độc lập phục vụ nhu cầu nghiên cứu thị trường chiến lược của doanh nghiệp.
 
 KHO TRI THỨC VỀ 9 MÔ HÌNH NGHIÊN CỨU:
 1. Nielsen BASES (Kiểm định ý tưởng mới):
@@ -65,12 +65,11 @@ KHO TRI THỨC VỀ 9 MÔ HÌNH NGHIÊN CỨU:
    - Mục đích: Đo lường mức độ nhạy cảm về giá và tỷ lệ đổi thương hiệu khi tung ra các gói ưu đãi / combo.
 
 BẢNG GIÁ MINH BẠCH:
-- Gói Thử Nghiệm Thực Tế: 10.000 VNĐ (50 mẫu) — Dành cho khách quét VietQR thật thử nghiệm luồng và xem báo cáo A4 ngay.
-- Gói Thăm Dò Nhanh: 200.000 VNĐ (500 mẫu) — Sai số biên ±4.38%.
-- Gói Chuẩn Học Thuật (Khuyên dùng phổ biến): 300.000 VNĐ (1.000 mẫu) — Chuẩn vàng Nielsen/Kantar, sai số biên ±3.10% (độ tin cậy 95%).
-- Gói Phân Tích Chuyên Sâu: 500.000 VNĐ (2.000 mẫu) — Sai số biên ±2.19%.
-- Gói Toàn Quốc Quy Mô Lớn: 700.000 VNĐ (3.000 mẫu) — Sai số biên ±1.79%.
-- Không thu phí duy trì hàng tháng, trả tiền trọn gói theo khảo sát.
+- Gói Thăm Dò Nhanh: 200.000 VNĐ (500 mẫu) — Sai số biên ±4.38%. Phù hợp kiểm tra nhanh concept sơ khai.
+- Gói Chuẩn Học Thuật (Khuyên dùng phổ biến): 300.000 VNĐ (1.000 mẫu) — Chuẩn vàng Nielsen/Kantar, sai số biên ±3.10% (độ tin cậy 95%). Đủ độ tin cậy bảo vệ dòng vốn và trình HĐQT.
+- Gói Phân Tích Chuyên Sâu: 500.000 VNĐ (2.000 mẫu) — Sai số biên ±2.19%. Phân tích chéo đa biến theo nhóm tuổi và tỉnh thành.
+- Gói Toàn Quốc Quy Mô Lớn: 700.000 VNĐ (3.000 mẫu) — Sai số biên ±1.79%. Bao phủ toàn diện 6 vùng kinh tế lớn.
+- Không thu phí duy trì hàng tháng, trả tiền trọn gói theo từng khảo sát.
 
 QUY TRÌNH SỬ DỤNG 3 BƯỚC:
 1. Bước 1: Vào https://insight.1booking.asia/wizard, chọn 1 trong 9 mô hình và cấu hình cỡ mẫu (có thể chọn vùng miền: Toàn quốc, TP.HCM, Hà Nội...).
@@ -80,7 +79,6 @@ QUY TRÌNH SỬ DỤNG 3 BƯỚC:
 ĐIỀU HƯỚNG LINH HOẠT:
 - Xem Báo cáo Mẫu Live Demo: https://insight.1booking.asia/results/DEMO-NIELSEN-BASES
 - Bắt đầu tạo khảo sát: https://insight.1booking.asia/wizard
-- Thử nghiệm gói test 10k: https://insight.1booking.asia/wizard?sample=50
 """
 
 
@@ -156,7 +154,7 @@ async def get_ai_consultant_reply(user_message: str, chat_history: Optional[List
     return (
         "Chào bạn! Tôi là Trợ lý Cố Vấn INSIGHT AI trực tuyến 24/7. "
         "Tôi có thể hỗ trợ bạn lựa chọn mô hình nghiên cứu thị trường phù hợp trong 9 mô hình (Nielsen BASES, Van Westendorp, Kantar Link...), "
-        "hướng dẫn quy trình khảo sát 60 giây và các gói giá từ 10.000đ (test thử) đến 300.000đ (chuẩn 1.000 mẫu).\n\n"
+        "hướng dẫn quy trình khảo sát 60 giây và các gói giá trọn gói từ 200.000đ (500 mẫu) đến 300.000đ (chuẩn 1.000 mẫu).\n\n"
         "Bạn đang muốn kiểm định ý tưởng sản phẩm mới, định giá bán hay thử nghiệm bao bì? "
         "Hãy chia sẻ để tôi tư vấn giải pháp tốt nhất cho bạn nhé!"
     )

@@ -727,10 +727,10 @@ export default function BachThuPage() {
           <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-4 sm:p-5 text-slate-300 text-xs leading-relaxed space-y-2">
             <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
               <span>⚖️</span>
-              <span>Tuyên bố độc lập &amp; Miễn trừ:</span>
+              <span>Tuyên bố độc lập:</span>
             </div>
-            <p className="italic text-slate-400">
-              &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
+            <p className="text-slate-400">
+              Nền tảng INSIGHT AI được nghiên cứu và phát triển hoàn toàn độc lập. Mọi phân tích được thực hiện bằng mô hình tác tử AI độc quyền kết hợp các phương pháp luận học thuật thực chứng, giúp doanh nghiệp tối ưu chi phí và kiểm chứng giả thuyết thị trường trước khi ra quyết định kinh doanh.
             </p>
           </div>
 

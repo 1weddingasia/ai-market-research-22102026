@@ -366,59 +366,44 @@ export default function MinhBachKhoaHocPage() {
               </div>
             </div>
 
-            {/* Khối chứng minh nguồn gốc dữ liệu FPT & NVIDIA theo Báo Nhân Dân */}
-            <div className="mt-6 pt-5 border-t-2 border-amber-500/20 bg-amber-50/60 rounded-xl p-5 border border-amber-200">
-              <div className="flex items-center gap-2 text-amber-900 font-bold text-sm mb-2">
-                <span>📰</span>
-                <span>Bảo Chứng Nguồn Gốc Dữ Liệu Quốc Gia: FPT &amp; NVIDIA (Báo Nhân Dân 17/10/2026)</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                Theo thông tin công bố chính thức trên{' '}
-                <a
-                  href="https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-amber-800 font-bold underline hover:text-amber-950"
-                >
-                  Báo Nhân Dân (ngày 17/10/2026)
-                </a>
-                , Tập đoàn <strong>FPT</strong> và <strong>NVIDIA</strong> đã hoàn tất mở rộng bộ dữ liệu người dùng giả lập Việt Nam{' '}
-                <strong>Nemotron-Personas-Vietnam</strong> lên quy mô <strong>1 triệu bản ghi</strong> (phát triển bởi Viện Quantum AI &amp; Cyber Security - QACI thuộc FPT phối hợp cùng NVIDIA).
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 text-xs text-slate-700">
-                <div className="p-3 bg-white rounded-lg border border-amber-200">
-                  <div className="font-bold text-amber-900 mb-1">Cấu trúc 21 trường dữ liệu</div>
-                  Gồm 6 trường chân dung nhân khẩu học (tuổi, giới tính, học vấn, nghề nghiệp, cư trú) và 15 trường bối cảnh (kỹ năng, sở thích, mô tả công việc, ẩm thực, du lịch, thể thao...).
-                </div>
-                <div className="p-3 bg-white rounded-lg border border-amber-200">
-                  <div className="font-bold text-amber-900 mb-1">Cơ sở phân bổ dân số GSO</div>
-                  Xây dựng dựa trên số liệu chính thức từ Điều tra dân số và nhà ở giữa kỳ 2024 &amp; Khảo sát mức sống dân cư 2024 của Tổng cục Thống kê (GSO).
-                </div>
-                <div className="p-3 bg-white rounded-lg border border-amber-200">
-                  <div className="font-bold text-amber-900 mb-1">Bản quyền mở CC BY 4.0</div>
-                  Được công bố công khai trên nền tảng quốc tế Hugging Face, phục vụ phát triển các hệ thống Tác tử AI (Agentic AI) và mô phỏng phản ứng thị trường.
-                </div>
-              </div>
-              <div className="mt-3 pt-2 text-[11px] text-slate-500 italic flex items-center justify-between">
-                <span>Trích dẫn nguồn báo: Báo Nhân Dân (Cơ quan Trung ương của Đảng Cộng sản Việt Nam)</span>
-                <a
-                  href="https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-amber-800 font-semibold underline"
-                >
-                  Xem bài viết gốc ↗
-                </a>
+            {/* Cơ Sở Dữ Liệu Mô Phỏng (Synthetic Data Provenance) */}
+            {/* Hạ Tầng Dữ Liệu Tác Tử Tổng Hợp (Synthetic Persona Infrastructure) */}
+            <div className="mt-8 pt-6 border-t border-slate-200 bg-slate-50/70 rounded-2xl p-6 sm:p-7 border border-slate-200 space-y-4">
+              <div className="space-y-1">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
+                  DATA PROVENANCE &amp; BENCHMARKS
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
+                  Hạ Tầng Dữ Liệu Tác Tử Tổng Hợp (Synthetic Persona Infrastructure)
+                </h3>
               </div>
 
-              {/* Tuyên bố độc lập & Miễn trừ pháp lý */}
-              <div className="mt-4 pt-3 border-t border-amber-300/80 bg-amber-100/70 p-3.5 rounded-lg text-[11.5px] leading-relaxed text-slate-700">
-                <span className="font-bold text-amber-950 uppercase tracking-wide block mb-1">
-                  ⚖️ Tuyên bố độc lập &amp; Miễn trừ pháp lý:
-                </span>
-                <p className="italic">
-                  &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
-                </p>
+              <p className="text-sm sm:text-[15px] text-slate-700 leading-relaxed font-normal">
+                Nhằm đảm bảo tính đại diện và phản ánh khách quan cơ cấu người tiêu dùng Việt Nam, hệ thống INSIGHT AI vận hành dựa trên hai tầng dữ liệu độc lập:
+              </p>
+
+              <div className="space-y-3 text-sm text-slate-700 pl-1">
+                <div className="flex items-start gap-2.5">
+                  <span className="text-amber-600 font-bold mt-0.5">•</span>
+                  <div>
+                    <strong className="text-slate-900">Khung mẫu phân tầng nhân khẩu học:</strong> Đối chuẩn trực tiếp theo Niên giám Thống kê Dân số và Khảo sát Mức sống Dân cư (VHLSS) của Tổng cục Thống kê Việt Nam (GSO 2024), phản ánh chính xác cơ cấu độ tuổi, giới tính và 6 vùng kinh tế trọng điểm.
+                  </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <span className="text-amber-600 font-bold mt-0.5">•</span>
+                  <div>
+                    <strong className="text-slate-900">Hệ thống tác tử hành vi tiêu dùng:</strong> Vận hành trên cơ sở dữ liệu tác tử tổng hợp (synthetic personas) quy mô lớn với hơn 1.000.000 hồ sơ hành vi mô phỏng theo chuẩn giấy phép dữ liệu mở quốc tế, tái hiện đa dạng quyết định tiêu dùng, độ nhạy giá và thói quen mua sắm.
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-2 border-t border-slate-200">
+                Toàn bộ quá trình xử lý được thiết kế theo nguyên tắc <em>Privacy-by-Design</em>: 100% không thu thập, xử lý hay khai thác dữ liệu định danh cá nhân thật (PII-Free), đáp ứng nghiêm ngặt các quy định của Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.
+              </p>
+
+              {/* Tuyên bố độc lập */}
+              <div className="mt-3 pt-3 border-t border-slate-200 text-[11.5px] leading-relaxed text-slate-500">
+                <strong className="text-slate-700 not-italic">Tuyên bố độc lập:</strong> INSIGHT AI là giải pháp phần mềm SaaS nghiên cứu thị trường độc lập. Nền tảng ứng dụng các phương pháp luận học thuật công khai và mô hình xác suất thực chứng nhằm phục vụ mục đích phân tích chiến lược kinh doanh cho doanh nghiệp.
               </div>
             </div>
           </div>
