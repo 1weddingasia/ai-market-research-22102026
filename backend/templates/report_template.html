@@ -7,68 +7,117 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
-  /* ── Page setup ──────────────────────────────────────────── */
+  /* ── Page setup chuẩn in ấn quốc tế A4 (Không margin để sheet tự căn chỉnh chính xác) ── */
   @page {
-    size: A4 portrait;
+    size: 210mm 297mm;
     margin: 0;
   }
-  @page :not(:first) {
-    margin: 18mm 20mm 15mm;
-    @bottom-center {
-      content: "insight.1booking.asia  |  Báo cáo Thẩm định Thị trường  |  Mã hồ sơ: " "{{ survey_id }}";
-      font-size: 7.5pt;
-      color: #94A3B8;
-      font-family: 'Inter', sans-serif;
-    }
-    @bottom-right {
-      content: "Trang " counter(page) " / 6";
-      font-size: 7.5pt;
-      font-weight: 600;
-      color: #0A192F;
-      font-family: 'Inter', sans-serif;
-    }
-    @top-right {
-      content: "STRICTLY CONFIDENTIAL";
-      font-size: 7pt;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: #D4AF37;
-      font-family: 'JetBrains Mono', monospace;
-    }
-  }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box !important;
+  }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     color: #1E293B;
-    background: #FFFFFF;
+    background: #0A192F;
     line-height: 1.5;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  /* Sheet container */
+  /* Sheet container — Cố định 296.5mm để chống subpixel overflow trên Windows DPI */
   .sheet {
     width: 210mm;
-    height: 297mm;
+    height: 296.5mm;
+    max-height: 296.5mm;
     box-sizing: border-box;
-    page-break-after: always;
-    break-after: page;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 22mm 22mm 18mm;
+    padding: 13mm 15mm 10mm;
     background: #FFFFFF;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .sheet:not(:last-of-type) {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .sheet:last-of-type {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  @media screen {
+    body {
+      background: #0B132B;
+      padding: 0 0 40px 0;
+    }
+    .sheet {
+      margin: 20px auto;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    .no-print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #0A192F;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #FFFFFF;
+      font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .print-btn {
+      background: linear-gradient(135deg, #D4AF37, #F59E0B);
+      color: #0A192F;
+      font-weight: 700;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .print-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+  }
+
+  @media print {
+    body {
+      background: #FFFFFF !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .no-print, .no-print-bar {
+      display: none !important;
+    }
+    .sheet {
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
   }
 
   /* ── PAGE 1: COVER SHEET ─────────────────────────────────── */
   .cover-sheet {
     background: #0A192F;
     color: #FFFFFF;
-    padding: 25mm 22mm 20mm;
+    padding: 16mm 16mm 12mm;
   }
 
   .corner { position: absolute; width: 18mm; height: 18mm; }
@@ -343,6 +392,21 @@
 </style>
 </head>
 <body>
+
+<div class="no-print-bar">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span style="font-family:'Playfair Display',serif; font-weight:900; color:#D4AF37; font-size:14px; letter-spacing:1px;">INSIGHT AI</span>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#94A3B8;">| Chuẩn Hồ Sơ Khảo Sát 6 Trang A4 · Mã: #{{ survey_id }}</span>
+  </div>
+  <div style="display:flex; align-items:center; gap:16px;">
+    <span style="color:#CBD5E1; font-size:11px; font-family:'Inter',sans-serif;">
+      💡 Khuyến nghị: Bật <strong>"Đồ họa nền" (Background graphics)</strong> trong hộp thoại in để giữ nguyên màu sắc chuẩn.
+    </span>
+    <button class="print-btn" onclick="window.print()">
+      🖨️ In Báo Cáo / Lưu PDF (6 Trang)
+    </button>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      PAGE 1: TRANG BÌA DOANH NGHIỆP (EXECUTIVE COVER)

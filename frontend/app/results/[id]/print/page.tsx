@@ -153,11 +153,16 @@ export default function PrintReportPage() {
           margin: 0;
         }
         @media print {
+          *, *::before, *::after {
+            box-sizing: border-box !important;
+          }
           html, body {
-            background: #ffffff !important;
-            color: #0f172a !important;
+            width: 210mm !important;
+            height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
+            background: #ffffff !important;
+            color: #0f172a !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
@@ -166,15 +171,14 @@ export default function PrintReportPage() {
           }
           .sheet {
             margin: 0 !important;
-            padding: 14mm 16mm !important;
+            padding: 11mm 15mm 9mm !important;
             box-shadow: none !important;
             border: none !important;
+            border-radius: 0 !important;
             width: 210mm !important;
-            height: 297mm !important;
-            max-height: 297mm !important;
-            page-break-after: always !important;
+            height: 296.5mm !important;
+            max-height: 296.5mm !important;
             page-break-inside: avoid !important;
-            break-after: page !important;
             break-inside: avoid !important;
             overflow: hidden !important;
             box-sizing: border-box !important;
@@ -183,15 +187,23 @@ export default function PrintReportPage() {
             justify-content: space-between !important;
             background: #ffffff !important;
           }
+          .sheet:not(:last-child) {
+            page-break-after: always !important;
+            break-after: page !important;
+          }
+          .sheet:last-child {
+            page-break-after: avoid !important;
+            break-after: avoid !important;
+          }
         }
 
         /* Screen Sheet Container (Wysiwyg 100% matched to A4 print) */
         .sheet {
           width: 210mm;
-          height: 297mm;
-          max-height: 297mm;
+          min-height: 296.5mm;
+          max-height: 296.5mm;
           margin: 24px auto;
-          padding: 15mm 16mm;
+          padding: 13mm 15mm 11mm;
           background: #ffffff;
           box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
           box-sizing: border-box;
