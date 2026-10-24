@@ -410,6 +410,16 @@ export default function MinhBachKhoaHocPage() {
                   Xem bài viết gốc ↗
                 </a>
               </div>
+
+              {/* Tuyên bố độc lập & Miễn trừ pháp lý */}
+              <div className="mt-4 pt-3 border-t border-amber-300/80 bg-amber-100/70 p-3.5 rounded-lg text-[11.5px] leading-relaxed text-slate-700">
+                <span className="font-bold text-amber-950 uppercase tracking-wide block mb-1">
+                  ⚖️ Tuyên bố độc lập &amp; Miễn trừ pháp lý:
+                </span>
+                <p className="italic">
+                  &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
+                </p>
+              </div>
             </div>
           </div>
         </section>

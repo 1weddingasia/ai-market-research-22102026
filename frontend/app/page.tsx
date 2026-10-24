@@ -980,6 +980,9 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
                 Hệ thống vận hành theo nguyên tắc <em className="text-slate-200">Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em className="text-slate-200">Nghị định 13/2023/NĐ-CP</em> và <em className="text-slate-200">Luật Bảo vệ dữ liệu cá nhân</em>.
               </p>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal italic pt-2.5 border-t border-slate-800">
+                <strong className="text-slate-300 not-italic">Tuyên bố độc lập &amp; Miễn trừ:</strong> &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
+              </p>
             </div>
           </div>
 

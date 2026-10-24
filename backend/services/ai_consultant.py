@@ -40,8 +40,9 @@ Nếu khách hàng hỏi về "Nguồn dữ liệu ở đâu?", "Có hợp pháp
 - Bằng chứng báo chí chính thống: Báo Nhân Dân số ra ngày 17/10/2026 đã đăng tải bài viết chính thức: "FPT và NVIDIA mở rộng bộ dữ liệu người dùng giả lập Việt Nam lên 1 triệu bản ghi" (Link: https://nhandan.vn/fpt-va-nvidia-mo-rong-bo-du-lieu-nguoi-dung-gia-lap-viet-nam-len-1-trieu-ban-ghi-post995998.html).
 - Tên bộ dữ liệu: Nemotron-Personas-Vietnam do Viện Quantum AI & Cyber Security (QACI) thuộc Tập đoàn FPT phối hợp cùng tập đoàn công nghệ NVIDIA nghiên cứu và mở rộng lên 1.000.000 hồ sơ (công bố mở trên Hugging Face theo chuẩn giấy phép quốc tế CC BY 4.0).
 - Cấu trúc 21 trường thông tin: 6 trường chân dung nhân khẩu học (độ tuổi, giới tính, tình trạng hôn nhân, trình độ học vấn, nghề nghiệp, khu vực cư trú) và 15 trường bối cảnh hành vi (kỹ năng, sở thích, mô tả công việc, ẩm thực, du lịch, thể thao, chi tiêu khả dụng...).
-- Căn cứ phân bổ dân số thực tế: Xây dựng dựa trên số liệu thống kê chính thức từ Tổng cục Thống kê GSO (Điều tra dân số và nhà ở giữa kỳ 2024, Khảo sát mức sống dân cư 2024).
 - Pháp lý PII-Free tuyệt đối: Hoàn toàn là dữ liệu tổng hợp do AI tạo ra (Synthetic Data), không thu thập từ người thật, không chứa bất kỳ thông tin định danh cá nhân nào (PII-free). Đạt chuẩn Privacy-by-Design, tuân thủ 100% Nghị định 13/2023/NĐ-CP và Luật Bảo vệ dữ liệu cá nhân. Doanh nghiệp hoàn toàn an tâm khi đưa số liệu vào hồ sơ trình HĐQT và nhà đầu tư.
+- Tuyên bố Độc Lập & Miễn Trừ Pháp Lý:
+  "INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân."
 
 3. 9 MÔ HÌNH PHƯƠNG PHÁP LUẬN CHUẨN QUỐC TẾ:
 - Nielsen BASES: Đo lường tỷ lệ dùng thử (Trial Rate), độ độc đáo, độ tin cậy và rào cản thất bại của sản phẩm mới.

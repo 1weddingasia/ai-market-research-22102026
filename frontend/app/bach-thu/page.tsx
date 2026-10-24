@@ -723,21 +723,33 @@ export default function BachThuPage() {
 
       {/* ── Document Footer ── */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 py-10 px-5 sm:px-8 mt-20">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left">
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <Logo variant="footer" href="/" />
-            <span className="text-[11px] text-slate-400 mt-1">insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-4 sm:p-5 text-slate-300 text-xs leading-relaxed space-y-2">
+            <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
+              <span>⚖️</span>
+              <span>Tuyên bố độc lập &amp; Miễn trừ:</span>
+            </div>
+            <p className="italic text-slate-400">
+              &ldquo;INSIGHT AI là nền tảng nghiên cứu thị trường độc lập. Chúng tôi ứng dụng các nghiên cứu thống kê công khai từ Niên giám GSO và bộ dữ liệu mở Nemotron-Personas-Vietnam (công bố theo giấy phép mở quốc tế Creative Commons Attribution 4.0 - CC BY 4.0) nhằm mục đích minh bạch phương pháp luận học thuật. Việc trích dẫn các tài liệu và thông tin báo chí công khai không hàm ý bất kỳ thỏa thuận hợp tác thương mại, tài trợ hay bảo trợ chính thức nào từ FPT, NVIDIA, GSO hay Báo Nhân Dân.&rdquo;
+            </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-slate-400">
-            <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 underline font-semibold">
-              Minh bạch thống kê MoE ±3.1%
-            </Link>
-            <span>·</span>
-            <span>Tuân thủ Luật 91/2025/QH15</span>
-            <span>·</span>
-            <span>Chuẩn Cochran 95%</span>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left pt-4 border-t border-slate-800">
+            <div className="flex flex-col items-center md:items-start gap-1">
+              <Logo variant="footer" href="/" />
+              <span className="text-[11px] text-slate-400 mt-1">insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-slate-400">
+              <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 underline font-semibold">
+                Minh bạch thống kê MoE ±3.1%
+              </Link>
+              <span>·</span>
+              <span>Tuân thủ Luật 91/2025/QH15</span>
+              <span>·</span>
+              <span>Chuẩn Cochran 95%</span>
+            </div>
+            <div>© 2026 INSIGHT AI Platform. All rights reserved.</div>
           </div>
-          <div>© 2026 INSIGHT AI Platform. All rights reserved.</div>
         </div>
       </footer>
     </div>

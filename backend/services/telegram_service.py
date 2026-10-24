@@ -170,25 +170,30 @@ async def handle_telegram_webhook(update: dict, db: Optional[Session] = None) ->
     admin_chat_id = str(os.getenv("TELEGRAM_ADMIN_CHAT_ID", "584207194")).strip()
 
     # =========================================================================
-    # NẾU LÀ KHÁCH HÀNG / NGƯỜI DÙNG CÔNG CỘNG: AI CONSULTANT TƯ VẤN 24/7
+    # BẢO MẬT: TELEGRAM BOT LÀ KÊNH NỘI BỘ GIÁM SÁT HOẠT ĐỘNG & DÒNG TIỀN
     # =========================================================================
     if chat_id != admin_chat_id:
-        from services.ai_consultant import get_ai_consultant_reply
-        ai_reply = await get_ai_consultant_reply(text)
+        log.warning("Unauthorized access to Telegram Admin Bot", chat_id=chat_id, user=first_name)
+        refusal_msg = (
+            "🔒 <b>HỆ THỐNG GIÁM SÁT NỘI BỘ & DÒNG TIỀN — INSIGHT AI</b>\n\n"
+            "Kênh Telegram này là kênh điều hành bảo mật nội bộ dành riêng cho Ban Quản Trị theo dõi biến động doanh thu, giao dịch VietQR và tiến trình mô phỏng tác tử AI.\n\n"
+            "💬 <b>Bạn cần tư vấn giải pháp nghiên cứu thị trường & giải đáp thắc mắc?</b>\n"
+            "Trợ lý AI Cố vấn Chiến lược 24/7 đã được tích hợp trực tiếp trên Website của chúng tôi. "
+            "Vui lòng truy cập website và bấm vào biểu tượng Chat ở góc dưới màn hình để được hỗ trợ chuyên sâu 24/7."
+        )
         inline_keyboard = {
             "inline_keyboard": [
                 [
-                    {"text": "🌐 Nền Tảng Insight AI", "url": FRONTEND_URL},
-                    {"text": "🚀 Khởi Tạo Khảo Sát", "url": f"{FRONTEND_URL}/wizard"},
+                    {"text": "🌐 Truy Cập Website INSIGHT AI", "url": FRONTEND_URL},
                 ],
                 [
-                    {"text": "🧪 Gói Test VietQR 10k", "url": f"{FRONTEND_URL}/wizard?sample=50"},
-                    {"text": "📊 Xem Live Demo A4", "url": f"{FRONTEND_URL}/results/DEMO-NIELSEN-BASES"},
+                    {"text": "📊 Xem Báo Cáo Mẫu (Live Demo)", "url": f"{FRONTEND_URL}/results/DEMO-NIELSEN-BASES"},
+                    {"text": "🚀 Khởi Tạo Khảo Sát", "url": f"{FRONTEND_URL}/wizard"},
                 ]
             ]
         }
-        await send_telegram_message(ai_reply, chat_id=chat_id, reply_markup=inline_keyboard)
-        return {"status": "ok", "action": "public_consultant_reply"}
+        await send_telegram_message(refusal_msg, chat_id=chat_id, reply_markup=inline_keyboard)
+        return {"status": "ok", "action": "internal_access_restricted"}
 
     # =========================================================================
     # CÁC LỆNH DÀNH RIÊNG CHO ANH LỢI
