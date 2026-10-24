@@ -96,11 +96,11 @@ async def notify_payment_received(
 ) -> bool:
     """Bắn thông báo nhận tiền SePay thành công và bắt đầu chạy AI simulation."""
     text = (
-        f"💰 <b>[THANH TOÁN THÀNH CÔNG — SEPAY]</b>\n\n"
+        f"💰 <b>[THANH TOÁN THÀNH CÔNG — VIETQR]</b>\n\n"
         f"• Mã khảo sát: <code>{survey_id}</code>\n"
         f"• Dự án: <b>{product_name}</b>\n"
         f"• Số tiền ghi nhận: <b>{amount:,} VNĐ</b>\n"
-        f"• Giao dịch SePay ID: <code>{transaction_id}</code>\n"
+        f"• Mã giao dịch: <code>{transaction_id}</code>\n"
         f"• Trạng thái: 🚀 <b>Đang kích hoạt Cụm AI Synthetic Personas</b>\n\n"
         f"Hệ thống đang chạy phỏng vấn 1.000 tác tử AI song song..."
     )

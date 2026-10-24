@@ -851,7 +851,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <span className="text-slate-400">Cổng thanh toán: </span>
-                  <span className="text-slate-200">VietQR 24/7 (SePay)</span>
+                  <span className="text-slate-200">VietQR 24/7</span>
                 </li>
                 <li>
                   <span className="text-slate-400">Email: </span>
