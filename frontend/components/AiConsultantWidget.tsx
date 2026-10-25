@@ -147,7 +147,7 @@ export default function AiConsultantWidget() {
 
           <span className="font-bold text-xs sm:text-sm tracking-tight text-white flex items-center gap-1.5">
             <span>💬</span>
-            <span className="hidden sm:inline">Hỏi đáp Phương Pháp Luận</span>
+            <span className="hidden sm:inline">Tư Vấn Khảo Sát AI</span>
             <span className="sm:hidden">Cố vấn AI</span>
             <span className="text-amber-400 font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-400/15 border border-amber-400/30">
               24/7
@@ -167,7 +167,7 @@ export default function AiConsultantWidget() {
               </div>
               <div>
                 <div className="font-bold text-sm text-white flex items-center gap-2">
-                  <span>Cố Vấn Phương Pháp Luận AI</span>
+                  <span>Cố Vấn Khảo Sát Thị Trường AI</span>
                   <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono px-1.5 py-0.2 rounded">
                     ONLINE
                   </span>

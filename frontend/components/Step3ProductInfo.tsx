@@ -214,7 +214,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'key_competitors',
       label: 'Các đối thủ cạnh tranh chính trên thị trường',
-      placeholder: 'VD: Highlands Coffee, Nescafe, Trung Nguyên, Birdy...',
+      placeholder: 'VD: Nhãn hiệu đóng chai A, Chuỗi đồ uống B, Thương hiệu di sản C...',
       required: true,
     },
     {
@@ -229,7 +229,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'company_name',
       label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
-      placeholder: 'VD: Tập đoàn Bánh kẹo Kinh Đô Mondelez',
+      placeholder: 'VD: Tập đoàn Thực phẩm & Bánh kẹo Crown Đô (CrownDo Group)',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },

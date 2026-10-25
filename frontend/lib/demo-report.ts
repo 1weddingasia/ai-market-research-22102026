@@ -177,7 +177,7 @@ export const DEMO_VAN_WESTENDORP: ReportPayload = {
   "survey_id": "DEMO-VAN-WESTENDORP",
   "model_type": "van_westendorp",
   "product_info": {
-    "company_name": "Công ty Cổ phần Cà phê Cao nguyên Hữu cơ (Highland Organic Coffee)",
+    "company_name": "Công ty Cổ phần Cà phê & Nông sản Cao nguyên LangBiang (LangBiang Coffee Roasters)",
     "product_name": "Cà Phê Cold Brew Hữu Cơ Đóng Lon 250ml - Arabica Cầu Đất",
     "category": "Cà phê & Đồ uống đóng chai sẵn (RTD Coffee)",
     "expected_price": "35.000đ / lon",
@@ -435,7 +435,7 @@ export const DEMO_VAN_WESTENDORP: ReportPayload = {
         "age": 29,
         "job": "Trưởng nhóm Thiết kế UI/UX (Hà Nội)",
         "income": "22 - 30 triệu/tháng",
-        "quote": "Mình uống Cold Brew mỗi sáng. Giá 35k lon 250ml Arabica Cầu Đất là cực kỳ hợp lý, ở The Coffee House hay Highlands một ly Cold Brew đã 55k-65k rồi.",
+        "quote": "Mình uống Cold Brew mỗi sáng. Giá 35k lon 250ml Arabica Cầu Đất là cực kỳ hợp lý, ở các chuỗi thương hiệu cà phê lớn một ly Cold Brew đã 55k-65k rồi.",
         "sentiment": "positive"
       },
       {
@@ -470,12 +470,12 @@ export const DEMO_AB_TESTING: ReportPayload = {
   "survey_id": "DEMO-AB-TESTING",
   "model_type": "ab_testing",
   "product_info": {
-    "company_name": "Công ty Bánh kẹo & Thực phẩm Cao cấp Danisa Bakery VN",
-    "product_name": "Hộp Quà Bánh Quy Bơ Thảo Mộc Cao Cấp (Bộ Sưu Tập Lễ Hội)",
+    "company_name": "Công ty Bánh kẹo & Quà tặng Hoàng Gia Delica Crown (Delica Bakery VN)",
+    "product_name": "Hộp Quà Bánh Quy Bơ Thảo Mộc Hoàng Gia Delica (Bộ Sưu Tập Lễ Hội)",
     "category": "Bánh kẹo & Quà tặng cao cấp (Premium Confectionery)",
     "option_a_description": "Concept A (Hiện Đại Tối Giản): Tone màu xanh navy trầm ánh kim, họa tiết dập nổi tối giản phong cách Bắc Âu Scandinavian, hướng tới giới trẻ và doanh nghiệp hiện đại.",
     "option_b_description": "Concept B (Truyền Thống Hoàng Gia): Tone màu đỏ bordeaux phối viền vàng gold cổ điển, họa tiết vương miện phong cách hoàng gia truyền thống.",
-    "brand_name": "Danisa Heritage Premium"
+    "brand_name": "Delica Crown Heritage"
   },
   "target_summary": {
     "sample_size": 1000,
@@ -656,8 +656,8 @@ export const DEMO_MONADIC: ReportPayload = {
   "survey_id": "DEMO-MONADIC",
   "model_type": "monadic",
   "product_info": {
-    "company_name": "Công ty Cổ phần Thực phẩm Dinh dưỡng Sạch Vissan Nutrition",
-    "product_name": "Nước Súp Hầm Xương & Thảo Dược Cô Đặc Tiện Lợi (Gói 150g)",
+    "company_name": "Công ty Cổ phần Thực phẩm Dinh dưỡng Bản địa VinaBroth Foods (VinaBroth Nutrition)",
+    "product_name": "Nước Cốt Hầm Xương & Thảo Dược Tinh Hoa Tiện Lợi (Gói 150g)",
     "concept_a_title": "Concept A: Súp Xương Hầm Bổ Sung Collagen & Đông Trùng",
     "concept_a_description": "Nước cốt xương hầm 12h kết hợp chiết xuất đông trùng hạ thảo và collagen peptid, định vị trẻ hóa làn da và bồi bổ sức khỏe cho phụ nữ văn phòng bận rộn.",
     "concept_b_title": "Concept B: Súp Xương Hầm Bổ Sung Nấm Linh Chi & Yến Mạch",
@@ -1022,8 +1022,8 @@ export const DEMO_KANO: ReportPayload = {
   "survey_id": "DEMO-KANO",
   "model_type": "kano",
   "product_info": {
-    "company_name": "Tập đoàn Gia dụng Cao cấp Elmich Vietnam",
-    "product_name": "Nồi Chiên Không Dầu Hơi Nước Thông Minh Elmich SteamAir (7 Lít)",
+    "company_name": "Tập đoàn Thiết bị Gia dụng Cao cấp ElmaTech Euro (ElmaTech Vietnam)",
+    "product_name": "Nồi Chiên Không Dầu Hơi Nước Thông Minh ElmaTech SteamAir (7 Lít)",
     "category": "Thiết bị Gia dụng Nhà bếp Cao cấp (Smart Kitchen Appliances)",
     "description": "Nồi chiên không dầu tích hợp công nghệ hấp hơi nước đối lưu nhiệt độ cao, khay nướng gốm Ceramic chống dính y tế, màn hình cảm ứng OLED và camera AI nhận diện độ chín món ăn."
   },
@@ -1198,7 +1198,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
   "survey_id": "DEMO-BRAND-MAP",
   "model_type": "brand_map",
   "product_info": {
-    "company_name": "Công ty Mỹ phẩm Hữu cơ Bản địa Cocoon Natural Cosmetics",
+    "company_name": "Công ty Mỹ phẩm Thuần chay Bản địa Cocona Botanica (Cocona Natural Cosmetics)",
     "product_name": "Khảo Sát Bản Đồ Định Vị Thị Trường Mỹ Phẩm Thiên Nhiên Việt Nam",
     "category": "Mỹ phẩm & Chăm sóc cá nhân (Beauty & Personal Care)",
     "description": "Nghiên cứu vị thế cạnh tranh đa chiều của các thương hiệu mỹ phẩm thuần chay/thiên nhiên nội địa và quốc tế tại thị trường Việt Nam."
@@ -1219,9 +1219,9 @@ export const DEMO_BRAND_MAP: ReportPayload = {
     "viability_score": 83,
     "verdict": "PHÁT HIỆN ĐẠI DƯƠNG XANH: PHÂN KHÚC MỸ PHẨM HỮU CƠ LÂM SÀNG CẬN CAO CẤP",
     "top_findings": [
-      "Cocoon dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
+      "Cocona dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
       "Phát hiện khoảng trống thị trường (White-space) rộng lớn ở tọa độ: 'Thành phần hữu cơ được chứng nhận quốc tế + Hiệu quả lâm sàng chuyên sâu + Mức giá cận cao cấp (400k - 700k)'.",
-      "Các thương hiệu quốc tế (Innisfree, The Body Shop) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi."
+      "Các thương hiệu quốc tế (InniGreen, The Herbal Shop) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi."
     ]
   },
   "quantitative_metrics": {
@@ -1248,7 +1248,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
       "white_space_opportunity": "Phân khúc Dược mỹ phẩm thuần chay có chứng nhận lâm sàng (Clinical Vegan Skincare) mức giá 450.000đ - 700.000đ đang hoàn toàn bỏ trống.",
       "brands_data": [
         {
-          "brand": "Cocoon",
+          "brand": "Cocona",
           "x": 8.2,
           "y": 4.1,
           "quadrant": "Q4",
@@ -1258,7 +1258,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "is_client": false
         },
         {
-          "brand": "Cỏ Mềm Homelab",
+          "brand": "Mộc Thảo Homelab",
           "x": 7.8,
           "y": 4.5,
           "quadrant": "Q4",
@@ -1268,7 +1268,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "is_client": false
         },
         {
-          "brand": "Innisfree VN",
+          "brand": "InniGreen VN",
           "x": 6.2,
           "y": 6.0,
           "quadrant": "Q1",
@@ -1278,7 +1278,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "is_client": false
         },
         {
-          "brand": "The Body Shop",
+          "brand": "The Herbal Shop",
           "x": 6.8,
           "y": 7.4,
           "quadrant": "Q1",
@@ -1300,7 +1300,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
       ],
       "brands": [
         {
-          "brand": "Cocoon",
+          "brand": "Cocona",
           "x": 8.2,
           "y": 4.1,
           "quadrant": "Q4",
@@ -1311,7 +1311,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "sentiment": "Rất yêu thích sự tự hào nông sản Việt, giá vừa túi tiền"
         },
         {
-          "brand": "Cỏ Mềm Homelab",
+          "brand": "Mộc Thảo Homelab",
           "x": 7.8,
           "y": 4.5,
           "quadrant": "Q4",
@@ -1322,7 +1322,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "sentiment": "Lành tính cho mẹ và bé, cảm giác mộc mạc"
         },
         {
-          "brand": "Innisfree VN",
+          "brand": "InniGreen VN",
           "x": 6.2,
           "y": 6.0,
           "quadrant": "Q1",
@@ -1333,7 +1333,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "sentiment": "Thương hiệu quen thuộc nhưng hiệu quả ở mức trung bình"
         },
         {
-          "brand": "The Body Shop",
+          "brand": "The Herbal Shop",
           "x": 6.8,
           "y": 7.4,
           "quadrant": "Q1",
@@ -1359,7 +1359,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
         "auditor_model": "Chuyên Gia Bản Đồ Định Vị Perceptual Mapping (MDS)",
         "auditor_seal": "Chứng Nhận Phân Tích Không Gian Định Vị Đa Chiều",
         "data_consistency_audit": "Dữ liệu khảo sát từ 1.000 tác tử AI nữ giới theo thang đo nhận thức 7 điểm. Tọa độ ma trận tương đồng MDS có độ hội tụ stress < 0.08 (rất tin cậy).",
-        "executive_verdict": "Cơ hội vàng để doanh nghiệp tung ra dòng sản phẩm cao cấp (Sub-brand Premium) với giá bán 450.000đ - 650.000đ, khai thác triệt để khoảng trống giữa Cocoon và các hãng ngoại.",
+        "executive_verdict": "Cơ hội vàng để doanh nghiệp tung ra dòng sản phẩm cao cấp (Sub-brand Premium) với giá bán 450.000đ - 650.000đ, khai thác triệt để khoảng trống giữa Cocona và các hãng ngoại.",
         "strategic_pillars": [
           {
             "pillar_name": "Tọa Độ Định Vị Hiện Tại",
@@ -1399,7 +1399,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
         "age": 27,
         "job": "Chuyên viên Đối ngoại (TP.HCM)",
         "income": "24 - 32 triệu/tháng",
-        "quote": "Mình dùng tẩy tế bào chết cà phê của Cocoon rất thích. Nhưng với serum dưỡng trắng và chống lão hóa mình vẫn phải mua đồ châu Âu vì cần hiệu quả lâm sàng cao. Nếu có dòng hữu cơ cao cấp kiểm nghiệm rõ ràng mình sẽ mua ngay.",
+        "quote": "Mình dùng tẩy tế bào chết cà phê của Cocona rất thích. Nhưng với serum dưỡng trắng và chống lão hóa mình vẫn phải mua đồ châu Âu vì cần hiệu quả lâm sàng cao. Nếu có dòng hữu cơ cao cấp kiểm nghiệm rõ ràng mình sẽ mua ngay.",
         "sentiment": "positive"
       },
       {
@@ -1415,7 +1415,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
         "age": 22,
         "job": "Sinh viên Đại học Ngoại thương (Hà Nội)",
         "income": "6 - 9 triệu/tháng",
-        "quote": "Cocoon giá 150k-250k thì sinh viên chúng mình dễ mua. Nếu ra dòng cao cấp 500k-600k thì phải có minisize hoặc quà tặng hấp dẫn mới dám thử.",
+        "quote": "Cocona giá 150k-250k thì sinh viên chúng mình dễ mua. Nếu ra dòng cao cấp 500k-600k thì phải có minisize hoặc quà tặng hấp dẫn mới dám thử.",
         "sentiment": "neutral"
       }
     ]
@@ -1433,10 +1433,10 @@ export const DEMO_UA_STUDY: ReportPayload = {
   "survey_id": "DEMO-UA-STUDY",
   "model_type": "ua_study",
   "product_info": {
-    "company_name": "Tập đoàn Cà phê & Đồ uống Quốc dân Vinacafe Heritage",
+    "company_name": "Tập đoàn Cà phê & Đồ uống Di sản VinaKofe Heritage (VinaKofe Group)",
     "product_name": "Nghiên Cứu Thói Quen & Thái Độ Tiêu Dùng Cà Phê Hòa Tan & Trà Túi Lọc Tại Nhà",
     "industry": "Cà phê hòa tan & Trà túi lọc pha tại gia đình (At-home Beverage)",
-    "key_competitors": "Nescafé, G7 Trung Nguyên, Lipton, Phúc Long",
+    "key_competitors": "KofeKing, G7-Legend, Lipton Leaf, Phúc Trà House",
     "description": "Nghiên cứu quy mô lớn về sự thay đổi thói quen uống cà phê/trà của người tiêu dùng sau giai đoạn làm việc linh hoạt (Hybrid Work)."
   },
   "target_summary": {
@@ -1618,7 +1618,7 @@ export const DEMO_UA_STUDY: ReportPayload = {
   },
   "actionable_recommendations": [
     "Đổi mới Công nghệ: Đầu tư dây chuyền sấy lạnh chân không (Freeze-drying) để giữ nguyên 95% hương thơm nguyên bản của hạt cà phê.",
-    "Tung sản phẩm mới: Ra mắt dòng 'Vinacafe Gentle Wake-up' với công thức giảm axit và bổ sung khoáng chất magiê.",
+    "Tung sản phẩm mới: Ra mắt dòng 'VinaKofe Gentle Wake-up' với công thức giảm axit và bổ sung khoáng chất magiê.",
     "Bao bì Đột phá: Đổi sang quy cách hộp thiếc vuông 20 gói sang trọng thích hợp làm quà tặng và trang trí bàn làm việc."
   ],
   "generated_at": "2026-10-23T16:19:16.640073"
@@ -1629,8 +1629,8 @@ export const DEMO_DEAL_ELASTICITY: ReportPayload = {
   "survey_id": "DEMO-DEAL-ELASTICITY",
   "model_type": "deal_elasticity",
   "product_info": {
-    "company_name": "Tập đoàn Bánh kẹo & Quà tặng Lễ Tết Quốc tế Mondelez Kinh Đô",
-    "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
+    "company_name": "Tập đoàn Bánh kẹo & Quà tặng Hoàng Gia Crown Đô (CrownDo Group)",
+    "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường Crown Đô (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
     "original_price": 450000,
     "discounted_price": 369000,
     "gift_items": "Tặng kèm 1 Bộ 6 Bao Lì Xì Mạ Vàng Dập Nổi 3D & 1 Hộp Trà Ô Long Thượng Hạng",
