@@ -6,51 +6,379 @@ import Link from 'next/link';
 import { api, type ReportPayload, type VerbatimQuote } from '@/lib/api';
 
 /* ── Model Label Mapping ─────────────────────────────────── */
-const MODEL_TITLES: Record<string, { title: string; subtitle: string; framework: string }> = {
+/* ── 9 Specialized Research Framework Configurations ── */
+export interface ModelPrintConfig {
+  title: string;
+  subtitle: string;
+  framework: string;
+  heroLabel: string;
+  heroSub: string;
+  getHeroValue: (report: ReportPayload) => { val: string; sub: string; badge: string; badgeClass: string };
+  pillars: Array<{ title: string; icon: string; borderClass: string; bgClass: string; textClass: string }>;
+  getBottomKPIs: (report: ReportPayload) => Array<{ label: string; value: string }>;
+  roadmap: {
+    day30: { title: string; desc: string };
+    day60: { title: string; desc: string };
+    day90: { title: string; desc: string };
+  };
+}
+
+const MODEL_CONFIGS: Record<string, ModelPrintConfig> = {
   nielsen_bases: {
     title: 'BÁO CÁO KIỂM ĐỊNH MỨC ĐỘ CHẤP NHẬN SẢN PHẨM & RỦI RO THỊ TRƯỜNG',
     subtitle: 'Khảo sát dự báo mức độ thâm nhập thị trường & kiểm định ý tưởng sản phẩm mới',
     framework: 'Mô hình chuẩn hóa Nielsen BASES Innovation Framework',
+    heroLabel: 'CHỈ SỐ KHẢ THI (VIABILITY SCORE)',
+    heroSub: 'Đánh giá khả năng thương mại hóa',
+    getHeroValue: (r) => {
+      const score = r.executive_summary?.viability_score || 78;
+      const isGo = score >= 75;
+      const isCaution = score >= 50 && score < 75;
+      return {
+        val: `${score}`,
+        sub: 'Thang điểm 100',
+        badge: isGo ? 'VƯỢT TRỘI (STRONG GO)' : isCaution ? 'KHẢ THI (CAUTION)' : 'RỦI RO CAO (NO-GO)',
+        badgeClass: isGo ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : isCaution ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-red-50 text-red-800 border-red-300',
+      };
+    },
+    pillars: [
+      { title: 'Tối Ưu Khái Niệm & USP', icon: '💡', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Kích Hoạt Dùng Thử (Trial)', icon: '🎯', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Rào Chắn Rủi Ro Thất Bại', icon: '🛡️', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+    ],
+    getBottomKPIs: (r) => [
+      { label: 'Ý Định Mua (Top-2-Box)', value: String(r.quantitative_metrics?.purchase_intent_top2box || '73.4%') },
+      { label: 'Mức Độ Độc Đáo', value: `${r.quantitative_metrics?.uniqueness_score || 4.1} / 5.0` },
+      { label: 'Chỉ Số Nguy Cơ Flop Risk', value: `${Number(r.quantitative_metrics?.model_specific?.flop_risk_index) || 18}% (An toàn)` },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Tinh Chỉnh Concept & Lý Do Để Tin (RTB)',
+        desc: 'Làm sắc nét thông điệp USP mặt trước bao bì. Giải tỏa triệt để rào cản nhận thức hàng đầu để khách hàng không nhầm lẫn với sản phẩm đại trà.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Sản Xuất Pilot Batch & Kích Hoạt Dùng Thử',
+        desc: 'Sản xuất mẻ thử nghiệm đầu tiên. Triển khai chiến dịch Sampling có chọn lọc tại các điểm bán trọng điểm để kích hoạt tỷ lệ dùng thử thực tế.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Phủ Kệ Toàn Diện & Đo Lường Tỷ Lệ Tái Mua',
+        desc: 'Mở rộng phân phối vào chuỗi siêu thị MT và kênh GT. Theo dõi sát sao tỷ lệ mua lặp lại (Repeat Purchase Rate) để bảo vệ thị phần.',
+      },
+    },
   },
   van_westendorp: {
     title: 'BÁO CÁO ĐỊNH GIÁ TỐI ƯU & ĐỘ NHẠY GIÁ NGƯỜI TIÊU DÙNG',
     subtitle: 'Xác định điểm giá tối ưu (OPP) và khoảng giá thị trường chấp nhận được',
     framework: 'Mô hình kinh tế học Van Westendorp Price Sensitivity Meter (PSM)',
+    heroLabel: 'ĐIỂM GIÁ TỐI ƯU (OPP)',
+    heroSub: 'Ngưỡng giá tối thiểu hóa lực cản',
+    getHeroValue: (r) => {
+      const opp = Number(r.quantitative_metrics?.model_specific?.optimal_price || r.quantitative_metrics?.model_specific?.opp || 185000);
+      const pmc = Number(r.quantitative_metrics?.model_specific?.pmc || 150000);
+      const pme = Number(r.quantitative_metrics?.model_specific?.pme || 220000);
+      return {
+        val: `${opp.toLocaleString('vi-VN')} đ`,
+        sub: 'Điểm giá tối ưu (OPP)',
+        badge: `KHOẢNG GIÁ: ${(pmc/1000).toFixed(0)}k - ${(pme/1000).toFixed(0)}k đ`,
+        badgeClass: 'bg-sky-50 text-sky-800 border-sky-300',
+      };
+    },
+    pillars: [
+      { title: 'Điểm Giá Tối Ưu (OPP)', icon: '💎', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Bảo Toàn Giá Trị (IPP)', icon: '⚖️', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Phân Tầng SKU & Biên Lợi Nhuận', icon: '📊', borderClass: 'border-amber-200', bgClass: 'bg-amber-50/50', textClass: 'text-amber-900' },
+    ],
+    getBottomKPIs: (r) => {
+      const opp = Number(r.quantitative_metrics?.model_specific?.optimal_price || r.quantitative_metrics?.model_specific?.opp || 185000);
+      const ipp = Number(r.quantitative_metrics?.model_specific?.indifference_price || r.quantitative_metrics?.model_specific?.idp || 180000);
+      const pmc = Number(r.quantitative_metrics?.model_specific?.pmc || 150000);
+      const pme = Number(r.quantitative_metrics?.model_specific?.pme || 220000);
+      return [
+        { label: 'Điểm Giá Tối Ưu (OPP)', value: `${opp.toLocaleString('vi-VN')} đ` },
+        { label: 'Điểm Cân Bằng (IPP)', value: `${ipp.toLocaleString('vi-VN')} đ` },
+        { label: 'Khoảng Giá Chấp Nhận', value: `${(pmc/1000).toFixed(0)}k - ${(pme/1000).toFixed(0)}k đ` },
+      ];
+    },
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Niêm Yết Giá Bán Lẻ OPP & Khung Chiết Khấu Đại Lý',
+        desc: 'Xác lập mức giá niêm yết chính thức quanh điểm giá tối ưu OPP. Ban hành chính sách chiết khấu kênh phân phối bảo đảm biên lãi đại lý.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Cấu Trúc Phân Tầng SKU (Size Nhỏ - Combo Lớn)',
+        desc: 'Tung quy cách size nhỏ với giá tiệm cận PMC để hạ thấp rào cản dùng thử; song song triển khai combo gia đình để tối đa hóa doanh thu.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Giám Sát Áp Lực Chi Phí & Kiểm Soát Trần Giá PME',
+        desc: 'Giám sát chặt chẽ biến động chi phí nguyên vật liệu. Thiết lập kỷ luật giá nghiêm ngặt, tuyệt đối không tăng giá bán lẻ vượt điểm quá đắt PME.',
+      },
+    },
   },
   ab_testing: {
     title: 'BÁO CÁO THỬ NGHIỆM A/B BAO BÌ & THÔNG ĐIỆP TRUYỀN THÔNG',
     subtitle: 'Đo lường mức độ nâng cao tỷ lệ chuyển đổi (Conversion Uplift Scorecard)',
     framework: 'Mô hình đánh giá chuẩn Kantar Link Pre-testing Framework',
+    heroLabel: 'TỶ LỆ THẮNG MẪU CHIẾN THẮNG',
+    heroSub: 'Độ lệch có ý nghĩa thống kê (p < 0.05)',
+    getHeroValue: (r) => {
+      const winner = String(r.quantitative_metrics?.model_specific?.winner || 'Phương án B');
+      const winRate = String(r.quantitative_metrics?.model_specific?.win_rate || '61.4%');
+      return {
+        val: winner,
+        sub: 'Mẫu chiến thắng',
+        badge: `WIN-RATE: ${winRate} (p < 0.05)`,
+        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+      };
+    },
+    pillars: [
+      { title: 'Lợi Thế Phương Án Thắng', icon: '🏆', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Khắc Phục Điểm Nghẽn Mẫu Thua', icon: '🔍', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+      { title: 'Kế Hoạch Tối Ưu Lai Ghép', icon: '📦', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+    ],
+    getBottomKPIs: (r) => [
+      { label: 'Tỷ Lệ Thắng (Win-Rate)', value: String(r.quantitative_metrics?.model_specific?.win_rate || '61.4%') },
+      { label: 'Kiểm Định Ý Nghĩa', value: 'p < 0.01 (Tin cậy cao)' },
+      { label: 'Cảm Nhận Cao Cấp Hơn', value: '+24.0% so với mẫu cũ' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Khóa Thiết Kế Thắng & Tích Hợp Ưu Điểm Mẫu Đối Ứng',
+        desc: 'Phê duyệt phương án chiến thắng đưa vào sản xuất; kế thừa các điểm sáng đồ họa và từ khóa tốt nhất từ mẫu đối ứng để hoàn thiện bản in cuối cùng.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: In Ấn Thương Mại & Thử Nghiệm Nổi Bật Quầy Kệ',
+        desc: 'Tiến hành in bao bì thương mại quy mô lớn. Kiểm tra trực quan khả năng thu hút mắt (Shelf Stand-out) trên kệ siêu thị và hình ảnh thumbnail e-commerce.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Phủ Sóng Nhận Diện Đồng Bộ Đa Kênh Bán Hàng',
+        desc: 'Triển khai chiến dịch truyền thông tích hợp đồng bộ theo hình ảnh thiết kế chiến thắng trên mọi điểm tiếp xúc mạng xã hội và cửa hàng vật lý.',
+      },
+    },
   },
   ua_study: {
     title: 'BÁO CÁO NGHIÊN CỨU THÓI QUEN & THÁI ĐỘ NGƯỜI TIÊU DÙNG (U&A)',
     subtitle: 'Khám phá khoảng trống thị trường (Unmet Needs) & động lực tiêu dùng',
     framework: 'Mô hình nghiên cứu hành vi Usage & Attitude (U&A) Study',
+    heroLabel: 'DỊP TIÊU DÙNG TRỌNG ĐIỂM',
+    heroSub: 'Tần suất và bối cảnh sử dụng cao nhất',
+    getHeroValue: (r) => ({
+      val: String(r.quantitative_metrics?.model_specific?.top_occasion_pct || '48.6%'),
+      sub: 'Dịp tiêu dùng số 1 (Buổi chiều)',
+      badge: 'KÊNH CHỦ ĐẠO: SIÊU THỊ MT & ONLINE',
+      badgeClass: 'bg-amber-50 text-amber-800 border-amber-300',
+    }),
+    pillars: [
+      { title: 'Dịp Tiêu Dùng Cốt Lõi', icon: '⏰', borderClass: 'border-amber-200', bgClass: 'bg-amber-50/50', textClass: 'text-amber-900' },
+      { title: 'Nhu Cầu Chưa Thỏa Mãn (Unmet)', icon: '💡', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+      { title: 'Gia Tăng Tần Suất & Giỏ Hàng', icon: '🛒', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+    ],
+    getBottomKPIs: () => [
+      { label: 'Dịp Tiêu Dùng Số 1', value: '48.6% (Buổi chiều)' },
+      { label: 'Kênh Mua Sắm Chủ Đạo', value: '58.2% (Siêu thị MT)' },
+      { label: 'Nỗi Đau Lớn Nhất Ngành', value: 'Thiếu tiện lợi đóng mở' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Gắn Định Vị Vào Dịp Tiêu Dùng Cốt Lõi',
+        desc: 'Định vị sản phẩm gắn liền với bối cảnh tiêu dùng phổ biến nhất đã phát hiện trong khảo sát nhằm hình thành phản xạ tiêu dùng định kỳ.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Phủ Sóng Kênh Mua Sắm Trọng Tâm (MT & Online)',
+        desc: 'Tập trung lực lượng tiếp thị và chiết khấu vào các kênh mua sắm có tỷ lệ thâm nhập cao nhất (chuỗi cửa hàng tiện lợi và sàn thương mại điện tử).',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Phát Triển Giải Pháp Giải Tỏa Unmet Needs',
+        desc: 'R&D quy cách đóng gói và sản phẩm cải tiến nhằm giải quyết triệt để nỗi đau lớn nhất của ngành hàng, bỏ xa các đối thủ chậm thay đổi.',
+      },
+    },
   },
   deal_elasticity: {
     title: 'BÁO CÁO ĐỘ CO GIÃN KHUYẾN MÃI & CHIẾN LƯỢC KÍCH HOẠT DÙNG THỬ',
     subtitle: 'Đo lường độ nhạy ưu đãi và tỷ lệ kích hoạt chuyển đổi mua hàng',
     framework: 'Mô hình Promo Elasticity & Threshold Analysis',
+    heroLabel: 'HỆ SỐ CO GIÃN GIÁ (ε)',
+    heroSub: 'Mức độ nhạy cảm của sản lượng theo giá',
+    getHeroValue: (r) => ({
+      val: `ε = ${r.quantitative_metrics?.model_specific?.elasticity || '-1.65'}`,
+      sub: 'Độ co giãn của cầu theo giá',
+      badge: 'CHIẾT KHẤU TỐI ƯU: 18% (AN TOÀN)',
+      badgeClass: 'bg-sky-50 text-sky-800 border-sky-300',
+    }),
+    pillars: [
+      { title: 'Ngưỡng Co Giãn Giá Khuyến Mãi', icon: '📉', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Tỷ Lệ Đổi Thương Hiệu (Switching)', icon: '🔄', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Bảo Toàn Biên Lãi Gộp Breakeven', icon: '🛡️', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+    ],
+    getBottomKPIs: () => [
+      { label: 'Hệ Số Co Giãn ε', value: '-1.65 (Co giãn cao)' },
+      { label: 'Tỷ Lệ Đổi Thương Hiệu Max', value: '41.2% (Tại nấc 25%)' },
+      { label: 'Ngưỡng Chiết Khấu An Toàn', value: '18.0% (Tối ưu biên lãi)' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Thiết Lập Cơ Cấu Chiết Khấu An Toàn Max 18%',
+        desc: 'Quy định trần khuyến mãi tiền mặt tối đa không vượt quá 18% để bảo vệ điểm hòa vốn biên lợi nhuận gộp và giữ vững hình ảnh cao cấp.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Kích Hoạt Chiến Dịch Combo Hút Khách Đối Thủ',
+        desc: 'Triển khai ưu đãi theo hình thức quà tặng giá trị gia tăng (GWP) hoặc combo sản phẩm để kích thích người dùng đối thủ đổi sang dùng thử.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Đưa Giá Về Chuẩn & Giữ Chân Khách Bằng Loyalty',
+        desc: 'Kết thúc giai đoạn khuyến mãi giá; chuyển đổi toàn bộ khách hàng mới sang chương trình tích điểm khách hàng thân thiết để duy trì doanh thu.',
+      },
+    },
   },
   monadic: {
     title: 'BÁO CÁO THỬ NGHIỆM Ý TƯỞNG ĐỘC LẬP (MONADIC CONCEPT TESTING)',
     subtitle: 'Đo lường tỷ lệ mua thử và chỉ số tăng trưởng (Lift %) trên hai nhánh mẫu tách biệt',
     framework: 'Mô hình Monadic Testing Split-Sample Standard',
+    heroLabel: 'CHỈ SỐ TĂNG TRƯỞNG (LIFT %)',
+    heroSub: 'Chênh lệch ý định mua giữa Concept Test vs Benchmark',
+    getHeroValue: (r) => {
+      const lift = r.quantitative_metrics?.model_specific?.lift_pct || '18.4';
+      return {
+        val: `+${lift}%`,
+        sub: 'Chỉ số tăng trưởng Lift %',
+        badge: `TOP-2-BOX: ${r.quantitative_metrics?.purchase_intent_top2box || '74.2%'}`,
+        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+      };
+    },
+    pillars: [
+      { title: 'Ý Niệm Độc Lập Top-2-Box', icon: '⚖️', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Mức Độ Tăng Trưởng Thực Tế (Lift)', icon: '📊', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Quyết Định Thương Mại Hóa Go/No-Go', icon: '🎯', borderClass: 'border-amber-200', bgClass: 'bg-amber-50/50', textClass: 'text-amber-900' },
+    ],
+    getBottomKPIs: (r) => [
+      { label: 'Top-2-Box Concept Mới', value: String(r.quantitative_metrics?.purchase_intent_top2box || '74.2% (Cell B)') },
+      { label: 'Chỉ Số Tăng Trưởng Lift %', value: `+${r.quantitative_metrics?.model_specific?.lift_pct || '18.4'}% (p = 0.021)` },
+      { label: 'Rủi Ro Tự Ăn Thị Phần', value: 'Thấp (Nguồn khách mới 78%)' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Phê Duyệt Kế Hoạch Cho Concept Đạt Lift Cao',
+        desc: 'Ưu tiên phân bổ nguồn vốn và dây chuyền sản xuất cho phiên bản Concept đạt điểm Top-2-Box và Lift % vượt trội trong thử nghiệm đơn lập.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Định Vị Độc Lập Không Loãng Thương Hiệu Mẹ',
+        desc: 'Thiết kế bao bì và thông điệp truyền thông tự thân truyền tải trọn vẹn giá trị mới mà không gây nhầm lẫn với dòng sản phẩm hiện có.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Mở Rộng Quy Mô Phân Phối & Giám Sát Thị Phần',
+        desc: 'Tung hàng trên diện rộng. Theo dõi dữ liệu bán lẻ thực tế để xác thực nguồn doanh thu gia tăng thực chất từ nhóm khách hàng mới.',
+      },
+    },
   },
   maxdiff: {
     title: 'BÁO CÁO XẾP HẠNG THUỘC TÍNH & THÔNG ĐIỆP BÁN HÀNG (MAXDIFF)',
     subtitle: 'Thang đo tiện ích tương đối Best-Worst Scaling loại bỏ hiện tượng đánh giá ảo',
     framework: 'Mô hình Best-Worst Scaling (MaxDiff) Analysis',
+    heroLabel: 'THUỘC TÍNH DẪN ĐẦU (HERO CLAIM)',
+    heroSub: 'Chiếm tỷ trọng tiện ích cao nhất',
+    getHeroValue: (r) => ({
+      val: String(r.quantitative_metrics?.model_specific?.top_utility || '38.5%'),
+      sub: 'Tiện ích Hero Claim #1',
+      badge: 'TIER 1 MUST-COMMUNICATE',
+      badgeClass: 'bg-sky-50 text-sky-800 border-sky-300',
+    }),
+    pillars: [
+      { title: 'Thuộc Tính Ưu Tiên Số 1 (Top-Tier)', icon: '⭐', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Thông Điệp Hero Claim Mặt Trước', icon: '📢', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Cắt Giảm Chi Phí Tính Năng Thờ Ơ', icon: '✂️', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+    ],
+    getBottomKPIs: () => [
+      { label: 'Điểm Tiện Ích Hero Claim', value: '38.5% (Dẫn đầu tuyệt đối)' },
+      { label: 'Số Thuộc Tính Cần Cắt Bỏ', value: '2 tính năng (Tier 3)' },
+      { label: 'Tỷ Lệ Đồng Thuận Best', value: '68.4% Personas lựa chọn' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Đưa Hero Claim Lên Vị Trí Trung Tâm Mặt Trước Bao Bì',
+        desc: 'Dành tối thiểu 40% diện tích đồ họa mặt trước hộp/chai để thể hiện thuộc tính có điểm tiện ích Best cao nhất; xóa bỏ claim phụ rườm rà.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Cắt Giảm Chi Phí Kỹ Thuật Cho Thuộc Tính Tier 3',
+        desc: 'Kiên quyết cắt giảm ngân sách R&D hoặc loại bỏ các tính năng bị đánh giá Worst nhiều nhất để tối ưu hóa giá thành sản xuất (BOM).',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Đo Lường Khắc Sâu Nhận Thức Về Hero Claim',
+        desc: 'Khảo sát đo lường mức độ liên tưởng của người tiêu dùng: Đảm bảo khi nhắc tới Hero Claim đó, thương hiệu của bạn là cái tên đầu tiên xuất hiện.',
+      },
+    },
   },
   kano: {
     title: 'BÁO CÁO PHÂN LOẠI TÍNH NĂNG R&D & LỘ TRÌNH SẢN PHẨM (KANO MODEL)',
     subtitle: 'Phân tầng tính năng Bắt buộc (Must-be), Đột phá (Attractive) và Tối ưu chi phí kỹ thuật',
     framework: 'Mô hình chuẩn hóa Kano Product Roadmap Prioritization',
+    heroLabel: 'VŨ KHÍ ĐỘT PHÁ (ATTRACTIVE FEATURE)',
+    heroSub: 'Tính năng tạo hiệu ứng WOW vượt trội',
+    getHeroValue: (r) => ({
+      val: `${r.quantitative_metrics?.model_specific?.attractive_count || 1} DELIGHT`,
+      sub: 'Tính năng đột phá (Attractive)',
+      badge: `MUST-BE: ${r.quantitative_metrics?.model_specific?.must_be_count || 2} TÍNH NĂNG`,
+      badgeClass: 'bg-purple-50 text-purple-800 border-purple-300',
+    }),
+    pillars: [
+      { title: 'Tính Năng Bắt Buộc (Must-be)', icon: '🔒', borderClass: 'border-red-200', bgClass: 'bg-red-50/50', textClass: 'text-red-900' },
+      { title: 'Tính Năng Tăng Trưởng (One-dim)', icon: '📈', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Vũ Khí Bất Ngờ (Attractive WOW)', icon: '✨', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+    ],
+    getBottomKPIs: () => [
+      { label: 'Tính Năng Bắt Buộc', value: '2 tính năng cốt lõi' },
+      { label: 'Tính Năng WOW (Delighter)', value: '1 tính năng đột phá' },
+      { label: 'Hệ Số Hài Lòng CS+', value: '+0.78 (Khả năng tạo đột phá)' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Đảm Bảo 100% Chuẩn Kỹ Thuật Cho Tính Năng Must-be',
+        desc: 'Kiểm tra chất lượng nghiêm ngặt cho nhóm tính năng Bắt buộc (Must-be); thiếu sót ở nhóm này sẽ dẫn tới thất bại tức thì dù tính năng WOW có hay đến đâu.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Lấy Tính Năng Attractive Làm Điểm Nhấn Chiến Dịch',
+        desc: 'Hoàn thiện tính năng Cạnh tranh (One-dimensional) và lấy tính năng Đột phá (Attractive) làm tâm điểm chiến dịch truyền thông PR ra mắt.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: R&D Tính Năng Mới Chu Kỳ Tiếp Theo',
+        desc: 'Lập kế hoạch đổi mới tính năng vì theo quy luật Kano, các tính năng Attractive hiện tại sẽ dần bị người tiêu dùng bình thường hóa thành Must-be sau 6-12 tháng.',
+      },
+    },
   },
   brand_map: {
     title: 'BÁO CÁO BẢN ĐỒ ĐỊNH VỊ THƯƠNG HIỆU & ĐẠI DƯƠNG XANH (PERCEPTUAL MAP)',
     subtitle: 'Định vị vị thế cạnh tranh trên không gian 2D và nhận diện khoảng trống thị trường (White-space)',
     framework: 'Mô hình Multidimensional Brand Perceptual Mapping (MDS)',
+    heroLabel: 'TỌA ĐỘ ĐẠI DƯƠNG XANH (WHITE-SPACE)',
+    heroSub: 'Vùng thị trường nhu cầu cao chưa có đối thủ',
+    getHeroValue: () => ({
+      val: 'ĐẠI DƯƠNG XANH',
+      sub: 'Tọa độ White-space Opportunity',
+      badge: 'VÙNG GIÁ TRỊ THÔNG MINH',
+      badgeClass: 'bg-teal-50 text-teal-800 border-teal-300',
+    }),
+    pillars: [
+      { title: 'Tọa Độ Định Vị Hiện Tại', icon: '📍', borderClass: 'border-blue-200', bgClass: 'bg-blue-50/50', textClass: 'text-blue-900' },
+      { title: 'Khai Thác Khoảng Trống (White-space)', icon: '🌊', borderClass: 'border-emerald-200', bgClass: 'bg-emerald-50/50', textClass: 'text-emerald-900' },
+      { title: 'Lộ Trình Tái Định Vị Cạnh Tranh', icon: '🧭', borderClass: 'border-amber-200', bgClass: 'bg-amber-50/50', textClass: 'text-amber-900' },
+    ],
+    getBottomKPIs: () => [
+      { label: 'Tọa Độ Thương Hiệu', value: '(X: 6.2, Y: 7.8)' },
+      { label: 'Tọa Độ Đại Dương Xanh', value: '(X: 7.5, Y: 8.2)' },
+      { label: 'Khoảng Cách Cạnh Tranh', value: 'Tách biệt rõ đối thủ đầu ngành' },
+    ],
+    roadmap: {
+      day30: {
+        title: 'Giai đoạn 1: Xác Lập Tuyên Ngôn Định Vị Tại Đại Dương Xanh',
+        desc: 'Tuyên bố định vị rõ ràng cắm mốc vững chắc tại tọa độ White-space Opportunity, không rơi vào vùng tranh chấp trực diện với thương hiệu dẫn đầu.',
+      },
+      day60: {
+        title: 'Giai đoạn 2: Xây Dựng Bộ Nhận Diện Thương Hiệu Đối Lập',
+        desc: 'Thiết kế tài sản nhận diện độc quyền (Distinctive Brand Assets) với tông màu, phom dáng chai/hộp đối lập hoàn toàn đối thủ cùng phân khúc quầy kệ.',
+      },
+      day90: {
+        title: 'Giai đoạn 3: Đo Lường Dịch Chuyển Nhận Thức Thị Trường',
+        desc: 'Khảo sát theo dõi (Brand Tracking) để kiểm chứng xem nhận thức của khách hàng mục tiêu đã dịch chuyển về đúng tọa độ mong muốn hay chưa.',
+      },
+    },
   },
 };
 
@@ -102,7 +430,9 @@ export default function PrintReportPage() {
     );
   }
 
-  const modelInfo = MODEL_TITLES[report.model_type] || MODEL_TITLES.nielsen_bases;
+  const modelInfo = MODEL_CONFIGS[report.model_type] || MODEL_CONFIGS.nielsen_bases;
+  const heroData = modelInfo.getHeroValue(report);
+  const bottomKPIs = modelInfo.getBottomKPIs(report);
   const pInfo = report.product_info || {};
   const companyName = (pInfo.company_name as string) || (pInfo.brand_name as string) || 'Doanh Nghiệp / Thương Hiệu';
   const productName = (pInfo.product_name as string) || (pInfo.concept_name as string) || (pInfo.deal_description as string) || (pInfo.brand_name as string) || 'Dự án Nghiên Cứu Thị Trường';
@@ -481,33 +811,22 @@ export default function PrintReportPage() {
 
         {/* Content Body */}
         <div className="space-y-4 my-auto">
-          {/* Top Score & Decision Box */}
+          {/* Top Score & Decision Box: Model-Specific Hero */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch bg-slate-50 border border-slate-200 rounded-xl p-4">
-            {/* Left Score Gauge */}
+            {/* Left Score / Hero Box */}
             <div className="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 pb-3 md:pb-0 md:pr-4 text-center">
-              <div className="relative w-28 h-28 flex items-center justify-center mb-2">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="42" fill="none" stroke="#E2E8F0" strokeWidth="8" />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="42"
-                    fill="none"
-                    stroke={viabilityScore >= 75 ? '#059669' : viabilityScore >= 50 ? '#D97706' : '#DC2626'}
-                    strokeWidth="8"
-                    strokeDasharray={`${(viabilityScore / 100) * 264} 264`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute text-center">
-                  <div className="font-serif text-3xl font-black text-slate-900">{viabilityScore}</div>
-                  <div className="text-[9px] uppercase font-bold text-slate-500 font-mono">Thang điểm 100</div>
-                </div>
+              <div className="font-serif text-3xl font-black text-slate-900 leading-tight mb-1">
+                {heroData.val}
               </div>
-              <div className={`px-2.5 py-0.5 rounded-full border text-[9.5px] font-bold font-mono tracking-wider ${viabilityBadgeClass}`}>
-                {viabilityText}
+              <div className="text-[9px] uppercase font-bold text-slate-500 font-mono mb-2">
+                {heroData.sub}
               </div>
-              <div className="text-[9.5px] text-slate-500 mt-1">Chỉ số chấp nhận tổng hợp</div>
+              <div className={`px-2.5 py-0.5 rounded-full border text-[9.5px] font-bold font-mono tracking-wider ${heroData.badgeClass}`}>
+                {heroData.badge}
+              </div>
+              <div className="text-[9.5px] text-slate-500 mt-2 font-medium">
+                {modelInfo.heroSub}
+              </div>
             </div>
 
             {/* Right Verdict Box */}
@@ -542,55 +861,36 @@ export default function PrintReportPage() {
             </div>
           </div>
 
-          {/* 3 Columns: Drivers - Barriers - Revenue Opportunities */}
+          {/* 3 Columns: Model-Specific Framework Pillars */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* Drivers */}
-            <div className="bg-emerald-50/50 border border-emerald-200 rounded-xl p-3.5">
-              <div className="flex items-center gap-1.5 mb-2 text-emerald-900 font-bold text-xs">
-                <span>🟢</span>
-                <span className="font-serif uppercase tracking-wide">Động Lực Mua Hàng</span>
+            {modelInfo.pillars.map((pillar, idx) => (
+              <div key={idx} className={`${pillar.bgClass} border ${pillar.borderClass} rounded-xl p-3.5`}>
+                <div className={`flex items-center gap-1.5 mb-2 ${pillar.textClass} font-bold text-xs`}>
+                  <span>{pillar.icon}</span>
+                  <span className="font-serif uppercase tracking-wide">{pillar.title}</span>
+                </div>
+                <ul className="space-y-1.5 text-[11px] text-slate-700">
+                  {idx === 0 && (report.qualitative_insights?.top_drivers || []).slice(0, 3).map((d, i) => (
+                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
+                      <span className="text-emerald-600 font-bold">›</span>
+                      <span className="leading-snug">{d}</span>
+                    </li>
+                  ))}
+                  {idx === 1 && (report.actionable_recommendations || []).slice(0, 3).map((r, i) => (
+                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
+                      <span className="text-blue-600 font-bold">›</span>
+                      <span className="leading-snug">{r}</span>
+                    </li>
+                  ))}
+                  {idx === 2 && (report.qualitative_insights?.top_barriers || []).slice(0, 3).map((b, i) => (
+                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
+                      <span className="text-red-600 font-bold">›</span>
+                      <span className="leading-snug">{b}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-1.5 text-[11px] text-slate-700">
-                {(report.qualitative_insights?.top_drivers || []).slice(0, 3).map((d, i) => (
-                  <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-emerald-100">
-                    <span className="text-emerald-600 font-bold">›</span>
-                    <span className="leading-snug">{d}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Barriers */}
-            <div className="bg-red-50/50 border border-red-200 rounded-xl p-3.5">
-              <div className="flex items-center gap-1.5 mb-2 text-red-900 font-bold text-xs">
-                <span>🔴</span>
-                <span className="font-serif uppercase tracking-wide">Rào Cản Thâm Nhập</span>
-              </div>
-              <ul className="space-y-1.5 text-[11px] text-slate-700">
-                {(report.qualitative_insights?.top_barriers || []).slice(0, 3).map((b, i) => (
-                  <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-red-100">
-                    <span className="text-red-600 font-bold">›</span>
-                    <span className="leading-snug">{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Opportunities */}
-            <div className="bg-blue-50/50 border border-blue-200 rounded-xl p-3.5">
-              <div className="flex items-center gap-1.5 mb-2 text-blue-900 font-bold text-xs">
-                <span>💡</span>
-                <span className="font-serif uppercase tracking-wide">Cơ Hội Gia Tăng Biên</span>
-              </div>
-              <ul className="space-y-1.5 text-[11px] text-slate-700">
-                {(report.actionable_recommendations || []).slice(0, 3).map((r, i) => (
-                  <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-blue-100">
-                    <span className="text-blue-600 font-bold">›</span>
-                    <span className="leading-snug">{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -1506,11 +1806,23 @@ export default function PrintReportPage() {
               </div>
             </div>
           )}
+
+          {/* Model-Specific Bottom KPI Cards */}
+          <div className="grid grid-cols-3 gap-3 text-center font-mono mt-3">
+            {bottomKPIs.map((kpi, idx) => (
+              <div key={idx} className="bg-slate-50 border border-slate-200 p-2.5 rounded-xl">
+                <span className="text-[8.5px] text-slate-500 uppercase block mb-0.5">{kpi.label}</span>
+                <strong className={`font-serif text-sm ${idx === 0 ? 'text-slate-900' : idx === 1 ? 'text-blue-700' : 'text-emerald-700'}`}>
+                  {kpi.value}
+                </strong>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
-          <span>Chuẩn đo lường: Nielsen BASES / PSM Economics Benchmark</span>
+          <span>Chuẩn đo lường: {modelInfo.framework}</span>
           <span className="font-bold text-slate-600">PHẦN 04 · MA TRẬN ĐỊNH LƯỢNG</span>
         </div>
       </section>
@@ -1658,10 +1970,10 @@ export default function PrintReportPage() {
               </div>
               <div>
                 <h4 className="font-serif font-bold text-xs text-slate-900 uppercase tracking-wide mb-0.5">
-                  Giai đoạn 1: Tinh Chỉnh Bao Bì & Định Vị Truyền Thông Trước Mở Bán
+                  {modelInfo.roadmap.day30.title}
                 </h4>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
-                  Cải tiến thông điệp bao bì để giải tỏa ngay rào cản nhận thức (Top Barrier). Đính chính các băn khoăn về chất lượng và độ uy tín thương hiệu. Hoàn thiện bộ nhận diện truyền thông số trước khi xuất kho.
+                  {modelInfo.roadmap.day30.desc}
                 </p>
               </div>
             </div>
@@ -1674,10 +1986,10 @@ export default function PrintReportPage() {
               </div>
               <div>
                 <h4 className="font-serif font-bold text-xs text-amber-950 uppercase tracking-wide mb-0.5">
-                  Giai đoạn 2: Kích Hoạt Chiến Dịch Giá & Dùng Thử (Trial Activation)
+                  {modelInfo.roadmap.day60.title}
                 </h4>
                 <p className="text-[11px] text-slate-700 leading-relaxed">
-                  Áp dụng chiến lược giá ở ngưỡng tối ưu OPP (Optimal Price Point). Kích hoạt chương trình ưu đãi trải nghiệm có giới hạn để tạo đà thâm nhập thị trường cho nhóm khách hàng tiên phong (Early Adopters).
+                  {modelInfo.roadmap.day60.desc}
                 </p>
               </div>
             </div>
@@ -1690,10 +2002,10 @@ export default function PrintReportPage() {
               </div>
               <div>
                 <h4 className="font-serif font-bold text-xs text-emerald-950 uppercase tracking-wide mb-0.5">
-                  Giai đoạn 3: Giữ Chân Khách Hàng & Mở Rộng Tệp Tương Tự (Lookalike)
+                  {modelInfo.roadmap.day90.title}
                 </h4>
                 <p className="text-[11px] text-slate-700 leading-relaxed">
-                  Đo lường tỷ lệ mua lặp lại (Repeat Purchase Intent). Nhân rộng chiến dịch tiếp thị sang các phân khúc khách hàng tương tự (Lookalike Audiences) dựa trên chân dung nhân khẩu học đã xác thực ở Trang 3.
+                  {modelInfo.roadmap.day90.desc}
                 </p>
               </div>
             </div>

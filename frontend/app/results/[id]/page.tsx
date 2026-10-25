@@ -651,8 +651,8 @@ function Tab2Quantitative({ report }: { report: ReportPayload }) {
         <BrandPerceptualMap modelSpecific={metrics.model_specific} />
       )}
 
-      {/* Top Bar Chart: Key Quantitative Metrics */}
-      {keyMetrics.length > 0 && (
+      {/* Top Bar Chart: Key Quantitative Metrics (Chỉ áp dụng cho Nielsen BASES & Monadic Concept Test) */}
+      {(report.model_type === 'nielsen_bases' || report.model_type === 'monadic') && keyMetrics.length > 0 && (
         <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>

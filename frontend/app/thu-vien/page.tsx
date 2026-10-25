@@ -27,11 +27,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'kombucha-bases',
     demoId: 'DEMO-NIELSEN-BASES',
     category: 'fnb',
-    categoryLabel: 'F&B · Đồ Uống',
+    categoryLabel: 'F&B · Đồ Uống Chức Năng',
     modelType: 'nielsen_bases',
     modelLabel: 'Nielsen BASES',
-    productName: 'Trà Kombucha Lên Men Men Xoài Cát Chu Tự Nhiên (330ml)',
-    companyName: 'Tập đoàn Tiêu dùng & Thực phẩm Sạch Á Châu (Asia Food Corp)',
+    productName: 'Báo Cáo Khảo Sát Tiềm Năng Ra Mắt: Dòng Trà Kombucha Men Vi Sinh Bản Địa (330ml)',
+    companyName: 'Khảo Sát Chuẩn Ngành F&B · Ban Đồ Uống Lên Men Tự Nhiên 2026',
     sampleSize: 'N = 1.000 Personas · Đô thị Toàn quốc',
     scoreOrVerdict: '78/100 · STRONG GO',
     scoreNumber: 78,
@@ -51,8 +51,8 @@ const CASE_STUDIES: CaseStudy[] = [
     categoryLabel: 'F&B · Cà Phê Đặc Sản',
     modelType: 'van_westendorp',
     modelLabel: 'Van Westendorp PSM',
-    productName: 'Cà Phê Phin Giấy Hòa Tan Cao Cấp LangBiang Roasters',
-    companyName: 'Công ty CP Cà phê & Nông sản Cao nguyên LangBiang Roasters',
+    productName: 'Báo Cáo Chuẩn Định Giá & Đo Lường Độ Co Giãn: Ngành Cà Phê Phin Giấy Đặc Sản',
+    companyName: 'Khảo Sát Chuẩn Ngành F&B · Hội Đồng Cà Phê Đặc Sản Việt Nam 2026',
     sampleSize: 'N = 1.000 Personas · Phân khúc Thu nhập B-A',
     scoreOrVerdict: 'ĐIỂM GIÁ TỐI ƯU: 185.000đ',
     scoreColor: 'text-sky-800 bg-sky-50 border-sky-300',
@@ -68,11 +68,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'confectionery-ab',
     demoId: 'DEMO-AB-TESTING',
     category: 'confectionery',
-    categoryLabel: 'Bánh Kẹo · Quà Biếu',
+    categoryLabel: 'Bánh Kẹo · Quà Biếu Mùa Vụ',
     modelType: 'ab_testing',
     modelLabel: 'A/B Testing Bao Bì',
-    productName: 'Hộp Quà Bánh Quy Hoàng Gia Delica Crown Heritage',
-    companyName: 'Công ty Bánh kẹo & Quà tặng Hoàng Gia Delica Crown',
+    productName: 'Báo Cáo Thử Nghiệm Thị Giác Bao Bì Hộp Thiếc: Ngành Quà Biếu Bánh Kẹo Mùa Lễ Tết',
+    companyName: 'Khảo Sát Chuẩn Ngành Bánh Kẹo · Ban Đo Lường Thị Giác Bao Bì Quà Tặng 2026',
     sampleSize: 'N = 1.000 Personas · Người mua quà biếu Tết',
     scoreOrVerdict: 'CONCEPT B THẮNG (61.4%)',
     scoreColor: 'text-amber-800 bg-amber-50 border-amber-300',
@@ -88,11 +88,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'nutrition-monadic',
     demoId: 'DEMO-MONADIC',
     category: 'nutrition',
-    categoryLabel: 'Thực Phẩm Dinh Dưỡng',
+    categoryLabel: 'Thực Phẩm Dinh Dưỡng Tiện Lợi',
     modelType: 'monadic',
     modelLabel: 'Monadic Concept Test',
-    productName: 'Nước Hầm Xương Cô Đặc Dinh Dưỡng VinaBroth Foods',
-    companyName: 'Công ty CP Thực phẩm Dinh dưỡng Bản địa VinaBroth Foods',
+    productName: 'Báo Cáo Thẩm Định Ý Niệm Đơn Lập (Monadic): Ngành Nước Hầm Dinh Dưỡng Đóng Gói',
+    companyName: 'Khảo Sát Chuẩn Ngành Dinh Dưỡng · Ban Thực Phẩm Bản Địa Đô Thị 2026',
     sampleSize: 'N = 1.000 Personas · Phụ nữ nội trợ & Gia đình',
     scoreOrVerdict: 'LIFT +18.4% ĐỘ HẤP DẪN',
     scoreColor: 'text-emerald-700 bg-emerald-50 border-emerald-300',
@@ -108,11 +108,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'kitchen-kano',
     demoId: 'DEMO-KANO',
     category: 'appliances',
-    categoryLabel: 'Gia Dụng · Smart Home',
+    categoryLabel: 'Gia Dụng · Smart Kitchen',
     modelType: 'kano',
     modelLabel: 'Kano Model R&D',
-    productName: 'Nồi Chiên Không Dầu Hơi Nước Đa Năng ElmaTech Euro',
-    companyName: 'Tập đoàn Thiết bị Gia dụng Cao cấp ElmaTech Euro',
+    productName: 'Báo Cáo Phân Tầng Tính Năng R&D: Thiết Bị Nồi Chiên Hơi Nước Gia Đình Đô Thị',
+    companyName: 'Khảo Sát Chuẩn Ngành Gia Dụng · Ban R&D Thiết Bị Nhà Bếp Thông Minh 2026',
     sampleSize: 'N = 1.000 Personas · Chủ hộ căn hộ hiện đại',
     scoreOrVerdict: 'TỐI ƯU BOM SẢN XUẤT',
     scoreColor: 'text-purple-800 bg-purple-50 border-purple-300',
@@ -128,11 +128,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'cosmetics-brandmap',
     demoId: 'DEMO-BRAND-MAP',
     category: 'cosmetics',
-    categoryLabel: 'Mỹ Phẩm · Skincare',
+    categoryLabel: 'Mỹ Phẩm · Skincare Đô Thị',
     modelType: 'brand_map',
     modelLabel: 'Brand Perceptual Map',
-    productName: 'Serum Phục Hồi Thảo Dược Bản Địa Cocona Botanica',
-    companyName: 'Công ty Mỹ phẩm Sinh thái Bản địa Cocona Botanica',
+    productName: 'Báo Cáo Bản Đồ Định Vị Đa Chiều (MDS): Phân Khúc Dược Mỹ Phẩm Thuần Chay Bản Địa',
+    companyName: 'Khảo Sát Chuẩn Ngành Mỹ Phẩm · Ban Đánh Giá Xu Hướng Skincare Đô Thị 2026',
     sampleSize: 'N = 1.000 Personas · Nữ giới 18-35 tuổi',
     scoreOrVerdict: 'KHAI THÁC WHITE-SPACE',
     scoreColor: 'text-teal-800 bg-teal-50 border-teal-300',
@@ -151,8 +151,8 @@ const CASE_STUDIES: CaseStudy[] = [
     categoryLabel: 'FMCG · Thói Quen Tiêu Dùng',
     modelType: 'ua_study',
     modelLabel: 'Usage & Attitude (U&A)',
-    productName: 'Cà Phê Hòa Tan Di Sản VinaKofe Heritage (Hộp 20 gói)',
-    companyName: 'Tập đoàn Cà phê & Đồ uống Di sản VinaKofe Heritage',
+    productName: 'Báo Cáo Thói Quen & Động Cơ Tiêu Dùng (U&A): Ngành Hàng Cà Phê Hòa Tan Đóng Gói',
+    companyName: 'Khảo Sát Chuẩn Ngành FMCG · Ban Nghiên Cứu Hành Vi Đồ Uống Tiện Lợi 2026',
     sampleSize: 'N = 1.000 Personas · Người dùng cà phê hàng ngày',
     scoreOrVerdict: 'THẤU HIỂU HÀNH VI 360°',
     scoreColor: 'text-indigo-800 bg-indigo-50 border-indigo-300',
@@ -168,11 +168,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'gifts-elasticity',
     demoId: 'DEMO-DEAL-ELASTICITY',
     category: 'confectionery',
-    categoryLabel: 'Quà Tặng Mùa Vụ',
+    categoryLabel: 'Quà Tặng Mùa Vụ B2B',
     modelType: 'deal_elasticity',
     modelLabel: 'Deal Elasticity Matrix',
-    productName: 'Hộp Bánh Trung Thu Hoàng Kim CrownDo Group',
-    companyName: 'Tập đoàn Bánh kẹo & Quà tặng Hoàng Gia CrownDo Group',
+    productName: 'Báo Cáo Độ Co Giãn Chiết Khấu B2B & Mùa Vụ: Phân Khúc Hộp Quà Trung Thu & Lễ Tết',
+    companyName: 'Khảo Sát Chuẩn Ngành Quà Tặng · Ban Đo Lường Hiệu Quả Khuyến Mãi 2026',
     sampleSize: 'N = 1.000 Personas · Người mua quà B2B & Gia đình',
     scoreOrVerdict: 'CHIẾT KHẤU TỐI ƯU: 15% - 20%',
     scoreColor: 'text-rose-800 bg-rose-50 border-rose-300',
@@ -188,11 +188,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'events-maxdiff',
     demoId: 'DEMO-MAXDIFF',
     category: 'lifestyle',
-    categoryLabel: 'Dịch Vụ Cưới & Sự Kiện',
+    categoryLabel: 'Dịch Vụ Cưới & Sự Kiện Cao Cấp',
     modelType: 'maxdiff',
     modelLabel: 'MaxDiff Scaling',
-    productName: 'Gói Tiệc Cưới Ngoài Trời Trọn Gói Sang Trọng Royal Wedding',
-    companyName: 'Tổ hợp Dịch vụ Cưới & Sự kiện Hoàng Gia Royal Wedding',
+    productName: 'Báo Cáo Phân Cấp Giá Trị Thuộc Tính MaxDiff: Dịch Vụ Cưới & Sự Kiện Ngoài Trời',
+    companyName: 'Khảo Sát Chuẩn Ngành Dịch Vụ · Ban Đánh Giá Trải Nghiệm Khách Hàng Cao Cấp 2026',
     sampleSize: 'N = 1.000 Personas · Cặp đôi chuẩn bị kết hôn',
     scoreOrVerdict: 'PHÂN CẤP TIỆN ÍCH TỐI ĐA',
     scoreColor: 'text-amber-800 bg-amber-50 border-amber-300',
@@ -211,8 +211,8 @@ const CASE_STUDIES: CaseStudy[] = [
     categoryLabel: 'Nông Sản OCOP Chế Biến Sâu',
     modelType: 'nielsen_bases',
     modelLabel: 'Nielsen BASES',
-    productName: 'Sữa Hạt Sen & Gạo Lứt Hữu Cơ Đồng Tháp (Mekong Pure)',
-    companyName: 'Công ty CP Nông sản Sạch Mekong Pure Vietnam',
+    productName: 'Báo Cáo Tiềm Năng Thương Mại Hóa: Sữa Hạt Sen OCOP & Dinh Dưỡng Thực Vật',
+    companyName: 'Khảo Sát Chuẩn Ngành Dinh Dưỡng · Ban Nông Sản Chế Biến Sâu Bản Địa 2026',
     sampleSize: 'N = 1.000 Personas · Gia đình có con nhỏ & Người lớn tuổi',
     scoreOrVerdict: '76/100 · STRONG GO',
     scoreNumber: 76,
@@ -229,11 +229,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'diaper-westendorp',
     demoId: 'DEMO-VAN-WESTENDORP',
     category: 'lifestyle',
-    categoryLabel: 'Mẹ & Bé',
+    categoryLabel: 'Mẹ & Bé · Đồ Dùng Trẻ Em',
     modelType: 'van_westendorp',
     modelLabel: 'Van Westendorp PSM',
-    productName: 'Tã Bỉm Hữu Cơ Sợi Tre Kháng Khuẩn Tự Nhiên (EcoBaby)',
-    companyName: 'Công ty Sản phẩm Gia đình & Trẻ em EcoBaby Care',
+    productName: 'Báo Cáo Ngưỡng Tâm Lý Giá Van Westendorp: Dòng Tã Bỉm Hữu Cơ Sợi Tre Tự Nhiên',
+    companyName: 'Khảo Sát Chuẩn Ngành Mẹ & Bé · Ban Khảo Sát Chi Tiêu Gia Đình Trẻ 2026',
     sampleSize: 'N = 1.000 Personas · Mẹ bỉm sữa đô thị (Con 0-2 tuổi)',
     scoreOrVerdict: 'ĐIỂM GIÁ: 320.000đ/BỊCH',
     scoreColor: 'text-sky-800 bg-sky-50 border-sky-300',
@@ -249,11 +249,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'air-purifier-kano',
     demoId: 'DEMO-KANO',
     category: 'appliances',
-    categoryLabel: 'Gia Dụng Thông Minh',
+    categoryLabel: 'Gia Dụng Thông Minh · Smart Home',
     modelType: 'kano',
     modelLabel: 'Kano Model',
-    productName: 'Máy Lọc Không Khí & Khử Mùi Căn Hộ Nhỏ AeroClean Pro',
-    companyName: 'Tập đoàn Điện tử Tiêu dùng Thông minh AeroClean',
+    productName: 'Báo Cáo Cấu Hình Cốt Lõi Kano Model: Máy Lọc Không Khí & Khử Mùi Căn Hộ Đô Thị',
+    companyName: 'Khảo Sát Chuẩn Ngành Smart Home · Ban Đánh Giá Thiết Bị Không Gian Sống 2026',
     sampleSize: 'N = 1.000 Personas · Cư dân chung cư Hà Nội & TP.HCM',
     scoreOrVerdict: 'PHÂN ĐỊNH TÍNH NĂNG R&D',
     scoreColor: 'text-purple-800 bg-purple-50 border-purple-300',
@@ -269,11 +269,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'fish-sauce-monadic',
     demoId: 'DEMO-MONADIC',
     category: 'nutrition',
-    categoryLabel: 'Gia Vị Truyền Thống',
+    categoryLabel: 'Gia Vị Truyền Thống Di Sản',
     modelType: 'monadic',
     modelLabel: 'Monadic Test',
-    productName: 'Nước Mắm Truyền Thống Đạm Cá Cơm Tự Nhiên VinaSauce 45°N',
-    companyName: 'Công ty Nước Mắm Di Sản Bản Địa VinaSauce',
+    productName: 'Báo Cáo Đo Lường Niềm Tin Ý Niệm: Nước Mắm Truyền Thống Đậm Đạm Tự Nhiên (45°N)',
+    companyName: 'Khảo Sát Chuẩn Ngành Gia Vị · Ban Bảo Tồn & Phát Triển Nông Sản Di Sản 2026',
     sampleSize: 'N = 1.000 Personas · Người nấu ăn chính trong gia đình',
     scoreOrVerdict: 'NIỀM TIN THƯƠNG HIỆU: 88.5%',
     scoreColor: 'text-emerald-700 bg-emerald-50 border-emerald-300',
@@ -289,11 +289,11 @@ const CASE_STUDIES: CaseStudy[] = [
     id: 'edtech-maxdiff',
     demoId: 'DEMO-MAXDIFF',
     category: 'lifestyle',
-    categoryLabel: 'Giáo Dục · EdTech',
+    categoryLabel: 'Giáo Dục · EdTech & Kỹ Năng Số',
     modelType: 'maxdiff',
     modelLabel: 'MaxDiff Scaling',
-    productName: 'Khóa Học Kỹ Năng Số & Ứng Dụng AI Cho Người Đi Làm (EduSmart)',
-    companyName: 'Viện Đào Tạo Kỹ Năng Số Thực Chiến EduSmart Pro',
+    productName: 'Báo Cáo Phân Cấp Nhu Cầu Đào Tạo MaxDiff: Khóa Học Kỹ Năng Số & Ứng Dụng AI Thực Chiến',
+    companyName: 'Khảo Sát Chuẩn Ngành EdTech · Ban Đào Tạo & Phát Triển Nguồn Nhân Lực Số 2026',
     sampleSize: 'N = 1.000 Personas · Nhân viên văn phòng 24-38 tuổi',
     scoreOrVerdict: 'ƯU TIÊN GIÁ TRỊ THỰC CHIẾN',
     scoreColor: 'text-amber-800 bg-amber-50 border-amber-300',
@@ -378,16 +378,25 @@ export default function ThuVienPage() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
-            🏛️ Executive Market Intelligence Library
+            🏛️ Executive Market Intelligence · Industry Benchmark 2026
           </div>
           
           <h1 className="font-serif text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-            Thư Viện Dữ Liệu & Báo Cáo Khảo Sát Thị Trường Thực Nghiệm
+            Thư Viện Báo Cáo Chuẩn Đo Lường Ngành Hàng 2026
           </h1>
           
-          <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-6 font-light">
-            Tổng hợp các bộ dữ liệu khảo sát thực tế quy mô <strong>N = 1.000 Personas</strong> phân tầng chuẩn Niên giám Thống kê GSO, áp dụng 9 mô hình kinh tế học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff...).
+          <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-4 font-light">
+            Tổng hợp 14 bộ dữ liệu nghiên cứu thị trường thực nghiệm quy mô <strong>N = 1.000 Personas</strong> phân tầng chuẩn Niên giám Tổng cục Thống kê GSO, áp dụng nghiêm ngặt 9 mô hình khoa học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff, Monadic...).
           </p>
+
+          {/* Legal & Ethical Notice Banner */}
+          <div className="p-3.5 bg-slate-900/90 border border-amber-500/30 rounded-xl text-left max-w-2xl mx-auto mb-6 flex items-start gap-3 shadow-lg">
+            <span className="text-base shrink-0 mt-0.5">⚖️</span>
+            <div className="text-[11.5px] text-slate-300 leading-relaxed">
+              <strong className="text-amber-400 font-bold block mb-0.5">Chuẩn Đối Sánh Ngành & Cam Kết Đạo Đức Nghiên Cứu (ESOMAR / AAPOR):</strong>
+              Tất cả các nghiên cứu trong thư viện là <strong>Báo Cáo Đối Sánh Vĩ Mô Ngành Hàng (Industry Benchmarks)</strong> được thực hiện khách quan phục vụ doanh nghiệp đo lường, đối chuẩn vị thế và hoạch định chiến lược kinh doanh. Nghiên cứu độc lập, tuyệt đối không xâm phạm hay tiết lộ dữ liệu bảo mật của bất kỳ doanh nghiệp thương mại cá biệt nào.
+            </div>
+          </div>
 
           {/* Quick Search */}
           <div className="max-w-xl mx-auto relative">
@@ -395,7 +404,7 @@ export default function ThuVienPage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Tìm kiếm theo tên sản phẩm, ngành hàng hoặc mô hình (VD: Kombucha, Cà phê, Định giá, Bao bì...)"
+              placeholder="Tìm kiếm theo ngành hàng hoặc mô hình (VD: Đồ uống, Cà phê, Định giá PSM, Bao bì A/B, Kano...)"
               className="w-full bg-white text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm px-4 py-3.5 pl-10 rounded-xl shadow-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
@@ -428,10 +437,10 @@ export default function ThuVienPage() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
         <div className="flex items-center justify-between mb-6">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Hiển thị {filteredCases.length} báo cáo nghiên cứu chuyên sâu
+            Hiển thị {filteredCases.length} báo cáo chuẩn đối sánh ngành hàng
           </p>
           <span className="text-xs text-slate-400">
-            Cập nhật liên tục theo chuẩn nghiên cứu ESOMAR
+            Tuân thủ chuẩn nghiên cứu quốc tế ESOMAR & AAPOR
           </span>
         </div>
 
@@ -453,9 +462,14 @@ export default function ThuVienPage() {
                 <div>
                   {/* Top Badges */}
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      {c.categoryLabel}
-                    </span>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        {c.categoryLabel}
+                      </span>
+                      <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-800 border border-sky-200">
+                        Chuẩn Ngành 2026
+                      </span>
+                    </div>
                     <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded uppercase bg-amber-50 text-amber-800 border border-amber-200">
                       {c.modelLabel}
                     </span>
@@ -466,7 +480,7 @@ export default function ThuVienPage() {
                     {c.productName}
                   </h3>
                   <p className="text-xs text-slate-500 mb-4">
-                    Doanh nghiệp thực hiện: <span className="font-semibold text-slate-700">{c.companyName}</span>
+                    Hội đồng nghiên cứu đối sánh: <span className="font-semibold text-slate-700">{c.companyName}</span>
                   </p>
 
                   {/* Score / Verdict Badge */}
