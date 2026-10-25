@@ -30,8 +30,7 @@ async def download_pdf(
     Trả về file báo cáo PDF chuẩn in ấn A4 (application/pdf).
     Khách hàng doanh nghiệp nhận trực tiếp file .pdf.
     """
-    survey = db.query(Survey).filter(Survey.id == survey_id).first()
-    if not survey and survey_id.upper().startswith("DEMO"):
+    if survey_id.upper().startswith("DEMO"):
         from models.demo_data import get_demo_report_payload
         demo_payload = get_demo_report_payload(survey_id)
         file_path_str = await generate_pdf(
@@ -48,6 +47,8 @@ async def download_pdf(
             )
         else:
             return HTMLResponse(content=file_path.read_text(encoding="utf-8"))
+
+    survey = db.query(Survey).filter(Survey.id == survey_id).first()
 
     if not survey:
         raise HTTPException(404, "Survey không tìm thấy")
