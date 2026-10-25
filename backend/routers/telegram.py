@@ -40,7 +40,7 @@ async def setup_commands():
     return {"status": "ok" if ok else "failed", "menu_registered": ok}
 
 
-@router.post("/test-alert")
+@router.api_route("/test-alert", methods=["GET", "POST"])
 async def send_test_alert(chat_id: str = None):
     """Bắn tin nhắn test alert tới Admin Chat ID."""
     text = (
