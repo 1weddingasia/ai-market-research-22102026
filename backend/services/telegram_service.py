@@ -14,8 +14,8 @@ from sqlalchemy import func
 
 log = structlog.get_logger(__name__)
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "8726193525:AAH3nEgwlg_B_0ZiWmY6kiOT-_bxyH9nKRE")
-TELEGRAM_ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID", "584207194")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID", "")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://insight.1booking.asia")
 TELEGRAM_API_BASE = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
@@ -27,7 +27,7 @@ async def send_telegram_message(
     parse_mode: str = "HTML",
 ) -> bool:
     """Gửi tin nhắn Telegram qua HTTP Bot API trực tiếp tới Quản trị viên."""
-    target_chat_id = chat_id or os.getenv("TELEGRAM_ADMIN_CHAT_ID", "584207194")
+    target_chat_id = chat_id or os.getenv("TELEGRAM_ADMIN_CHAT_ID", "")
     if not target_chat_id or not TELEGRAM_BOT_TOKEN:
         log.warning("Telegram target_chat_id or token not configured", target_chat_id=target_chat_id)
         return False
