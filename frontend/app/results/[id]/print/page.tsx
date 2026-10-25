@@ -171,16 +171,12 @@ export default function PrintReportPage() {
           }
           .sheet {
             margin: 0 !important;
-            padding: 11mm 15mm 9mm !important;
+            padding: 12mm 15mm 10mm !important;
             box-shadow: none !important;
             border: none !important;
             border-radius: 0 !important;
             width: 210mm !important;
-            height: 296.5mm !important;
-            max-height: 296.5mm !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-            overflow: hidden !important;
+            min-height: 297mm !important;
             box-sizing: border-box !important;
             display: flex !important;
             flex-direction: column !important;
@@ -195,14 +191,17 @@ export default function PrintReportPage() {
             page-break-after: avoid !important;
             break-after: avoid !important;
           }
+          .avoid-break, table, tr, .rounded-xl, .rounded-lg {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
         }
 
-        /* Screen Sheet Container (Wysiwyg 100% matched to A4 print) */
+        /* Screen Sheet Container (Wysiwyg chuẩn A4, tự động co giãn theo nội dung, không cắt xén) */
         .sheet {
           width: 210mm;
-          min-height: 296.5mm;
-          max-height: 296.5mm;
-          margin: 24px auto;
+          min-height: 297mm;
+          margin: 28px auto;
           padding: 13mm 15mm 11mm;
           background: #ffffff;
           box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -211,8 +210,11 @@ export default function PrintReportPage() {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          border-radius: 4px;
-          overflow: hidden;
+          border-radius: 6px;
+        }
+        .avoid-break {
+          break-inside: avoid;
+          page-break-inside: avoid;
         }
       `}</style>
 
@@ -222,14 +224,14 @@ export default function PrintReportPage() {
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
             <div className="text-white text-xs font-mono">
-              <span className="text-amber-400 font-bold uppercase tracking-wider">CHUẨN BÁO CÁO ĐIỀU HÀNH 6 TRANG A4</span>
+              <span className="text-amber-400 font-bold uppercase tracking-wider">BÁO CÁO ĐIỀU HÀNH EXECUTIVE CHUẨN IN ẤN A4</span>
               <span className="text-slate-400 ml-2">| Mã hồ sơ: #{surveyId}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="hidden md:inline text-[11px] text-slate-300 font-mono">
-              💡 Khuyến nghị: Bật "Đồ họa nền" (Background graphics) trong cài đặt in
+              💡 Khuyến nghị: Bật "Đồ họa nền" (Background graphics) trong hộp thoại in
             </span>
 
             <Link
@@ -251,7 +253,7 @@ export default function PrintReportPage() {
               onClick={() => window.print()}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-5 py-2 rounded-lg text-xs shadow-lg transition-transform hover:scale-105"
             >
-              <span>🖨️ In Báo Cáo / Lưu PDF (6 Trang)</span>
+              <span>🖨️ In Báo Cáo / Xuất PDF A4</span>
             </button>
           </div>
         </div>
@@ -454,7 +456,7 @@ export default function PrintReportPage() {
               <span>SHA256: {(surveyId + '-KANTAR-NIELSEN-CERT').slice(0, 20).toUpperCase()}</span>
             </div>
             <div className="font-bold text-slate-700">
-              TRANG 01 / 06 · BÌA BÁO CÁO
+              PHẦN 01 · BÌA BÁO CÁO
             </div>
           </div>
         </div>
@@ -468,7 +470,7 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 02 / 06 · BẢN KẾT LUẬN CHIẾN LƯỢC DÀNH CHO HĐQT
+              PHẦN 02 · BẢN KẾT LUẬN CHIẾN LƯỢC DÀNH CHO HĐQT
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
               Đánh Giá Khả Thi & Khuyến Nghị Quyết Định (Actionable Verdict)
@@ -595,7 +597,7 @@ export default function PrintReportPage() {
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
           <span>Khảo sát độc quyền: insight.1booking.asia Intelligence System</span>
-          <span className="font-bold text-slate-600">TRANG 02 / 06</span>
+          <span className="font-bold text-slate-600">PHẦN 02 · TỔNG QUAN CHIẾN LƯỢC</span>
         </div>
       </section>
 
@@ -607,7 +609,7 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 03 / 06 · CƠ SỞ KHOA HỌC & PHƯƠNG PHÁP LUẬN
+              PHẦN 03 · CƠ SỞ KHOA HỌC & PHƯƠNG PHÁP LUẬN
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
               Quy Chuẩn Thống Kê & Phân Tầng Nhân Khẩu Học (Sampling Matrix)
@@ -804,7 +806,7 @@ export default function PrintReportPage() {
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
           <span>Khung phân tầng đối chuẩn: Niên giám Thống kê GSO & Synthetic Consumer Engine</span>
-          <span className="font-bold text-slate-600">TRANG 03 / 06</span>
+          <span className="font-bold text-slate-600">PHẦN 03 · KHUNG MẪU GSO</span>
         </div>
       </section>
 
@@ -816,7 +818,7 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 04 / 06 · BIỂU ĐỒ CHUYÊN SÂU THEO MÔ HÌNH
+              PHẦN 04 · BIỂU ĐỒ CHUYÊN SÂU THEO MÔ HÌNH
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
               Phân Tích Kinh Tế Học & Ma Trận Định Lượng Chi Tiết
@@ -1509,7 +1511,7 @@ export default function PrintReportPage() {
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
           <span>Chuẩn đo lường: Nielsen BASES / PSM Economics Benchmark</span>
-          <span className="font-bold text-slate-600">TRANG 04 / 06</span>
+          <span className="font-bold text-slate-600">PHẦN 04 · MA TRẬN ĐỊNH LƯỢNG</span>
         </div>
       </section>
 
@@ -1521,7 +1523,7 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 05 / 06 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)
+              PHẦN 05 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
               Ý Kiến Định Tính Trích Xuất Từ Tác Tử AI Đối Chuẩn Theo Khung Phân Tầng GSO
@@ -1623,7 +1625,7 @@ export default function PrintReportPage() {
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
           <span>Dữ liệu trích xuất từ {sampleN.toLocaleString('vi-VN')} hồ sơ phỏng vấn sâu trực tiếp</span>
-          <span className="font-bold text-slate-600">TRANG 05 / 06</span>
+          <span className="font-bold text-slate-600">PHẦN 05 · TIẾNG NÓI KHÁCH HÀNG</span>
         </div>
       </section>
 
@@ -1635,7 +1637,7 @@ export default function PrintReportPage() {
         <div className="border-b border-slate-200 pb-2.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono text-amber-700 uppercase tracking-widest font-bold">
-              TRANG 06 / 06 · LỘ TRÌNH THỰC THI CHIẾN LƯỢC
+              PHẦN 06 · LỘ TRÌNH THỰC THI CHIẾN LƯỢC
             </div>
             <h2 className="font-serif text-lg font-black text-slate-900">
               Kế Hoạch Hành Động 30 - 60 - 90 Ngày & Chứng Thực Bản Quyền
@@ -1733,7 +1735,7 @@ export default function PrintReportPage() {
         {/* Page Footer */}
         <div className="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono">
           <span>Hệ thống bảo trợ công nghệ: insight.1booking.asia Intelligence System</span>
-          <span className="font-bold text-slate-600">TRANG 06 / 06 · HẾT</span>
+          <span className="font-bold text-slate-600">PHẦN 06 · LỘ TRÌNH THỰC THI · HẾT</span>
         </div>
       </section>
     </div>

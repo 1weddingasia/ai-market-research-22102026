@@ -28,21 +28,17 @@
     print-color-adjust: exact !important;
   }
 
-  /* Sheet container — Cố định 296.5mm để chống subpixel overflow trên Windows DPI */
+  /* Sheet container — Chuẩn in ấn A4 quốc tế, tự động co giãn theo nội dung không cắt xén */
   .sheet {
     width: 210mm;
-    height: 296.5mm;
-    max-height: 296.5mm;
+    min-height: 297mm;
     box-sizing: border-box;
     position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 13mm 15mm 10mm;
+    padding: 12mm 15mm 10mm;
     background: #FFFFFF;
-    page-break-inside: avoid;
-    break-inside: avoid;
   }
 
   .sheet:not(:last-of-type) {
@@ -53,6 +49,12 @@
   .sheet:last-of-type {
     page-break-after: avoid;
     break-after: avoid;
+  }
+
+  /* Tránh cắt đôi bảng biểu, card và quote khi ngắt trang */
+  table, tr, td, th, .card-pillar, .box-executive, .verdict-box, .roadmap-card, .quote-item {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   @media screen {
@@ -481,7 +483,7 @@
 <section class="sheet">
   <div class="page-header">
     <div>
-      <div class="page-header-tag">TRANG 02 / 06 · BẢN KẾT LUẬN CHIẾN LƯỢC</div>
+      <div class="page-header-tag">PHẦN 02 · BẢN KẾT LUẬN CHIẾN LƯỢC</div>
       <div class="page-header-title">Đánh Giá Khả Thi & Khuyến Nghị Quyết Định HĐQT</div>
     </div>
     <div class="page-header-id">MÃ: {{ survey_id }}</div>
@@ -559,7 +561,7 @@
 
   <div class="page-footer">
     <span>Bảo trợ công nghệ: insight.1booking.asia Intelligence System</span>
-    <span>Trang 2 / 6</span>
+    <span>PHẦN 02 · TỔNG QUAN CHIẾN LƯỢC</span>
   </div>
 </section>
 
@@ -569,7 +571,7 @@
 <section class="sheet">
   <div class="page-header">
     <div>
-      <div class="page-header-tag">TRANG 03 / 06 · CƠ SỞ KHOA HỌC & MA TRẬN PHÂN TẦNG</div>
+      <div class="page-header-tag">PHẦN 03 · CƠ SỞ KHOA HỌC & MA TRẬN PHÂN TẦNG</div>
       <div class="page-header-title">Phương Pháp Luận Thống Kê & Cơ Cấu Mẫu (Sampling Matrix)</div>
     </div>
     <div class="page-header-id">MÃ: {{ survey_id }}</div>
@@ -702,7 +704,7 @@
 
   <div class="page-footer">
     <span>Khung phân tầng đối chuẩn: Niên giám Thống kê GSO & Synthetic Personas</span>
-    <span>Trang 3 / 6</span>
+    <span>PHẦN 03 · KHUNG MẪU GSO</span>
   </div>
 </section>
 
@@ -712,7 +714,7 @@
 <section class="sheet">
   <div class="page-header">
     <div>
-      <div class="page-header-tag">TRANG 04 / 06 · PHÂN TÍCH KINH TẾ HỌC CHUYÊN SÂU</div>
+      <div class="page-header-tag">PHẦN 04 · PHÂN TÍCH KINH TẾ HỌC CHUYÊN SÂU</div>
       <div class="page-header-title">Ma Trận Định Lượng & Biểu Đồ Chuyên Ngành</div>
     </div>
     <div class="page-header-id">MÃ: {{ survey_id }}</div>
@@ -807,7 +809,7 @@
 
   <div class="page-footer">
     <span>Mô hình đánh giá chuẩn: Nielsen BASES & Economics Benchmark</span>
-    <span>Trang 4 / 6</span>
+    <span>PHẦN 04 · MA TRẬN ĐỊNH LƯỢNG</span>
   </div>
 </section>
 
@@ -817,7 +819,7 @@
 <section class="sheet">
   <div class="page-header">
     <div>
-      <div class="page-header-tag">TRANG 05 / 06 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)</div>
+      <div class="page-header-tag">PHẦN 05 · TIẾNG NÓI THỊ TRƯỜNG TỪ TÁC TỬ AI (SYNTHETIC VOC)</div>
       <div class="page-header-title">Ý Kiến Định Tính Trích Xuất Từ Tác Tử AI Đối Chuẩn Theo Khung Phân Tầng GSO</div>
     </div>
     <div class="page-header-id">MÃ: {{ survey_id }}</div>
@@ -887,7 +889,7 @@
 
   <div class="page-footer">
     <span>Dữ liệu thực chứng từ phỏng vấn {{ target.sample_size | default(1000) }} Synthetic Personas độc lập</span>
-    <span>Trang 5 / 6</span>
+    <span>PHẦN 05 · TIẾNG NÓI KHÁCH HÀNG</span>
   </div>
 </section>
 
@@ -897,7 +899,7 @@
 <section class="sheet">
   <div class="page-header">
     <div>
-      <div class="page-header-tag">TRANG 06 / 06 · LỘ TRÌNH THỰC THI CHIẾN LƯỢC</div>
+      <div class="page-header-tag">PHẦN 06 · LỘ TRÌNH THỰC THI CHIẾN LƯỢC</div>
       <div class="page-header-title">Kế Hoạch Hành Động 30 - 60 - 90 Ngày & Chứng Thực Bản Quyền</div>
     </div>
     <div class="page-header-id">MÃ: {{ survey_id }}</div>
@@ -972,7 +974,7 @@
 
   <div class="page-footer">
     <span>insight.1booking.asia — Intelligence System</span>
-    <span>Trang 6 / 6 · HẾT BÁO CÁO</span>
+    <span>PHẦN 06 · LỘ TRÌNH THỰC THI · HẾT</span>
   </div>
 </section>
 
