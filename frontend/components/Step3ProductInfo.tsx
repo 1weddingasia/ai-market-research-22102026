@@ -263,11 +263,11 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'deal_description',
-      label: 'Các kịch bản khuyến mãi muốn đo lường',
+      label: 'Các kịch bản khuyến mãi / combo dự kiến đo lường',
       placeholder: 'VD: Kịch bản 1: Giảm thẳng 15%; Kịch bản 2: Mua 2 tặng 1; Kịch bản 3: Tặng bình trà cao cấp...',
       required: true,
       type: 'textarea',
-      hint: 'Liệt kê 2-3 kịch bản ưu đãi để cụm AI đo lường độ co giãn và so sánh sức bật chuyển đổi.',
+      hint: 'Liệt kê 2-3 kịch bản khuyến mãi/combo dự kiến để đo lường hệ số co giãn cầu theo giá, tỷ lệ lôi kéo khách hàng từ đối thủ (Brand Switching Rate) và điểm hòa vốn biên lợi nhuận.',
     },
   ],
   monadic: [
@@ -347,8 +347,8 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     },
     {
       id: 'attributes',
-      label: 'Danh sách 6 đến 10 tính năng hoặc thông điệp bán hàng (Claims)',
-      placeholder: `Nhập mỗi thuộc tính trên một dòng mới:
+      label: 'Danh sách từ 6 đến 12 thông điệp (Claims) hoặc tính năng sản phẩm',
+      placeholder: `Nhập mỗi thuộc tính hoặc thông điệp trên một dòng mới:
 VD:
 100% Nguyên liệu hữu cơ đạt chuẩn USDA
 Hiệu quả rõ rệt ngay sau 7 ngày sử dụng
@@ -358,7 +358,7 @@ Dịch vụ chăm sóc và bảo hành 1-đổi-1 trong 12 tháng
 Thiết kế tối giản, sang trọng phong cách Bắc Âu`,
       required: true,
       type: 'textarea',
-      hint: 'Hệ thống sẽ tự động tạo các nhóm 4 thuộc tính ngẫu nhiên xoay vòng để personas chọn Best và Worst.',
+      hint: 'Hệ thống áp dụng thuật toán Louviere Best-Worst Scaling, xoay vòng các nhóm thuộc tính để personas bình chọn, tính toán Utility Scores và loại bỏ hoàn toàn hiện tượng đánh giá ảo 5 sao.',
     },
   ],
   kano: [
@@ -383,16 +383,17 @@ Thiết kế tối giản, sang trọng phong cách Bắc Âu`,
     },
     {
       id: 'features',
-      label: 'Danh sách 3 đến 5 tính năng dự kiến phát triển',
-      placeholder: `Nhập mỗi tính năng trên một dòng mới:
+      label: 'Danh sách 5 - 10 tính năng dự kiến phát triển (R&D Features)',
+      placeholder: `Nhập mỗi tính năng trên một dòng mới (từ 5 đến 10 tính năng):
 VD:
 Tự động đồng bộ tồn kho thời gian thực với Shopee & TikTok
 Trợ lý AI tự động trả lời tin nhắn và chốt đơn khách hàng
 Báo cáo phân tích dòng tiền và dự báo doanh thu tự động
-Tùy biến giao diện hóa đơn và thương hiệu riêng`,
+Tùy biến giao diện hóa đơn và thương hiệu riêng
+Tích hợp thanh toán một chạm VietQR động`,
       required: true,
       type: 'textarea',
-      hint: 'Với mỗi tính năng, hệ thống sẽ hỏi persona 2 câu hỏi đối lập: khi CÓ và khi KHÔNG CÓ tính năng.',
+      hint: 'Với mỗi tính năng, hệ thống hỏi persona cặp câu hỏi chức năng/phi chức năng để phân loại 5 tầng ma trận Kano (Must-be, Attractive, Performance, Indifferent, Reverse) giúp tối ưu ngân sách R&D.',
     },
   ],
   brand_map: [
@@ -417,15 +418,15 @@ Tùy biến giao diện hóa đơn và thương hiệu riêng`,
     },
     {
       id: 'brands',
-      label: 'Danh sách các thương hiệu đối thủ cùng ngành cần so chuẩn',
-      placeholder: `Nhập mỗi đối thủ trên một dòng mới:
+      label: 'Danh sách 3 - 5 đối thủ cùng ngành cần so chuẩn',
+      placeholder: `Nhập mỗi đối thủ trên một dòng mới (từ 3 đến 5 đối thủ):
 VD:
 Thương hiệu đối thủ A (Truyền thống dẫn đầu)
 Thương hiệu đối thủ B (Ngoại nhập cao cấp)
 Thương hiệu đối thủ C (Chuỗi giá rẻ bình dân)`,
       required: true,
       type: 'textarea',
-      hint: 'Nhập từ 2 đến 4 đối thủ trực tiếp để hệ thống chấm điểm và định vị trên bản đồ 2D.',
+      hint: 'Nhập từ 3 đến 5 đối thủ trực tiếp để hệ thống tính toán tọa độ định vị 2D không gian đa chiều, nhận diện cụm cạnh tranh và vùng trống đại dương xanh (White-space Opportunity).',
     },
     {
       id: 'axis_x_label',

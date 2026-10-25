@@ -154,12 +154,39 @@ function SentimentBadge({ s }: { s: string }) {
 
 /* ── Tabs ────────────────────────────────────────────────── */
 
-function Tab1ExecutiveSummary({ report }: { report: ReportPayload }) {
+function Tab1ExecutiveSummary({ report, onSelectTab }: { report: ReportPayload; onSelectTab?: (tab: string) => void }) {
   const exec = report.executive_summary;
   const pInfo = report.product_info || {};
 
   return (
     <div className="space-y-6">
+      {/* Quick Jump Callout to Specialized Model Chart (Tab 2) */}
+      <div className="bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-slate-50 border border-amber-300 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+        <div className="flex items-center gap-3">
+          <span className="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-lg shadow-xs shrink-0">
+            📊
+          </span>
+          <div>
+            <span className="font-serif font-bold text-slate-900 text-sm sm:text-base block">
+              Biểu Đồ Trực Quan & Ma Trận Phân Tích Chuyên Sâu ({MODEL_BENCHMARK_NAMES[report.model_type] || 'Chuyên Ngành'})
+            </span>
+            <span className="text-xs text-slate-600 mt-0.5 block">
+              Khám phá đồ thị tương tác, các điểm giá hội tụ, ma trận 4 góc và số liệu định lượng chi tiết của mô hình này tại Tab 2.
+            </span>
+          </div>
+        </div>
+        {onSelectTab && (
+          <button
+            type="button"
+            onClick={() => onSelectTab('quantitative')}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs shrink-0 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Mở Xem Biểu Đồ Ngay</span>
+            <span>&rarr;</span>
+          </button>
+        )}
+      </div>
+
       {/* Top Gauge & AI Verdict */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <div className="lg:col-span-5 flex">
@@ -1015,6 +1042,17 @@ export default function ResultsPage() {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('executive');
 
+  // Tự động nhận diện tab từ URL (ví dụ: ?tab=quantitative để mở ngay biểu đồ chuyên sâu)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sp = new URLSearchParams(window.location.search);
+      const tabParam = sp.get('tab');
+      if (tabParam === 'quantitative' || tabParam === 'consumer' || tabParam === 'actions' || tabParam === 'executive') {
+        setActiveTab(tabParam);
+      }
+    }
+  }, []);
+
   // Trạng thái modal tiêu hủy dữ liệu
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteEmail, setDeleteEmail] = useState('');
@@ -1208,7 +1246,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Tab Content Display */}
-        {activeTab === 'executive' && <Tab1ExecutiveSummary report={report} />}
+        {activeTab === 'executive' && <Tab1ExecutiveSummary report={report} onSelectTab={setActiveTab} />}
         {activeTab === 'quantitative' && <Tab2Quantitative report={report} />}
         {activeTab === 'consumer' && <Tab3VoiceOfConsumer report={report} />}
         {activeTab === 'actions' && <Tab4StrategicAction report={report} surveyId={surveyId} />}

@@ -480,18 +480,27 @@ export default function HomePage() {
                     </p>
                   </div>
                   <div className="mt-6 pt-4 border-t border-slate-700 flex flex-col gap-3 text-sm">
-                    <Link
-                      href={demoUrl}
-                      target="_blank"
-                      className="w-full inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/40 text-xs sm:text-sm font-bold transition-all group/btn"
-                      title="Mở xem báo cáo mẫu thực tế trong tab mới (gồm 4 Tab tương tác & Bản in 6 Trang A4)"
-                    >
-                      <span className="inline-flex items-center gap-2">
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`${demoUrl}?tab=quantitative`}
+                        target="_blank"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-xs sm:text-sm font-bold transition-all group/btn"
+                        title="Mở xem ngay biểu đồ & ma trận tương tác của mô hình này trong 5 giây"
+                      >
                         <span>📊</span>
-                        <span>Xem Báo Cáo Mẫu (Live Demo)</span>
-                      </span>
-                      <span className="font-mono text-amber-400 group-hover/btn:translate-x-1 transition-transform">Mở ↗</span>
-                    </Link>
+                        <span className="truncate">Xem Biểu Đồ (Live)</span>
+                        <span className="font-mono text-amber-400 group-hover/btn:translate-x-0.5 transition-transform text-xs">↗</span>
+                      </Link>
+                      <Link
+                        href={`${demoUrl}/print`}
+                        target="_blank"
+                        className="inline-flex items-center justify-center gap-1 px-3 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-bold transition-all shrink-0"
+                        title="Mở xem trực tiếp bản in PDF 6 trang A4 chuẩn xuất bản"
+                      >
+                        <span>📄</span>
+                        <span>Bản In A4</span>
+                      </Link>
+                    </div>
 
                     <div className="flex items-center justify-between pt-1">
                       <span className="text-slate-400 text-xs sm:text-sm">Báo cáo chuẩn hóa</span>
