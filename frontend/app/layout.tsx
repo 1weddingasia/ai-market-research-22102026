@@ -4,6 +4,7 @@ import './globals.css';
 import { WizardProvider } from '@/lib/wizard-context';
 import BackToTop from '@/components/BackToTop';
 import AiConsultantWidget from '@/components/AiConsultantWidget';
+import { Analytics } from '@vercel/analytics/next';
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BackToTop />
           <AiConsultantWidget />
         </WizardProvider>
+        <Analytics />
       </body>
     </html>
   );
