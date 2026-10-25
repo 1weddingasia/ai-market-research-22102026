@@ -26,7 +26,8 @@ from slowapi.util import get_remote_address
 load_dotenv()
 
 from database import init_db
-from routers import export, payment, stream, survey, telegram, chat
+from routers import export, payment, stream, survey, telegram, chat, outreach
+from services.outreach_service import start_outreach_worker
 
 log = structlog.get_logger(__name__)
 
@@ -44,6 +45,10 @@ async def lifespan(app: FastAPI):
     # Tạo thư mục PDFs nếu chưa có
     os.makedirs("./pdfs", exist_ok=True)
     log.info("PDF directory ready")
+
+    # Khởi động worker gửi email tự động an toàn
+    start_outreach_worker()
+    log.info("Outreach background worker initialized")
 
     log.info(
         "[START] AI Market Research Platform ready",
@@ -90,6 +95,7 @@ app.include_router(payment.router)
 app.include_router(export.router)
 app.include_router(telegram.router)
 app.include_router(chat.router)
+app.include_router(outreach.router)
 
 app.include_router(survey.router, prefix="/api")
 app.include_router(stream.router, prefix="/api")
@@ -97,6 +103,7 @@ app.include_router(payment.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
 app.include_router(telegram.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+app.include_router(outreach.router, prefix="/api")
 
 
 # ── Health check ───────────────────────────────────────────────────────────────

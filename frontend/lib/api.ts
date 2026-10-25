@@ -288,6 +288,83 @@ export const api = {
     }
     return res.json() as Promise<{ reply: string; status: string }>;
   },
+
+  // ── Outreach & Cold Email Automation API ─────────────────────────────
+  getOutreachStats: () => fetchJSON<any>('/outreach/stats'),
+
+  toggleOutreachBot: (isActive: boolean) =>
+    fetchJSON<{ success: boolean; is_active: boolean; message: string }>('/outreach/toggle', {
+      method: 'POST',
+      body: JSON.stringify({ is_active: isActive }),
+    }),
+
+  updateOutreachSettings: (settings: {
+    daily_limit?: number;
+    min_interval_seconds?: number;
+    max_interval_seconds?: number;
+    ignore_business_hours?: boolean;
+  }) =>
+    fetchJSON<any>('/outreach/settings', {
+      method: 'POST',
+      body: JSON.stringify(settings),
+    }),
+
+  getOutreachLogs: (limit: number = 50, offset: number = 0, status?: string) => {
+    let query = `/outreach/logs?limit=${limit}&offset=${offset}`;
+    if (status) query += `&status=${encodeURIComponent(status)}`;
+    return fetchJSON<{ total: number; items: any[] }>(query);
+  },
+
+  getOutreachLogDetail: (logId: number) =>
+    fetchJSON<any>(`/outreach/logs/${logId}`),
+
+  getOutreachLeads: (params: {
+    limit?: number;
+    offset?: number;
+    industry?: string;
+    status?: string;
+    search?: string;
+  }) => {
+    const q = new URLSearchParams();
+    if (params.limit) q.set('limit', String(params.limit));
+    if (params.offset) q.set('offset', String(params.offset));
+    if (params.industry) q.set('industry', params.industry);
+    if (params.status) q.set('status', params.status);
+    if (params.search) q.set('search', params.search);
+    return fetchJSON<{ total: number; items: any[] }>(`/outreach/leads?${q.toString()}`);
+  },
+
+  createOutreachLead: (data: any) =>
+    fetchJSON<{ success: boolean; lead_id: number; message: string }>('/outreach/leads', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  sendOutreachTestEmail: (data: {
+    to_email: string;
+    contact_name?: string;
+    company_name?: string;
+    industry?: string;
+  }) =>
+    fetchJSON<{ success: boolean; message: string; resend_id?: string }>('/outreach/send-test', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  sendOutreachLeadNow: (leadId: number) =>
+    fetchJSON<{ success: boolean; lead_id: number; message: string }>(`/outreach/leads/${leadId}/send-now`, {
+      method: 'POST',
+    }),
+
+  resetOutreachLead: (leadId: number) =>
+    fetchJSON<{ success: boolean; message: string }>(`/outreach/leads/${leadId}/reset`, {
+      method: 'POST',
+    }),
+
+  deleteOutreachLead: (leadId: number) =>
+    fetchJSON<{ success: boolean; message: string }>(`/outreach/leads/${leadId}`, {
+      method: 'DELETE',
+    }),
 };
 
 export const PRICING: Record<number, number> = {

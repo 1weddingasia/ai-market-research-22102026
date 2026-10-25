@@ -115,6 +115,54 @@ class SurveyLog(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+# ─── B2B Outreach & Automated Cold Email Models ───────────────────────────────
+
+class OutreachLead(Base):
+    __tablename__ = "outreach_leads"
+
+    id              = Column(Integer, primary_key=True, autoincrement=True)
+    company_name    = Column(String(200), nullable=False)
+    contact_name    = Column(String(100), nullable=True)     # Tên người liên hệ (vd: Anh Nam, Chị Hương)
+    contact_title   = Column(String(100), nullable=True)     # Chức danh (vd: Giám đốc R&D, Brand Manager, Founder)
+    email           = Column(String(200), nullable=False, index=True)
+    industry        = Column(String(100), nullable=False, index=True) # fnb, cosmetics, confectionery, etc.
+    website         = Column(String(200), nullable=True)
+    phone           = Column(String(50), nullable=True)
+    status          = Column(String(20), default="PENDING", index=True) # PENDING, SENT, FAILED, UNSUBSCRIBED
+    suggested_model = Column(String(50), nullable=True, default="nielsen_bases")
+    sample_report_id= Column(String(50), nullable=True, default="DEMO-NIELSEN-BASES")
+    sent_count      = Column(Integer, default=0)
+    last_sent_at    = Column(DateTime, nullable=True)
+    notes           = Column(Text, nullable=True)
+    created_at      = Column(DateTime, default=datetime.utcnow)
+
+
+class OutreachLog(Base):
+    __tablename__ = "outreach_logs"
+
+    id                 = Column(Integer, primary_key=True, autoincrement=True)
+    lead_id            = Column(Integer, nullable=True, index=True)
+    recipient_email    = Column(String(200), nullable=False)
+    recipient_name     = Column(String(100), nullable=True)
+    company_name       = Column(String(200), nullable=True)
+    industry           = Column(String(100), nullable=True)
+    subject            = Column(String(300), nullable=False)
+    email_body_preview = Column(Text, nullable=True)
+    email_body_html    = Column(Text, nullable=True)
+    template_type      = Column(String(50), default="sample_report")
+    status             = Column(String(20), nullable=False) # "SUCCESS", "FAILED"
+    error_message      = Column(Text, nullable=True)
+    sent_at            = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+class OutreachSetting(Base):
+    __tablename__ = "outreach_settings"
+
+    key        = Column(String(50), primary_key=True)
+    value      = Column(String(255), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
 # ─── Helpers ───────────────────────────────────────────────────────────────────
 
 def get_db():

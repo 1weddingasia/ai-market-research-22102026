@@ -139,12 +139,12 @@ export default function HomePage() {
               Mô hình nghiên cứu
             </a>
             <Link
-              href="/results/DEMO-NIELSEN-BASES"
+              href="/thu-vien"
               className="inline-flex items-center gap-1.5 text-amber-700 hover:text-amber-900 font-bold transition-colors"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              <span>Báo cáo mẫu</span>
-              <span className="text-[10px] font-mono uppercase bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">Demo</span>
+              <span>Thư viện mẫu</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">14 Ngành</span>
             </Link>
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">
               Bảng giá
@@ -862,10 +862,10 @@ export default function HomePage() {
                 </li>
                 <li className="pt-1">
                   <Link
-                    href="/results/DEMO-NIELSEN-BASES"
+                    href="/thu-vien"
                     className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
                   >
-                    <span>Xem toàn bộ 9 ca mẫu</span>
+                    <span>Thư viện 14 ca mẫu thực nghiệm</span>
                     <span>→</span>
                   </Link>
                 </li>
