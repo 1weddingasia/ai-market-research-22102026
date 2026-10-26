@@ -296,9 +296,10 @@ async def run_simulation(survey_id: str) -> None:
         # Bắn thông báo Telegram khi báo cáo hoàn tất
         try:
             from services.telegram_service import notify_survey_completed
+            prod_name = getattr(report, "product_name", None) or product_info.get("name") or product_info.get("product_name") or survey_id
             await notify_survey_completed(
                 survey_id=survey_id,
-                product_name=report.product_name,
+                product_name=prod_name,
                 model_type=report.model_type,
                 sample_size=report.target_summary.sample_size,
                 viability_score=report.executive_summary.viability_score,

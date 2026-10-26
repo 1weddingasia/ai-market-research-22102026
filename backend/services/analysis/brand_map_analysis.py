@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 import statistics
 from models.schemas import (
-    ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
+    DemographicBreakdown, ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
     ReportPayload, TargetSummary, VerbatimQuote,
 )
 from services.duckdb_service import get_demographic_summary

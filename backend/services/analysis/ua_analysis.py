@@ -4,7 +4,7 @@ Analysis: U&A Study — Thói quen & Thái độ ngành hàng.
 from collections import Counter
 from datetime import datetime
 from models.schemas import (
-    ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
+    DemographicBreakdown, ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
     ReportPayload, TargetSummary, VerbatimQuote,
 )
 from services.duckdb_service import get_demographic_summary

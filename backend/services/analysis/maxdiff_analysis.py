@@ -6,7 +6,7 @@ Xếp hạng từ cao xuống thấp, phân tầng Core Driver vs Low Priority.
 from collections import Counter, defaultdict
 from datetime import datetime
 from models.schemas import (
-    ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
+    DemographicBreakdown, ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
     ReportPayload, TargetSummary, VerbatimQuote,
 )
 from services.duckdb_service import get_demographic_summary

@@ -14,7 +14,7 @@ CS- (Worse)  = (O + M) / (A + O + M + I) * (-1)
 from collections import Counter
 from datetime import datetime
 from models.schemas import (
-    ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
+    DemographicBreakdown, ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
     ReportPayload, TargetSummary, VerbatimQuote,
 )
 from services.duckdb_service import get_demographic_summary

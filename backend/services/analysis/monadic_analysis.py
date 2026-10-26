@@ -6,7 +6,7 @@ Chia tách mẫu N = 1000 thành 2 nhóm độc lập NA = 500, NB = 500.
 from datetime import datetime
 import statistics
 from models.schemas import (
-    ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
+    DemographicBreakdown, ExecutiveSummary, QualitativeInsights, QuantitativeMetrics,
     ReportPayload, TargetSummary, VerbatimQuote,
 )
 from services.duckdb_service import get_demographic_summary
