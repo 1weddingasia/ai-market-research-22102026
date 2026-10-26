@@ -1523,10 +1523,32 @@ def get_demo_report_payload(survey_id: str = "DEMO-NIELSEN-BASES") -> dict[str, 
     Trả về dữ liệu báo cáo chuẩn chỉnh cho cả 14 báo cáo mẫu thực nghiệm.
     Hỗ trợ nhận diện thông minh theo ID chuẩn 1-đối-1 hoặc tiền tố ngành.
     """
-    sid = (survey_id or "").upper()
+    sid = (survey_id or "").upper().strip()
 
-    # ── 1. Kiểm tra chính xác 6 báo cáo chuyên đề thư viện ─────────────
-    if "MILK" in sid or "SEN" in sid:
+    # ── 1. Khớp chính xác ID bản demo ──────────────────────────────
+    DEMO_MAP = {
+        "DEMO-NIELSEN-BASES": _get_bases_demo,
+        "DEMO-VAN-WESTENDORP": _get_van_westendorp_demo,
+        "DEMO-AB-TESTING": _get_ab_testing_demo,
+        "DEMO-MONADIC": _get_monadic_demo,
+        "DEMO-KANO": _get_kano_demo,
+        "DEMO-BRAND-MAP": _get_brand_map_demo,
+        "DEMO-UA-STUDY": _get_ua_study_demo,
+        "DEMO-DEAL-ELASTICITY": _get_deal_elasticity_demo,
+        "DEMO-MAXDIFF": _get_events_maxdiff_demo,
+        "DEMO-EVENTS-MAXDIFF": _get_events_maxdiff_demo,
+        "DEMO-MILK-SEN-BASES": _get_milk_sen_bases_demo,
+        "DEMO-DIAPER-WESTENDORP": _get_diaper_westendorp_demo,
+        "DEMO-AIR-PURIFIER-KANO": _get_air_purifier_kano_demo,
+        "DEMO-FISH-SAUCE-MONADIC": _get_fish_sauce_monadic_demo,
+        "DEMO-EDTECH-MAXDIFF": _get_edtech_maxdiff_demo,
+    }
+
+    if sid in DEMO_MAP:
+        return DEMO_MAP[sid](survey_id)
+
+    # ── 2. Khớp theo từ khóa đặc thù chuyên đề (loại trừ NIELSEN) ────
+    if "MILK" in sid or ("SEN" in sid and "NIELSEN" not in sid):
         return _get_milk_sen_bases_demo(survey_id)
     if "DIAPER" in sid or "BIM" in sid:
         return _get_diaper_westendorp_demo(survey_id)
@@ -1539,7 +1561,7 @@ def get_demo_report_payload(survey_id: str = "DEMO-NIELSEN-BASES") -> dict[str, 
     if "EVENTS" in sid or "CUOI" in sid:
         return _get_events_maxdiff_demo(survey_id)
 
-    # ── 2. Kiểm tra 9 mô hình nghiên cứu cốt lõi ───────────────────────
+    # ── 3. Khớp theo 9 mô hình nghiên cứu cốt lõi ───────────────────────
     if "VAN" in sid or "WESTENDORP" in sid or "PSM" in sid:
         return _get_van_westendorp_demo(survey_id)
     elif "AB" in sid or "SPLIT" in sid:
@@ -1547,7 +1569,7 @@ def get_demo_report_payload(survey_id: str = "DEMO-NIELSEN-BASES") -> dict[str, 
     elif "MONADIC" in sid:
         return _get_monadic_demo(survey_id)
     elif "MAXDIFF" in sid:
-        return _get_maxdiff_demo(survey_id)
+        return _get_events_maxdiff_demo(survey_id)
     elif "KANO" in sid:
         return _get_kano_demo(survey_id)
     elif "BRAND" in sid or "MAP" in sid:
