@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { api, formatVND } from '@/lib/api';
 import Logo from '@/components/Logo';
+import Footer from '@/components/Footer';
 
 interface SurveyItem {
   survey_id: string;
@@ -158,12 +159,6 @@ function TraCuuContent() {
               <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
                 Xem & Tải PDF
               </span>
-            </Link>
-            <Link
-              href="/"
-              className="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-slate-100 transition-all"
-            >
-              ← Trang chủ
             </Link>
             <Link
               href="/wizard"
@@ -566,16 +561,7 @@ function TraCuuContent() {
       )}
 
       {/* ── Footer ── */}
-      <footer className="bg-slate-900 text-white border-t border-slate-800 py-6 px-4 text-center text-xs text-slate-400">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span>INSIGHT AI Platform · insight.1booking.asia</span>
-          <div className="flex items-center gap-3 text-slate-400">
-            <span>Bảo Mật Cấp Doanh Nghiệp</span>
-            <span>·</span>
-            <span>Xác thực OTP 100% không ma sát</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

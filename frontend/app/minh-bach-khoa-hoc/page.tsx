@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import Footer from '@/components/Footer';
 
 export default function MinhBachKhoaHocPage() {
   return (
@@ -44,12 +45,6 @@ export default function MinhBachKhoaHocPage() {
               className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-amber-500/40 hover:border-amber-400 transition-all"
             >
               <span>📐 Chuẩn 9 Phương pháp</span>
-            </Link>
-            <Link
-              href="/bach-thu"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 hover:border-amber-500/50 transition-all"
-            >
-              <span>📚 Bạch thư C-Level</span>
             </Link>
             <Link
               href="/wizard"
@@ -458,36 +453,7 @@ export default function MinhBachKhoaHocPage() {
       </main>
 
       {/* ── Footer ── */}
-      <footer className="bg-slate-900 text-white border-t border-slate-800 py-8 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left">
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <Logo variant="footer" href="/" />
-            <span className="text-[11px] text-slate-400 mt-1">
-              insight.1booking.asia · Nền tảng mô phỏng thị trường bằng Tác tử AI Đa Nhân Khẩu (Synthetic Personas)
-            </span>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
-            <Link href="/" className="hover:text-amber-400 transition-colors">
-              Trang Chủ
-            </Link>
-            <span>·</span>
-            <Link href="/chuan-phuong-phap" className="hover:text-amber-400 transition-colors">
-              Chuẩn 9 Phương Pháp
-            </Link>
-            <span>·</span>
-            <Link href="/bach-thu" className="hover:text-amber-400 transition-colors">
-              Bạch Thư C-Level
-            </Link>
-            <span>·</span>
-            <Link href="/minh-bach-khoa-hoc" className="text-amber-400 font-bold underline underline-offset-4">
-              Minh Bạch Khoa Học
-            </Link>
-            <span>·</span>
-            <span>Bảo chứng Cochran 95%</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/components/Logo';
+import Footer from '@/components/Footer';
 
 export default function BachThuPage() {
   return (
@@ -33,12 +34,6 @@ export default function BachThuPage() {
               className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-300 hover:text-white px-3 py-1.5 rounded-lg border border-amber-500/40 hover:bg-amber-500/10 transition-all"
             >
               <span>📐 Chuẩn 9 Phương pháp</span>
-            </Link>
-            <Link
-              href="/minh-bach-khoa-hoc"
-              className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 hover:border-amber-500/50 transition-all"
-            >
-              <span>⚖️ Minh bạch thống kê</span>
             </Link>
             <Link
               href="/thu-vien"
@@ -733,36 +728,7 @@ export default function BachThuPage() {
       </main>
 
       {/* ── Document Footer ── */}
-      <footer className="bg-slate-900 text-white border-t border-slate-800 py-10 px-5 sm:px-8 mt-20">
-        <div className="max-w-5xl mx-auto space-y-6">
-          <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-4 sm:p-5 text-slate-300 text-xs leading-relaxed space-y-2">
-            <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <span>⚖️</span>
-              <span>Tuyên bố độc lập:</span>
-            </div>
-            <p className="text-slate-400">
-              Nền tảng INSIGHT AI được nghiên cứu và phát triển hoàn toàn độc lập. Mọi phân tích được thực hiện bằng mô hình tác tử AI độc quyền kết hợp các phương pháp luận học thuật thực chứng, giúp doanh nghiệp tối ưu chi phí và kiểm chứng giả thuyết thị trường trước khi ra quyết định kinh doanh.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 text-center md:text-left pt-4 border-t border-slate-800">
-            <div className="flex flex-col items-center md:items-start gap-1">
-              <Logo variant="footer" href="/" />
-              <span className="text-[11px] text-slate-400 mt-1">insight.1booking.asia · Bản quyền thuộc 1booking Engine</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-slate-400">
-              <Link href="/minh-bach-khoa-hoc" className="text-amber-400 hover:text-amber-300 underline font-semibold">
-                Minh bạch thống kê MoE ±3.1%
-              </Link>
-              <span>·</span>
-              <span>Tuân thủ Luật 91/2025/QH15</span>
-              <span>·</span>
-              <span>Chuẩn Cochran 95%</span>
-            </div>
-            <div>© 2026 INSIGHT AI Platform. All rights reserved.</div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

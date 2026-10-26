@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import Footer from '@/components/Footer';
 
 interface MethodologyDetail {
   id: string;
@@ -505,9 +506,9 @@ export default function ChuanPhuongPhapPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Logo href="/" />
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
-            <Link href="/" className="hover:text-slate-900 transition-colors">
-              Trang Chủ
+          <nav className="hidden sm:flex items-center gap-6 text-xs font-semibold text-slate-600">
+            <Link href="/chuan-phuong-phap" className="text-amber-700 font-bold">
+              Chuẩn 9 Phương Pháp
             </Link>
             <Link
               href="/thu-vien"
@@ -519,15 +520,6 @@ export default function ChuanPhuongPhapPage() {
               <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
                 Xem & Tải PDF
               </span>
-            </Link>
-            <Link href="/chuan-phuong-phap" className="text-amber-700 font-bold">
-              Tiêu Chuẩn 9 Phương Pháp
-            </Link>
-            <Link href="/minh-bach-khoa-hoc" className="hover:text-slate-900 transition-colors">
-              Minh Bạch Khoa Học
-            </Link>
-            <Link href="/bach-thu" className="hover:text-slate-900 transition-colors">
-              Bạch Thư C-Level
             </Link>
           </nav>
 
@@ -825,6 +817,8 @@ export default function ChuanPhuongPhapPage() {
 
       </main>
 
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HeroSlider from '@/components/HeroSlider';
 import Logo from '@/components/Logo';
+import Footer from '@/components/Footer';
 
 export default function HomePage() {
   const router = useRouter();
@@ -133,14 +134,11 @@ export default function HomePage() {
           {/* Logo INSIGHT AI */}
           <Logo href="/" />
 
-          {/* Navigation Tinh Gọn (4 mục cốt lõi, không rối mắt) */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold text-slate-600 shrink-0">
-            <a href="#phuong-phap" className="hover:text-slate-900 transition-colors">
-              Mô hình nghiên cứu
-            </a>
+          {/* Navigation Tinh Gọn (Giữ đúng 2 mục cốt lõi, không rối mắt) */}
+          <nav className="hidden md:flex items-center gap-6 xl:gap-8 text-xs font-semibold text-slate-600 shrink-0">
             <Link
               href="/chuan-phuong-phap"
-              className="text-amber-800 hover:text-amber-950 font-bold transition-colors"
+              className="hover:text-slate-900 transition-colors"
             >
               Chuẩn 9 Phương pháp
             </Link>
@@ -155,29 +153,10 @@ export default function HomePage() {
                 Xem & Tải PDF
               </span>
             </Link>
-            <a href="#bang-gia" className="hover:text-slate-900 transition-colors">
-              Bảng giá
-            </a>
-            <Link
-              href="/minh-bach-khoa-hoc"
-              className="hover:text-slate-900 transition-colors"
-            >
-              Minh bạch khoa học
-            </Link>
           </nav>
 
           {/* Actions bên phải */}
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <Link
-              href="/tra-cuu"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 py-2 px-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition-all cursor-pointer"
-            >
-              <svg className="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <span>Tra cứu</span>
-            </Link>
-
             <Link
               href="/wizard"
               className="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4.5 rounded-xl shadow-xs transition-all"
@@ -830,169 +809,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Footer Tinh Gọn, Đẳng Cấp & Chuẩn Pháp Lý ── */}
-      <footer className="bg-slate-950 text-white border-t border-slate-800 pt-12 sm:pt-16 pb-10 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
-          {/* 4-Column Structured Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 text-xs">
-            {/* Col 1: Brand & Media Positioning */}
-            <div className="space-y-3.5 lg:pr-4">
-              <Logo variant="footer" href="/" />
-              <p className="text-slate-400 text-xs leading-relaxed">
-                Chúng tôi giúp bạn kiểm thử ý tưởng với 1.000 khách hàng tiềm năng giả lập trong 60 giây, giúp tiết kiệm 95% chi phí và thời gian trước khi tung sản phẩm thật ra thị trường.
-              </p>
-              <div className="pt-1 flex flex-wrap gap-2 text-[10px] font-mono">
-                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">
-                  Cochran 95%
-                </span>
-                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-emerald-400">
-                  Privacy-by-Design
-                </span>
-                <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
-                  VietQR Pro
-                </span>
-              </div>
-            </div>
-
-            {/* Col 2: Models & Solutions */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
-                Mô Hình Nghiên Cứu
-              </h4>
-              <ul className="space-y-2 text-slate-400">
-                <li>
-                  <a href="#phuong-phap" className="hover:text-white transition-colors">
-                    Nielsen BASES (Kiểm định ý tưởng)
-                  </a>
-                </li>
-                <li>
-                  <a href="#phuong-phap" className="hover:text-white transition-colors">
-                    Van Westendorp (Định giá tối ưu)
-                  </a>
-                </li>
-                <li>
-                  <a href="#phuong-phap" className="hover:text-white transition-colors">
-                    Kantar Link (Thử nghiệm A/B bao bì)
-                  </a>
-                </li>
-                <li>
-                  <a href="#phuong-phap" className="hover:text-white transition-colors">
-                    U&amp;A Study (Hành vi &amp; Thói quen)
-                  </a>
-                </li>
-                <li className="pt-1">
-                  <Link
-                    href="/thu-vien"
-                    className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1.5 transition-colors"
-                  >
-                    <span>Kho Báo Cáo Đối Sánh Ngành 2026 (Xem & Tải PDF)</span>
-                    <span>→</span>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 3: Academic & Documentation */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
-                Cơ Sở Khoa Học
-              </h4>
-              <ul className="space-y-2 text-slate-400">
-                <li>
-                  <Link href="/chuan-phuong-phap" className="hover:text-white transition-colors">
-                    Tiêu Chuẩn 9 Phương Pháp Nghiên Cứu
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/minh-bach-khoa-hoc" className="hover:text-white transition-colors">
-                    Minh Bạch Khoa Học &amp; Thống Kê
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/bach-thu" className="hover:text-white transition-colors">
-                    Bạch Thư Phương Pháp Luận C-Level
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/minh-bach-khoa-hoc" className="hover:text-white transition-colors">
-                    Khung đối chuẩn Niên giám GSO
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/tra-cuu" className="hover:text-white transition-colors">
-                    Tra cứu báo cáo bảo mật
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 4: Support & Operations */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
-                Vận Hành &amp; Hỗ Trợ
-              </h4>
-              <ul className="space-y-2 text-slate-400">
-                <li>
-                  <Link href="/wizard" className="hover:text-white transition-colors">
-                    Khởi tạo khảo sát trực tuyến
-                  </Link>
-                </li>
-                <li>
-                  <span className="text-slate-400">Cổng thanh toán: </span>
-                  <span className="text-slate-200">VietQR 24/7</span>
-                </li>
-                <li>
-                  <span className="text-slate-400">Email: </span>
-                  <a href="mailto:hi@1booking.asia" className="text-amber-400 hover:underline">
-                    hi@1booking.asia
-                  </a>
-                </li>
-                <li>
-                  <span className="text-slate-400">Hệ sinh thái: </span>
-                  <a href="https://1booking.asia" target="_blank" rel="noreferrer" className="text-slate-300 hover:text-white">
-                    1booking.asia
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Legal Disclaimer Box — Điều khoản Khước từ Trách nhiệm Pháp lý */}
-          <div className="pt-6 border-t border-slate-900">
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 text-slate-300 text-xs sm:text-sm leading-relaxed space-y-3 shadow-inner">
-              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
-                <span>⚖️</span>
-                <span>Điều khoản khước từ trách nhiệm (Legal Disclaimer)</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-                INSIGHT AI là công cụ mô phỏng giả lập tác tử AI hỗ trợ thử nghiệm ý tưởng và tối ưu hóa chi phí nghiên cứu ban đầu. Kết quả khảo sát mang tính chất tham khảo khoa học, không thay thế hoàn toàn cho các quyết định đầu tư tài chính hoặc pháp lý thực tế của doanh nghiệp.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
-                Hệ thống vận hành theo nguyên tắc <em className="text-slate-200">Privacy-by-Design</em>, toàn bộ hồ sơ khách hàng giả lập là dữ liệu tổng hợp (Synthetic Personas), không thu thập hoặc lưu trữ thông tin định danh cá nhân thật (PII-free) của bất kỳ công dân nào, đáp ứng 100% quy định của <em className="text-slate-200">Nghị định 13/2023/NĐ-CP</em> và <em className="text-slate-200">Luật Bảo vệ dữ liệu cá nhân</em>.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal pt-2.5 border-t border-slate-800">
-                <strong className="text-slate-300 not-italic">Tuyên bố độc lập:</strong> Nền tảng INSIGHT AI được nghiên cứu và phát triển hoàn toàn độc lập. Mọi phân tích được thực hiện bằng mô hình tác tử AI độc quyền kết hợp các phương pháp luận học thuật thực chứng, giúp doanh nghiệp tối ưu chi phí và kiểm chứng giả thuyết thị trường trước khi ra quyết định kinh doanh.
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom Copyright Bar */}
-          <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-400 text-center sm:text-left">
-            <span>
-              © 2026 INSIGHT AI Platform · Nền tảng Nghiên cứu Thị trường bằng Tác tử AI Mô phỏng. All rights reserved.
-            </span>
-            <div className="flex items-center gap-4 text-slate-400 font-medium">
-              <Link href="/minh-bach-khoa-hoc" className="hover:text-amber-400 transition-colors">
-                Bảo vệ dữ liệu PII-Free
-              </Link>
-              <span>·</span>
-              <Link href="/bach-thu" className="hover:text-amber-400 transition-colors">
-                Chuẩn Cochran 95%
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 }
