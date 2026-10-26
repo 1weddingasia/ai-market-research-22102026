@@ -117,7 +117,7 @@ export default function BachThuPage() {
             <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Tốc độ trích xuất</div>
               <div className="text-xl sm:text-2xl font-serif font-bold text-sky-400 mt-1">60 Giây</div>
-              <div className="text-[11px] text-slate-400">Báo cáo Executive 6 trang</div>
+              <div className="text-[11px] text-slate-400">Báo cáo chiến lược A4 chuyên sâu</div>
             </div>
           </div>
         </div>
@@ -307,7 +307,7 @@ export default function BachThuPage() {
               {
                 step: '04',
                 title: 'Mô hình hóa kinh tế lượng & Xuất báo cáo C-Level',
-                desc: 'Dữ liệu được đưa vào xử lý qua các khung phân tích kinh điển gồm Nielsen BASES (dự báo tỷ lệ thử nghiệm Trial Rate), Van Westendorp PSM (đồ thị 4 đường giá OPP/IDP), Kantar Link A/B Testing (đối đầu bao bì/thông điệp) và U&A Study (khoảng trống ngành hàng Unmet Needs) để xuất bản báo cáo Executive 6 trang.',
+                desc: 'Dữ liệu được đưa vào xử lý qua các khung phân tích kinh điển gồm Nielsen BASES (dự báo tỷ lệ thử nghiệm Trial Rate), Van Westendorp PSM (đồ thị 4 đường giá OPP/IDP), Kantar Link A/B Testing (đối đầu bao bì/thông điệp) và U&A Study (khoảng trống ngành hàng Unmet Needs) để xuất bản bản in chiến lược A4 chuyên sâu đa trang.',
                 tech: 'Econometric Modeling Suite · A4 Layout Generator · SHA256 Verification',
               },
             ].map((s) => (

@@ -22,8 +22,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
+from pathlib import Path
 
-load_dotenv()
+_backend_env = Path(__file__).resolve().parent / ".env"
+if _backend_env.exists():
+    load_dotenv(dotenv_path=_backend_env)
+else:
+    load_dotenv()
 
 from database import init_db
 from routers import export, payment, stream, survey, telegram, chat, outreach

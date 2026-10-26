@@ -130,7 +130,7 @@ def send_survey_completed_email(
                                     <tr>
                                         <td align="center" style="padding-top: 12px;">
                                             <a href="{print_url}" target="_blank" style="color: #b45309; text-decoration: none; font-size: 12px; font-weight: bold;">
-                                                📄 Xem & Xuất Báo Cáo In PDF A4 (6 Trang Chuẩn C-Level)
+                                                📄 Xem & Xuất Bản In Chiến Lược A4 Chuyên Sâu
                                             </a>
                                         </td>
                                     </tr>

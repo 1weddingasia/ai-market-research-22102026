@@ -1,7 +1,7 @@
 """
 Hệ thống dữ liệu mẫu thực nghiệm (Full 9 Demo Reports) cho 9 phương pháp nghiên cứu thị trường.
 Mỗi bản demo là một trường hợp thực tế hoàn chỉnh, số liệu logic và đồng bộ 100% giữa
-trang Dashboard trực tuyến (4 Tab) và trang In ấn A4 (6 Trang).
+trang Dashboard trực tuyến (4 Tab) và Bản in chiến lược A4 chuyên sâu đa trang.
 """
 
 from datetime import datetime

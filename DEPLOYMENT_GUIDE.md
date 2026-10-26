@@ -8,7 +8,7 @@ Tài liệu này tổng hợp toàn bộ quy trình chuẩn hóa và hướng d�
 
 | Mảnh ghép | Nền tảng | Vai trò & Trách nhiệm |
 | :--- | :--- | :--- |
-| **1. Mặt tiền (Frontend)** | **Vercel** | Giao diện Next.js, kết xuất báo cáo Executive 6 trang (`/results/[id]/print`), gán domain `insight.1booking.asia`. |
+| **1. Mặt tiền (Frontend)** | **Vercel** | Giao diện Next.js, kết xuất Bản In Chiến Lược A4 Chuyên Sâu Đa Trang (`/results/[id]/print`), gán domain `insight.1booking.asia`. |
 | **2. Bộ não xử lý (Backend API)** | **Render.com** | FastAPI (Python 3.11+), xử lý Webhook SePay, phân tầng Quota GSO, điều phối OpenAI GPT-4o-mini, xuất báo cáo PDF/HTML. |
 | **3. Kho dữ liệu xã hội học** | **Cloudflare R2** | Lưu file `personas_vn_1m.parquet` (2.21 GB), DuckDB đọc phân tầng qua giao thức S3/httpfs. |
 | **4. Cơ sở dữ liệu vận hành** | **Supabase PostgreSQL** | Lưu trữ đơn hàng (`surveys`), kết quả khảo sát 5 model (`result_json`) và luồng Live Telemetry (`survey_logs`). |
@@ -125,4 +125,4 @@ Dự án đã có sẵn file `render.yaml` ở thư mục gốc.
    - Bắn dữ liệu SSE thời gian thực lên màn hình Live Telemetry `/processing/[id]`.
 5. Sau ~60 giây:
    - Ma trận phân tích tính toán xong, lưu trọn vẹn kết quả vào cột `result_json` trên Supabase.
-   - Tự động chuyển hướng khách hàng sang màn hình Báo cáo Executive 6 trang `/results/[id]` và `/results/[id]/print` để xuất file PDF A4 chuẩn quốc tế.
+   - Tự động chuyển hướng khách hàng sang màn hình Báo cáo Executive Bản In Chiến Lược A4 Chuyên Sâu Đa Trang `/results/[id]` và `/results/[id]/print` để xuất file PDF A4 chuẩn quốc tế.

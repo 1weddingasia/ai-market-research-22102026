@@ -199,7 +199,7 @@ export default function Step1ModelSelect() {
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all shrink-0"
-                  title="Mở xem trực tiếp bản in PDF 6 trang A4 chuẩn xuất bản"
+                  title="Mở xem trực tiếp bản in chiến lược A4 chuyên sâu đa trang"
                 >
                   <span>📄</span>
                   <span>Bản In A4</span>

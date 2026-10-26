@@ -34,7 +34,7 @@ models = {
 header = """/**
  * Hệ thống 9 báo cáo mẫu thực nghiệm (Full 9 Demo Reports) cho 9 phương pháp nghiên cứu thị trường.
  * Đồng bộ 100% với backend/models/demo_data.py.
- * Đảm bảo số liệu và giao diện giữa Dashboard 4 Tab và Trang In A4 6 Trang hoàn toàn đồng nhất.
+ * Đảm bảo số liệu và giao diện giữa Dashboard 4 Tab và Bản in chiến lược A4 chuyên sâu đa trang hoàn toàn đồng nhất.
  */
 
 import type { ReportPayload } from './api';

@@ -12,9 +12,14 @@ from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+_backend_env = Path(__file__).resolve().parent / ".env"
+if _backend_env.exists():
+    load_dotenv(dotenv_path=_backend_env)
+else:
+    load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./surveys.db")
 
@@ -161,6 +166,64 @@ class OutreachSetting(Base):
     key        = Column(String(50), primary_key=True)
     value      = Column(String(255), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+# ─── Multi-Industry Benchmark Intelligence & Gated Lead Capture ────────────────
+
+class BenchmarkReport(Base):
+    """
+    Bảng lưu trữ Báo Cáo Đối Sánh Ngành Hàng Kỳ (Industry Benchmarks) đa ngành.
+    Hỗ trợ xuất bản theo Tuần/Tháng/Quý/Năm mà không cần sửa code hay build lại web.
+    """
+    __tablename__ = "benchmark_reports"
+
+    id               = Column(String(100), primary_key=True)   # e.g. "DEMO-NIELSEN-BASES", "BENCHMARK-2026-Q1-FNB"
+    title            = Column(String(300), nullable=False)     # Tên hiển thị báo cáo
+    slug             = Column(String(200), unique=True, index=True, nullable=False)
+    industry         = Column(String(50), nullable=False, index=True) # fnb, cosmetics, appliances, nutrition, lifestyle...
+    industry_label   = Column(String(100), nullable=False)
+    period_type      = Column(String(30), default="quarterly") # monthly | quarterly | annual | case_study
+    period_label     = Column(String(50), default="Quý 1/2026", index=True)
+    model_type       = Column(String(50), nullable=False, index=True) # nielsen_bases, van_westendorp, kano, maxdiff...
+    model_label      = Column(String(100), nullable=False)
+    company_name     = Column(String(200), nullable=False)
+    product_name     = Column(String(300), nullable=False)
+    sample_size      = Column(Integer, default=1000)
+    score_or_verdict = Column(String(100), nullable=True)
+    score_number     = Column(Integer, nullable=True)
+    score_color      = Column(String(100), nullable=True)
+    summary          = Column(Text, nullable=True)
+    findings_json    = Column(Text, nullable=True)   # JSON string list
+    tags_json        = Column(Text, nullable=True)   # JSON string list
+    full_report_json = Column(Text, nullable=False)  # Bản in chiến lược A4 chuyên sâu đa trang (độ dài linh hoạt theo dữ liệu)
+    view_count       = Column(Integer, default=0)
+    download_count   = Column(Integer, default=0)
+    is_published     = Column(Boolean, default=True, index=True)
+    created_at       = Column(DateTime, default=datetime.utcnow)
+    updated_at       = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class ReportDownloadLead(Base):
+    """
+    Bảng lưu trữ hồ sơ Lead Doanh Nghiệp (B2B) khi tải Bản In Chiến Lược A4.
+    Kích hoạt Telegram Bot thông báo tức thì cho Ban Quản Trị.
+    """
+    __tablename__ = "report_download_leads"
+
+    id               = Column(Integer, primary_key=True, autoincrement=True)
+    full_name        = Column(String(100), nullable=False)
+    phone_zalo       = Column(String(50), nullable=False, index=True)
+    company_name     = Column(String(200), nullable=False)
+    work_email       = Column(String(200), nullable=True, index=True)   # Tùy chọn để tối đa hóa conversion
+    job_title        = Column(String(100), nullable=True)              # Tùy chọn
+    report_id        = Column(String(100), nullable=False, index=True)
+    report_title     = Column(String(300), nullable=True)
+    industry         = Column(String(50), nullable=True)
+    is_work_email    = Column(Boolean, default=False)                  # True nếu tên miền công ty riêng
+    lead_score       = Column(String(20), default="WARM")              # 'HOT' (domain công ty) | 'WARM' (gmail/zalo)
+    notes            = Column(Text, nullable=True)
+    contacted_status = Column(String(30), default="NEW")               # NEW, CONTACTED, PROPOSAL_SENT, CONVERTED
+    created_at       = Column(DateTime, default=datetime.utcnow, index=True)
 
 
 # ─── Helpers ───────────────────────────────────────────────────────────────────

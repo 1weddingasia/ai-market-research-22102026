@@ -984,13 +984,13 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
       <div className="bg-[#0A192F] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-amber-500/30">
         <div>
           <div className="inline-block px-2.5 py-0.5 rounded bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/40 uppercase tracking-wider mb-2 font-mono">
-            BÁO CÁO EXECUTIVE 6 TRANG CHUẨN KANTAR / MCKINSEY
+            BÁO CÁO EXECUTIVE CHIẾN LƯỢC A4 CHUẨN KANTAR / MCKINSEY
           </div>
           <h4 className="font-serif text-xl sm:text-2xl font-bold text-white mb-1">
             Xuất Bản Báo Cáo Chiến Lược Toàn Văn (A4 Print / PDF)
           </h4>
           <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
-            Hồ sơ báo cáo đóng dấu mộc số bảo mật 1booking Insight Engine, thiết kế chuẩn A4 Landscape / Portrait gồm đủ 6 trang: Trang bìa, Kết luận HĐQT, Đối chuẩn Niên giám GSO N={report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'}, Biểu đồ kinh tế học, 15 Trích dẫn VoC và Lộ trình 30-60-90 ngày.
+            Hồ sơ báo cáo đóng dấu mộc số bảo mật 1booking Insight Engine, thiết kế chuẩn bản in chiến lược A4 chuyên sâu đa trang (độ dài linh hoạt theo dữ liệu): Trang bìa, Kết luận HĐQT, Đối chuẩn Niên giám GSO N={report.target_summary?.sample_size?.toLocaleString('vi-VN') || '1.000'}, Biểu đồ kinh tế học, 15 Trích dẫn VoC và Lộ trình 30-60-90 ngày.
           </p>
         </div>
 
@@ -1001,7 +1001,7 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
           >
-            <span>🖨️ Mở Bản In / Lưu PDF A4 (6 Trang)</span>
+            <span>🖨️ Mở Bản In / Lưu PDF A4 Chiến Lược</span>
           </a>
 
           <a
@@ -1164,7 +1164,7 @@ export default function ResultsPage() {
               className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3 sm:px-3.5 rounded-lg shadow-sm transition-all"
             >
               <span>🖨️</span>
-              <span className="hidden sm:inline">Xuất Báo Cáo 6 Trang (A4)</span>
+              <span className="hidden sm:inline">Xuất Bản In A4 Chiến Lược</span>
               <span className="sm:hidden">Xuất A4</span>
             </a>
 

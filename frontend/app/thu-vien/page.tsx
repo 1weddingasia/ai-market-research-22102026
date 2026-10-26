@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import { api } from '@/lib/api';
 
 interface CaseStudy {
   id: string;
@@ -318,10 +319,130 @@ const CATEGORIES = [
 ];
 
 export default function ThuVienPage() {
+  const [caseList, setCaseList] = useState<CaseStudy[]>(CASE_STUDIES);
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredCases = CASE_STUDIES.filter((c) => {
+  // ── Gated Lead Download State (Lưu phiên qua localStorage) ──
+  const [selectedCaseForDownload, setSelectedCaseForDownload] = useState<CaseStudy | null>(null);
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phoneZalo: '',
+    companyName: '',
+    workEmail: '',
+    jobTitle: '',
+  });
+  const [downloadLoading, setDownloadLoading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [downloadError, setDownloadError] = useState('');
+  const [hasSavedProfile, setHasSavedProfile] = useState(false);
+
+  // Nạp danh sách báo cáo trực tiếp từ Supabase Database (Real-time update)
+  useEffect(() => {
+    api.getBenchmarkReports()
+      .then((res) => {
+        if (res && res.reports && res.reports.length > 0) {
+          setCaseList(res.reports);
+        }
+      })
+      .catch(() => {
+        // Fallback tự nhiên sang CASE_STUDIES sẵn có
+      });
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('insight_lead_profile');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.fullName && parsed.phoneZalo && parsed.companyName) {
+          setHasSavedProfile(true);
+          setFormData(parsed);
+        }
+      }
+    } catch {}
+  }, []);
+
+  const handlePrintClick = (c: CaseStudy, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (hasSavedProfile) {
+      // Đã có profile lưu trong session -> mở luôn bản in không cần bắt điền lại
+      window.open(`/results/${c.demoId}/print`, '_blank');
+      // Bắn tracking tải ngầm
+      try {
+        const saved = localStorage.getItem('insight_lead_profile');
+        if (saved) {
+          const p = JSON.parse(saved);
+          api.submitDownloadLead({
+            full_name: p.fullName,
+            phone_zalo: p.phoneZalo,
+            company_name: p.companyName,
+            work_email: p.workEmail,
+            job_title: p.jobTitle,
+            report_id: c.demoId,
+            report_title: c.productName,
+            industry: c.category,
+          }).catch(() => {});
+        }
+      } catch {}
+    } else {
+      setSelectedCaseForDownload(c);
+      setDownloadError('');
+      setDownloadSuccess(false);
+    }
+  };
+
+  const handleDownloadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setDownloadError('');
+    if (!formData.fullName.trim()) {
+      setDownloadError('Vui lòng nhập Họ và tên.');
+      return;
+    }
+    if (!formData.phoneZalo.trim()) {
+      setDownloadError('Vui lòng nhập Số Zalo để nhận tài liệu.');
+      return;
+    }
+    if (!formData.companyName.trim()) {
+      setDownloadError('Vui lòng nhập Tên công ty / Thương hiệu.');
+      return;
+    }
+
+    setDownloadLoading(true);
+    try {
+      if (selectedCaseForDownload) {
+        await api.submitDownloadLead({
+          full_name: formData.fullName.trim(),
+          phone_zalo: formData.phoneZalo.trim(),
+          company_name: formData.companyName.trim(),
+          work_email: formData.workEmail.trim() || undefined,
+          job_title: formData.jobTitle.trim() || undefined,
+          report_id: selectedCaseForDownload.demoId,
+          report_title: selectedCaseForDownload.productName,
+          industry: selectedCaseForDownload.category,
+        });
+
+        // Lưu profile vào localStorage để không phải điền lại lần 2
+        localStorage.setItem('insight_lead_profile', JSON.stringify(formData));
+        setHasSavedProfile(true);
+        setDownloadSuccess(true);
+
+        const printUrl = `/results/${selectedCaseForDownload.demoId}/print`;
+        setTimeout(() => {
+          setSelectedCaseForDownload(null);
+          setDownloadSuccess(false);
+          window.open(printUrl, '_blank');
+        }, 800);
+      }
+    } catch (err: any) {
+      setDownloadError(err.message || 'Không thể gửi thông tin. Vui lòng thử lại.');
+    } finally {
+      setDownloadLoading(false);
+    }
+  };
+
+  const filteredCases = caseList.filter((c) => {
     const matchCat = activeCategory === 'all' || c.category === activeCategory;
     const matchSearch =
       searchTerm.trim() === '' ||
@@ -534,14 +655,14 @@ export default function ThuVienPage() {
                   >
                     Xem Dashboard Tương Tác &rarr;
                   </Link>
-                  <Link
-                    href={`/results/${c.demoId}/print`}
-                    target="_blank"
-                    className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-slate-200"
-                    title="Mở bản in A4 tiêu chuẩn 6 trang"
+                  <button
+                    type="button"
+                    onClick={(e) => handlePrintClick(c, e)}
+                    className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-slate-200 cursor-pointer"
+                    title="Mở bản in chiến lược A4 chuyên sâu đa trang (độ dài linh hoạt theo dữ liệu)"
                   >
                     📄 Bản In A4
-                  </Link>
+                  </button>
                   <Link
                     href={`/wizard?model=${c.modelType}`}
                     className="text-center bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-amber-200"
@@ -589,6 +710,167 @@ export default function ThuVienPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Gated Content Lead Capture Modal ── */}
+      {selectedCaseForDownload && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative overflow-hidden">
+            {/* Top decorative bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600" />
+
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <span className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-xl shrink-0">
+                  📄
+                </span>
+                <div>
+                  <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
+                    Tải Bản In Chiến Lược A4 Chuyên Sâu
+                  </h3>
+                  <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mt-0.5">
+                    Hồ Sơ Nghiên Cứu #{selectedCaseForDownload.demoId} · Quy Mô N = 1.000 Personas
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedCaseForDownload(null)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer text-sm shrink-0"
+                title="Đóng cửa sổ"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed mb-5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              Bạn đang yêu cầu trọn bộ tài liệu: <strong>{selectedCaseForDownload.productName}</strong>. Vui lòng cung cấp thông tin để hệ thống mở quyền truy cập và chuẩn bị bản in PDF A4 chất lượng cao.
+            </p>
+
+            <form onSubmit={handleDownloadSubmit} className="space-y-3.5">
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                  Họ và tên của bạn <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="VD: Nguyễn Hoàng Minh"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                    Số điện thoại Zalo <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="VD: 0912345678"
+                    value={formData.phoneZalo}
+                    onChange={(e) => setFormData({ ...formData, phoneZalo: e.target.value })}
+                    className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                    Doanh nghiệp / Đơn vị <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="VD: Cà Phê Highlands / Masan..."
+                    value={formData.companyName}
+                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Optional Fields Toggle */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setShowOptionalFields(!showOptionalFields)}
+                  className="text-[11px] font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1 cursor-pointer py-1"
+                >
+                  <span>{showOptionalFields ? '▲ Thu gọn thông tin công tác' : '▼ Thêm Email & Chức danh (Tùy chọn - Nhận thêm dữ liệu Excel thô)'}</span>
+                </button>
+
+                {showOptionalFields && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 animate-in fade-in duration-150">
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                        Email công tác (Tùy chọn)
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="email@congty.com"
+                        value={formData.workEmail}
+                        onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                        Chức vụ / Phòng ban (Tùy chọn)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="VD: Brand Manager, Founder..."
+                        value={formData.jobTitle}
+                        onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {downloadError && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 leading-relaxed">
+                  ⚠️ {downloadError}
+                </div>
+              )}
+
+              {downloadSuccess && (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium leading-relaxed">
+                  ✅ Xác nhận thành công! Đang mở Bản In PDF A4...
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={downloadLoading || downloadSuccess}
+                  className="w-full py-3 px-5 text-xs font-bold text-slate-950 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {downloadLoading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                      <span>Đang xác nhận dữ liệu...</span>
+                    </>
+                  ) : (
+                    <span>Xác Nhận & Mở Bản In PDF A4 Ngay &rarr;</span>
+                  )}
+                </button>
+              </div>
+
+              {/* Privacy Notice (Chuẩn Pháp Lý & Tăng Độ Tin Cậy) */}
+              <p className="text-[11px] text-slate-500 text-center leading-relaxed pt-1 flex items-center justify-center gap-1.5">
+                <span>🔒</span>
+                <span>Insight AI cam kết bảo mật thông tin và chỉ sử dụng để gửi tài liệu chuyên môn theo yêu cầu của bạn.</span>
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -375,7 +375,7 @@ export default function HomePage() {
               BÁO CÁO THẨM ĐỊNH
             </span>
             <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
-              PDF 6 Trang A4
+              Bản In Chiến Lược A4
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
               Hồ sơ chiến lược độc bản trình trực tiếp HĐQT
@@ -495,7 +495,7 @@ export default function HomePage() {
                         href={`${demoUrl}/print`}
                         target="_blank"
                         className="inline-flex items-center justify-center gap-1 px-3 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-bold transition-all shrink-0"
-                        title="Mở xem trực tiếp bản in PDF 6 trang A4 chuẩn xuất bản"
+                        title="Mở xem trực tiếp bản in chiến lược A4 chuyên sâu đa trang"
                       >
                         <span>📄</span>
                         <span>Bản In A4</span>
@@ -761,7 +761,7 @@ export default function HomePage() {
               <span>Báo cáo có đủ tiêu chuẩn để trình Hội Đồng Quản Trị hoặc Nhà Đầu Tư không?</span>
             </h3>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed pl-0 sm:pl-8 font-normal">
-              Hoàn toàn đủ tiêu chuẩn. Báo cáo được xây dựng theo chuẩn <strong>Executive Briefing 4 Phân mục</strong> (Tóm lược điều hành, Phân tích định lượng, Tiếng nói thị trường và Đề xuất hành động). Hệ thống cung cấp nút bấm <strong>Xuất Báo Cáo 6 Trang (A4)</strong> với bố cục sang trọng, có thông tin doanh nghiệp, mã độc bản bảo mật và biểu đồ trực quan, sẵn sàng in ấn hoặc đính kèm vào hồ sơ gọi vốn.
+              Hoàn toàn đủ tiêu chuẩn. Báo cáo được xây dựng theo chuẩn <strong>Executive Briefing 4 Phân mục</strong> (Tóm lược điều hành, Phân tích định lượng, Tiếng nói thị trường và Đề xuất hành động). Hệ thống cung cấp nút bấm <strong>Xuất Bản In A4 Chiến Lược</strong> với bố cục sang trọng, có thông tin doanh nghiệp, mã độc bản bảo mật và biểu đồ trực quan, sẵn sàng in ấn hoặc đính kèm vào hồ sơ gọi vốn.
             </p>
           </div>
         </div>
@@ -810,7 +810,7 @@ export default function HomePage() {
               <span className="text-emerald-400 font-bold">✓</span> Độ tin cậy 95% chuẩn Cochran
             </span>
             <span className="flex items-center gap-2">
-              <span className="text-emerald-400 font-bold">✓</span> Xuất báo cáo PDF A4 6 trang
+              <span className="text-emerald-400 font-bold">✓</span> Xuất bản in chiến lược A4 chuyên sâu
             </span>
             <span className="flex items-center gap-2">
               <span className="text-emerald-400 font-bold">✓</span> Bảo mật dữ liệu tuyệt đối (PII-Free)

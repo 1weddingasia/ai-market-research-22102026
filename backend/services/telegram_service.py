@@ -8,16 +8,24 @@ import os
 import json
 import httpx
 import structlog
+from pathlib import Path
+from dotenv import load_dotenv
 from typing import Optional, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 log = structlog.get_logger(__name__)
 
+# Tự động nạp .env từ thư mục backend
+_backend_env = Path(__file__).resolve().parent.parent / ".env"
+if _backend_env.exists():
+    load_dotenv(dotenv_path=_backend_env)
+else:
+    load_dotenv()
+
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID", "")
+TELEGRAM_ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID", "584207194")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://insight.1booking.asia")
-TELEGRAM_API_BASE = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
 
 async def send_telegram_message(
@@ -27,12 +35,14 @@ async def send_telegram_message(
     parse_mode: str = "HTML",
 ) -> bool:
     """Gửi tin nhắn Telegram qua HTTP Bot API trực tiếp tới Quản trị viên."""
-    target_chat_id = chat_id or os.getenv("TELEGRAM_ADMIN_CHAT_ID", "")
-    if not target_chat_id or not TELEGRAM_BOT_TOKEN:
-        log.warning("Telegram target_chat_id or token not configured", target_chat_id=target_chat_id)
+    bot_token = (os.getenv("TELEGRAM_BOT_TOKEN") or TELEGRAM_BOT_TOKEN or "").strip()
+    target_chat_id = (chat_id or os.getenv("TELEGRAM_ADMIN_CHAT_ID") or TELEGRAM_ADMIN_CHAT_ID or "584207194").strip()
+
+    if not target_chat_id or not bot_token:
+        log.warning("Telegram target_chat_id or token not configured", target_chat_id=target_chat_id, has_token=bool(bot_token))
         return False
 
-    url = f"{TELEGRAM_API_BASE}/sendMessage"
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     payload: dict[str, Any] = {
         "chat_id": str(target_chat_id).strip(),
         "text": text,
@@ -132,7 +142,7 @@ async def notify_survey_completed(
         f"• Cỡ mẫu: <b>N = {sample_size:,} Personas</b>\n"
         f"• Điểm khả thi: <b>{viability_score}/100</b> ({score_badge})\n"
         f"• Kết luận: <i>{verdict}</i>\n\n"
-        f"Báo cáo 6 trang A4 và dữ liệu 4 tab đã sẵn sàng:"
+        f"Báo cáo chiến lược chuyên sâu và ma trận số liệu đã sẵn sàng:"
     )
     inline_keyboard = {
         "inline_keyboard": [
@@ -140,7 +150,7 @@ async def notify_survey_completed(
                 {"text": "📊 Báo Cáo Trực Tuyến (4 Tab)", "url": f"{FRONTEND_URL}/results/{survey_id}"},
             ],
             [
-                {"text": "🖨️ Bản In A4 PDF Chiến Lược (6 Trang)", "url": f"{FRONTEND_URL}/results/{survey_id}/print"},
+                {"text": "🖨️ Bản In A4 PDF Chiến Lược Chuyên Sâu", "url": f"{FRONTEND_URL}/results/{survey_id}/print"},
             ]
         ]
     }
@@ -381,7 +391,7 @@ async def handle_telegram_webhook(update: dict, db: Optional[Session] = None) ->
             "inline_keyboard": [
                 [
                     {"text": "📊 Xem Báo Cáo 4 Tab", "url": f"{FRONTEND_URL}/results/{clean_code}"},
-                    {"text": "🖨️ Bản In PDF A4 (6 Trang)", "url": f"{FRONTEND_URL}/results/{clean_code}/print"},
+                    {"text": "🖨️ Bản In A4 PDF Chiến Lược Chuyên Sâu", "url": f"{FRONTEND_URL}/results/{clean_code}/print"},
                 ]
             ]
         }
@@ -429,7 +439,7 @@ async def handle_telegram_webhook(update: dict, db: Optional[Session] = None) ->
             if survey.status == "COMPLETED":
                 buttons.append([
                     {"text": "📊 Xem Báo Cáo Trên Web", "url": f"{FRONTEND_URL}/results/{clean_code}"},
-                    {"text": "🖨️ Bản In A4 PDF (6 Trang)", "url": f"{FRONTEND_URL}/results/{clean_code}/print"},
+                    {"text": "🖨️ Bản In A4 PDF Chiến Lược Chuyên Sâu", "url": f"{FRONTEND_URL}/results/{clean_code}/print"},
                 ])
             else:
                 buttons.append([
@@ -459,6 +469,55 @@ async def handle_telegram_webhook(update: dict, db: Optional[Session] = None) ->
     }
     await send_telegram_message(reply, chat_id=chat_id, reply_markup=inline_keyboard)
     return {"status": "ok", "action": "not_found"}
+
+
+async def notify_lead_download_report(
+    full_name: str,
+    phone_zalo: str,
+    company_name: str,
+    report_title: str,
+    report_id: str,
+    work_email: Optional[str] = None,
+    job_title: Optional[str] = None,
+    industry: Optional[str] = None,
+    lead_score: str = "WARM",
+) -> bool:
+    """
+    Gửi thông báo tức thì cho Ban Quản Trị (anh Lợi) khi có khách hàng doanh nghiệp
+    điền form tải Bản In Chiến Lược A4 Chuyên Sâu từ Thư Viện.
+    """
+    badge = "🔥 [HOT LEAD - DOANH NGHIỆP]" if lead_score == "HOT" else "⭐ [LEAD MỚI]"
+    email_display = work_email if work_email else "<i>Chưa cung cấp</i>"
+    job_display = job_title if job_title else "<i>Chưa cung cấp</i>"
+    clean_phone = phone_zalo.strip().replace(" ", "").replace(".", "").replace("-", "")
+
+    text = (
+        f"🔔 <b>{badge} VỪA TẢI BÁO CÁO ĐỐI SÁNH!</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"👤 <b>Người tải:</b> <b>{full_name}</b>\n"
+        f"📱 <b>Zalo/Phone:</b> <code>{phone_zalo}</code>\n"
+        f"🏢 <b>Đơn vị:</b> <b>{company_name}</b>\n"
+        f"💼 <b>Chức danh:</b> {job_display}\n"
+        f"📧 <b>Email:</b> {email_display}\n"
+        f"📊 <b>Báo cáo quan tâm:</b> {report_title}\n"
+        f"🏷️ <b>Mã hồ sơ:</b> <code>#{report_id}</code>\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"💡 <i>Anh có thể mở Zalo nhắn ngay: \"Chào anh/chị {full_name}, em thấy bên mình vừa quan tâm tải báo cáo {report_title}...\"</i>"
+    )
+
+    clean_id = report_id.strip()
+    reply_markup = {
+        "inline_keyboard": [
+            [
+                {"text": "📊 Xem Báo Cáo Trên Web", "url": f"{FRONTEND_URL}/results/{clean_id}"},
+                {"text": "📄 Bản In Chiến Lược A4", "url": f"{FRONTEND_URL}/results/{clean_id}/print"},
+            ],
+            [
+                {"text": f"📱 Mở Zalo ({clean_phone})", "url": f"https://zalo.me/{clean_phone}"},
+            ]
+        ]
+    }
+    return await send_telegram_message(text, reply_markup=reply_markup)
 
 
 async def setup_telegram_commands() -> bool:

@@ -74,7 +74,7 @@ BẢNG GIÁ MINH BẠCH:
 QUY TRÌNH SỬ DỤNG 3 BƯỚC:
 1. Bước 1: Vào https://insight.1booking.asia/wizard, chọn 1 trong 9 mô hình và cấu hình cỡ mẫu (có thể chọn vùng miền: Toàn quốc, TP.HCM, Hà Nội...).
 2. Bước 2: Quét mã VietQR trên màn hình bằng bất kỳ app ngân hàng nào (Techcombank, Vietcombank, MB, Momo...). Hệ thống tự động kích hoạt ngay sau 1-2 giây.
-3. Bước 3: Xem phân tích trực tiếp theo thời gian thực (Live Stream). Báo cáo Dashboard 4 tab và nút xuất Báo cáo PDF A4 6 trang sẵn sàng nộp Ban Giám đốc trong vòng 60 giây.
+3. Bước 3: Xem phân tích trực tiếp theo thời gian thực (Live Stream). Báo cáo Dashboard 4 tab và nút xuất Bản in chiến lược A4 chuyên sâu đa trang sẵn sàng nộp Ban Giám đốc trong vòng 60 giây.
 
 ĐIỀU HƯỚNG LINH HOẠT:
 - Xem Báo cáo Mẫu Live Demo: https://insight.1booking.asia/results/DEMO-NIELSEN-BASES

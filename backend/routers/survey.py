@@ -2,13 +2,14 @@ import asyncio
 import json
 import os
 from datetime import datetime
+from typing import Optional
 
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from database import Survey, DiscountCode, get_db
+from database import Survey, DiscountCode, BenchmarkReport, ReportDownloadLead, get_db
 from models.schemas import (
     SurveyCreateRequest, SurveyCreateResponse, SurveyStatusResponse,
     ApplyDiscountRequest, ApplyDiscountResponse,
@@ -581,6 +582,212 @@ async def upload_historical_dataset(
         log = structlog.get_logger(__name__)
         log.error("Failed to parse historical dataset", error=str(e), filename=filename)
         raise HTTPException(500, f"Lỗi khi xử lý file dữ liệu: {str(e)}")
+
+
+# ─── Multi-Industry Benchmark Reports & Gated Lead Capture ─────────────────────
+
+class DownloadLeadRequest(BaseModel):
+    full_name: str
+    phone_zalo: str
+    company_name: str
+    work_email: Optional[str] = None
+    job_title: Optional[str] = None
+    report_id: str
+    report_title: Optional[str] = None
+    industry: Optional[str] = None
+    notes: Optional[str] = None
+
+
+@router.get("/benchmark/reports")
+async def get_benchmark_reports(
+    industry: Optional[str] = None,
+    model_type: Optional[str] = None,
+    period: Optional[str] = None,
+    db: Session = Depends(get_db),
+):
+    """
+    Truy vấn kho Báo Cáo Đối Sánh Ngành trực tiếp từ Supabase PostgreSQL.
+    Hỗ trợ bộ lọc linh hoạt theo ngành hàng, mô hình nghiên cứu và kỳ hạn.
+    """
+    query = db.query(BenchmarkReport).filter(BenchmarkReport.is_published == True)
+
+    if industry and industry != "all":
+        query = query.filter(BenchmarkReport.industry == industry.lower())
+    if model_type:
+        query = query.filter(BenchmarkReport.model_type == model_type.lower())
+    if period and period != "all":
+        query = query.filter(BenchmarkReport.period_label == period)
+
+    reports = query.order_by(BenchmarkReport.created_at.asc()).all()
+
+    # Nếu DB rỗng (trường hợp chưa seed), fallback sang demo data
+    if not reports:
+        from models.demo_data import get_demo_report_payload
+        # Trả về ít nhất các báo cáo cơ bản
+        return {"reports": [], "total": 0}
+
+    results = []
+    for r in reports:
+        findings = []
+        tags = []
+        try:
+            if r.findings_json:
+                findings = json.loads(r.findings_json)
+        except Exception:
+            pass
+        try:
+            if r.tags_json:
+                tags = json.loads(r.tags_json)
+        except Exception:
+            pass
+
+        results.append({
+            "id": r.id,
+            "demoId": r.id,
+            "slug": r.slug,
+            "title": r.title,
+            "productName": r.title,
+            "category": r.industry,
+            "categoryLabel": r.industry_label,
+            "periodType": r.period_type,
+            "periodLabel": r.period_label,
+            "modelType": r.model_type,
+            "modelLabel": r.model_label,
+            "companyName": r.company_name,
+            "sampleSize": f"N = {r.sample_size:,} Personas · Đô thị Toàn quốc",
+            "scoreOrVerdict": r.score_or_verdict,
+            "scoreNumber": r.score_number,
+            "scoreColor": r.score_color or "text-emerald-700 bg-emerald-50 border-emerald-300",
+            "summary": r.summary,
+            "findings": findings,
+            "tags": tags,
+            "viewCount": r.view_count,
+            "downloadCount": r.download_count,
+            "createdAt": r.created_at.isoformat() if r.created_at else None,
+        })
+
+    return {"reports": results, "total": len(results)}
+
+
+@router.get("/benchmark/reports/{report_id}")
+async def get_benchmark_report_detail(
+    report_id: str,
+    db: Session = Depends(get_db),
+):
+    """
+    Lấy chi tiết dữ liệu JSON của báo cáo đối sánh ngành để render trên Dashboard hoặc Bản in A4.
+    """
+    clean_id = report_id.strip().upper()
+    rep = db.query(BenchmarkReport).filter(
+        func.upper(BenchmarkReport.id) == clean_id,
+        BenchmarkReport.is_published == True
+    ).first()
+
+    if rep and rep.full_report_json:
+        try:
+            # Tăng view_count
+            rep.view_count = (rep.view_count or 0) + 1
+            db.commit()
+            return json.loads(rep.full_report_json)
+        except Exception:
+            pass
+
+    # Fallback to demo_data router nếu chưa lưu JSON
+    from models.demo_data import get_demo_report_payload
+    return get_demo_report_payload(clean_id)
+
+
+@router.post("/benchmark/download-lead")
+async def submit_download_lead(
+    req: DownloadLeadRequest,
+    db: Session = Depends(get_db),
+):
+    """
+    Tiếp nhận thông tin người dùng tải Bản In Chiến Lược A4 (Gated Lead Capture).
+    Chỉ bắt buộc 3 trường: Họ tên, Số Zalo và Tên đơn vị.
+    Lưu trực tiếp vào Supabase PostgreSQL và bắn chuông báo Telegram tức thì cho Ban Quản Trị.
+    """
+    if not req.full_name or not req.full_name.strip():
+        raise HTTPException(400, "Vui lòng nhập Họ và tên của bạn.")
+    if not req.phone_zalo or not req.phone_zalo.strip():
+        raise HTTPException(400, "Vui lòng nhập Số điện thoại Zalo để nhận báo cáo.")
+    if not req.company_name or not req.company_name.strip():
+        raise HTTPException(400, "Vui lòng nhập Tên doanh nghiệp hoặc thương hiệu.")
+
+    # Phân loại Lead: Nếu nhập email công ty (không phải gmail/yahoo...) -> HOT LEAD
+    is_work_email = False
+    lead_score = "WARM"
+    email_clean = (req.work_email or "").strip().lower()
+
+    if email_clean and "@" in email_clean:
+        domain = email_clean.split("@")[-1].strip()
+        generic_domains = {
+            "gmail.com", "yahoo.com", "hotmail.com", "outlook.com",
+            "icloud.com", "mail.com", "zoho.com"
+        }
+        if domain not in generic_domains and "." in domain:
+            is_work_email = True
+            lead_score = "HOT"
+
+    # Lưu vào database Supabase
+    lead_row = ReportDownloadLead(
+        full_name=req.full_name.strip(),
+        phone_zalo=req.phone_zalo.strip(),
+        company_name=req.company_name.strip(),
+        work_email=email_clean if email_clean else None,
+        job_title=req.job_title.strip() if req.job_title else None,
+        report_id=req.report_id.strip(),
+        report_title=req.report_title.strip() if req.report_title else f"Báo cáo #{req.report_id}",
+        industry=req.industry.strip() if req.industry else None,
+        is_work_email=is_work_email,
+        lead_score=lead_score,
+        notes=req.notes.strip() if req.notes else None,
+        contacted_status="NEW",
+        created_at=datetime.utcnow(),
+    )
+    db.add(lead_row)
+
+    # Tăng lượt tải của báo cáo tương ứng
+    benchmark_rep = db.query(BenchmarkReport).filter(
+        func.upper(BenchmarkReport.id) == req.report_id.strip().upper()
+    ).first()
+    if benchmark_rep:
+        benchmark_rep.download_count = (benchmark_rep.download_count or 0) + 1
+
+    try:
+        db.commit()
+        db.refresh(lead_row)
+    except Exception as e:
+        db.rollback()
+        log = structlog.get_logger(__name__)
+        log.error("Failed to save report download lead to database", error=str(e))
+        raise HTTPException(500, "Không thể lưu thông tin vào cơ sở dữ liệu")
+
+    # Kích hoạt Telegram Bot thông báo tức thì tới Ban Quản Trị
+    try:
+        from services.telegram_service import notify_lead_download_report
+        await notify_lead_download_report(
+            full_name=req.full_name.strip(),
+            phone_zalo=req.phone_zalo.strip(),
+            company_name=req.company_name.strip(),
+            report_title=req.report_title or f"Báo cáo #{req.report_id}",
+            report_id=req.report_id.strip(),
+            work_email=email_clean if email_clean else None,
+            job_title=req.job_title.strip() if req.job_title else None,
+            industry=req.industry,
+            lead_score=lead_score,
+        )
+    except Exception as te:
+        log = structlog.get_logger(__name__)
+        log.warning("Telegram notification skipped or failed", error=str(te))
+
+    return {
+        "success": True,
+        "lead_id": lead_row.id,
+        "lead_score": lead_score,
+        "message": "Thông tin đã được ghi nhận. Đang chuẩn bị bản in PDF A4 chuyên sâu...",
+    }
+
 
 
 

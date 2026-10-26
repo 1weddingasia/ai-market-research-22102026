@@ -16,7 +16,7 @@ const INITIAL_GREETING = `Xin chào! Tôi là **Trợ lý Cố Vấn INSIGHT AI*
 Tôi trực tuyến 24/7 để đồng hành và hỗ trợ bạn:
 • 🎯 **Tư vấn chọn mô hình khảo sát phù hợp** với sản phẩm/ngành hàng của bạn (kiểm định ý tưởng, định giá tối ưu, test bao bì...).
 • 💰 **Bảng giá trọn gói minh bạch:** Từ gói Thăm dò 200.000đ (500 mẫu) đến gói Chuẩn vàng 300.000đ (1.000 mẫu), nhận kết quả sau 60 giây.
-• 📊 **Hướng dẫn xem Báo cáo mẫu A4:** Trải nghiệm trước bản in chiến lược 6 trang chuẩn trình Ban Giám đốc & Nhà đầu tư.
+• 📊 **Hướng dẫn xem Báo cáo mẫu A4:** Trải nghiệm trước bản in chiến lược A4 chuyên sâu đa trang chuẩn trình Ban Giám đốc & Nhà đầu tư.
 
 Bạn đang chuẩn bị ra mắt sản phẩm mới, cần tìm điểm giá hay muốn khảo sát thói quen tiêu dùng? Hãy chia sẻ với tôi nhé!`;
 

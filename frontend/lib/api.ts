@@ -200,6 +200,24 @@ export const api = {
     return fetchJSON<ReportPayload>(`/survey/${surveyId}/results`);
   },
 
+  submitDownloadLead: (data: {
+    full_name: string;
+    phone_zalo: string;
+    company_name: string;
+    work_email?: string;
+    job_title?: string;
+    report_id: string;
+    report_title?: string;
+    industry?: string;
+  }) =>
+    fetchJSON<{ success: boolean; lead_id: number; lead_score: string; message: string }>('/survey/benchmark/download-lead', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  getBenchmarkReports: (industry?: string) =>
+    fetchJSON<{ reports: any[]; total: number }>(`/survey/benchmark/reports${industry && industry !== 'all' ? `?industry=${industry}` : ''}`),
+
   getPdfUrl: (surveyId: string) => `${API_URL}/survey/${surveyId}/pdf`,
 
   requestLookupOtp: (email: string) =>
