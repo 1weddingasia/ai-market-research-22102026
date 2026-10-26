@@ -640,12 +640,12 @@ export default function PrintReportPage() {
           </div>
 
           <h1 className="font-serif text-2xl sm:text-3xl font-black text-slate-900 leading-tight tracking-tight">
-            {modelInfo.title}
+            {isBenchmark && pInfo.title ? pInfo.title : modelInfo.title}
           </h1>
 
           <div className="border-l-4 border-amber-600 pl-4 py-1">
             <div className="text-lg sm:text-xl font-serif text-amber-700 font-bold">
-              Dự án: {productName}
+              {isBenchmark ? `Mô hình thực nghiệm: ${modelInfo.framework}` : `Dự án: ${productName}`}
             </div>
             <div className="text-xs font-sans text-slate-700 mt-1 font-semibold">
               <span>{isBenchmark ? 'Đơn vị nghiên cứu & công bố: ' : 'Đơn vị yêu cầu / Khách hàng: '}</span>
@@ -880,24 +880,27 @@ export default function PrintReportPage() {
                   <span className="font-serif uppercase tracking-wide">{pillar.title}</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] text-slate-700">
-                  {idx === 0 && (report.qualitative_insights?.top_drivers || []).slice(0, 3).map((d, i) => (
-                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
-                      <span className="text-emerald-600 font-bold">›</span>
-                      <span className="leading-snug">{d}</span>
-                    </li>
-                  ))}
-                  {idx === 1 && (report.actionable_recommendations || []).slice(0, 3).map((r, i) => (
-                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
-                      <span className="text-blue-600 font-bold">›</span>
-                      <span className="leading-snug">{r}</span>
-                    </li>
-                  ))}
-                  {idx === 2 && (report.qualitative_insights?.top_barriers || []).slice(0, 3).map((b, i) => (
-                    <li key={i} className="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-200/60">
-                      <span className="text-red-600 font-bold">›</span>
-                      <span className="leading-snug">{b}</span>
-                    </li>
-                  ))}
+                  {/* Bullet 1: Core Action for this specific pillar */}
+                  <li className="bg-white p-2.5 rounded-lg border border-slate-200/80 shadow-2xs">
+                    <span className={`font-bold block mb-1 text-[10.5px] ${idx === 0 ? 'text-emerald-700' : idx === 1 ? 'text-blue-700' : 'text-amber-700'}`}>
+                      ✦ Hành động chiến lược:
+                    </span>
+                    <span className="leading-relaxed">
+                      {report.actionable_recommendations?.[idx] || 'Triển khai giải pháp hành động cụ thể cho trụ cột này.'}
+                    </span>
+                  </li>
+                  {/* Bullet 2: Supporting Grounding / Data Signal */}
+                  <li className="bg-white/90 p-2 rounded-lg border border-slate-200/60 text-[10px] text-slate-600">
+                    <span className="font-bold text-slate-700 block mb-0.5">› Căn cứ dữ liệu:</span>
+                    <span className="leading-snug">
+                      {idx === 0
+                        ? (report.qualitative_insights?.top_drivers?.[0] || 'Phản hồi tích cực vượt trội từ tập khách hàng mục tiêu.')
+                        : idx === 1
+                        ? (report.qualitative_insights?.top_drivers?.[1] || 'Đảm bảo minh bạch giá trị nhận được để củng cố lòng tin.')
+                        : (report.qualitative_insights?.top_barriers?.[0] || 'Kiểm soát rào cản nhận thức để bảo vệ tỷ lệ chuyển đổi.')
+                      }
+                    </span>
+                  </li>
                 </ul>
               </div>
             ))}
@@ -1274,35 +1277,65 @@ export default function PrintReportPage() {
                 </div>
 
                 {/* SVG Curves Graph */}
-                <div className="w-full h-44 bg-white rounded-lg border border-slate-200 p-2 relative flex items-center justify-center">
-                  <svg viewBox="0 0 500 170" className="w-full h-full">
-                    <line x1="50" y1="20" x2="480" y2="20" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="50" y1="60" x2="480" y2="60" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="50" y1="100" x2="480" y2="100" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="50" y1="135" x2="480" y2="135" stroke="#F1F5F9" strokeWidth="1" />
+                <div className="w-full bg-white rounded-lg border border-slate-200 p-2.5 relative">
+                  <svg viewBox="0 0 520 180" className="w-full h-44">
+                    {/* Horizontal Grid */}
+                    <line x1="50" y1="20" x2="500" y2="20" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="50" y1="55" x2="500" y2="55" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="50" y1="90" x2="500" y2="90" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="50" y1="125" x2="500" y2="125" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="50" y1="150" x2="500" y2="150" stroke="#CBD5E1" strokeWidth="1.2" />
 
-                    {/* Too Cheap Curve */}
-                    <path d="M 50 25 Q 160 35 240 100 T 480 150" fill="none" stroke="#059669" strokeWidth="2.2" />
-                    {/* Cheap / Bargain */}
-                    <path d="M 50 40 Q 180 60 270 115 T 480 155" fill="none" stroke="#2563EB" strokeWidth="1.8" strokeDasharray="4 2" />
-                    {/* Expensive */}
-                    <path d="M 50 155 Q 200 135 290 80 T 480 30" fill="none" stroke="#D97706" strokeWidth="1.8" strokeDasharray="4 2" />
-                    {/* Too Expensive */}
-                    <path d="M 50 160 Q 260 150 330 85 T 480 20" fill="none" stroke="#DC2626" strokeWidth="2.2" />
+                    {/* Shaded RAP Corridor */}
+                    <rect x="150" y="20" width="240" height="130" fill="#FEF3C7" fillOpacity="0.35" rx="2" />
+                    <text x="270" y="32" fill="#B45309" fontSize="8" fontWeight="bold" textAnchor="middle" fontFamily="monospace">
+                      VÙNG GIÁ CHẤP NHẬN (RAP): {Number(report.quantitative_metrics?.model_specific?.pmc || 24200).toLocaleString('vi-VN')} đ – {Number(report.quantitative_metrics?.model_specific?.pme || 31600).toLocaleString('vi-VN')} đ
+                    </text>
 
-                    {/* OPP Intersection Indicator */}
-                    <circle cx="280" cy="85" r="4.5" fill="#D97706" />
-                    <line x1="280" y1="85" x2="280" y2="150" stroke="#D97706" strokeWidth="1.5" strokeDasharray="2 2" />
-                    <text x="285" y="80" fill="#B45309" fontSize="9.5" fontWeight="bold">OPP: Điểm tối ưu</text>
+                    {/* Vertical Guide Lines */}
+                    <line x1="150" y1="40" x2="150" y2="150" stroke="#059669" strokeWidth="1" strokeDasharray="2 2" />
+                    <line x1="230" y1="40" x2="230" y2="150" stroke="#D97706" strokeWidth="1.5" strokeDasharray="2 2" />
+                    <line x1="275" y1="40" x2="275" y2="150" stroke="#2563EB" strokeWidth="1" strokeDasharray="2 2" />
+                    <line x1="390" y1="40" x2="390" y2="150" stroke="#DC2626" strokeWidth="1" strokeDasharray="2 2" />
 
-                    {/* Axis Labels */}
-                    <text x="15" y="25" fill="#94A3B8" fontSize="8.5">100%</text>
-                    <text x="15" y="85" fill="#94A3B8" fontSize="8.5">50%</text>
-                    <text x="25" y="145" fill="#94A3B8" fontSize="8.5">0%</text>
-                    <text x="50" y="162" fill="#64748B" fontSize="8.5">Giá Sàn</text>
-                    <text x="260" y="162" fill="#B45309" fontSize="8.5" fontWeight="bold">Khoảng giá an toàn (RAP)</text>
-                    <text x="445" y="162" fill="#64748B" fontSize="8.5">Giá Trần</text>
+                    {/* 4 Curves */}
+                    <path d="M 50 25 C 115 30, 175 80, 230 115 C 290 135, 410 148, 500 150" fill="none" stroke="#059669" strokeWidth="2.5" />
+                    <path d="M 50 45 C 135 55, 215 95, 275 118 C 350 138, 430 148, 500 150" fill="none" stroke="#2563EB" strokeWidth="2" strokeDasharray="4 2" />
+                    <path d="M 50 148 C 135 145, 215 132, 275 95 C 350 60, 430 40, 500 28" fill="none" stroke="#D97706" strokeWidth="2" strokeDasharray="4 2" />
+                    <path d="M 50 150 C 175 148, 275 135, 355 90 C 415 55, 465 30, 500 22" fill="none" stroke="#DC2626" strokeWidth="2.5" />
+
+                    {/* Intersections */}
+                    <circle cx="150" cy="115" r="4" fill="#059669" stroke="#FFF" strokeWidth="1.5" />
+                    <circle cx="230" cy="102" r="5" fill="#D97706" stroke="#FFF" strokeWidth="2" />
+                    <text x="230" y="93" fill="#B45309" fontSize="8.5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">
+                      ★ OPP: {Number(report.quantitative_metrics?.model_specific?.opp || report.quantitative_metrics?.model_specific?.optimal_price || 26200).toLocaleString('vi-VN')} đ
+                    </text>
+                    <circle cx="275" cy="104" r="4" fill="#2563EB" stroke="#FFF" strokeWidth="1.5" />
+                    <circle cx="390" cy="98" r="4" fill="#DC2626" stroke="#FFF" strokeWidth="1.5" />
+
+                    {/* Y-Axis */}
+                    <text x="44" y="23" fill="#94A3B8" fontSize="7" textAnchor="end" fontFamily="monospace">100%</text>
+                    <text x="44" y="58" fill="#94A3B8" fontSize="7" textAnchor="end" fontFamily="monospace">75%</text>
+                    <text x="44" y="93" fill="#94A3B8" fontSize="7" textAnchor="end" fontFamily="monospace">50%</text>
+                    <text x="44" y="128" fill="#94A3B8" fontSize="7" textAnchor="end" fontFamily="monospace">25%</text>
+                    <text x="44" y="153" fill="#94A3B8" fontSize="7" textAnchor="end" fontFamily="monospace">0%</text>
+
+                    {/* X-Axis Labels */}
+                    <text x="50" y="165" fill="#64748B" fontSize="7" textAnchor="middle" fontFamily="monospace">20k</text>
+                    <text x="150" y="165" fill="#059669" fontSize="7.5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">PMC ({Math.round(Number(report.quantitative_metrics?.model_specific?.pmc || 24200) / 1000)}k)</text>
+                    <text x="230" y="165" fill="#B45309" fontSize="8" fontWeight="bold" textAnchor="middle" fontFamily="monospace">OPP ({Math.round(Number(report.quantitative_metrics?.model_specific?.opp || 26200) / 1000)}k)</text>
+                    <text x="275" y="165" fill="#2563EB" fontSize="7.5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">IPP ({Math.round(Number(report.quantitative_metrics?.model_specific?.idp || 26800) / 1000)}k)</text>
+                    <text x="390" y="165" fill="#DC2626" fontSize="7.5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">PME ({Math.round(Number(report.quantitative_metrics?.model_specific?.pme || 31600) / 1000)}k)</text>
+                    <text x="500" y="165" fill="#64748B" fontSize="7" textAnchor="middle" fontFamily="monospace">38k</text>
                   </svg>
+
+                  {/* Legend */}
+                  <div className="flex items-center justify-center gap-4 mt-1 font-mono text-[9px]">
+                    <span className="text-emerald-700 font-bold">● Quá rẻ (Too Cheap)</span>
+                    <span className="text-blue-700 font-bold">--- Rẻ / Hời (Cheap)</span>
+                    <span className="text-amber-700 font-bold">--- Bắt đầu đắt (Expensive)</span>
+                    <span className="text-red-700 font-bold">● Quá đắt (Too Expensive)</span>
+                  </div>
                 </div>
               </div>
 

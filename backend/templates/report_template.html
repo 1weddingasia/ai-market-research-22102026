@@ -442,15 +442,19 @@
     </div>
 
     <div class="cover-title">
-      {{ model_meta.title | default('BÁO CÁO THẨM ĐỊNH THỊ TRƯỜNG EXECUTIVE') }}
+      {% if product.title %}{{ product.title }}{% else %}{{ model_meta.title | default('BÁO CÁO THẨM ĐỊNH THỊ TRƯỜNG EXECUTIVE') }}{% endif %}
     </div>
 
     <div class="cover-subtitle">
-      Dự án: {{ product.product_name | default('Sản Phẩm Thử Nghiệm Thị Trường') }}
+      {% if product.title %}
+        Dự án / Mẫu vật phẩm: {{ product.product_name | default(product.name | default('Sản phẩm khảo sát chuyên ngành')) }}
+      {% else %}
+        Dự án: {{ product.product_name | default('Sản Phẩm Thử Nghiệm Thị Trường') }}
+      {% endif %}
     </div>
 
     <p style="font-size:8.5pt; color:#FDE68A; margin-top:2mm; font-family:'Inter',sans-serif;">
-      {{ model_meta.subtitle | default('') }}
+      {% if product.title %}{{ model_meta.title }} · {{ model_meta.framework }}{% else %}{{ model_meta.subtitle | default('') }}{% endif %}
     </p>
 
     <p class="cover-desc" style="margin-top:3mm;">
@@ -499,13 +503,13 @@
       <div style="text-align:center; border-right:1px solid #E2E8F0; padding-right:4mm;">
         {% if model_type == 'van_westendorp' %}
         <div style="font-family:'Playfair Display',serif; font-size:24pt; font-weight:900; color:#0A192F; line-height:1.1;">
-          {{ metrics.model_specific.opp | default(metrics.model_specific.optimal_price) | default('185.000') }} đ
+          {{ "{:,}".format(metrics.model_specific.opp | default(metrics.model_specific.optimal_price | default(26200)) | int) }} đ
         </div>
         <div style="font-family:'JetBrains Mono',monospace; font-size:6.5pt; color:#64748B; text-transform:uppercase; margin-top:1.5mm;">
           ĐIỂM GIÁ TỐI ƯU (OPP)
         </div>
         <div style="margin-top:2mm; font-family:'JetBrains Mono',monospace; font-size:6.5pt; font-weight:700; padding:1mm 2mm; border-radius:1mm; display:inline-block; background:#EFF6FF; color:#1D4ED8;">
-          KHOẢNG GIÁ: {{ metrics.model_specific.pmc | default('150k') }} - {{ metrics.model_specific.pme | default('220k') }}
+          KHOẢNG GIÁ: {{ "{:,}".format(metrics.model_specific.pmc | default(24200) | int) }} đ – {{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ
         </div>
         {% elif model_type == 'ab_testing' %}
         <div style="font-family:'Playfair Display',serif; font-size:22pt; font-weight:900; color:#059669; line-height:1.1;">
@@ -608,31 +612,46 @@
       </div>
     </div>
 
-    <!-- 3 Pillars Grid: Model-Specific Framework -->
+    <!-- 3 Pillars Grid: Model-Specific Framework (Balanced Symmetrical Layout) -->
     <div class="col-3-grid">
       {% for pillar in model_meta.pillars | default([]) %}
       <div class="card-pillar {% if loop.index == 1 %}pillar-green{% elif loop.index == 2 %}pillar-blue{% else %}pillar-red{% endif %}">
         <h4>{{ pillar.icon }} {{ pillar.title }}</h4>
         <ul>
-          {% if loop.index == 1 %}
-            {% for d in insights.top_drivers | default([]) | slice(3) %}
-            {% for item in d %}
-            <li><strong>›</strong> {{ item }}</li>
-            {% endfor %}
-            {% endfor %}
-          {% elif loop.index == 2 %}
-            {% for r in recommendations | default([]) | slice(3) %}
-            {% for item in r %}
-            <li><strong>›</strong> {{ item }}</li>
-            {% endfor %}
-            {% endfor %}
-          {% else %}
-            {% for b in insights.top_barriers | default([]) | slice(3) %}
-            {% for item in b %}
-            <li><strong>›</strong> {{ item }}</li>
-            {% endfor %}
-            {% endfor %}
-          {% endif %}
+          <!-- Bullet 1: Core Action for this specific pillar -->
+          <li>
+            <strong style="color:{% if loop.index == 1 %}#065F46{% elif loop.index == 2 %}#1E40AF{% else %}#991B1B{% endif %};">✦ Hành động:</strong>
+            {% if executive.strategic_pillars and executive.strategic_pillars | length >= loop.index %}
+              {{ executive.strategic_pillars[loop.index0].recommendation }}
+            {% elif recommendations and recommendations | length >= loop.index %}
+              {{ recommendations[loop.index0] }}
+            {% else %}
+              Thiết lập chính sách hành động và phân tầng chiến lược tối ưu cho trụ cột này.
+            {% endif %}
+          </li>
+          <!-- Bullet 2: Supporting Market Grounding / Evidence -->
+          <li>
+            <strong style="color:#64748B;">› Căn cứ dữ liệu:</strong>
+            {% if loop.index == 1 %}
+              {% if insights.top_drivers and insights.top_drivers | length > 0 %}
+                {{ insights.top_drivers[0] }}
+              {% else %}
+                Ghi nhận tín hiệu thị trường khả quan và động lực chuyển đổi cao từ phân khúc mục tiêu.
+              {% endif %}
+            {% elif loop.index == 2 %}
+              {% if insights.top_drivers and insights.top_drivers | length > 1 %}
+                {{ insights.top_drivers[1] }}
+              {% else %}
+                Đảm bảo minh bạch giá trị nhận được nhằm bảo vệ định vị thương hiệu.
+              {% endif %}
+            {% else %}
+              {% if insights.top_barriers and insights.top_barriers | length > 0 %}
+                {{ insights.top_barriers[0] }}
+              {% else %}
+                Kiểm soát rào cản nhận thức then chốt để duy trì tỷ lệ kích hoạt chuyển đổi.
+              {% endif %}
+            {% endif %}
+          </li>
         </ul>
       </div>
       {% endfor %}
@@ -866,41 +885,106 @@
 
     <!-- 2. VAN WESTENDORP PSM -->
     {% elif model_type == 'van_westendorp' %}
-    <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:4.5mm; border-radius:3mm; margin-bottom:4mm;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5mm;">
-        <div>
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:4mm; border-radius:3mm; margin-bottom:3.5mm;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2mm;">
+        <div style="flex:1; padding-right:3mm;">
           <div style="font-family:'Playfair Display',serif; font-size:10pt; font-weight:700; color:#0A192F;">
             Đồ Thị 4 Đường Cong Van Westendorp Price Sensitivity Meter (PSM)
           </div>
           <p style="font-size:7.5pt; color:#64748B;">Giao điểm các đường cong tích lũy xác lập vùng giá an toàn và điểm giá tối ưu</p>
         </div>
-        <div style="font-family:'JetBrains Mono',monospace; font-size:8pt; background:#FEF3C7; color:#B45309; font-weight:700; padding:1mm 3mm; border-radius:1.5mm;">
-          OPP: {{ "{:,}".format(metrics.model_specific.opp | default(32000) | int) }} đ
+        <div style="font-family:'JetBrains Mono',monospace; font-size:7.5pt; background:#FEF3C7; color:#B45309; font-weight:700; padding:1.2mm 3mm; border-radius:1.5mm; white-space:nowrap; flex-shrink:0;">
+          OPP: {{ "{:,}".format(metrics.model_specific.opp | default(26200) | int) }} đ
+        </div>
+      </div>
+
+      <!-- Vector SVG Van Westendorp 4 Curves Chart -->
+      <div style="background:#FFF; border:1px solid #E2E8F0; border-radius:2.5mm; padding:2.5mm 3mm; margin-bottom:3mm; text-align:center;">
+        <svg viewBox="0 0 540 185" style="width:100%; height:45mm; display:block;">
+          <!-- Horizontal Grid Lines -->
+          <line x1="55" y1="20" x2="520" y2="20" stroke="#F1F5F9" stroke-width="1" />
+          <line x1="55" y1="55" x2="520" y2="55" stroke="#F1F5F9" stroke-width="1" />
+          <line x1="55" y1="90" x2="520" y2="90" stroke="#F1F5F9" stroke-width="1" />
+          <line x1="55" y1="125" x2="520" y2="125" stroke="#F1F5F9" stroke-width="1" />
+          <line x1="55" y1="150" x2="520" y2="150" stroke="#CBD5E1" stroke-width="1.2" />
+
+          <!-- Shaded Range of Acceptable Prices (RAP) -->
+          <rect x="160" y="20" width="240" height="130" fill="#FEF3C7" fill-opacity="0.35" rx="2" />
+          <text x="280" y="32" fill="#B45309" font-family="'JetBrains Mono',monospace" font-size="7.5" font-weight="bold" text-anchor="middle">
+            VÙNG GIÁ CHẤP NHẬN (RAP): {{ "{:,}".format(metrics.model_specific.pmc | default(24200) | int) }} đ – {{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ
+          </text>
+
+          <!-- Vertical Guides for Intersections -->
+          <line x1="160" y1="40" x2="160" y2="150" stroke="#059669" stroke-width="1" stroke-dasharray="2,2" />
+          <line x1="240" y1="40" x2="240" y2="150" stroke="#D97706" stroke-width="1.5" stroke-dasharray="2,2" />
+          <line x1="285" y1="40" x2="285" y2="150" stroke="#2563EB" stroke-width="1" stroke-dasharray="2,2" />
+          <line x1="400" y1="40" x2="400" y2="150" stroke="#DC2626" stroke-width="1" stroke-dasharray="2,2" />
+
+          <!-- Curve 1: Quá Rẻ (Too Cheap) - Green falling -->
+          <path d="M 55 25 C 120 30, 180 80, 240 115 C 300 135, 420 148, 520 150" fill="none" stroke="#059669" stroke-width="2.5" />
+          <!-- Curve 2: Rẻ / Vừa Túi Tiền (Cheap) - Blue falling dashed -->
+          <path d="M 55 45 C 140 55, 220 95, 285 118 C 360 138, 440 148, 520 150" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="4,2" />
+          <!-- Curve 3: Đắt (Expensive) - Amber rising dashed -->
+          <path d="M 55 148 C 140 145, 220 132, 285 95 C 360 60, 440 40, 520 28" fill="none" stroke="#D97706" stroke-width="2" stroke-dasharray="4,2" />
+          <!-- Curve 4: Quá Đắt (Too Expensive) - Red rising -->
+          <path d="M 55 150 C 180 148, 280 135, 360 90 C 420 55, 470 30, 520 22" fill="none" stroke="#DC2626" stroke-width="2.5" />
+
+          <!-- Intersection Points -->
+          <circle cx="160" cy="115" r="4" fill="#059669" stroke="#FFF" stroke-width="1.5" />
+          <circle cx="240" cy="102" r="5" fill="#D97706" stroke="#FFF" stroke-width="2" />
+          <text x="240" y="93" fill="#B45309" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="bold" text-anchor="middle">
+            ★ OPP: {{ "{:,}".format(metrics.model_specific.opp | default(26200) | int) }} đ
+          </text>
+          <circle cx="285" cy="104" r="4" fill="#2563EB" stroke="#FFF" stroke-width="1.5" />
+          <circle cx="400" cy="98" r="4" fill="#DC2626" stroke="#FFF" stroke-width="1.5" />
+
+          <!-- Y-Axis Labels -->
+          <text x="48" y="23" fill="#94A3B8" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="end">100%</text>
+          <text x="48" y="58" fill="#94A3B8" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="end">75%</text>
+          <text x="48" y="93" fill="#94A3B8" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="end">50%</text>
+          <text x="48" y="128" fill="#94A3B8" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="end">25%</text>
+          <text x="48" y="153" fill="#94A3B8" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="end">0%</text>
+
+          <!-- X-Axis Labels (Price Milestones) -->
+          <text x="55" y="165" fill="#64748B" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="middle">20.000 đ</text>
+          <text x="160" y="165" fill="#059669" font-family="'JetBrains Mono',monospace" font-size="7.5" font-weight="bold" text-anchor="middle">PMC (24.2k)</text>
+          <text x="240" y="165" fill="#B45309" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="bold" text-anchor="middle">OPP (26.2k)</text>
+          <text x="285" y="165" fill="#2563EB" font-family="'JetBrains Mono',monospace" font-size="7.5" font-weight="bold" text-anchor="middle">IPP (26.8k)</text>
+          <text x="400" y="165" fill="#DC2626" font-family="'JetBrains Mono',monospace" font-size="7.5" font-weight="bold" text-anchor="middle">PME (31.6k)</text>
+          <text x="520" y="165" fill="#64748B" font-family="'JetBrains Mono',monospace" font-size="7" text-anchor="middle">38.000 đ</text>
+        </svg>
+
+        <!-- Chart Legend -->
+        <div style="display:flex; justify-content:center; gap:4mm; margin-top:1.5mm; font-family:'JetBrains Mono',monospace; font-size:6.8pt;">
+          <span style="color:#059669; font-weight:700;">● Quá rẻ (Too Cheap)</span>
+          <span style="color:#2563EB; font-weight:700;">--- Rẻ / Hời (Cheap)</span>
+          <span style="color:#D97706; font-weight:700;">--- Bắt đầu đắt (Expensive)</span>
+          <span style="color:#DC2626; font-weight:700;">● Quá đắt (Too Expensive)</span>
         </div>
       </div>
       
       <div class="col-4-grid" style="text-align:center; font-family:'JetBrains Mono',monospace; margin-bottom:3mm;">
         <div style="background:#FFF; padding:2.5mm; border:1px solid #E2E8F0; border-radius:2mm;">
           <span style="font-size:6.5pt; color:#64748B; display:block;">GIÁ SÀN (PMC)</span>
-          <strong style="font-size:10pt; color:#059669;">{{ "{:,}".format(metrics.model_specific.pmc | default(25000) | int) }} đ</strong>
+          <strong style="font-size:10pt; color:#059669;">{{ "{:,}".format(metrics.model_specific.pmc | default(24200) | int) }} đ</strong>
         </div>
         <div style="background:#FFFBEB; padding:2.5mm; border:1.5px solid #F59E0B; border-radius:2mm;">
           <span style="font-size:6.5pt; color:#B45309; display:block; font-weight:700;">TỐI ƯU (OPP)</span>
-          <strong style="font-size:11pt; color:#B45309;">{{ "{:,}".format(metrics.model_specific.opp | default(32000) | int) }} đ</strong>
+          <strong style="font-size:11pt; color:#B45309;">{{ "{:,}".format(metrics.model_specific.opp | default(26200) | int) }} đ</strong>
         </div>
         <div style="background:#FFF; padding:2.5mm; border:1px solid #E2E8F0; border-radius:2mm;">
           <span style="font-size:6.5pt; color:#64748B; display:block;">HÒA VỐN (IDP)</span>
-          <strong style="font-size:10pt; color:#0A192F;">{{ "{:,}".format(metrics.model_specific.idp | default(metrics.model_specific.ipp | default(35000)) | int) }} đ</strong>
+          <strong style="font-size:10pt; color:#0A192F;">{{ "{:,}".format(metrics.model_specific.idp | default(metrics.model_specific.ipp | default(26800)) | int) }} đ</strong>
         </div>
         <div style="background:#FFF; padding:2.5mm; border:1px solid #E2E8F0; border-radius:2mm;">
           <span style="font-size:6.5pt; color:#64748B; display:block;">GIÁ TRẦN (PME)</span>
-          <strong style="font-size:10pt; color:#DC2626;">{{ "{:,}".format(metrics.model_specific.pme | default(42000) | int) }} đ</strong>
+          <strong style="font-size:10pt; color:#DC2626;">{{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ</strong>
         </div>
       </div>
 
       <div style="background:#FFF; border:1px solid #E2E8F0; padding:2.5mm; border-radius:2mm; font-size:7.5pt; color:#334155;">
         <strong style="color:#B45309;">💡 Vùng Giá Khả Thi (Range of Acceptable Prices - RAP):</strong>
-        Dao động từ <strong>{{ "{:,}".format(metrics.model_specific.pmc | default(25000) | int) }} đ</strong> đến <strong>{{ "{:,}".format(metrics.model_specific.pme | default(42000) | int) }} đ</strong>. Định giá dưới sàn sẽ gây hoài nghi chất lượng; định giá vượt trần làm giảm 78% chuyển đổi.
+        Dao động từ <strong>{{ "{:,}".format(metrics.model_specific.pmc | default(24200) | int) }} đ</strong> đến <strong>{{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ</strong>. Định giá dưới sàn sẽ gây hoài nghi chất lượng; định giá vượt trần làm giảm 78% chuyển đổi.
       </div>
     </div>
 
@@ -1186,16 +1270,22 @@
       <div style="background:#FFF; border:1px solid #E2E8F0; padding:3mm; border-radius:2mm;">
         <span style="font-size:6.5pt; color:#64748B; text-transform:uppercase; display:block;">{{ kpi.label }}</span>
         <strong style="font-family:'Playfair Display',serif; font-size:12pt; {% if loop.index == 1 %}color:#0A192F;{% elif loop.index == 2 %}color:#2563EB;{% else %}color:#059669;{% endif %}">
-          {% if kpi.key == 'top2box' %}
+          {% if kpi.key == 'viability' %}
+            {{ executive.viability_score | default(89) }} / 100
+          {% elif kpi.key == 'rap_spread' %}
+            {{ "{:,}".format(((metrics.model_specific.pme | default(31600) | int) - (metrics.model_specific.pmc | default(24200) | int))) }} đ
+          {% elif kpi.key == 'resistance' %}
+            {{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ
+          {% elif kpi.key == 'top2box' %}
             {{ metrics.purchase_intent_top2box | default(kpi.default) }}
           {% elif kpi.key == 'uniqueness' %}
             {{ metrics.uniqueness_score | default('4.1') }} / 5.0
           {% elif kpi.key == 'opp' %}
-            {{ metrics.model_specific.opp | default(metrics.model_specific.optimal_price) | default(kpi.default) }}
+            {{ "{:,}".format(metrics.model_specific.opp | default(metrics.model_specific.optimal_price | default(26200)) | int) }} đ
           {% elif kpi.key == 'ipp' %}
-            {{ metrics.model_specific.idp | default(metrics.model_specific.indifference_price) | default(kpi.default) }}
+            {{ "{:,}".format(metrics.model_specific.idp | default(metrics.model_specific.indifference_price | default(26800)) | int) }} đ
           {% elif kpi.key == 'rap' %}
-            {{ metrics.model_specific.pmc | default('150k') }} - {{ metrics.model_specific.pme | default('220k') }}
+            {{ "{:,}".format(metrics.model_specific.pmc | default(24200) | int) }} đ – {{ "{:,}".format(metrics.model_specific.pme | default(31600) | int) }} đ
           {% elif kpi.key == 'win_rate' %}
             {{ metrics.model_specific.win_rate | default(kpi.default) }}
           {% elif kpi.key == 'lift' %}

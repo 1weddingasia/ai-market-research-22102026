@@ -81,9 +81,9 @@ MODEL_META = {
             {"title": "Phân Tầng SKU & Biên Lợi Nhuận", "icon": "📊", "color": "amber"},
         ],
         "bottom_kpis": [
-            {"label": "Điểm Giá Tối Ưu (OPP)", "key": "opp", "default": "185.000 đ"},
-            {"label": "Điểm Cân Bằng (IPP)", "key": "ipp", "default": "180.000 đ"},
-            {"label": "Khoảng Giá Chấp Nhận", "key": "rap", "default": "150k - 220k đ"},
+            {"label": "Chỉ Số Khả Thi Giá (Viability)", "key": "viability", "default": "89 / 100"},
+            {"label": "Độ Rộng Vùng An Toàn (RAP)", "key": "rap_spread", "default": "7.400 đ"},
+            {"label": "Trần Cản Tâm Lý (PME)", "key": "resistance", "default": "31.600 đ"},
         ],
         "roadmap": {
             "day30": {
