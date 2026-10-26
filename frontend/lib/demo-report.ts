@@ -1807,6 +1807,594 @@ export const DEMO_DEAL_ELASTICITY: ReportPayload = {
 
 export const DEMO_REPORT: ReportPayload = DEMO_NIELSEN_BASES;
 
+export const DEMO_EVENTS_MAXDIFF: ReportPayload = {
+  "project_id": "DEMO-EVENTS-MAXDIFF",
+  "survey_id": "DEMO-EVENTS-MAXDIFF",
+  "model_type": "maxdiff",
+  "product_info": {
+    "company_name": "Công ty Dịch vụ Cưới & Sự kiện Ngoài trời RoseGarden Heritage",
+    "product_name": "Khảo Sát Phân Cấp Giá Trị Thuộc Tính Dịch Vụ Cưới & Tiệc Ngoài Trời",
+    "category": "Dịch vụ Cưới & Sự kiện Cao cấp (Wedding & Events)",
+    "description": "Nghiên cứu phân cấp tiện ích tối đa (Best-Worst Scaling) giữa các thuộc tính không gian, ẩm thực, âm thanh và trang trí tiệc cưới ngoài trời dành cho các cặp đôi thành thị."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "TP.HCM, Hà Nội, Đà Nẵng (Khu vực Đô thị)",
+    "demographics": "1.000 Tác tử AI Đô thị | Tuổi 23-36 | Cặp đôi dự kiến tổ chức hôn lễ trong 12 tháng tới",
+    "targeting_summary": "1.000 Tác tử AI Đô thị | Tuổi 23-36 | Cặp đôi dự kiến tổ chức hôn lễ trong 12 tháng tới",
+    "target_gender": "all",
+    "target_income": "AB",
+    "target_marital_status": "all",
+    "target_occupation": "all",
+    "target_zone": "urban"
+  },
+  "executive_summary": {
+    "viability_score": 86,
+    "verdict": "RIÊNG TƯ TUYỆT ĐỐI & ẨM THỰC TIỆC NÓNG LÀ 2 YẾU TỐ QUYẾT ĐỊNH CHỐT ĐƠN",
+    "top_findings": [
+      "Thuộc tính 'Khuôn viên tiệc hoàn toàn riêng tư không chung đụng sảnh khác' dẫn đầu bảng tiện ích với Utility Score +42.1 (31.5% thị phần ưu tiên).",
+      "Thuộc tính 'Ẩm thực tiệc nóng chế biến trực tiếp tại chỗ chuẩn 5 sao' xếp thứ 2 (+31.8), vượt trội hoàn toàn so với tiệc nguội/finger food.",
+      "Thuộc tính 'Cổng hoa giả trang trí sảnh' (-32.7) và 'Pháo hoa khói lạnh rườm rà' (-22.4) bị khách hàng xem là lãng phí, sẵn sàng cắt giảm."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.6,
+    "uniqueness_score": 4.2,
+    "purchase_intent_top2box": "82.5%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 20.0, "25-34": 65.0, "35-44": 12.0, "45+": 3.0},
+      "by_gender": {"male": 42.0, "female": 58.0}
+    },
+    "model_specific": {
+      "top_attribute": "Khuôn viên tiệc hoàn toàn riêng tư (Private Garden Booking)",
+      "top_score": 42.1,
+      "bottom_attribute": "Cổng hoa giả trang trí cố định theo sảnh",
+      "bottom_score": -32.7,
+      "utility_spread": 74.8,
+      "total_attributes_tested": 8,
+      "rankings": [
+        {"rank": 1, "attribute": "Khuôn viên sân vườn hoàn toàn riêng tư không chung đụng tiệc khác", "score": 42.1, "best_count": 384, "worst_count": 22, "appearances": 600, "tier": "Trụ cột cốt lõi (Core Driver)"},
+        {"rank": 2, "attribute": "Ẩm thực tiệc nóng chế biến trực tiếp tại chỗ theo chuẩn bếp 5 sao", "score": 31.8, "best_count": 315, "worst_count": 38, "appearances": 600, "tier": "Trụ cột cốt lõi (Core Driver)"},
+        {"rank": 3, "attribute": "Thực đơn cá nhân hóa theo chế độ ăn (thuần chay, keto, không gluten)", "score": 18.4, "best_count": 220, "worst_count": 64, "appearances": 600, "tier": "Tạo sự khác biệt (Differentiator)"},
+        {"rank": 4, "attribute": "Không gian chụp ảnh hoàng hôn với ánh sáng tự nhiên và cây cổ thụ", "score": 9.2, "best_count": 145, "worst_count": 82, "appearances": 600, "tier": "Tính năng gia tăng (Value-add)"},
+        {"rank": 5, "attribute": "Đội ngũ điều phối viên lễ cưới 1-kèm-1 theo sát kịch bản", "score": 2.1, "best_count": 98, "worst_count": 92, "appearances": 600, "tier": "Tính năng gia tăng (Value-add)"},
+        {"rank": 6, "attribute": "Hệ thống âm thanh acoustic ngoài trời mộc mạc không gây chói tai", "score": -8.5, "best_count": 52, "worst_count": 140, "appearances": 600, "tier": "Thấp dần (Low Priority)"},
+        {"rank": 7, "attribute": "Màn trình diễn pháo hoa hoặc hiệu ứng khói lạnh lúc làm lễ", "score": -22.4, "best_count": 28, "worst_count": 245, "appearances": 600, "tier": "Loại bỏ / Thờ ơ (Indifferent)"},
+        {"rank": 8, "attribute": "Cổng hoa giả trang trí sẵn cố định theo sảnh tiệc", "score": -32.7, "best_count": 14, "worst_count": 315, "appearances": 600, "tier": "Loại bỏ / Thờ ơ (Indifferent)"}
+      ],
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Phân Cấp Thuộc Tính MaxDiff Best-Worst Scaling",
+        "auditor_seal": "Chứng Nhận Thẩm Định Tiện Ích Dịch Vụ Cưới Cao Cấp",
+        "data_consistency_audit": "1.000 tác tử AI độ tuổi kết hôn đánh giá 8 thuộc tính qua mô hình Louviere Scaling. Phân cấp tiện ích rõ rệt, không có hiện tượng hòa hoãn.",
+        "executive_verdict": "Khách hàng sẵn sàng chi trả mức giá cao hơn 25-30% nếu được cam kết 'Toàn bộ khuôn viên chỉ phục vụ 1 tiệc duy nhất trong buổi tối'. Cắt giảm ngân sách hoa nhựa và pháo khói để dồn vào chất lượng ẩm thực.",
+        "strategic_pillars": [
+          {"pillar_name": "Đặc Quyền Riêng Tư (Exclusivity)", "icon": "👑", "recommendation": "Định vị gói 'Chỉ Một Tiệc Duy Nhất Mỗi Ngày' làm thông điệp bán hàng chủ lực."},
+          {"pillar_name": "Đỉnh Cao Ẩm Thực Tiệc Nóng", "icon": "🍳", "recommendation": "Thiết kế khu bếp mở live-cooking biểu diễn các món nướng tại chỗ cho khách mời."},
+          {"pillar_name": "Tinh Giản Chi Phí Vô Bổ", "icon": "✂️", "recommendation": "Loại bỏ cổng hoa giả đại trà, chuyển sang dịch vụ trang trí hoa tươi hữu cơ địa phương theo yêu cầu."}
+        ],
+        "critical_risks": [
+          "Rủi ro thời tiết mưa gió: Bắt buộc phải có mái che kính di động hoặc phương án sảnh vòm dự phòng đạt chuẩn thẩm mỹ."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Ám ảnh cảnh 3-4 đám cưới chen chúc chung sảnh tiệc ở các trung tâm hội nghị truyền thống.",
+      "Khách mời được thưởng thức món ăn nóng sốt thơm ngon thay vì các món nguội ngắt dọn sẵn từ sớm.",
+      "Ảnh cưới chụp trong không gian hoàng hôn sân vườn tự nhiên đẹp lung linh không cần photoshop."
+    ],
+    "top_barriers": [
+      "Lo ngại rủi ro thời tiết nhiệt đới bất chợt đổ mưa dông hoặc quá oi bức vào mùa hè.",
+      "Chi phí trọn gói ngoài trời thường phát sinh nhiều phụ phí âm thanh, ánh sáng và máy phát điện."
+    ],
+    "verbatim_quotes": [
+      {"name": "Trần Ngọc Diệp", "age": 27, "job": "Trưởng phòng Truyền thông (TP.HCM)", "income": "30 - 45 triệu/tháng", "quote": "Đám cưới đời người chỉ có một lần, mình muốn khách mời đến chung vui cảm thấy ấm cúng và riêng tư. Khâu ẩm thực tiệc nóng và không gian sân vườn thoáng đãng là ưu tiên số 1.", "sentiment": "positive"},
+      {"name": "Nguyễn Hoàng Bách", "age": 30, "job": "Kiến trúc sư (Hà Nội)", "income": "25 - 35 triệu/tháng", "quote": "Mấy cái pháo khói hay cổng hoa nhựa nhìn rất sến và ô nhiễm. Mình chỉ cần khuôn viên cỏ xanh tự nhiên, hoa tươi tối giản và âm nhạc acoustic êm dịu.", "sentiment": "positive"},
+      {"name": "Lê Mai Phương", "age": 25, "job": "Nhân viên Ngân hàng (Đà Nẵng)", "income": "16 - 22 triệu/tháng", "quote": "Không gian đẹp là một chuyện, nhưng địa điểm phải có phương án mái che dự phòng ngay nếu trời đổ mưa, chứ không thể để khách chạy tán loạn.", "sentiment": "neutral"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Đóng Gói Dịch Vụ: Ra mắt gói 'RoseGarden Exclusive' cam kết không nhận tiệc thứ hai trong cùng ngày.",
+    "Nâng Cấp Cơ Sở Vật Chất: Lắp đặt hệ thống mái trượt vòm kính trong suốt tự động đóng lại trong 90 giây khi có mưa.",
+    "Tiếp Thị Trực Quan: Tổ chức đêm tiệc thử món (Tasting Night) dành riêng cho 10 cặp đôi đặt cọc sớm."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
+export const DEMO_MILK_SEN_BASES: ReportPayload = {
+  "project_id": "DEMO-MILK-SEN-BASES",
+  "survey_id": "DEMO-MILK-SEN-BASES",
+  "model_type": "nielsen_bases",
+  "product_info": {
+    "company_name": "Công ty Cổ phần Nông sản Dinh dưỡng Sen Vàng Đồng Tháp (Golden Lotus Foods)",
+    "product_name": "Sữa Hạt Sen Tháp Mười OCOP 4 Sao & Dinh Dưỡng Thực Vật Huyết Rồng (Hộp 180ml / Lốc 4 hộp)",
+    "category": "Nông Sản OCOP Chế Biến Sâu & Dinh Dưỡng Thực Vật (Plant-based Milk)",
+    "expected_price": "15.000đ / hộp (58.000đ / lốc 4 hộp)",
+    "description": "Sữa dinh dưỡng thuần thực vật từ 100% hạt sen tươi Đồng Tháp kết hợp gạo lứt huyết rồng và yến mạch hữu cơ, giảm 40% đường, giàu melatonin tự nhiên hỗ trợ giấc ngủ sâu, an toàn cho người bất dung nạp lactose."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "Toàn quốc (Bắc: 35%, Trung: 20%, Nam: 45%)",
+    "demographics": "1.000 Tác tử AI Đa Tầng | Tuổi 24-55 | Người mua sắm dinh dưỡng gia đình & người ăn kiêng",
+    "targeting_summary": "1.000 Tác tử AI Đa Tầng | Tuổi 24-55 | Người mua sắm dinh dưỡng gia đình & người ăn kiêng",
+    "target_gender": "all",
+    "target_income": "all",
+    "target_marital_status": "married",
+    "target_occupation": "all",
+    "target_zone": "urban"
+  },
+  "executive_summary": {
+    "viability_score": 76,
+    "verdict": "STRONG GO (ĐỦ ĐIỀU KIỆN THƯƠNG MẠI HÓA TOÀN QUỐC)",
+    "top_findings": [
+      "Ý định mua Top-2-Box đạt 76.2%, vượt trội mức trung bình ngành sữa hạt thực vật tại Việt Nam (benchmark 64%).",
+      "Độ tin cậy bao bì (Believability Score) đạt 8.6/10 nhờ chứng nhận OCOP 4 sao và nguồn gốc xuất xứ hạt sen Tháp Mười rõ ràng.",
+      "Nhóm người tiêu dùng trên 35 tuổi và phụ nữ có con nhỏ thể hiện tỷ lệ mua lặp lại (Repeat Purchase Intent) lên tới 78%."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.3,
+    "uniqueness_score": 4.2,
+    "purchase_intent_top2box": "76.2%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 18.0, "25-34": 42.0, "35-44": 28.0, "45+": 12.0},
+      "by_gender": {"male": 38.0, "female": 62.0}
+    },
+    "model_specific": {
+      "bases_viability_score": 76,
+      "trial_rate": 72.5,
+      "matrix_position": "Ngôi sao đột phá (Breakthrough Star)",
+      "matrix_quadrant": "star",
+      "flop_risk_index": 15,
+      "bases_matrix": [
+        {"dimension": "Độ hấp dẫn ý tưởng (Relevance)", "score": 84, "benchmark": 65},
+        {"dimension": "Tính mới lạ độc đáo (Uniqueness)", "score": 82, "benchmark": 60},
+        {"dimension": "Mức độ tin cậy bao bì (Believability)", "score": 86, "benchmark": 70},
+        {"dimension": "Độ tương xứng giá/giá trị (Value for Money)", "score": 74, "benchmark": 66},
+        {"dimension": "Khả năng mua lại (Repeat Purchase Intent)", "score": 78, "benchmark": 58}
+      ],
+      "net_promoter_score": 52,
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Đánh Giá Tiềm Năng Sản Phẩm Mới Nielsen BASES",
+        "auditor_seal": "Chứng Nhận Thẩm Định Tiềm Năng Nông Sản Chế Biến Sâu OCOP",
+        "data_consistency_audit": "1.000 tác tử AI đối chuẩn khung nhân khẩu học GSO. Độ tương quan giữa yếu tố 'An thần ngủ ngon' và Ý định mua đạt r = 0.79.",
+        "executive_verdict": "Sản phẩm đạt điểm khả thi 76/100 (Strong Go). Đạt ngưỡng an toàn cao để thâm nhập kênh siêu thị và chuỗi cửa hàng mẹ & bé. Cần giữ vững chất lượng sánh mịn tự nhiên không dùng tinh bột biến tính.",
+        "strategic_pillars": [
+          {"pillar_name": "Bảo Chứng Nguồn Gốc Bản Địa OCOP", "icon": "🪷", "recommendation": "Đưa tem OCOP 4 sao và câu chuyện 'Hạt sen Tháp Mười trứ danh' ra chính diện mặt hộp."},
+          {"pillar_name": "Lợi Ích Sức Khỏe Khác Biệt (Sleep Booster)", "icon": "🌙", "recommendation": "Nhấn mạnh công dụng 'Thư giãn an thần, hỗ trợ giấc ngủ tự nhiên' cho giới văn phòng stress."},
+          {"pillar_name": "Định Vị Phân Khúc Gia Đình", "icon": "👨‍👩‍👧", "recommendation": "Bán theo lốc 4 hộp và thùng 24 hộp với mức giá tiết kiệm 12% để thúc đẩy tiêu dùng hàng ngày."}
+        ],
+        "critical_risks": [
+          "Rủi ro nếu sữa bị tách lớp hoặc lắng cặn đáy hộp sẽ khiến 32% người dùng lầm tưởng sản phẩm bị hỏng."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Vị bùi béo tự nhiên của hạt sen thơm dịu, dễ uống hơn sữa đậu nành và không ngấy như sữa bò.",
+      "Công dụng hỗ trợ giấc ngủ ngon được người lớn tuổi và dân văn phòng đón nhận rất nồng nhiệt.",
+      "Quy cách hộp giấy tiệt trùng Tetra Pak 180ml tiện lợi cho con mang đi học và mẹ mang đi làm."
+    ],
+    "top_barriers": [
+      "Cần kiểm soát độ ngọt thanh, 35% người ăn kiêng đề xuất phiên bản hoàn toàn không thêm đường.",
+      "Lo ngại vị hạt sen pha loãng hoặc có vị bột sắn nếu nhà sản xuất dùng phụ gia tạo đặc."
+    ],
+    "verbatim_quotes": [
+      {"name": "Lê Thị Thảo", "age": 36, "job": "Bác sĩ Đa khoa (TP.HCM)", "income": "28 - 38 triệu/tháng", "quote": "Hạt sen Tháp Mười vốn nổi tiếng bùi thơm. Nếu giữ được vị nguyên bản và giảm ngọt thì đây là thức uống buổi tối tuyệt vời thay thế sữa bò cho cả nhà.", "sentiment": "positive"},
+      {"name": "Trần Thanh Bình", "age": 45, "job": "Giảng viên Đại học (Cần Thơ)", "income": "20 - 28 triệu/tháng", "quote": "Tôi bị mất ngủ mãn tính, uống sữa bò thì đau bụng vì không tiêu hóa được đường sữa. Sữa hạt sen thực vật này đánh đúng tim đen của tôi, giá 15k/hộp cũng rất vừa phải.", "sentiment": "positive"},
+      {"name": "Hoàng Thu Ngân", "age": 29, "job": "Nhân viên Thiết kế (Hà Nội)", "income": "16 - 22 triệu/tháng", "quote": "Hộp nhìn thiết kế trang nhã mang đậm nét văn hóa Việt. Hy vọng nhãn hàng có thêm bản không đường cho người tập gym giữ dáng.", "sentiment": "neutral"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Công thức Chế biến: Ứng dụng công nghệ nghiền ướt siêu mịn và đồng hóa áp lực cao để chống lắng cặn tự nhiên.",
+    "Mở rộng Dòng sản phẩm: Phát triển song song 2 phiên bản: 'Ít đường (3.2g/100ml)' và 'Hoàn toàn không thêm đường (Zero Sugar)'.",
+    "Phân phối Trọng điểm: Tập trung phủ kệ tại các chuỗi cửa hàng thực phẩm sạch (Bách Hóa Xanh, Co.opmart, WinMart) tại miền Nam trước khi phân phối miền Bắc."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
+export const DEMO_DIAPER_WESTENDORP: ReportPayload = {
+  "project_id": "DEMO-DIAPER-WESTENDORP",
+  "survey_id": "DEMO-DIAPER-WESTENDORP",
+  "model_type": "van_westendorp",
+  "product_info": {
+    "company_name": "Công ty Chăm sóc Mẹ & Bé Hữu cơ EcoBamboo Care (EcoBamboo Vietnam)",
+    "product_name": "Tã Bỉm Hữu Cơ Sợi Tre Tự Nhiên EcoBamboo Baby (Bịch 50 miếng)",
+    "category": "Mẹ & Bé · Đồ Dùng Trẻ Em Hữu Cơ (Eco Baby Care)",
+    "expected_price": "320.000đ / bịch",
+    "description": "Tã bỉm hữu cơ công nghệ sợi tre tự nhiên siêu thoáng khí, lưng thun đệm mây chống lằn đỏ, lõi thấm SAP Sumitomo Nhật Bản khóa ẩm 12 tiếng, đạt chứng nhận kháng khuẩn tự nhiên SGS không gây hăm tã cho làn da nhạy cảm của trẻ sơ sinh."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "Hà Nội, TP.HCM, Đà Nẵng, Hải Phòng, Cần Thơ",
+    "demographics": "1.000 Tác tử AI Mẹ Bỉm Sữa Đô Thị | Tuổi 22-38 | Có con từ 0 đến 36 tháng tuổi",
+    "targeting_summary": "1.000 Tác tử AI Mẹ Bỉm Sữa Đô Thị | Tuổi 22-38 | Có con từ 0 đến 36 tháng tuổi",
+    "target_gender": "female",
+    "target_income": "AB",
+    "target_marital_status": "married",
+    "target_occupation": "all",
+    "target_zone": "urban"
+  },
+  "executive_summary": {
+    "viability_score": 81,
+    "verdict": "VƯỢT TRỘI (ĐIỂM GIÁ TỐI ƯU OPP: 320.000đ - KHOẢNG GIÁ AN TOÀN: 250.000đ - 390.000đ)",
+    "top_findings": [
+      "Điểm giá tối ưu (OPP) xác lập chuẩn xác tại 320.000đ/bịch 50 miếng (tương đương 6.400đ/miếng) — mức giá tối thiểu hóa kháng cự của mẹ bỉm đô thị.",
+      "Khoảng giá chấp nhận được (Acceptable Range) dao động từ 250.000đ (giá sàn PMC) đến 390.000đ (giá trần PME).",
+      "Định giá dưới 250.000đ khiến 46% bà mẹ nghi ngờ bỉm dùng sợi bông công nghiệp hoặc chất lượng thấm hút kém gây hăm da cho bé."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.4,
+    "uniqueness_score": 4.1,
+    "purchase_intent_top2box": "78.4%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 14.0, "25-34": 68.0, "35-44": 18.0, "45+": 0.0},
+      "by_gender": {"male": 0.0, "female": 100.0}
+    },
+    "model_specific": {
+      "opp": 320000,
+      "optimal_price": 320000,
+      "pmc": 250000,
+      "pme": 390000,
+      "idp": 320000,
+      "ipp": 320000,
+      "indifference_price": 320000,
+      "acceptable_range": [250000, 390000],
+      "price_range_min": 250000,
+      "price_range_max": 390000,
+      "price_curves": [
+        {"price": 200000, "too_cheap": 78, "cheap": 88, "expensive": 4, "too_expensive": 1},
+        {"price": 250000, "too_cheap": 42, "cheap": 74, "expensive": 14, "too_expensive": 3},
+        {"price": 290000, "too_cheap": 18, "cheap": 58, "expensive": 28, "too_expensive": 8},
+        {"price": 320000, "too_cheap": 8, "cheap": 42, "expensive": 42, "too_expensive": 14},
+        {"price": 350000, "too_cheap": 3, "cheap": 26, "expensive": 62, "too_expensive": 28},
+        {"price": 390000, "too_cheap": 1, "cheap": 12, "expensive": 76, "too_expensive": 52},
+        {"price": 430000, "too_cheap": 0, "cheap": 4, "expensive": 86, "too_expensive": 78}
+      ],
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Định Giá Kinh Tế Lượng Van Westendorp PSM",
+        "auditor_seal": "Chứng Nhận Thẩm Định Ngưỡng Nhạy Cảm Giá Ngành Mẹ & Bé",
+        "data_consistency_audit": "Dữ liệu đo lường từ 1.000 tác tử AI phụ nữ có con nhỏ. 4 đường cong tích lũy giao cắt chuẩn xác tại OPP = 320.000đ.",
+        "executive_verdict": "Mức giá kỳ vọng 320.000đ nằm chính xác ở tâm điểm chấp nhận của thị trường. Không được giảm giá xuống dưới 250.000đ để tránh mất uy tín định vị 'Bỉm sợi tre hữu cơ cao cấp'.",
+        "strategic_pillars": [
+          {"pillar_name": "Điểm Giá Vàng (OPP 320.000đ)", "icon": "💎", "recommendation": "Niêm yết giá chuẩn 320.000đ/bịch 50 miếng để định vị ngang phân khúc bỉm Nhật nhập khẩu."},
+          {"pillar_name": "Chiến Lược Combo Tháng", "icon": "📦", "recommendation": "Thiết kế combo 3 bịch giá 890.000đ (tiết kiệm 70k) tặng kèm 1 hộp khăn ướt sợi tre để giữ chân khách dài hạn."},
+          {"pillar_name": "Hàng Rào Bảo Vệ Chất Lượng", "icon": "🛡️", "recommendation": "Đính kèm cam kết 'Hoàn tiền 100% nếu bé bị hăm đỏ trong 7 ngày đầu sử dụng'."}
+        ],
+        "critical_risks": [
+          "Rủi ro nếu định giá vượt quá 390.000đ thì tỷ lệ từ bỏ mua sắm tăng vọt lên 76% do vượt trần ngân sách bỉm hàng tháng của gia đình."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Làn da trẻ sơ sinh rất mỏng và dễ dị ứng, chất liệu sợi tre tự nhiên tạo sự an tâm tuyệt đối cho các mẹ kỹ tính.",
+      "Lưng thun đệm mây mềm mại không để lại vết hằn đỏ trên bụng bé sau cả đêm ngủ say.",
+      "Khả năng thấm hút 12 tiếng không bị vón cục hay tràn tã giúp mẹ và bé ngủ ngon trọn giấc."
+    ],
+    "top_barriers": [
+      "Thị trường bỉm có quá nhiều thương hiệu quảng cáo 'hữu cơ' nhưng thực chất là bỉm gia công giá rẻ.",
+      "Cần có gói dùng thử nhỏ (miếng test) để mẹ kiểm tra độ vừa vặn và độ thấm hút trước khi mua nguyên bịch lớn."
+    ],
+    "verbatim_quotes": [
+      {"name": "Vũ Thanh Hằng", "age": 28, "job": "Chuyên viên Nhân sự (Hà Nội)", "income": "22 - 30 triệu/tháng", "quote": "Bé nhà mình da nhạy cảm lắm, dùng bỉm thường là bị hăm đỏ ngay. Nếu bỉm sợi tre thật và giá tầm 320k một bịch 50 miếng thì hoàn toàn hợp lý, bằng giá bỉm Nhật mình đang mua xách tay.", "sentiment": "positive"},
+      {"name": "Nguyễn Ngọc Bích", "age": 31, "job": "Kế toán Doanh nghiệp (TP.HCM)", "income": "20 - 28 triệu/tháng", "quote": "Thích nhất là cam kết thấm hút 12 tiếng không vón cục. Mua bỉm cho con quan trọng nhất là không tràn và không lằn bụng, giá 6k - 7k một miếng là mức chấp nhận được.", "sentiment": "positive"},
+      {"name": "Trần Thị Kim Anh", "age": 25, "job": "Kinh doanh Tự do (Hải Phòng)", "income": "15 - 20 triệu/tháng", "quote": "Nếu có gói test mini 3 miếng giá 20k hoặc tặng kèm khi mua đồ sơ sinh thì mình sẽ đăng ký dùng thử ngay trước khi mua bịch to.", "sentiment": "neutral"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Chính sách Ra mắt: Tặng 20.000 gói sample (3 miếng test kèm cẩm nang chăm sóc da bé) tại các bệnh viện phụ sản và phòng khám nhi.",
+    "Kênh Bán hàng Chủ lực: Hợp tác phân phối độc quyền tại các chuỗi cửa hàng mẹ và bé uy tín (Con Cưng, KidsPlaza, AVAKids).",
+    "Khai thác Tiếp thị Số: Hợp tác với các bác sĩ nhi khoa và mẹ bỉm có sức ảnh hưởng chia sẻ video 'Kiểm tra độ thoáng khí của sợi tre dưới kính hiển vi'."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
+export const DEMO_AIR_PURIFIER_KANO: ReportPayload = {
+  "project_id": "DEMO-AIR-PURIFIER-KANO",
+  "survey_id": "DEMO-AIR-PURIFIER-KANO",
+  "model_type": "kano",
+  "product_info": {
+    "company_name": "Công ty Thiết bị Không Gian Sống Thông Minh AeroClean Vietnam (AeroClean Tech)",
+    "product_name": "Máy Lọc Không Khí & Khử Mùi Căn Hộ Đô Thị AeroClean Pro (45-75m²)",
+    "category": "Gia Dụng Thông Minh · Smart Home Appliances",
+    "description": "Máy lọc không khí thế hệ mới tối ưu cho căn hộ chung cư đô thị: Hệ màng lọc 4 lớp HEPA H13 kháng khuẩn, than hoạt tính hoạt hóa gáo dừa khử mùi ẩm mốc thức ăn, cảm biến laser hiển thị chỉ số bụi mịn PM2.5 thời gian thực và vận hành siêu êm ban đêm."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "Hà Nội & TP.HCM (Khu vực Đô thị nhiều bụi mịn)",
+    "demographics": "1.000 Tác tử AI Đô thị | Tuổi 25-48 | Cư dân sống tại các chung cư và nhà phố đô thị",
+    "targeting_summary": "1.000 Tác tử AI Đô thị | Tuổi 25-48 | Cư dân sống tại các chung cư và nhà phố đô thị",
+    "target_gender": "all",
+    "target_income": "AB",
+    "target_marital_status": "married",
+    "target_occupation": "all",
+    "target_zone": "urban"
+  },
+  "executive_summary": {
+    "viability_score": 80,
+    "verdict": "PHÂN TẦNG TÍNH NĂNG R&D RÕ RỆT: HEPA H13 LÀ BẮT BUỘC, LASER PM2.5 LÀ VŨ KHÍ TĂNG TRƯỞNG",
+    "top_findings": [
+      "Màng lọc HEPA H13 lọc sạch 99.97% bụi mịn và độ ồn chế độ ngủ dưới 28dB là 2 tính năng Bắt buộc (Must-be) với hệ số bất mãn CS- lên tới -0.92 nếu máy kêu to hoặc không lọc sạch.",
+      "Cảm biến laser hiển thị chỉ số bụi mịn PM2.5 theo thời gian thực thuộc nhóm Một chiều tăng trưởng (One-dimensional) mang lại độ hài lòng cao nhất (CS+ 0.74).",
+      "Tính năng điều khiển giọng nói qua Wi-Fi thuộc nhóm Vô thưởng vô phạt (Indifferent, CS+ 0.15), có thể cắt giảm để tiết kiệm chi phí sản xuất 250.000đ/máy."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.4,
+    "uniqueness_score": 4.0,
+    "purchase_intent_top2box": "79.2%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 15.0, "25-34": 52.0, "35-44": 25.0, "45+": 8.0},
+      "by_gender": {"male": 54.0, "female": 46.0}
+    },
+    "model_specific": {
+      "must_be_count": 2,
+      "one_dimensional_count": 2,
+      "attractive_count": 1,
+      "indifferent_count": 1,
+      "total_features": 6,
+      "features_summary": [
+        {"feature": "Màng lọc HEPA H13 kháng khuẩn lọc sạch 99.97% bụi mịn PM2.5", "category_code": "M", "category_name": "Bắt buộc (Must-be)", "better_cs_plus": 0.22, "worse_cs_minus": -0.92, "priority": 1},
+        {"feature": "Độ ồn vận hành chế độ ngủ ban đêm dưới 28dB siêu êm ái", "category_code": "M", "category_name": "Bắt buộc (Must-be)", "better_cs_plus": 0.28, "worse_cs_minus": -0.85, "priority": 2},
+        {"feature": "Cảm biến laser hiển thị chỉ số bụi mịn PM2.5 chuẩn xác theo thời gian thực", "category_code": "O", "category_name": "Một chiều tăng trưởng (One-dimensional)", "better_cs_plus": 0.74, "worse_cs_minus": -0.55, "priority": 3},
+        {"feature": "Màng than hoạt tính gáo dừa khử sạch mùi thức ăn, ẩm mốc và lông thú cưng", "category_code": "O", "category_name": "Một chiều tăng trưởng (One-dimensional)", "better_cs_plus": 0.68, "worse_cs_minus": -0.48, "priority": 4},
+        {"feature": "Đèn tia cực tím UVC khử khuẩn virus trong luồng khí tuần hoàn", "category_code": "A", "category_name": "Đột phá thu hút (Attractive)", "better_cs_plus": 0.62, "worse_cs_minus": -0.12, "priority": 5},
+        {"feature": "Điều khiển giọng nói và kết nối app điều khiển từ xa qua Wi-Fi", "category_code": "I", "category_name": "Vô thưởng vô phạt (Indifferent)", "better_cs_plus": 0.15, "worse_cs_minus": -0.08, "priority": 6}
+      ],
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Quản Trị Danh Mục R&D Sản Phẩm Kano",
+        "auditor_seal": "Chứng Nhận Phân Tầng Tính Năng Thiết Bị Gia Dụng Thông Minh",
+        "data_consistency_audit": "1.000 tác tử AI cư dân chung cư đô thị trả lời theo ma trận Kano 2 chiều (Có/Không có tính năng). Phân chia rạch ròi 4 góc phần tư tối ưu hóa BOM.",
+        "executive_verdict": "Quyết định R&D then chốt: Dồn toàn lực vào màng lọc HEPA H13 và quạt động cơ DC không chổi than để đảm bảo máy chạy êm tuyệt đối. Cắt bỏ bo mạch Wi-Fi điều khiển giọng nói ở phiên bản Standard để hạ giá bán cạnh tranh.",
+        "strategic_pillars": [
+          {"pillar_name": "Chống Bất Mãn (Must-be Pillars)", "icon": "🔒", "recommendation": "Cam kết màng lọc đạt chuẩn HEPA H13 châu Âu và độ ồn ban đêm êm như tiếng thở."},
+          {"pillar_name": "Đòn Bẩy Doanh Số (Performance)", "icon": "📈", "recommendation": "Trang bị màn hình LED tròn hiển thị vòng màu chất lượng không khí (Xanh - Vàng - Đỏ)."},
+          {"pillar_name": "Cắt Giảm Chi Phí (Cost Optimization)", "icon": "✂️", "recommendation": "Lược bỏ tính năng điều khiển giọng nói để tiết kiệm 12% giá thành sản xuất."}
+        ],
+        "critical_risks": [
+          "Rủi ro nếu máy kêu rè rè khi ngủ ban đêm sẽ kích hoạt tỷ lệ đổi trả hàng lên tới 68% ngay trong tháng đầu tiên."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Tình trạng ô nhiễm bụi mịn mùa đông ở Hà Nội và khói xe ở TP.HCM khiến máy lọc khí trở thành thiết bị thiết yếu trong nhà có trẻ nhỏ.",
+      "Cảm biến laser đổi màu đèn theo chất lượng không khí tạo cảm giác yên tâm thấy rõ bằng mắt thường.",
+      "Khả năng hút sạch mùi chiên rán thức ăn trong căn hộ chung cư kín không có lối thoát khí tự nhiên."
+    ],
+    "top_barriers": [
+      "E ngại giá thay màng lọc định kỳ quá đắt (chiếm 30-40% giá máy) và khó tìm mua màng lọc thay thế sau 1 năm.",
+      "Lo ngại đèn hiển thị ban đêm quá sáng gây chói mắt làm mất giấc ngủ."
+    ],
+    "verbatim_quotes": [
+      {"name": "Đỗ Hoàng Long", "age": 34, "job": "Kỹ sư Tự động hóa (Hà Nội)", "income": "28 - 38 triệu/tháng", "quote": "Nhà mình ở tầng 15 chung cư sát đường vành đai, mở cửa sổ ra là bụi bám đầy bàn. Quan trọng nhất là cảm biến nhạy và máy chạy ban đêm phải thật êm, chứ ù ù là mất ngủ ngay.", "sentiment": "positive"},
+      {"name": "Lê Thị Thảo Trang", "age": 29, "job": "Biên tập viên (TP.HCM)", "income": "18 - 25 triệu/tháng", "quote": "Căn hộ chung cư nấu ăn mùi dầu mỡ bám vào rèm cửa rất khó chịu. Nếu màng than hoạt tính khử sạch mùi thức ăn trong 15 phút thì mình mua liền.", "sentiment": "positive"},
+      {"name": "Phạm Quốc Tuấn", "age": 41, "job": "Quản lý Dự án Xây dựng (Hà Nội)", "income": "35 - 50 triệu/tháng", "quote": "Mấy cái điều khiển giọng nói tôi thấy chẳng mấy khi dùng tới, toàn bật chế độ tự động (Auto) rồi để máy tự chạy. Giá màng lọc thay thế định kỳ tầm 300k - 400k là hợp lý.", "sentiment": "neutral"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Chiến lược Phiên bản: Ra mắt bản Standard (Không Wi-Fi, giá 2.690.000đ) đánh phân khúc đại trà và bản Pro (Có Wi-Fi UV, giá 3.490.000đ).",
+    "Chế độ Ban đêm (Sleep Mode): Bổ sung cảm biến ánh sáng tự động tắt toàn bộ đèn màn hình và giảm tốc độ quạt xuống dưới 26dB khi phòng tắt đèn.",
+    "Chính sách Hậu mãi: Tặng kèm 1 màng lọc sơ cua miễn phí trong thùng máy để gỡ bỏ triệt để rào cản chi phí thay màng lọc của khách hàng."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
+export const DEMO_FISH_SAUCE_MONADIC: ReportPayload = {
+  "project_id": "DEMO-FISH-SAUCE-MONADIC",
+  "survey_id": "DEMO-FISH-SAUCE-MONADIC",
+  "model_type": "monadic",
+  "product_info": {
+    "company_name": "Hợp tác xã Nước mắm Di sản Thùng Gỗ Đảo Ngọc (Phu Quoc Heritage Fish Sauce)",
+    "product_name": "Nước Mắm Truyền Thống Đậm Đạm Tự Nhiên 45°N Thùng Gỗ Phú Quốc (Chai 500ml)",
+    "concept_a_title": "Concept A: Chai Thủy Tinh Nắp Rót Định Lượng 5ml Thông Minh",
+    "concept_a_description": "Nước mắm truyền thống 45 độ đạm ủ chượp thùng gỗ 18 tháng từ cá cơm than Phú Quốc, trang bị nắp rót định lượng thông minh 5ml/lần bấm giúp kiểm soát lượng muối ăn hàng ngày và chống rớt giọt làm bẩn miệng chai.",
+    "concept_b_title": "Concept B: Chai Thủy Tinh Cổ Điển Nắp Bật Truyền Thống",
+    "concept_b_description": "Nước mắm truyền thống 45 độ đạm ủ chượp thùng gỗ 18 tháng từ cá cơm than Phú Quốc trong quy cách chai thủy tinh cổ điển nắp bật nhựa quen thuộc trên thị trường."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "Toàn quốc (Bắc: 33%, Trung: 22%, Nam: 45%)",
+    "demographics": "1.000 Tác tử AI Độc Lập | Tuổi 26-58 | Người nấu ăn chính và quyết định mua sắm gia vị gia đình",
+    "targeting_summary": "1.000 Tác tử AI Độc Lập | Tuổi 26-58 | Người nấu ăn chính và quyết định mua sắm gia vị gia đình",
+    "target_gender": "all",
+    "target_income": "all",
+    "target_marital_status": "married",
+    "target_occupation": "all",
+    "target_zone": "all"
+  },
+  "executive_summary": {
+    "viability_score": 82,
+    "verdict": "CONCEPT A VƯỢT TRỘI (+22.4% LIFT Ý ĐỊNH MUA NHỜ GIẢI PHÁP NẮP ĐỊNH LƯỢNG)",
+    "top_findings": [
+      "Concept A (Nắp rót định lượng 5ml) đạt ý định mua Top-2-Box 78.6%, vượt trội +22.4% so với Concept B (64.2%) trong điều kiện thử nghiệm mù tách biệt.",
+      "Chỉ số cảm nhận giá trị tương xứng (Value for Money) của Concept A đạt 84.5% nhờ đánh trúng tâm lý giảm ăn mặn để phòng ngừa huyết áp và tim mạch.",
+      "88.5% người tiêu dùng sẵn sàng trả mức giá 95.000đ/chai cho Concept A vì giải quyết được nỗi ám ảnh 'nước mắm chảy dính nhớp nháp quanh cổ chai'."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.5,
+    "uniqueness_score": 4.4,
+    "purchase_intent_top2box": "78.6%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 12.0, "25-34": 42.0, "35-44": 30.0, "45+": 16.0},
+      "by_gender": {"male": 35.0, "female": 65.0}
+    },
+    "model_specific": {
+      "winner": "A",
+      "winning_title": "Concept A (Chai Nắp Rót Định Lượng 5ml)",
+      "lift_percentage": 22.4,
+      "concept_a": {
+        "title": "Concept A (Nắp Định Lượng 5ml Chống Rớt Giọt)",
+        "sample_size": 500,
+        "top2box": 78.6,
+        "uniqueness": 4.5,
+        "relevance": 4.4,
+        "value_ratio": 84.5,
+        "price": "95.000đ"
+      },
+      "concept_b": {
+        "title": "Concept B (Nắp Bật Cổ Điển Truyền Thống)",
+        "sample_size": 500,
+        "top2box": 64.2,
+        "uniqueness": 3.6,
+        "relevance": 3.9,
+        "value_ratio": 68.0,
+        "price": "85.000đ"
+      },
+      "comparisons": [
+        {"metric": "Ý định mua thử (Top-2-Box)", "score_a": "78.6%", "score_b": "64.2%", "diff": "+22.4%", "winner": "A"},
+        {"metric": "Mức độ độc đáo (Uniqueness)", "score_a": "4.5 / 5", "score_b": "3.6 / 5", "diff": "+25.0%", "winner": "A"},
+        {"metric": "Giải quyết phiền toái khi nấu ăn", "score_a": "4.6 / 5", "score_b": "3.4 / 5", "diff": "+35.3%", "winner": "A"},
+        {"metric": "Tương xứng giá trị (Value for Money)", "score_a": "84.5%", "score_b": "68.0%", "diff": "+24.3%", "winner": "A"}
+      ],
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Thử Nghiệm Tách Biệt Ý Niệm Monadic Split-Sample",
+        "auditor_seal": "Chứng Nhận Thẩm Định Ý Niệm Nông Sản Di Sản Việt Nam",
+        "data_consistency_audit": "Thử nghiệm trên 2 nhóm tác tử AI độc lập 500 người. Phân bổ đồng nhất về tuổi và vùng miền. Mức tăng trưởng Lift mang ý nghĩa thống kê cao p < 0.01.",
+        "executive_verdict": "Cải tiến nắp rót định lượng là 'cú huých' mạnh mẽ biến nước mắm truyền thống đậm đà thành sản phẩm hiện đại, văn minh. Khuyến nghị sản xuất 100% theo Concept A.",
+        "strategic_pillars": [
+          {"pillar_name": "Đổi Mới Trải Nghiệm Bao Bì", "icon": "🍾", "recommendation": "Đăng ký độc quyền kiểu dáng công nghiệp cho nắp rót định lượng 5ml chống rớt giọt."},
+          {"pillar_name": "Thông Điệp Sức Khỏe Lành Mạnh", "icon": "❤️", "recommendation": "Gắn liền thông điệp 'Đậm đà chuẩn vị truyền thống nhưng kiểm soát lượng muối bảo vệ tim mạch'."},
+          {"pillar_name": "Tái Định Vị Nước Mắm Di Sản", "icon": "🏆", "recommendation": "Nâng tầm nước mắm thùng gỗ từ gian bếp bình dân thành món quà biếu ẩm thực tinh hoa."}
+        ],
+        "critical_risks": [
+          "Rủi ro nếu cơ chế nắp định lượng bị kẹt muối kết tinh sau 2-3 tháng sử dụng sẽ gây phiền toái cho người nội trợ."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Nước mắm truyền thống rất ngon nhưng hay bị quá tay làm mặn chát món ăn, nắp 5ml giúp nêm nếm cực kỳ chuẩn xác.",
+      "Chống rớt giọt nước mắm ra thành chai, không còn cảnh để lại vệt ố mặn mùi nồng nặc trên kệ bếp.",
+      "Màu nâu cánh gián hổ phách tự nhiên và hậu vị ngọt sâu của đạm cá cơm than nguyên chất."
+    ],
+    "top_barriers": [
+      "Giá 95.000đ cao gấp đôi nước mắm công nghiệp đại trà dung tích lớn ngoài chợ.",
+      "Lo ngại cặn muối biển làm tắc vòi xịt nhỏ sau thời gian dài sử dụng."
+    ],
+    "verbatim_quotes": [
+      {"name": "Nguyễn Thị Kim Loan", "age": 42, "job": "Nội trợ & Mẹ 3 con (TP.HCM)", "income": "25 - 35 triệu/tháng", "quote": "Tôi thích ăn nước mắm truyền thống vì thơm ngon tự nhiên không hóa chất, nhưng sợ nhất cảnh rót xong nước mắm chảy ròng ròng xuống cổ chai dính mùi kinh khủng. Nắp định lượng chống rớt này đúng là cứu tinh của tôi.", "sentiment": "positive"},
+      {"name": "Vũ Đình Cường", "age": 36, "job": "Chủ Nhà Hàng Món Việt (Hà Nội)", "income": "40 - 60 triệu/tháng", "quote": "Chai nắp định lượng này đặt trên bàn ăn nhà hàng vừa sang vừa vệ sinh. Khách ăn bún chả hay phở tự nêm thêm vài giọt rất lịch sự.", "sentiment": "positive"},
+      {"name": "Hoàng Thị Mai", "age": 55, "job": "Cán bộ Hưu trí (Đà Nẵng)", "income": "12 - 16 triệu/tháng", "quote": "Tôi bị huyết áp cao bác sĩ dặn ăn nhạt. Có nắp đo đúng 5ml này tôi biết rõ mỗi bữa mình nêm bao nhiêu muối, rất an tâm cho sức khỏe.", "sentiment": "positive"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Kỹ thuật Nắp chai: Thiết kế vòi rót bằng chất liệu silicone y tế chống bám muối kết tinh khi tiếp xúc với không khí.",
+    "Định vị Giá bán: Định giá 95.000đ cho chai 500ml và ra mắt chai refill tiết kiệm 1 lít với giá 160.000đ.",
+    "Truyền thông Tiếp thị: Tạo chiến dịch video 'Nêm chuẩn 5ml — Trọn vị đậm đà, an lành tim mạch'."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
+export const DEMO_EDTECH_MAXDIFF: ReportPayload = {
+  "project_id": "DEMO-EDTECH-MAXDIFF",
+  "survey_id": "DEMO-EDTECH-MAXDIFF",
+  "model_type": "maxdiff",
+  "product_info": {
+    "company_name": "Học viện Công nghệ & Đào tạo Thực chiến EduAI Vietnam (EduAI Academy)",
+    "product_name": "Khóa Học Trực Tuyến Kỹ Năng Số & Ứng Dụng AI Thực Chiến Cho Người Đi Làm",
+    "category": "Giáo Dục Trực Tuyến & Kỹ Năng Số (EdTech / Digital Skills)",
+    "description": "Chương trình đào tạo thực chiến chuyên sâu 4 tuần giúp nhân viên văn phòng, quản lý và chủ doanh nghiệp làm chủ các công cụ AI (ChatGPT, Claude, Midjourney, Make, Notion AI) để tự động hóa 50% công việc hàng ngày."
+  },
+  "target_summary": {
+    "sample_size": 1000,
+    "margin_of_error": "±3.10%",
+    "location": "Toàn quốc (Hà Nội: 40%, TP.HCM: 45%, Tỉnh khác: 15%)",
+    "demographics": "1.000 Tác tử AI Nhân Viên Văn Phòng | Tuổi 22-42 | Có nhu cầu nâng cao năng suất bằng AI",
+    "targeting_summary": "1.000 Tác tử AI Nhân Viên Văn Phòng | Tuổi 22-42 | Có nhu cầu nâng cao năng suất bằng AI",
+    "target_gender": "all",
+    "target_income": "all",
+    "target_marital_status": "all",
+    "target_occupation": "office",
+    "target_zone": "urban"
+  },
+  "executive_summary": {
+    "viability_score": 85,
+    "verdict": "THỰC HÀNH DỰ ÁN THẬT KÈM TEMPLATE DẪN ĐẦU TUYỆT ĐỐI VỀ MỨC ĐỘ ƯU TIÊN",
+    "top_findings": [
+      "Thuộc tính 'Thực hành trên bài toán kinh doanh thật và có template dùng được ngay' xếp vị trí số 1 tuyệt đối với Utility Score +38.5 (28.2% thị phần ưu tiên).",
+      "Thuộc tính 'Hỗ trợ hỏi đáp 1-1 qua Discord/Zalo trong 30 ngày sau khóa học' xếp thứ 2 (+26.4), là động lực chốt đơn đăng ký mạnh mẽ nhất.",
+      "Thuộc tính 'Chứng chỉ hoàn thành khóa học' (-28.6) và 'Giao lưu mạng lưới cựu học viên' (-11.8) bị xếp ở đáy bảng xếp hạng — người đi làm hoàn toàn thờ ơ với bằng cấp hình thức."
+    ]
+  },
+  "quantitative_metrics": {
+    "appeal_score": 4.6,
+    "uniqueness_score": 4.3,
+    "purchase_intent_top2box": "83.5%",
+    "demographic_breakdown": {
+      "by_age": {"18-24": 28.0, "25-34": 54.0, "35-44": 15.0, "45+": 3.0},
+      "by_gender": {"male": 48.0, "female": 52.0}
+    },
+    "model_specific": {
+      "top_attribute": "Thực hành trên bài toán thật kèm kho template dùng được ngay",
+      "top_score": 38.5,
+      "bottom_attribute": "Chứng chỉ hoàn thành khóa học có mộc nổi",
+      "bottom_score": -28.6,
+      "utility_spread": 67.1,
+      "total_attributes_tested": 8,
+      "rankings": [
+        {"rank": 1, "attribute": "Thực hành trực tiếp trên bài toán công việc thật kèm kho template dùng được ngay", "score": 38.5, "best_count": 362, "worst_count": 25, "appearances": 600, "tier": "Trụ cột cốt lõi (Core Driver)"},
+        {"rank": 2, "attribute": "Hỗ trợ sửa lỗi và hỏi đáp 1-1 qua Discord/Zalo trong 30 ngày sau khóa học", "score": 26.4, "best_count": 285, "worst_count": 42, "appearances": 600, "tier": "Trụ cột cốt lõi (Core Driver)"},
+        {"rank": 3, "attribute": "Giảng viên là chuyên gia thực chiến cấp Lead tại các tập đoàn công nghệ lớn", "score": 18.2, "best_count": 210, "worst_count": 68, "appearances": 600, "tier": "Tạo sự khác biệt (Differentiator)"},
+        {"rank": 4, "attribute": "Thư viện 500+ Prompt và Workflow tự động hóa công việc độc quyền", "score": 12.5, "best_count": 165, "worst_count": 78, "appearances": 600, "tier": "Tính năng gia tăng (Value-add)"},
+        {"rank": 5, "attribute": "Học phí linh hoạt, hỗ trợ trả góp 0% lãi suất qua thẻ tín dụng", "score": 2.4, "best_count": 95, "worst_count": 92, "appearances": 600, "tier": "Tính năng gia tăng (Value-add)"},
+        {"rank": 6, "attribute": "Video bài giảng ngắn 10-15 phút xem lại trọn đời trên mọi thiết bị", "score": -4.2, "best_count": 72, "worst_count": 125, "appearances": 600, "tier": "Thấp dần (Low Priority)"},
+        {"rank": 7, "attribute": "Cộng đồng cựu học viên giao lưu và chia sẻ cơ hội việc làm", "score": -11.8, "best_count": 45, "worst_count": 185, "appearances": 600, "tier": "Loại bỏ / Thờ ơ (Indifferent)"},
+        {"rank": 8, "attribute": "Chứng chỉ hoàn thành khóa học bản cứng có mộc nổi và badge LinkedIn", "score": -28.6, "best_count": 18, "worst_count": 320, "appearances": 600, "tier": "Loại bỏ / Thờ ơ (Indifferent)"}
+      ],
+      "deepseek_audit": {
+        "auditor_model": "Chuyên Gia Đánh Giá Hành Vi Tiêu Dùng Giáo Dục EdTech MaxDiff",
+        "auditor_seal": "Chứng Nhận Phân Cấp Tiện Ích Đào Tạo Thực Chiến",
+        "data_consistency_audit": "1.000 tác tử AI nhân viên văn phòng đánh giá 8 thuộc tính khóa học trực tuyến. Triệt tiêu hoàn toàn hiện tượng 'nói thích chứng chỉ nhưng không bao giờ đăng ký học'.",
+        "executive_verdict": "Người đi làm trưởng thành cần GIẢI PHÁP LÀM ĐƯỢC NGAY VIỆC, không cần bằng cấp tượng trưng. Bán hàng EdTech phải chứng minh được: 'Học xong buổi 1 áp dụng được ngay vào sáng mai'.",
+        "strategic_pillars": [
+          {"pillar_name": "USP Bán Hàng Số 1 (Actionable Templates)", "icon": "⚡", "recommendation": "Đưa cam kết 'Tặng kèm 50 bộ template tự động hóa văn phòng copy-paste' làm Hero Hook."},
+          {"pillar_name": "Bảo Đảm Kết Quả (1-on-1 Support)", "icon": "🤝", "recommendation": "Đội ngũ Teaching Assistant (Trợ giảng) cam kết phản hồi thắc mắc kỹ thuật trong 15 phút."},
+          {"pillar_name": "Cắt Giảm Chi Phí Vô Nghĩa", "icon": "✂️", "recommendation": "Dừng in ấn chứng chỉ giấy tốn kém, chuyển thành chứng nhận số tự động qua email."}
+        ],
+        "critical_risks": [
+          "Rủi ro nếu kiến thức khóa học quá lý thuyết hàn lâm sẽ dẫn tới tỷ lệ bỏ dở giữa chừng (Dropout Rate) tăng trên 50%."
+        ]
+      }
+    }
+  },
+  "qualitative_insights": {
+    "top_drivers": [
+      "Áp lực bị AI đào thải hoặc tụt hậu so với đồng nghiệp trẻ biết dùng công cụ mới.",
+      "Tiết kiệm 2-3 tiếng mỗi ngày nhờ tự động hóa việc viết báo cáo, email và xử lý số liệu Excel.",
+      "Có trợ giảng kèm cặp trực tiếp những lúc gặp lỗi kỹ thuật mà không biết hỏi ai."
+    ],
+    "top_barriers": [
+      "Nỗi sợ các khóa học online 'đem con bỏ chợ', mua xong bỏ xó không ai hướng dẫn.",
+      "Nhiều khóa học trên mạng chỉ dạy prompt chung chung vô thưởng vô phạt không áp dụng được vào công việc thật."
+    ],
+    "verbatim_quotes": [
+      {"name": "Vũ Minh Hùng", "age": 32, "job": "Trưởng phòng Kinh doanh B2B (Hà Nội)", "income": "30 - 45 triệu/tháng", "quote": "Tôi đi làm 10 năm rồi, chứng chỉ chẳng để làm gì cả. Cái tôi cần là vào học làm sao tự động hóa được báo cáo doanh số hàng ngày và viết email gửi khách hàng nhanh gấp đôi. Có template dùng được luôn là tôi mua.", "sentiment": "positive"},
+      {"name": "Nguyễn Thùy Dương", "age": 26, "job": "Chuyên viên Digital Marketing (TP.HCM)", "income": "18 - 25 triệu/tháng", "quote": "Học AI sợ nhất là lúc công cụ bị lỗi không biết hỏi ai. Nếu có kênh Discord được chuyên gia giải đáp 1-1 trong 30 ngày thì giá khóa học 2-3 triệu mình sẵn sàng đăng ký ngay.", "sentiment": "positive"},
+      {"name": "Đặng Quốc Bảo", "age": 38, "job": "Giám đốc Vận hành SME (Đà Nẵng)", "income": "45 - 65 triệu/tháng", "quote": "Khóa học phải thực chiến, dạy cách tích hợp AI vào quy trình làm việc của cả phòng ban. Giảng viên phải là người đã làm dự án thật cho công ty lớn thì chia sẻ mới có trọng lượng.", "sentiment": "positive"}
+    ]
+  },
+  "actionable_recommendations": [
+    "Thiết Kế Khóa Học: 80% thời lượng là thực hành cầm tay chỉ việc, 20% lý thuyết tổng quan.",
+    "Cam Kết Đầu Ra: Hoàn thành khóa học mỗi học viên bắt buộc có tối thiểu 3 quy trình AI tự động hóa áp dụng trực tiếp vào công việc hiện tại.",
+    "Chính Sách Giới Thiệu (Referral): Tặng thêm 60 ngày hỗ trợ VIP 1-1 cho học viên giới thiệu đồng nghiệp cùng đăng ký."
+  ],
+  "generated_at": "2026-10-26T10:30:00.000Z"
+};
+
 export const DEMO_REPORTS: Record<string, ReportPayload> = {
   'DEMO-NIELSEN-BASES': DEMO_NIELSEN_BASES,
   'DEMO-VAN-WESTENDORP': DEMO_VAN_WESTENDORP,
@@ -1817,11 +2405,46 @@ export const DEMO_REPORTS: Record<string, ReportPayload> = {
   'DEMO-BRAND-MAP': DEMO_BRAND_MAP,
   'DEMO-UA-STUDY': DEMO_UA_STUDY,
   'DEMO-DEAL-ELASTICITY': DEMO_DEAL_ELASTICITY,
+  'DEMO-EVENTS-MAXDIFF': DEMO_EVENTS_MAXDIFF,
+  'DEMO-MILK-SEN-BASES': DEMO_MILK_SEN_BASES,
+  'DEMO-DIAPER-WESTENDORP': DEMO_DIAPER_WESTENDORP,
+  'DEMO-AIR-PURIFIER-KANO': DEMO_AIR_PURIFIER_KANO,
+  'DEMO-FISH-SAUCE-MONADIC': DEMO_FISH_SAUCE_MONADIC,
+  'DEMO-EDTECH-MAXDIFF': DEMO_EDTECH_MAXDIFF,
 };
 
 export function getDemoReport(surveyId: string = 'DEMO-NIELSEN-BASES'): ReportPayload {
   const sid = (surveyId || '').toUpperCase();
 
+  // 1. Khớp chính xác theo ID trong từ điển
+  if (DEMO_REPORTS[surveyId]) {
+    return { ...DEMO_REPORTS[surveyId], project_id: surveyId };
+  }
+  if (DEMO_REPORTS[sid]) {
+    return { ...DEMO_REPORTS[sid], project_id: surveyId };
+  }
+
+  // 2. Khớp theo từ khóa đặc thù chuyên đề
+  if (sid.includes('MILK') || sid.includes('SEN')) {
+    return { ...DEMO_MILK_SEN_BASES, project_id: surveyId };
+  }
+  if (sid.includes('DIAPER') || sid.includes('BIM')) {
+    return { ...DEMO_DIAPER_WESTENDORP, project_id: surveyId };
+  }
+  if (sid.includes('AIR') || sid.includes('PURIFIER') || sid.includes('KHI')) {
+    return { ...DEMO_AIR_PURIFIER_KANO, project_id: surveyId };
+  }
+  if (sid.includes('FISH') || sid.includes('SAUCE') || sid.includes('MAM')) {
+    return { ...DEMO_FISH_SAUCE_MONADIC, project_id: surveyId };
+  }
+  if (sid.includes('EDTECH') || sid.includes('EDU')) {
+    return { ...DEMO_EDTECH_MAXDIFF, project_id: surveyId };
+  }
+  if (sid.includes('EVENTS') || sid.includes('CUOI')) {
+    return { ...DEMO_EVENTS_MAXDIFF, project_id: surveyId };
+  }
+
+  // 3. Khớp theo 9 mô hình tổng quát
   if (sid.includes('VAN') || sid.includes('WESTENDORP') || sid.includes('PSM')) {
     return { ...DEMO_VAN_WESTENDORP, project_id: surveyId };
   }
@@ -1849,3 +2472,4 @@ export function getDemoReport(surveyId: string = 'DEMO-NIELSEN-BASES'): ReportPa
 
   return { ...DEMO_NIELSEN_BASES, project_id: surveyId };
 }
+
