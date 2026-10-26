@@ -465,6 +465,9 @@ export default function ThuVienPage() {
             <Link href="/" className="hover:text-slate-900 transition-colors">
               Trang Chủ
             </Link>
+            <Link href="/chuan-phuong-phap" className="hover:text-slate-900 transition-colors">
+              Chuẩn 9 Phương Pháp
+            </Link>
             <Link href="/thu-vien" className="text-amber-700 font-bold">
               Thư Viện Báo Cáo
             </Link>

@@ -139,8 +139,14 @@ export default function HomePage() {
               Mô hình nghiên cứu
             </a>
             <Link
+              href="/chuan-phuong-phap"
+              className="text-amber-800 hover:text-amber-950 font-bold transition-colors"
+            >
+              Chuẩn 9 Phương pháp
+            </Link>
+            <Link
               href="/thu-vien"
-              className="inline-flex items-center gap-1.5 text-amber-700 hover:text-amber-900 font-bold transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold transition-colors"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
               <span>Thư viện mẫu</span>
@@ -887,6 +893,11 @@ export default function HomePage() {
                 Cơ Sở Khoa Học
               </h4>
               <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link href="/chuan-phuong-phap" className="hover:text-white transition-colors">
+                    Tiêu Chuẩn 9 Phương Pháp Nghiên Cứu
+                  </Link>
+                </li>
                 <li>
                   <Link href="/minh-bach-khoa-hoc" className="hover:text-white transition-colors">
                     Minh Bạch Khoa Học &amp; Thống Kê

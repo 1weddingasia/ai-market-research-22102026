@@ -29,6 +29,12 @@ export default function MinhBachKhoaHocPage() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
+              href="/chuan-phuong-phap"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-amber-500/40 hover:border-amber-400 transition-all"
+            >
+              <span>📐 Chuẩn 9 Phương pháp</span>
+            </Link>
+            <Link
               href="/bach-thu"
               className="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 hover:border-amber-500/50 transition-all"
             >
@@ -453,6 +459,10 @@ export default function MinhBachKhoaHocPage() {
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
             <Link href="/" className="hover:text-amber-400 transition-colors">
               Trang Chủ
+            </Link>
+            <span>·</span>
+            <Link href="/chuan-phuong-phap" className="hover:text-amber-400 transition-colors">
+              Chuẩn 9 Phương Pháp
             </Link>
             <span>·</span>
             <Link href="/bach-thu" className="hover:text-amber-400 transition-colors">

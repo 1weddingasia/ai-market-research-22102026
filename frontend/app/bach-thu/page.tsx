@@ -29,8 +29,14 @@ export default function BachThuPage() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
-              href="/minh-bach-khoa-hoc"
+              href="/chuan-phuong-phap"
               className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-300 hover:text-white px-3 py-1.5 rounded-lg border border-amber-500/40 hover:bg-amber-500/10 transition-all"
+            >
+              <span>📐 Chuẩn 9 Phương pháp</span>
+            </Link>
+            <Link
+              href="/minh-bach-khoa-hoc"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 hover:border-amber-500/50 transition-all"
             >
               <span>⚖️ Minh bạch thống kê</span>
             </Link>
