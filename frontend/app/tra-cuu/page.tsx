@@ -147,10 +147,21 @@ function TraCuuContent() {
           {/* Logo INSIGHT AI */}
           <Logo href="/" />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/thu-vien"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-50 text-amber-950 font-bold border border-amber-300 shadow-2xs hover:shadow-xs hover:border-amber-400 hover:bg-amber-100/60 transition-all shrink-0"
+              title="Xem & Tải Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026 (N=2.000 Personas)"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="text-slate-950 font-bold text-xs tracking-tight">Báo Cáo Ngành 2026</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
+                Xem & Tải PDF
+              </span>
+            </Link>
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-600 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-slate-100 transition-all"
+              className="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-slate-100 transition-all"
             >
               ← Trang chủ
             </Link>

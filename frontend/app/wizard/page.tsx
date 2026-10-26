@@ -91,6 +91,12 @@ export default function WizardPage() {
             >
               ← <span className="hidden xs:inline">Về</span> trang chủ
             </Link>
+            <Link
+              href="/thu-vien"
+              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 py-1.5 px-3 rounded-lg transition-colors"
+            >
+              <span>📑 Kho Báo Cáo Ngành 2026</span>
+            </Link>
             <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               Khung đối chuẩn GSO

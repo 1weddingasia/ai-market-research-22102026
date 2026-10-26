@@ -146,11 +146,14 @@ export default function HomePage() {
             </Link>
             <Link
               href="/thu-vien"
-              className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-50 text-amber-950 font-bold border border-amber-300 shadow-2xs hover:shadow-xs hover:border-amber-400 hover:bg-amber-100/60 transition-all shrink-0"
+              title="Xem & Tải Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026 (N=2.000 Personas)"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              <span>Thư viện mẫu</span>
-              <span className="text-[10px] font-mono uppercase bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">14 Ngành</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="text-slate-950 font-bold text-xs tracking-tight">Báo Cáo Ngành 2026</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
+                Xem & Tải PDF
+              </span>
             </Link>
             <a href="#bang-gia" className="hover:text-slate-900 transition-colors">
               Bảng giá
@@ -216,15 +219,17 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/results/DEMO-NIELSEN-BASES"
+              href="/thu-vien"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl bg-amber-50 text-amber-900 font-bold text-xs border border-amber-200"
+              className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs shadow-md border border-amber-400"
             >
               <span className="flex items-center gap-2">
-                <span>📊</span>
-                <span>Xem Báo Cáo Mẫu Thực Tế (Live Demo)</span>
+                <span className="text-base">📑</span>
+                <span>Báo Cáo Ngành 2026 (Xem & Tải PDF N=2.000)</span>
               </span>
-              <span>→</span>
+              <span className="bg-slate-950 text-amber-300 text-[10px] px-2 py-0.5 rounded-md font-bold uppercase">
+                Xem Ngay →
+              </span>
             </Link>
 
             <Link
@@ -878,9 +883,9 @@ export default function HomePage() {
                 <li className="pt-1">
                   <Link
                     href="/thu-vien"
-                    className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
+                    className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1.5 transition-colors"
                   >
-                    <span>Thư viện 14 ca mẫu thực nghiệm</span>
+                    <span>Kho Báo Cáo Đối Sánh Ngành 2026 (Xem & Tải PDF)</span>
                     <span>→</span>
                   </Link>
                 </li>

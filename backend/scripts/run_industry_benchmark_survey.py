@@ -348,6 +348,7 @@ async def execute_benchmark_survey(topic_config: dict) -> bool:
             )
             db.add(bm)
         else:
+            bm.sample_size = survey.sample_size
             bm.score_or_verdict = f"{viability}/100 · {verdict.split('.')[0][:30]}"
             bm.score_number = viability
             bm.summary = exec_sum.get("problem_statement") or bm.summary

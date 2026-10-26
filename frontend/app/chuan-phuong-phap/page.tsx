@@ -509,8 +509,16 @@ export default function ChuanPhuongPhapPage() {
             <Link href="/" className="hover:text-slate-900 transition-colors">
               Trang Chủ
             </Link>
-            <Link href="/thu-vien" className="hover:text-slate-900 transition-colors">
-              Thư Viện Báo Cáo
+            <Link
+              href="/thu-vien"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-50 text-amber-950 font-bold border border-amber-300 shadow-2xs hover:shadow-xs hover:border-amber-400 hover:bg-amber-100/60 transition-all shrink-0"
+              title="Xem & Tải Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026 (N=2.000 Personas)"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="text-slate-950 font-bold text-xs tracking-tight">Báo Cáo Ngành 2026</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
+                Xem & Tải PDF
+              </span>
             </Link>
             <Link href="/chuan-phuong-phap" className="text-amber-700 font-bold">
               Tiêu Chuẩn 9 Phương Pháp
@@ -808,9 +816,9 @@ export default function ChuanPhuongPhapPage() {
             </Link>
             <Link
               href="/thu-vien"
-              className="py-3 px-6 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/20 transition-all"
+              className="py-3 px-6 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/20 transition-all flex items-center gap-2"
             >
-              <span>Xem Thư Viện Báo Cáo Đối Sánh</span>
+              <span>📑 Kho Báo Cáo Ngành 2026 (Xem & Tải PDF)</span>
             </Link>
           </div>
         </section>

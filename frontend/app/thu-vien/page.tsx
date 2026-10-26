@@ -25,6 +25,27 @@ interface CaseStudy {
 
 const CASE_STUDIES: CaseStudy[] = [
   {
+    id: 'bm-fnb-psm-2026',
+    demoId: 'BM-FNB-2026-PSM',
+    category: 'fnb',
+    categoryLabel: 'F&B · Đồ Uống Tốt Cho Sức Khỏe',
+    modelType: 'van_westendorp',
+    modelLabel: 'Van Westendorp PSM',
+    productName: 'Báo Cáo Đo Lường Ngưỡng Giá Chấp Nhận & Xu Hướng: Đồ Uống Ít Đường & Thảo Mộc Bản Địa (Quý 1/2026)',
+    companyName: 'Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform',
+    sampleSize: 'N = 2.000 Personas · Đại diện 3 miền',
+    scoreOrVerdict: 'OPP: 26.200 đ · CHẤP NHẬN: 89/100',
+    scoreNumber: 89,
+    scoreColor: 'text-emerald-700 bg-emerald-50 border-emerald-300',
+    summary: 'Khảo sát thực nghiệm quy mô N = 2.000 personas đại diện dân số đô thị 3 miền theo niên giám GSO, xác định điểm giá tối ưu (OPP: 26.200đ), biên độ giá chấp nhận (24.200đ - 31.600đ) và đo lường nhu cầu đồ uống thảo mộc thanh nhiệt ít đường.',
+    findings: [
+      'Điểm giá tối ưu (OPP) xác lập tại 26.200 đ/lon 330ml — tỷ lệ kháng cự tâm lý thấp nhất, cân bằng hoàn hảo giữa cảm nhận chất lượng & khả năng chi trả.',
+      'Khoảng giá chấp nhận được (PME) dao động từ 24.200 đ (ngưỡng rẻ nghi ngờ chất lượng) đến 31.600 đ (ngưỡng đắt từ chối thử nghiệm).',
+      'Thành phần thảo mộc tự nhiên (atiso, cúc La Mã, la hán quả) và định vị ít đường đạt 86.4% ưu tiên chọn lựa so với nước ngọt thông thường.',
+    ],
+    tags: ['F&B', 'Đồ uống thảo mộc', 'Van Westendorp PSM', 'Định giá tối ưu', 'N=2.000 Personas', 'Ít đường'],
+  },
+  {
     id: 'kombucha-bases',
     demoId: 'DEMO-NIELSEN-BASES',
     category: 'fnb',
@@ -465,11 +486,19 @@ export default function ThuVienPage() {
             <Link href="/" className="hover:text-slate-900 transition-colors">
               Trang Chủ
             </Link>
+            <Link
+              href="/thu-vien"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-50 text-amber-950 font-bold border border-amber-400 shadow-2xs transition-all shrink-0"
+              title="Kho Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026 (N=2.000 Personas)"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="text-slate-950 font-bold text-xs tracking-tight">Báo Cáo Ngành 2026</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
+                Xem & Tải PDF
+              </span>
+            </Link>
             <Link href="/chuan-phuong-phap" className="hover:text-slate-900 transition-colors">
               Chuẩn 9 Phương Pháp
-            </Link>
-            <Link href="/thu-vien" className="text-amber-700 font-bold">
-              Thư Viện Báo Cáo
             </Link>
             <Link href="/minh-bach-khoa-hoc" className="hover:text-slate-900 transition-colors">
               Minh Bạch Khoa Học
@@ -502,15 +531,15 @@ export default function ThuVienPage() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
-            🏛️ Executive Market Intelligence · Industry Benchmark 2026
+            🏛️ Executive Market Intelligence · Official Industry Benchmarks 2026
           </div>
           
           <h1 className="font-serif text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-            Thư Viện Báo Cáo Chuẩn Đo Lường Ngành Hàng 2026
+            Kho Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026
           </h1>
           
-          <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-4 font-light">
-            Tổng hợp 14 bộ dữ liệu nghiên cứu thị trường thực nghiệm quy mô <strong>N = 1.000 Personas</strong> phân tầng chuẩn Niên giám Tổng cục Thống kê GSO, áp dụng nghiêm ngặt 9 mô hình khoa học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff, Monadic...).
+          <p className="text-slate-300 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed mb-4 font-light">
+            Kho dữ liệu nghiên cứu thị trường chuẩn hóa quy mô lớn lên đến <strong>N = 2.000 Personas</strong> phân tầng chuẩn Niên giám Tổng cục Thống kê GSO, áp dụng nghiêm ngặt 9 mô hình khoa học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff, Monadic...). Toàn bộ báo cáo sẵn sàng cho doanh nghiệp <strong>xem dashboard tương tác, duyệt bản in A4 và tải file PDF chính thức</strong>.
           </p>
 
           {/* Legal & Ethical Notice Banner */}
@@ -651,28 +680,42 @@ export default function ThuVienPage() {
                 </div>
 
                 {/* Card Actions */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-                  <Link
-                    href={`/results/${c.demoId}`}
-                    className="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-xs"
-                  >
-                    Xem Dashboard Tương Tác &rarr;
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={(e) => handlePrintClick(c, e)}
-                    className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-slate-200 cursor-pointer"
-                    title="Mở bản in chiến lược A4 chuyên sâu đa trang (độ dài linh hoạt theo dữ liệu)"
-                  >
-                    📄 Bản In A4
-                  </button>
-                  <Link
-                    href={`/wizard?model=${c.modelType}`}
-                    className="text-center bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-amber-200"
-                    title="Khởi tạo khảo sát cho sản phẩm của bạn"
-                  >
-                    Khảo Sát Ngay
-                  </Link>
+                <div className="pt-4 border-t border-slate-100 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/results/${c.demoId}`}
+                      className="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5"
+                    >
+                      <span>Xem Dashboard</span>
+                      <span className="text-amber-400 font-bold">&rarr;</span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={(e) => handlePrintClick(c, e)}
+                      className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-slate-200 cursor-pointer flex items-center justify-center gap-1 shrink-0"
+                      title="Mở bản in chiến lược A4 chuyên sâu đa trang"
+                    >
+                      <span>📄 Bản In A4</span>
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${c.demoId}/pdf?download=true`}
+                      download={`bao-cao-chinh-thuc-${c.demoId}.pdf`}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-xs transition-all cursor-pointer"
+                      title="Tải trực tiếp file PDF chính thức chuẩn in ấn A4"
+                    >
+                      <span>💾 Tải Báo Cáo PDF</span>
+                    </a>
+                    <Link
+                      href={`/wizard?model=${c.modelType}`}
+                      className="text-center bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-900 text-xs font-semibold py-2 px-3 rounded-xl transition-all border border-slate-200 hover:border-amber-200 shrink-0"
+                      title="Khởi tạo khảo sát cho sản phẩm của bạn"
+                    >
+                      <span>Khảo sát ngay →</span>
+                    </Link>
+                  </div>
                 </div>
 
               </div>

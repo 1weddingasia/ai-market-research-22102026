@@ -29,6 +29,17 @@ export default function MinhBachKhoaHocPage() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
+              href="/thu-vien"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 text-amber-300 hover:text-white font-bold border border-amber-400/50 hover:border-amber-400 shadow-2xs transition-all text-xs shrink-0"
+              title="Kho Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026 (N=2.000 Personas)"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span className="font-bold tracking-tight">Báo Cáo Ngành 2026</span>
+              <span className="text-[10px] font-mono uppercase bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black tracking-tight shrink-0">
+                Xem & Tải PDF
+              </span>
+            </Link>
+            <Link
               href="/chuan-phuong-phap"
               className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg border border-amber-500/40 hover:border-amber-400 transition-all"
             >

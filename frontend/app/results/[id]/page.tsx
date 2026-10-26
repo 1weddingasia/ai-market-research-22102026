@@ -1305,6 +1305,15 @@ export default function ResultsPage() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Link Kho Báo Cáo */}
+            <Link
+              href="/thu-vien"
+              className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-950 font-bold text-xs transition-colors"
+              title="Kho Báo Cáo Nghiên Cứu Thị Trường Chính Thức 2026"
+            >
+              <span>📑 Kho Báo Cáo</span>
+            </Link>
+
             {/* Confidential Stamp */}
             <div className="border border-red-500/80 bg-red-50 text-red-700 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded hidden sm:block">
               CONFIDENTIAL · BẢO MẬT HĐQT
@@ -1318,14 +1327,15 @@ export default function ResultsPage() {
               className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3 sm:px-3.5 rounded-lg shadow-sm transition-all"
             >
               <span>🖨️</span>
-              <span className="hidden sm:inline">Xuất Bản In A4 Chiến Lược</span>
-              <span className="sm:hidden">Xuất A4</span>
+              <span className="hidden sm:inline">Xuất Bản In A4</span>
+              <span className="sm:hidden">Bản In A4</span>
             </a>
 
             <a
               href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
               download={`bao-cao-khao-sat-${surveyId}.pdf`}
-              className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-3 rounded-lg shadow-xs transition-colors hidden sm:inline-flex"
+              className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-2.5 sm:px-3 rounded-lg shadow-xs transition-colors"
+              title="Tải trực tiếp file PDF chính thức chuẩn A4"
             >
               <span>💾 Tải PDF</span>
             </a>
