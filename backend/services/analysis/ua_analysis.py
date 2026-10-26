@@ -119,11 +119,13 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
         {"gap": top_3_pains[2] if len(top_3_pains) > 2 else "Bất tiện khi mua sắm", "severity": "Trung bình (19%)", "opportunity": "Tối ưu hóa kênh phân phối đa kênh Omni-channel và giao hàng siêu tốc."},
     ]
 
+    moe = 1.96 * ((0.25 / max(1, total)) ** 0.5) * 100
     return ReportPayload(
         project_id=survey_id,
         model_type="ua_study",
         target_summary=TargetSummary(
-            sample_size=total, margin_of_error="±3.1%",
+            sample_size=total,
+            margin_of_error=f"±{moe:.1f}%",
             location=location,
             demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),

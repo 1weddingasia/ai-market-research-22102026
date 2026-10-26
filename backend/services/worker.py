@@ -169,9 +169,10 @@ async def run_simulation(survey_id: str) -> None:
             female_pct = demo.get("gender", {}).get("female_pct", 50)
             avg_age    = demo.get("avg_age", 30)
 
+            moe_val = 1.96 * ((0.25 / max(1, len(personas_df))) ** 0.5) * 100
             await _emit_log(
                 survey_id, 30,
-                f"[ĐỐI CHUẨN MẪU GSO] Mục tiêu: {targeting_summary_str} (Mẫu thực: Nam {male_pct:.0f}% - Nữ {female_pct:.0f}%, Tuổi TB {avg_age:.0f}) | N={len(personas_df):,} tác tử AI đối chuẩn theo khung phân tầng Niên giám GSO (Độ tin cậy 95%, Sai số ±3.1%)."
+                f"[ĐỐI CHUẨN MẪU GSO] Mục tiêu: {targeting_summary_str} (Mẫu thực: Nam {male_pct:.0f}% - Nữ {female_pct:.0f}%, Tuổi TB {avg_age:.0f}) | N={len(personas_df):,} tác tử AI đối chuẩn theo khung phân tầng Niên giám GSO (Độ tin cậy 95%, Sai số ±{moe_val:.1f}%)."
             )
 
         except Exception as e:

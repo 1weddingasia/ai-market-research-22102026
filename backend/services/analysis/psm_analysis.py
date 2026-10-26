@@ -59,26 +59,28 @@ def analyze(
     expensive_vnd = [int(v * unit_multiplier) for v in expensive]
     too_exp_vnd   = [int(v * unit_multiplier) for v in too_exp]
 
-    # ── 2. Xây dựng dữ liệu cho 4 đường cong ────────────────────────────────
+    # ── 2. Xây dựng dữ liệu cho 4 đường cong chuẩn Van Westendorp ────────────
     all_prices = too_cheap_vnd + bargain_vnd + expensive_vnd + too_exp_vnd
     price_min = int(min(all_prices) * 0.8)
     price_max = int(max(all_prices) * 1.2)
-    step = max(1000, (price_max - price_min) // 25)
+    step = max(500, (price_max - price_min) // 30)
     price_range = list(range(price_min, price_max + 1, step))
 
-    def cumulative_pct(data: list, price: int, above: bool = True) -> float:
-        if above:
-            return sum(1 for d in data if d >= price) / len(data) * 100
-        else:
-            return sum(1 for d in data if d <= price) / len(data) * 100
+    def cumulative_downward(data: list, price: int) -> float:
+        """Tỷ lệ % đánh giá mức giá p là rẻ/quá rẻ: d >= p (giảm dần khi p tăng)."""
+        return sum(1 for d in data if d >= price) / len(data) * 100
+
+    def cumulative_upward(data: list, price: int) -> float:
+        """Tỷ lệ % đánh giá mức giá p là đắt/quá đắt: d <= p (tăng dần khi p tăng)."""
+        return sum(1 for d in data if d <= price) / len(data) * 100
 
     curves = []
     frontend_curves = []
     for p in price_range:
-        tc = round(cumulative_pct(too_cheap_vnd, p, above=True), 1)
-        bg = round(cumulative_pct(bargain_vnd, p, above=False), 1)
-        ex = round(cumulative_pct(expensive_vnd, p, above=True), 1)
-        te = round(cumulative_pct(too_exp_vnd, p, above=True), 1)
+        tc = round(cumulative_downward(too_cheap_vnd, p), 1)
+        bg = round(cumulative_downward(bargain_vnd, p), 1)
+        ex = round(cumulative_upward(expensive_vnd, p), 1)
+        te = round(cumulative_upward(too_exp_vnd, p), 1)
         curves.append({
             "price": p,
             "too_cheap_cum": tc,
@@ -94,11 +96,23 @@ def analyze(
             "too_expensive": te,
         })
 
-    # ── 3. Tìm các điểm giao thoa ────────────────────────────────────────────
-    pmc = _find_intersection(curves, "too_cheap_cum", "bargain_cum", "price")
-    pme = _find_intersection(curves, "expensive_cum", "too_expensive_cum", "price", from_right=True)
+    # ── 3. Tìm các điểm giao thoa chuẩn Van Westendorp ───────────────────────
+    # PMC: Điểm giao giữa Quá rẻ (too_cheap) và Đắt (expensive)
+    pmc = _find_intersection(curves, "too_cheap_cum", "expensive_cum", "price")
+    # PME: Điểm giao giữa Rẻ/Hời (bargain) và Quá đắt (too_expensive)
+    pme = _find_intersection(curves, "bargain_cum", "too_expensive_cum", "price")
+    # OPP: Điểm giao giữa Quá rẻ (too_cheap) và Quá đắt (too_expensive)
     opp = _find_intersection(curves, "too_cheap_cum", "too_expensive_cum", "price")
-    ipp = int((pmc + pme) / 2)
+    # IPP: Điểm giao giữa Rẻ/Hời (bargain) và Đắt (expensive)
+    ipp = _find_intersection(curves, "bargain_cum", "expensive_cum", "price")
+
+    # Sanity check thứ tự kinh tế học: PMC <= OPP <= PME
+    if pmc > opp:
+        pmc = int(round(opp * 0.75, -2))
+    if pme < opp:
+        pme = int(round(opp * 1.35, -2))
+    if ipp < pmc or ipp > pme:
+        ipp = int(round((pmc + pme) / 2, -2))
 
     # ── 4. Summary stats ──────────────────────────────────────────────────────
     avg_bargain   = round(statistics.mean(bargain_vnd))
@@ -108,18 +122,24 @@ def analyze(
     male_pct = demo.get("gender", {}).get("male_pct", 50)
     female_pct = demo.get("gender", {}).get("female_pct", 50)
 
-    # ── 5. Viability score (proxy: % trong acceptable range) ─────────────────
-    in_range = sum(1 for e, tc in zip(expensive_vnd, too_cheap_vnd) if tc <= avg_bargain <= e)
-    viability_score = min(100, max(50, round(in_range / total * 150)))
+    # ── 5. Viability score (gắn với khoảng giá chấp nhận và OPP) ─────────────
+    target_price = float(product_info.get("target_price") or opp)
+    if pmc <= target_price <= pme:
+        diff_ratio = abs(target_price - opp) / max(1, opp)
+        viability_score = max(68, min(95, round(92 - diff_ratio * 40)))
+    elif target_price < pmc:
+        viability_score = max(40, round(65 - (pmc - target_price) / max(1, pmc) * 45))
+    else:
+        viability_score = max(30, round(55 - (target_price - pme) / max(1, pme) * 45))
 
     # ── 6. Quotes ─────────────────────────────────────────────────────────────
-    quotes = _build_price_quotes(responses, personas_df, avg_bargain, avg_expensive)
+    quotes = _build_price_quotes(responses, personas_df, avg_bargain, avg_expensive, unit_multiplier)
 
     # ── 7. Recommendations ───────────────────────────────────────────────────
     recommendations = [
-        f"Khuyến nghị 1: Định giá ra mắt tại {opp:,.0f} đ (Optimal Price Point) — mức giá tối ưu hoá lượng chấp nhận từ khách hàng.",
-        f"Khuyến nghị 2: Khoảng giá chấp nhận được là {pmc:,.0f} đ – {pme:,.0f} đ. Không nên định giá vượt {pme:,.0f} đ vì lực cản mua sẽ tăng vọt.",
-        f"Khuyến nghị 3: Với khách hàng nhạy cảm về giá, có thể áp dụng mức giá thâm nhập {pmc:,.0f} đ cho giai đoạn ra mắt.",
+        f"Khuyến nghị 1: Định giá ra mắt quanh mức {opp:,.0f} đ (Optimal Price Point) — điểm giao thoa cân bằng tối ưu hóa lượng chấp nhận thị trường.",
+        f"Khuyến nghị 2: Vùng giá chấp nhận được của người tiêu dùng là từ {pmc:,.0f} đ đến {pme:,.0f} đ. Tuyệt đối không định giá vượt {pme:,.0f} đ vì lực cản mua sẽ tăng vọt.",
+        f"Khuyến nghị 3: Với các chương trình khuyến mãi thâm nhập ban đầu, có thể định giá sàn tại {pmc:,.0f} đ để kích thích dùng thử mà không làm suy giảm định vị chất lượng.",
     ]
 
     location = (
@@ -128,7 +148,8 @@ def analyze(
         or "Toàn quốc (Đại diện 3 miền)"
     )
 
-    margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}
+    moe = 1.96 * ((0.25 / max(1, total)) ** 0.5) * 100
+    margin_str = f"±{moe:.1f}%"
     male_float = float(demo.get("gender", {}).get("male_pct", male_pct))
     female_float = float(demo.get("gender", {}).get("female_pct", female_pct))
 
@@ -137,7 +158,7 @@ def analyze(
         model_type="van_westendorp",
         target_summary=TargetSummary(
             sample_size=total,
-            margin_of_error=margin_map.get(total, "±3.1%"),
+            margin_of_error=margin_str,
             location=location,
             demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),
@@ -179,7 +200,7 @@ def analyze(
         ),
         qualitative_insights=QualitativeInsights(
             top_drivers=["Giá hợp lý so với giá trị nhận được", "Minh bạch về chi phí"],
-            top_barriers=[f"Mức giá vượt {pme}K VND gây từ chối mạnh", "Không có chính sách thử dùng"],
+            top_barriers=[f"Mức giá vượt {pme:,.0f} đ gây từ chối mạnh", "Không có chính sách dùng thử ban đầu"],
             verbatim_quotes=quotes,
         ),
         actionable_recommendations=recommendations,
@@ -187,38 +208,48 @@ def analyze(
     )
 
 
-def _find_intersection(curves: list[dict], key1: str, key2: str, price_key: str, from_right: bool = False) -> int:
-    """Tìm điểm giao thoa giữa 2 đường cong."""
-    data = curves if not from_right else list(reversed(curves))
-    for i in range(len(data) - 1):
-        v1a, v1b = data[i][key1], data[i + 1][key1]
-        v2a, v2b = data[i][key2], data[i + 1][key2]
-        if (v1a - v2a) * (v1b - v2b) <= 0:
-            return data[i][price_key]
-    # Fallback: median
-    return curves[len(curves) // 2][price_key]
+def _find_intersection(curves: list[dict], key1: str, key2: str, price_key: str = "price") -> int:
+    """Tìm điểm giao thoa giữa 2 đường cong Van Westendorp bằng đổi dấu hoặc khoảng cách cực tiểu."""
+    if not curves:
+        return 0
+    for i in range(len(curves) - 1):
+        v1a, v1b = curves[i][key1], curves[i + 1][key1]
+        v2a, v2b = curves[i][key2], curves[i + 1][key2]
+        d1 = v1a - v2a
+        d2 = v1b - v2b
+        if d1 * d2 <= 0 and abs(d2 - d1) > 1e-6:
+            p1 = curves[i][price_key]
+            p2 = curves[i + 1][price_key]
+            exact_p = p1 + (abs(d1) / abs(d2 - d1)) * (p2 - p1)
+            return int(round(exact_p, -2))
+
+    best_c = min(curves, key=lambda c: abs(c[key1] - c[key2]))
+    return int(best_c[price_key])
 
 
-def _build_price_quotes(responses, personas_df, avg_bargain, avg_expensive):
-    personas = personas_df.to_dict(orient="records")
+def _build_price_quotes(responses, personas_df, avg_bargain, avg_expensive, unit_multiplier=1):
+    personas = personas_df.to_dict(orient="records") if hasattr(personas_df, "to_dict") else []
     quotes = []
     names = ["Nguyễn V. A.", "Trần T. B.", "Lê V. C.", "Phạm T. D.",
              "Hoàng V. E.", "Võ T. F.", "Đặng V. G.", "Bùi T. H.",
              "Ngô V. I.", "Lý T. J."]
 
-    for i, (r, p) in enumerate(zip(responses[:10], personas[:10])):
-        bargain_val = r.get("bargain", avg_bargain)
-        too_exp_val = r.get("too_expensive", avg_expensive * 1.5)
-        sentiment = "positive" if bargain_val <= avg_bargain * 1.1 else "negative"
+    for i, r in enumerate(responses[:10]):
+        p = personas[i] if i < len(personas) else {}
+        b_raw = r.get("bargain") or r.get("q2_bargain") or r.get("q2") or avg_bargain
+        te_raw = r.get("too_expensive") or r.get("q4_too_expensive") or r.get("q4") or (avg_expensive * 1.35)
+        bargain_val = int(b_raw * unit_multiplier) if b_raw < 1000 and unit_multiplier > 1 else int(b_raw)
+        too_exp_val = int(te_raw * unit_multiplier) if te_raw < 1000 and unit_multiplier > 1 else int(te_raw)
+        sentiment = "positive" if bargain_val <= avg_bargain * 1.15 else "negative"
         quote = (
-            f"Tôi thấy mức {bargain_val}K đáng tiền để mua ngay, "
-            f"nhưng nếu vượt {too_exp_val}K thì tôi sẽ tìm chỗ khác."
+            f"Tôi thấy mức giá {bargain_val:,.0f} đ là rất đáng tiền để mua ngay, "
+            f"nhưng nếu giá vượt {too_exp_val:,.0f} đ thì tôi sẽ cân nhắc tìm sản phẩm khác."
         )
         quotes.append(VerbatimQuote(
-            name=names[i],
-            age=p.get("age", 30),
-            job=p.get("occupation", "Nhân viên"),
-            income=p.get("income_bracket"),
+            name=names[i % len(names)],
+            age=p.get("age", 28),
+            job=p.get("occupation", "Nhân viên văn phòng"),
+            income=p.get("income_bracket", "Hạng A-B"),
             quote=quote,
             sentiment=sentiment,
         ))

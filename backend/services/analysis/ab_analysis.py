@@ -162,11 +162,13 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
     male_float = float(demo.get("gender", {}).get("male_pct", male_pct))
     female_float = float(demo.get("gender", {}).get("female_pct", female_pct))
 
+    moe = 1.96 * ((0.25 / max(1, total)) ** 0.5) * 100
     return ReportPayload(
         project_id=survey_id,
         model_type="ab_testing",
         target_summary=TargetSummary(
-            sample_size=total, margin_of_error="±3.1%",
+            sample_size=total,
+            margin_of_error=f"±{moe:.1f}%",
             location=location,
             demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),

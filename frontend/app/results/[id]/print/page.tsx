@@ -434,12 +434,21 @@ export default function PrintReportPage() {
   const heroData = modelInfo.getHeroValue(report);
   const bottomKPIs = modelInfo.getBottomKPIs(report);
   const pInfo = report.product_info || {};
-  const companyName = (pInfo.company_name as string) || (pInfo.brand_name as string) || 'Doanh Nghiệp / Thương Hiệu';
-  const productName = (pInfo.product_name as string) || (pInfo.concept_name as string) || (pInfo.deal_description as string) || (pInfo.brand_name as string) || 'Dự án Nghiên Cứu Thị Trường';
-  const category = (pInfo.category as string) || (pInfo.industry as string) || 'Tiêu dùng & Dịch vụ';
-  const location = report.target_summary?.location || 'Toàn quốc (Đại diện 6 vùng)';
-  const sampleN = report.target_summary?.sample_size || 1000;
-  const moe = report.target_summary?.margin_of_error || '±3.1%';
+  const isBenchmark = Boolean(
+    pInfo.is_benchmark ||
+    (typeof surveyId === 'string' && surveyId.startsWith('BM-')) ||
+    pInfo.title
+  );
+  const companyName = isBenchmark
+    ? ((pInfo.company_name as string) || 'Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform')
+    : ((pInfo.company_name as string) || (pInfo.brand_name as string) || 'Doanh Nghiệp / Thương Hiệu');
+  const productName = (pInfo.title as string) || (pInfo.product_name as string) || (pInfo.name as string) || (pInfo.concept_name as string) || (pInfo.deal_description as string) || (pInfo.brand_name as string) || 'Báo Cáo Nghiên Cứu Thị Trường';
+  const category = (pInfo.category as string) || (pInfo.industry_label as string) || (pInfo.industry as string) || 'Tiêu dùng & Dịch vụ';
+  const location = report.target_summary?.location || 'Toàn quốc (Đại diện 3 miền)';
+  const sampleN = report.target_summary?.sample_size || 2000;
+  const moe = (report.target_summary?.margin_of_error && report.target_summary.margin_of_error !== '±3.1%')
+    ? report.target_summary.margin_of_error
+    : `±${(1.96 * Math.sqrt(0.25 / sampleN) * 100).toFixed(1)}%`;
   const viabilityScore = report.executive_summary?.viability_score || 75;
 
   // Viability classification
@@ -639,7 +648,8 @@ export default function PrintReportPage() {
               Dự án: {productName}
             </div>
             <div className="text-xs font-sans text-slate-700 mt-1 font-semibold">
-              Đơn vị yêu cầu / Khách hàng: <span className="text-slate-900 font-bold">{companyName}</span> · Ngành: <span className="text-slate-800">{category}</span>
+              <span>{isBenchmark ? 'Đơn vị nghiên cứu & công bố: ' : 'Đơn vị yêu cầu / Khách hàng: '}</span>
+              <span className="text-slate-900 font-bold">{companyName}</span> · Ngành: <span className="text-slate-800">{category}</span>
             </div>
           </div>
 

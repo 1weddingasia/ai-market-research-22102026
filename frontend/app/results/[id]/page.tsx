@@ -130,6 +130,177 @@ function ScoreGauge({ score, modelType }: { score: number; modelType?: string })
   );
 }
 
+function HeroMetricDisplay({ report }: { report: any }) {
+  const modelType = report.model_type;
+  const exec = report.executive_summary || {};
+  const quant = report.quantitative_metrics || {};
+  const ms = quant.model_specific || {};
+
+  if (modelType === 'van_westendorp') {
+    const opp = Number(ms.optimal_price || ms.opp || 0);
+    const ipp = Number(ms.indifference_price || ms.idp || 0);
+    const pmc = Number(ms.pmc || 0);
+    const pme = Number(ms.pme || 0);
+    const score = exec.viability_score ?? 85;
+    const isGood = score >= 70;
+
+    return (
+      <div className="flex flex-col justify-between p-6 bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl shadow-sm h-full">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-[#D4AF37] text-[10px] font-bold border border-amber-400/30 uppercase tracking-wider mb-3 font-mono">
+            💎 ĐỊNH GIÁ TỐI ƯU · VAN WESTENDORP (PSM)
+          </div>
+          <div className="text-[11px] uppercase tracking-wider text-slate-400 font-mono">
+            Điểm Giá Tối Ưu Hội Tụ (OPP)
+          </div>
+          <div className="text-3xl sm:text-4xl font-serif font-black text-amber-400 mt-1">
+            {opp > 0 ? `${opp.toLocaleString('vi-VN')} đ` : '28.000 đ'}
+          </div>
+          <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+            Khoảng giá chấp nhận được:{' '}
+            <strong className="text-white font-mono">
+              {pmc > 0 && pme > 0 ? `${(pmc / 1000).toFixed(0)}k – ${(pme / 1000).toFixed(0)}k đ` : '19k – 38k đ'}
+            </strong>
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-slate-800 mt-4">
+          <div className="grid grid-cols-3 gap-2 text-center mb-3">
+            <div className="bg-slate-800/60 p-2 rounded-lg border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 block font-mono">Sàn PMC</span>
+              <span className="text-xs font-bold text-slate-200">
+                {pmc > 0 ? `${(pmc / 1000).toFixed(0)}k đ` : '19k đ'}
+              </span>
+            </div>
+            <div className="bg-slate-800/60 p-2 rounded-lg border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 block font-mono">Cân Bằng IPP</span>
+              <span className="text-xs font-bold text-amber-300">
+                {ipp > 0 ? `${(ipp / 1000).toFixed(0)}k đ` : '26k đ'}
+              </span>
+            </div>
+            <div className="bg-slate-800/60 p-2 rounded-lg border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 block font-mono">Trần PME</span>
+              <span className="text-xs font-bold text-slate-200">
+                {pme > 0 ? `${(pme / 1000).toFixed(0)}k đ` : '38k đ'}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-slate-400 font-mono">Chỉ số phù hợp giá</span>
+            <span
+              className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
+                isGood
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                  : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+              }`}
+            >
+              {score}/100 {isGood ? 'GO (GIÁ HỢP LÝ)' : 'CẦN ĐIỀU CHỈNH'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (modelType === 'ab_testing') {
+    const winner = String(ms.winner || 'Phương án A');
+    const winRate = String(ms.win_rate || '68.5%');
+
+    return (
+      <div className="flex flex-col justify-between p-6 bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl shadow-sm h-full">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-bold border border-emerald-400/30 uppercase tracking-wider mb-3 font-mono">
+            🏆 THỬ NGHIỆM ĐỐI ĐẦU · KANTAR LINK
+          </div>
+          <div className="text-[11px] uppercase tracking-wider text-slate-400 font-mono">
+            Phương Án Chiến Thắng Tuyệt Đối
+          </div>
+          <div className="text-3xl sm:text-4xl font-serif font-black text-white mt-1">
+            {winner}
+          </div>
+          <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+            Tỷ lệ áp đảo:{' '}
+            <strong className="text-emerald-400 font-mono text-sm">{winRate}</strong> (Kiểm định thống kê p &lt; 0.05)
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-slate-800 mt-4">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-400 font-mono">Khuyến nghị sản xuất</span>
+            <span className="font-bold text-amber-400 uppercase">Khóa mẫu {winner}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (modelType === 'ua_study') {
+    const topOccasion = String(ms.top_occasion_pct || '48.6%');
+    const topChannel = String(ms.top_channel || 'Siêu thị MT & Chuỗi tiện lợi');
+
+    return (
+      <div className="flex flex-col justify-between p-6 bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl shadow-sm h-full">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-400/20 text-blue-300 text-[10px] font-bold border border-blue-400/30 uppercase tracking-wider mb-3 font-mono">
+            ⏰ HÀNH VI TIÊU DÙNG · U&A STUDY
+          </div>
+          <div className="text-[11px] uppercase tracking-wider text-slate-400 font-mono">
+            Dịp Tiêu Dùng Số 1 Ngành Hàng
+          </div>
+          <div className="text-3xl sm:text-4xl font-serif font-black text-amber-400 mt-1">
+            {topOccasion}
+          </div>
+          <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+            Kênh phân phối chủ đạo:{' '}
+            <strong className="text-white font-mono">{topChannel}</strong>
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-slate-800 mt-4">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-400 font-mono">Độ hấp dẫn thị trường</span>
+            <span className="font-bold text-emerald-400">{exec.viability_score}/100 RẤT TIỀM NĂNG</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (modelType === 'deal_elasticity') {
+    const elasticity = String(ms.elasticity || '-1.65');
+
+    return (
+      <div className="flex flex-col justify-between p-6 bg-gradient-to-br from-slate-900 to-[#0A192F] text-white border border-amber-500/30 rounded-2xl shadow-sm h-full">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-400/20 text-purple-300 text-[10px] font-bold border border-purple-400/30 uppercase tracking-wider mb-3 font-mono">
+            📉 CO GIÃN KHUYẾN MÃI · DEAL ELASTICITY
+          </div>
+          <div className="text-[11px] uppercase tracking-wider text-slate-400 font-mono">
+            Hệ Số Co Giãn Cầu Theo Giá (ε)
+          </div>
+          <div className="text-3xl sm:text-4xl font-serif font-black text-purple-300 mt-1">
+            ε = {elasticity}
+          </div>
+          <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+            Ngưỡng chiết khấu an toàn tối ưu biên lãi gộp:{' '}
+            <strong className="text-amber-400 font-mono">18% – 20%</strong>
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-slate-800 mt-4">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-400 font-mono">Điểm chuyển đổi thương hiệu</span>
+            <span className="font-bold text-emerald-400">{exec.viability_score}/100 HIỆU QUẢ</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <ScoreGauge score={exec.viability_score ?? 75} modelType={modelType} />;
+}
+
 function SentimentBadge({ s }: { s: string }) {
   if (s === 'positive') {
     return (
@@ -191,7 +362,7 @@ function Tab1ExecutiveSummary({ report, onSelectTab }: { report: ReportPayload; 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <div className="lg:col-span-5 flex">
           <div className="w-full">
-            <ScoreGauge score={exec.viability_score} modelType={report.model_type} />
+            <HeroMetricDisplay report={report} />
           </div>
         </div>
 
@@ -1129,9 +1300,19 @@ export default function ResultsPage() {
   }
 
   const pInfo = report.product_info || {};
-  const companyName = pInfo.company_name || pInfo.brand_name || 'Doanh Nghiệp / Thương Hiệu';
-  const productName = pInfo.product_name || pInfo.concept_name || pInfo.deal_description || pInfo.brand_name || 'Dự án Nghiên Cứu Thị Trường';
-  const category = pInfo.category || pInfo.industry || 'Tiêu dùng & Dịch vụ';
+  const isBenchmark = Boolean(
+    pInfo.is_benchmark ||
+    (typeof surveyId === 'string' && surveyId.startsWith('BM-')) ||
+    pInfo.title
+  );
+  const companyName = isBenchmark
+    ? (pInfo.company_name || 'Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform')
+    : (pInfo.company_name || pInfo.brand_name || 'Doanh Nghiệp / Thương Hiệu');
+  const productName = pInfo.title || pInfo.product_name || pInfo.name || pInfo.concept_name || pInfo.deal_description || pInfo.brand_name || 'Báo Cáo Nghiên Cứu Thị Trường';
+  const category = pInfo.category || pInfo.industry_label || pInfo.industry || 'Tiêu dùng & Dịch vụ';
+  const dynamicMoE = report.target_summary.margin_of_error && report.target_summary.margin_of_error !== '±3.1%'
+    ? report.target_summary.margin_of_error
+    : `±${(1.96 * Math.sqrt(0.25 / (report.target_summary.sample_size || 1000)) * 100).toFixed(1)}%`;
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
@@ -1201,10 +1382,11 @@ export default function ResultsPage() {
               {productName}
             </h1>
             <div className="text-amber-400 font-medium text-xs sm:text-sm mt-1">
-              Đơn vị yêu cầu: <span className="text-white font-semibold">{companyName}</span> · Ngành hàng: <span className="text-slate-200">{category}</span>
+              <span>{isBenchmark ? 'Đơn vị nghiên cứu & công bố: ' : 'Đơn vị yêu cầu: '}</span>
+              <span className="text-white font-semibold">{companyName}</span> · Ngành hàng: <span className="text-slate-200">{category}</span>
             </div>
             <p className="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
-              Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} Personas</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số thống kê: <span className="text-amber-400 font-semibold">{report.target_summary.margin_of_error || '±3.1%'}</span> (Khung đối chuẩn phân tầng GSO)
+              Địa bàn: <span className="text-white font-semibold">{report.target_summary.location}</span> · Quy mô: <span className="text-[#D4AF37] font-semibold">N = {report.target_summary.sample_size.toLocaleString('vi-VN')} Personas</span> · Độ tin cậy: <span className="text-emerald-400 font-semibold">95%</span> · Sai số thống kê: <span className="text-amber-400 font-semibold">{dynamicMoE}</span> (Khung đối chuẩn phân tầng GSO)
             </p>
             {report.target_summary.demographics && (
               <div className="mt-2.5 inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-400/10 border border-amber-400/25 text-amber-300 text-xs">

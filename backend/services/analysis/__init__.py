@@ -23,14 +23,31 @@ _ANALYSIS_MAP = {
 }
 
 
+def calculate_margin_of_error(sample_size: int) -> str:
+    """
+    Tính sai số biên (Margin of Error) theo chuẩn thống kê ESOMAR:
+    MoE = Z * sqrt(p*(1-p)/N) với Z=1.96 (độ tin cậy 95%), p=0.5 (phương sai tối đa).
+    Công thức: MoE (%) = 1.96 * sqrt(0.25 / N) * 100 = 98 / sqrt(N).
+    Ví dụ:
+      N=200  -> ±6.9%
+      N=500  -> ±4.4%
+      N=1000 -> ±3.1%
+      N=2000 -> ±2.2%
+      N=3000 -> ±1.8%
+    """
+    if not sample_size or sample_size <= 0:
+        return "±2.2%"
+    moe = 1.96 * ((0.25 / sample_size) ** 0.5) * 100
+    return f"±{moe:.1f}%"
+
+
 def build_standard_target_summary(
     total: int,
     product_info: dict,
     demo: dict,
 ) -> TargetSummary:
     """Tạo TargetSummary chuẩn hóa chuyên nghiệp với đầy đủ thông tin phân khúc mục tiêu."""
-    margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}
-    margin = margin_map.get(total, "±3.1%")
+    margin = calculate_margin_of_error(total)
     location = (
         product_info.get("display_location")
         or product_info.get("region")

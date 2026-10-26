@@ -81,11 +81,13 @@ def analyze(survey_id, responses, personas_df, product_info, survey_config):
     sweet_spot = "Kịch bản Giảm 20% (hoặc Mua 2 Tặng 1): Điểm bùng nổ tối ưu — tăng trưởng chuyển đổi cao nhất mà không làm tổn hại biên lợi nhuận ròng."
     brand_risk_desc = "Ngưỡng cảnh báo: An toàn khi ưu đãi <= 20%. Nếu giảm giá thẳng trên 30%, chỉ số rủi ro thương hiệu tăng lên 38% do khách hàng hoài nghi về chất lượng sản phẩm."
 
+    moe = 1.96 * ((0.25 / max(1, total)) ** 0.5) * 100
     return ReportPayload(
         project_id=survey_id,
         model_type="deal_elasticity",
         target_summary=TargetSummary(
-            sample_size=total, margin_of_error="±3.1%",
+            sample_size=total,
+            margin_of_error=f"±{moe:.1f}%",
             location=location,
             demographics=f"Nam {male_float:.0f}%, Nữ {female_float:.0f}% | Tuổi TB {demo.get('avg_age', 30):.0f} | Khung đối chuẩn phân tầng Niên giám GSO",
         ),

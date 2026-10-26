@@ -125,8 +125,8 @@ def analyze(
         f"Khung đối chuẩn phân tầng Niên giám GSO"
     )
 
-    margin_map = {500: "±4.3%", 1000: "±3.1%", 2000: "±2.2%", 3000: "±1.8%"}
-    margin = margin_map.get(total, "±3.1%")
+    moe = 1.96 * ((0.25 / max(1, total)) ** 0.5) * 100
+    margin = f"±{moe:.1f}%"
 
     # ── 10. Assemble ReportPayload ────────────────────────────────────────────
     return ReportPayload(
