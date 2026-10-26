@@ -182,7 +182,7 @@ def _get_van_westendorp_demo(survey_id: str) -> dict[str, Any]:
                     "executive_verdict": "Mức giá đề xuất 35.000đ hoàn toàn khả thi nếu đi kèm chứng nhận Hữu cơ Arabica Cầu Đất. Không nên bán dưới 25.000đ vì sẽ gây nghi ngờ chất lượng cà phê pha hương liệu.",
                     "strategic_pillars": [
                         {"pillar_name": "Điểm Giá Tối Ưu (OPP)", "icon": "💎", "recommendation": "Định giá niêm yết 35.000đ và áp dụng giá ưu đãi dùng thử 32.000đ trong 60 ngày đầu ra mắt."},
-                        {"pillar_name": "Bảo Toàn Giá Trị Thương Hiệu (IPP)", "icon": "⚖️", "recommendation": "Nhấn mạnh công nghệ ủ lạnh Cold Brew 24h và chứng nhận hữu cơ để định vị ngang hàng Starbucks RTD nhưng giá cạnh tranh hơn."},
+                        {"pillar_name": "Bảo Toàn Giá Trị Thương Hiệu (IPP)", "icon": "⚖️", "recommendation": "Nhấn mạnh công nghệ ủ lạnh Cold Brew 24h và chứng nhận hữu cơ để định vị ngang hàng các thương hiệu chuỗi RTD quốc tế nhưng giá cạnh tranh hơn."},
                         {"pillar_name": "Biên Độ Chấp Nhận & Phân Tầng Giá", "icon": "📊", "recommendation": "Thiết kế combo tuần 5 lon giá 150.000đ (tương đương 30.000đ/lon) để tối đa hóa lượng tiêu thụ định kỳ."},
                     ],
                     "critical_risks": [
@@ -643,9 +643,9 @@ def _get_brand_map_demo(survey_id: str) -> dict[str, Any]:
             "viability_score": 83,
             "verdict": "PHÁT HIỆN ĐẠI DƯƠNG XANH: PHÂN KHÚC MỸ PHẨM HỮU CƠ LÂM SÀNG CẬN CAO CẤP",
             "top_findings": [
-                "Cocona dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
+                "Cocona Botanica dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
                 "Phát hiện khoảng trống thị trường (White-space) rộng lớn ở tọa độ: 'Thành phần hữu cơ được chứng nhận quốc tế + Hiệu quả lâm sàng chuyên sâu + Mức giá cận cao cấp (400k - 700k)'.",
-                "Các thương hiệu quốc tế (InniGreen, The Herbal Shop) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi.",
+                "Các thương hiệu quốc tế (EcoGreen Natural, Botanical Care) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi.",
             ],
         },
         "quantitative_metrics": {
@@ -663,17 +663,17 @@ def _get_brand_map_demo(survey_id: str) -> dict[str, Any]:
                 "whitespace_name": "Dược mỹ phẩm Hữu cơ Lâm sàng Cận cao cấp",
                 "white_space_opportunity": "Phân khúc Dược mỹ phẩm thuần chay có chứng nhận lâm sàng (Clinical Vegan Skincare) mức giá 450.000đ - 700.000đ đang hoàn toàn bỏ trống.",
                 "brands_data": [
-                    {"brand": "Cocona", "x": 8.2, "y": 4.1, "quadrant": "Q4", "quadrant_name": "Thuần chay & Giá bình dân", "awareness": 88, "color": "#059669", "is_client": False},
+                    {"brand": "Cocona Botanica", "x": 8.2, "y": 4.1, "quadrant": "Q4", "quadrant_name": "Thuần chay & Giá bình dân", "awareness": 88, "color": "#059669", "is_client": False},
                     {"brand": "Mộc Thảo Homelab", "x": 7.8, "y": 4.5, "quadrant": "Q4", "quadrant_name": "Lành tính mộc mạc", "awareness": 72, "color": "#10b981", "is_client": False},
-                    {"brand": "InniGreen VN", "x": 6.2, "y": 6.0, "quadrant": "Q1", "quadrant_name": "Thương hiệu quen thuộc", "awareness": 85, "color": "#3b82f6", "is_client": False},
-                    {"brand": "The Herbal Shop", "x": 6.8, "y": 7.4, "quadrant": "Q1", "quadrant_name": "Cao cấp quốc tế", "awareness": 79, "color": "#6366f1", "is_client": False},
+                    {"brand": "EcoGreen Natural (HQ)", "x": 6.2, "y": 6.0, "quadrant": "Q1", "quadrant_name": "Thương hiệu quen thuộc", "awareness": 85, "color": "#3b82f6", "is_client": False},
+                    {"brand": "Botanical Care (QT)", "x": 6.8, "y": 7.4, "quadrant": "Q1", "quadrant_name": "Cao cấp quốc tế", "awareness": 79, "color": "#6366f1", "is_client": False},
                     {"brand": "Thương hiệu Dự án (Next-Gen)", "x": 8.8, "y": 7.2, "quadrant": "Q2", "quadrant_name": "Hữu cơ lâm sàng cao cấp", "awareness": 45, "color": "#f59e0b", "is_client": True},
                 ],
                 "brands": [
-                    {"brand": "Cocona", "x": 8.2, "y": 4.1, "quadrant": "Q4", "quadrant_name": "Thuần chay & Giá bình dân", "awareness": 88, "color": "#059669", "is_client": False, "sentiment": "Rất yêu thích sự tự hào nông sản Việt, giá vừa túi tiền"},
+                    {"brand": "Cocona Botanica", "x": 8.2, "y": 4.1, "quadrant": "Q4", "quadrant_name": "Thuần chay & Giá bình dân", "awareness": 88, "color": "#059669", "is_client": False, "sentiment": "Rất yêu thích sự tự hào nông sản Việt, giá vừa túi tiền"},
                     {"brand": "Mộc Thảo Homelab", "x": 7.8, "y": 4.5, "quadrant": "Q4", "quadrant_name": "Lành tính mộc mạc", "awareness": 72, "color": "#10b981", "is_client": False, "sentiment": "Lành tính cho mẹ và bé, cảm giác mộc mạc"},
-                    {"brand": "InniGreen VN", "x": 6.2, "y": 6.0, "quadrant": "Q1", "quadrant_name": "Thương hiệu quen thuộc", "awareness": 85, "color": "#3b82f6", "is_client": False, "sentiment": "Thương hiệu quen thuộc nhưng hiệu quả ở mức trung bình"},
-                    {"brand": "The Herbal Shop", "x": 6.8, "y": 7.4, "quadrant": "Q1", "quadrant_name": "Cao cấp quốc tế", "awareness": 79, "color": "#6366f1", "is_client": False, "sentiment": "Chất lượng tốt nhưng giá khá cao, bao bì chưa đổi mới"},
+                    {"brand": "EcoGreen Natural (HQ)", "x": 6.2, "y": 6.0, "quadrant": "Q1", "quadrant_name": "Thương hiệu quen thuộc", "awareness": 85, "color": "#3b82f6", "is_client": False, "sentiment": "Thương hiệu quen thuộc nhưng hiệu quả ở mức trung bình"},
+                    {"brand": "Botanical Care (QT)", "x": 6.8, "y": 7.4, "quadrant": "Q1", "quadrant_name": "Cao cấp quốc tế", "awareness": 79, "color": "#6366f1", "is_client": False, "sentiment": "Chất lượng tốt nhưng giá khá cao, bao bì chưa đổi mới"},
                     {"brand": "Thương hiệu Dự án (Next-Gen)", "x": 8.8, "y": 7.2, "quadrant": "Q2", "quadrant_name": "Hữu cơ lâm sàng cao cấp", "awareness": 45, "color": "#f59e0b", "is_client": True, "sentiment": "Khoảng trống đại dương xanh: Hữu cơ lâm sàng cao cấp"},
                 ],
                 "deepseek_audit": {
@@ -725,7 +725,7 @@ def _get_ua_study_demo(survey_id: str) -> dict[str, Any]:
             "company_name": "Tập đoàn Cà phê & Đồ uống Di sản VinaKofe Heritage (VinaKofe Group)",
             "product_name": "Nghiên Cứu Thói Quen & Thái Độ Tiêu Dùng Cà Phê Hòa Tan & Trà Túi Lọc Tại Nhà",
             "industry": "Cà phê hòa tan & Trà túi lọc pha tại gia đình (At-home Beverage)",
-            "key_competitors": "KofeKing, G7-Legend, Lipton Leaf, Phúc Trà House",
+            "key_competitors": "KofeMaster (Dẫn đầu thị phần), G-Coffee (Hòa tan truyền thống), L-Tea Blend (Trà túi lọc nhập khẩu), PhucTra House (Chuỗi đồ uống)",
             "description": "Nghiên cứu quy mô lớn về sự thay đổi thói quen uống cà phê/trà của người tiêu dùng sau giai đoạn làm việc linh hoạt (Hybrid Work).",
         },
         "target_summary": {
@@ -829,8 +829,8 @@ def _get_deal_elasticity_demo(survey_id: str) -> dict[str, Any]:
         "survey_id": survey_id,
         "model_type": "deal_elasticity",
         "product_info": {
-            "company_name": "Tập đoàn Bánh kẹo & Quà tặng Hoàng Gia Crown Đô (CrownDo Group)",
-            "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường Crown Đô (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
+            "company_name": "Tập đoàn Bánh kẹo & Quà tặng Delica Hoàng Gia (Delica Crown Group)",
+            "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường Delica (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
             "original_price": 450000,
             "discounted_price": 369000,
             "gift_items": "Tặng kèm 1 Bộ 6 Bao Lì Xì Mạ Vàng Dập Nổi 3D & 1 Hộp Trà Ô Long Thượng Hạng",

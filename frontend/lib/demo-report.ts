@@ -403,7 +403,7 @@ export const DEMO_VAN_WESTENDORP: ReportPayload = {
           {
             "pillar_name": "Bảo Toàn Giá Trị Thương Hiệu (IPP)",
             "icon": "⚖️",
-            "recommendation": "Nhấn mạnh công nghệ ủ lạnh Cold Brew 24h và chứng nhận hữu cơ để định vị ngang hàng Starbucks RTD nhưng giá cạnh tranh hơn."
+            "recommendation": "Nhấn mạnh công nghệ ủ lạnh Cold Brew 24h và chứng nhận hữu cơ để định vị ngang hàng các thương hiệu chuỗi RTD quốc tế nhưng giá cạnh tranh hơn."
           },
           {
             "pillar_name": "Biên Độ Chấp Nhận & Phân Tầng Giá",
@@ -1219,9 +1219,9 @@ export const DEMO_BRAND_MAP: ReportPayload = {
     "viability_score": 83,
     "verdict": "PHÁT HIỆN ĐẠI DƯƠNG XANH: PHÂN KHÚC MỸ PHẨM HỮU CƠ LÂM SÀNG CẬN CAO CẤP",
     "top_findings": [
-      "Cocona dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
+      "Cocona Botanica dẫn đầu thị trường về nhận thức 'Thuần chay & Bản địa Việt Nam' nhưng đang bị giới hạn ở phân khúc giá bình dân (150k - 300k).",
       "Phát hiện khoảng trống thị trường (White-space) rộng lớn ở tọa độ: 'Thành phần hữu cơ được chứng nhận quốc tế + Hiệu quả lâm sàng chuyên sâu + Mức giá cận cao cấp (400k - 700k)'.",
-      "Các thương hiệu quốc tế (InniGreen, The Herbal Shop) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi."
+      "Các thương hiệu quốc tế (EcoGreen Natural, Botanical Care) đang bị giảm sút sức hút do giá cao nhưng thiếu câu chuyện nguyên liệu bản địa gần gũi."
     ]
   },
   "quantitative_metrics": {
@@ -1248,7 +1248,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
       "white_space_opportunity": "Phân khúc Dược mỹ phẩm thuần chay có chứng nhận lâm sàng (Clinical Vegan Skincare) mức giá 450.000đ - 700.000đ đang hoàn toàn bỏ trống.",
       "brands_data": [
         {
-          "brand": "Cocona",
+          "brand": "Cocona Botanica",
           "x": 8.2,
           "y": 4.1,
           "quadrant": "Q4",
@@ -1268,7 +1268,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "is_client": false
         },
         {
-          "brand": "InniGreen VN",
+          "brand": "EcoGreen Natural (HQ)",
           "x": 6.2,
           "y": 6.0,
           "quadrant": "Q1",
@@ -1278,7 +1278,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "is_client": false
         },
         {
-          "brand": "The Herbal Shop",
+          "brand": "Botanical Care (QT)",
           "x": 6.8,
           "y": 7.4,
           "quadrant": "Q1",
@@ -1300,7 +1300,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
       ],
       "brands": [
         {
-          "brand": "Cocona",
+          "brand": "Cocona Botanica",
           "x": 8.2,
           "y": 4.1,
           "quadrant": "Q4",
@@ -1322,7 +1322,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "sentiment": "Lành tính cho mẹ và bé, cảm giác mộc mạc"
         },
         {
-          "brand": "InniGreen VN",
+          "brand": "EcoGreen Natural (HQ)",
           "x": 6.2,
           "y": 6.0,
           "quadrant": "Q1",
@@ -1333,7 +1333,7 @@ export const DEMO_BRAND_MAP: ReportPayload = {
           "sentiment": "Thương hiệu quen thuộc nhưng hiệu quả ở mức trung bình"
         },
         {
-          "brand": "The Herbal Shop",
+          "brand": "Botanical Care (QT)",
           "x": 6.8,
           "y": 7.4,
           "quadrant": "Q1",
@@ -1436,7 +1436,7 @@ export const DEMO_UA_STUDY: ReportPayload = {
     "company_name": "Tập đoàn Cà phê & Đồ uống Di sản VinaKofe Heritage (VinaKofe Group)",
     "product_name": "Nghiên Cứu Thói Quen & Thái Độ Tiêu Dùng Cà Phê Hòa Tan & Trà Túi Lọc Tại Nhà",
     "industry": "Cà phê hòa tan & Trà túi lọc pha tại gia đình (At-home Beverage)",
-    "key_competitors": "KofeKing, G7-Legend, Lipton Leaf, Phúc Trà House",
+    "key_competitors": "KofeMaster (Dẫn đầu thị phần), G-Coffee (Hòa tan truyền thống), L-Tea Blend (Trà túi lọc nhập khẩu), PhucTra House (Chuỗi đồ uống)",
     "description": "Nghiên cứu quy mô lớn về sự thay đổi thói quen uống cà phê/trà của người tiêu dùng sau giai đoạn làm việc linh hoạt (Hybrid Work)."
   },
   "target_summary": {
@@ -1629,8 +1629,8 @@ export const DEMO_DEAL_ELASTICITY: ReportPayload = {
   "survey_id": "DEMO-DEAL-ELASTICITY",
   "model_type": "deal_elasticity",
   "product_info": {
-    "company_name": "Tập đoàn Bánh kẹo & Quà tặng Hoàng Gia Crown Đô (CrownDo Group)",
-    "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường Crown Đô (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
+    "company_name": "Tập đoàn Bánh kẹo & Quà tặng Delica Hoàng Gia (Delica Crown Group)",
+    "product_name": "Combo Hộp Quà Tết Phú Quý Cát Tường Delica (Gồm 4 Hộp Bánh Quy & Kẹo Cao Cấp)",
     "original_price": 450000,
     "discounted_price": 369000,
     "gift_items": "Tặng kèm 1 Bộ 6 Bao Lì Xì Mạ Vàng Dập Nổi 3D & 1 Hộp Trà Ô Long Thượng Hạng",

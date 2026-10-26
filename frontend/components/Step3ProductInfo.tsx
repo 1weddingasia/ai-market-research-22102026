@@ -153,7 +153,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'company_name',
       label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
-      placeholder: 'VD: Công ty Cổ phần Sữa Việt Nam (Vinamilk)',
+      placeholder: 'VD: Công ty Cổ phần Sữa & Thực phẩm Dinh dưỡng VinaDairy',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },
@@ -166,7 +166,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'brand_name',
       label: 'Dòng sản phẩm / Thương hiệu thử nghiệm',
-      placeholder: 'VD: Sữa Chua Uống Men Sống Probi',
+      placeholder: 'VD: Sữa Chua Uống Men Vi Sinh Bản Địa Pro-Digest',
       required: true,
     },
     {
@@ -195,7 +195,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'company_name',
       label: 'Tên Doanh nghiệp / Đơn vị yêu cầu khảo sát',
-      placeholder: 'VD: Be Group / Grab Vietnam / VinFast',
+      placeholder: 'VD: Nền tảng Siêu ứng dụng & Vận tải Đô thị NextRide',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },
@@ -229,7 +229,7 @@ const FIELDS_MAP: Record<string, FieldConfig[]> = {
     {
       id: 'company_name',
       label: 'Tên Doanh nghiệp / Thương hiệu yêu cầu khảo sát',
-      placeholder: 'VD: Tập đoàn Thực phẩm & Bánh kẹo Crown Đô (CrownDo Group)',
+      placeholder: 'VD: Tập đoàn Bánh kẹo & Quà tặng Delica Hoàng Gia (Delica Foods Group)',
       required: true,
       hint: 'Thông tin này sẽ được in trang trọng lên tiêu đề và trang bìa báo cáo chiến lược Executive Summary.',
     },
