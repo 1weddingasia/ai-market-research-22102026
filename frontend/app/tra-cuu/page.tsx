@@ -450,26 +450,20 @@ function TraCuuContent() {
                             <Link
                               href={`/results/${s.survey_id}`}
                               className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-xs transition-all text-center"
+                              title="Xem toàn bộ biểu đồ và kết quả nghiên cứu trên màn hình"
                             >
-                              <span>Xem Dashboard</span>
+                              <span>👁️ Xem Trên Màn Hình</span>
                               <span>→</span>
                             </Link>
-                            <div className="flex items-center gap-1.5 w-full sm:w-auto">
-                              <Link
-                                href={`/results/${s.survey_id}/print`}
-                                target="_blank"
-                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs py-1.5 px-3 rounded-lg border border-slate-300 transition-all text-center"
-                              >
-                                <span>📄 In A4</span>
-                              </Link>
-                              <a
-                                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${s.survey_id}/pdf?download=true`}
-                                download={`bao-cao-khao-sat-${s.survey_id}.pdf`}
-                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs py-1.5 px-3 rounded-lg border border-slate-300 transition-all text-center"
-                              >
-                                <span>💾 Tải PDF</span>
-                              </a>
-                            </div>
+
+                            <a
+                              href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${s.survey_id}/pdf?download=true`}
+                              download={`Bao-Cao-Nghien-Cuu-Thi-Truong-${s.survey_id.replace('DEMO-', '')}.pdf`}
+                              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-4 rounded-xl shadow-xs transition-all text-center"
+                              title="Tải trực tiếp file PDF chính thức chuẩn A4"
+                            >
+                              <span>📥 Tải Về File PDF</span>
+                            </a>
                             <button
                               type="button"
                               onClick={() => {

@@ -31,14 +31,16 @@
   /* Sheet container — Chuẩn in ấn A4 quốc tế, tự động co giãn theo nội dung không cắt xén */
   .sheet {
     width: 210mm;
+    max-width: 210mm;
     min-height: 297mm;
     box-sizing: border-box;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 12mm 15mm 10mm;
+    padding: 12mm 16mm 10mm;
     background: #FFFFFF;
+    overflow: hidden;
   }
 
   .sheet:not(:last-of-type) {
@@ -67,35 +69,6 @@
       box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
       border-radius: 4px;
     }
-    .no-print-bar {
-      position: sticky;
-      top: 0;
-      z-index: 9999;
-      background: #0A192F;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-      padding: 10px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #FFFFFF;
-      font-size: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-    .print-btn {
-      background: linear-gradient(135deg, #D4AF37, #F59E0B);
-      color: #0A192F;
-      font-weight: 700;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .print-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
-    }
   }
 
   @media print {
@@ -104,7 +77,7 @@
       padding: 0 !important;
       margin: 0 !important;
     }
-    .no-print, .no-print-bar {
+    .no-print {
       display: none !important;
     }
     .sheet {
@@ -119,14 +92,16 @@
   .cover-sheet {
     background: #0A192F;
     color: #FFFFFF;
-    padding: 16mm 16mm 12mm;
+    padding: 16mm 18mm 12mm;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .corner { position: absolute; width: 18mm; height: 18mm; }
   .corner-tl { top: 10mm; left: 10mm; border-top: 2px solid #D4AF37; border-left: 2px solid #D4AF37; }
-  .corner-tr { top: 10mm; right: 10mm; border-top: 2px solid #D4AF37; border-right: 2px solid #D4AF37; }
+  .corner-tr { top: 10mm; right: 12mm; border-top: 2px solid #D4AF37; border-right: 2px solid #D4AF37; }
   .corner-bl { bottom: 10mm; left: 10mm; border-bottom: 2px solid #D4AF37; border-left: 2px solid #D4AF37; }
-  .corner-br { bottom: 10mm; right: 10mm; border-bottom: 2px solid #D4AF37; border-right: 2px solid #D4AF37; }
+  .corner-br { bottom: 10mm; right: 12mm; border-bottom: 2px solid #D4AF37; border-right: 2px solid #D4AF37; }
 
   .cover-top-line {
     width: 100%;
@@ -150,25 +125,31 @@
 
   .cover-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 28pt;
+    font-size: 24pt;
     font-weight: 900;
     color: #FFFFFF;
-    line-height: 1.2;
+    line-height: 1.25;
     margin-bottom: 4mm;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
 
   .cover-subtitle {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 16pt;
+    font-size: 15pt;
     color: #D4AF37;
-    margin-bottom: 6mm;
+    margin-bottom: 5mm;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .cover-desc {
-    font-size: 9.5pt;
+    font-size: 9pt;
     color: #CBD5E1;
-    line-height: 1.7;
-    max-width: 145mm;
+    line-height: 1.65;
+    max-width: 150mm;
+    word-break: break-word;
   }
 
   .cover-meta-grid {
@@ -394,21 +375,6 @@
 </style>
 </head>
 <body>
-
-<div class="no-print-bar">
-  <div style="display:flex; align-items:center; gap:12px;">
-    <span style="font-family:'Playfair Display',serif; font-weight:900; color:#D4AF37; font-size:14px; letter-spacing:1px;">INSIGHT AI</span>
-    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#94A3B8;">| Bản In Chiến Lược A4 Chuyên Sâu · Mã: #{{ survey_id }}</span>
-  </div>
-  <div style="display:flex; align-items:center; gap:16px;">
-    <span style="color:#CBD5E1; font-size:11px; font-family:'Inter',sans-serif;">
-      💡 Khuyến nghị: Bật <strong>"Đồ họa nền" (Background graphics)</strong> trong hộp thoại in để giữ nguyên màu sắc chuẩn.
-    </span>
-    <button class="print-btn" onclick="window.print()">
-      🖨️ In Báo Cáo / Lưu PDF A4 Chuyên Sâu
-    </button>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      PAGE 1: TRANG BÌA DOANH NGHIỆP (EXECUTIVE COVER)

@@ -569,31 +569,20 @@ export default function PrintReportPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden md:inline text-[11px] text-slate-300 font-mono">
-              💡 Khuyến nghị: Bật "Đồ họa nền" (Background graphics) trong hộp thoại in
-            </span>
-
             <Link
               href={`/results/${surveyId}`}
               className="px-3.5 py-1.5 rounded-lg border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs font-medium transition-colors"
             >
-              ← Dashboard
+              ← Xem Trên Màn Hình
             </Link>
 
             <a
               href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${surveyId}/pdf?download=true`}
-              download={`bao-cao-khao-sat-${surveyId}.pdf`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white text-xs font-medium transition-colors"
-            >
-              <span>💾 Tải Báo Cáo PDF (A4)</span>
-            </a>
-
-            <button
-              onClick={() => window.print()}
+              download={`Bao-Cao-Nghien-Cuu-Thi-Truong-${surveyId.replace('DEMO-', '')}.pdf`}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-5 py-2 rounded-lg text-xs shadow-lg transition-transform hover:scale-105"
             >
-              <span>🖨️ In Báo Cáo / Xuất PDF A4</span>
-            </button>
+              <span>📥 Tải Về File PDF Chính Thức (Chuẩn A4)</span>
+            </a>
           </div>
         </div>
       </aside>

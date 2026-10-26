@@ -144,13 +144,7 @@ export default function BachThuPage() {
             <div className="flex items-center gap-4 text-xs font-mono text-slate-600">
               <span>Thời gian nghiên cứu: ~8 phút</span>
               <span>·</span>
-              <button
-                type="button"
-                onClick={() => typeof window !== 'undefined' && window.print()}
-                className="inline-flex items-center gap-1.5 text-amber-900 hover:text-amber-950 font-bold underline cursor-pointer"
-              >
-                <span>🖨️ In tài liệu</span>
-              </button>
+              <span className="text-amber-800 font-bold">C-Level Monograph</span>
             </div>
           </div>
 

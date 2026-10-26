@@ -455,6 +455,7 @@ export default function HomePage() {
                 ua_study: '/results/DEMO-UA-STUDY',
                 deal_elasticity: '/results/DEMO-DEAL-ELASTICITY',
               }[m.id] || '/results/DEMO-NIELSEN-BASES';
+              const demoId = demoUrl.replace('/results/', '');
 
               return (
                 <div key={m.id} className="bg-slate-800/90 border border-slate-700/80 p-6 sm:p-7 rounded-2xl hover:border-amber-400/60 transition-all flex flex-col justify-between group shadow-sm hover:shadow-md">
@@ -472,24 +473,24 @@ export default function HomePage() {
                   <div className="mt-6 pt-4 border-t border-slate-700 flex flex-col gap-3 text-sm">
                     <div className="flex items-center gap-2">
                       <Link
-                        href={`${demoUrl}?tab=quantitative`}
+                        href={`${demoUrl}`}
                         target="_blank"
                         className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-xs sm:text-sm font-bold transition-all group/btn"
-                        title="Mở xem ngay biểu đồ & ma trận tương tác của mô hình này trong 5 giây"
+                        title="Xem toàn diện biểu đồ & ma trận tương tác của mô hình này trên màn hình"
                       >
-                        <span>📊</span>
-                        <span className="truncate">Xem Biểu Đồ (Live)</span>
-                        <span className="font-mono text-amber-400 group-hover/btn:translate-x-0.5 transition-transform text-xs">↗</span>
+                        <span>👁️</span>
+                        <span className="truncate">Xem Trên Màn Hình</span>
+                        <span className="font-mono text-amber-400 group-hover/btn:translate-x-0.5 transition-transform text-xs">→</span>
                       </Link>
-                      <Link
-                        href={`${demoUrl}/print`}
-                        target="_blank"
-                        className="inline-flex items-center justify-center gap-1 px-3 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-bold transition-all shrink-0"
-                        title="Mở xem trực tiếp bản in chiến lược A4 chuyên sâu đa trang"
+                      <a
+                        href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${demoId}/pdf?download=true`}
+                        download={`Bao-Cao-Nghien-Cuu-Thi-Truong-${demoId.replace('DEMO-', '')}.pdf`}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-bold transition-all shrink-0"
+                        title="Tải trực tiếp file PDF chính thức chuẩn A4"
                       >
-                        <span>📄</span>
-                        <span>Bản In A4</span>
-                      </Link>
+                        <span>📥</span>
+                        <span>Tải PDF</span>
+                      </a>
                     </div>
 
                     <div className="flex items-center justify-between pt-1">

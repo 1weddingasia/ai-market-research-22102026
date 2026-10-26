@@ -30,6 +30,9 @@ async def download_pdf(
     Trả về file báo cáo PDF chuẩn in ấn A4 (application/pdf).
     Khách hàng doanh nghiệp nhận trực tiếp file .pdf.
     """
+    clean_name = survey_id.replace("DEMO-", "").replace("_", "-")
+    download_filename = f"Bao-Cao-Nghien-Cuu-Thi-Truong-{clean_name}.pdf"
+
     if survey_id.upper().startswith("DEMO"):
         from models.demo_data import get_demo_report_payload
         demo_payload = get_demo_report_payload(survey_id)
@@ -42,7 +45,7 @@ async def download_pdf(
             return FileResponse(
                 path=str(file_path),
                 media_type="application/pdf",
-                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                filename=download_filename,
                 content_disposition_type="attachment" if download else "inline",
             )
         else:
@@ -63,7 +66,7 @@ async def download_pdf(
             return FileResponse(
                 path=str(cached),
                 media_type="application/pdf",
-                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                filename=download_filename,
                 content_disposition_type="attachment" if download else "inline",
             )
 
@@ -86,7 +89,7 @@ async def download_pdf(
             return FileResponse(
                 path=file_path,
                 media_type="application/pdf",
-                filename=f"bao-cao-khao-sat-{survey_id}.pdf",
+                filename=download_filename,
                 content_disposition_type="attachment" if download else "inline",
             )
         else:

@@ -1138,22 +1138,13 @@ function Tab4StrategicAction({ report, surveyId }: { report: ReportPayload; surv
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-          <a
-            href={`/results/${surveyId}/print`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
-          >
-            <span>🖨️ Mở Bản In / Lưu PDF A4 Chiến Lược</span>
-          </a>
-
+        <div className="flex items-center gap-3 shrink-0">
           <a
             href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
-            download={`bao-cao-khao-sat-${surveyId}.pdf`}
-            className="inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-white text-xs py-3 px-4 rounded-xl transition-colors font-medium"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
+            title="Tải trực tiếp file PDF chính thức chuẩn A4"
           >
-            <span>💾 Tải Báo Cáo PDF (A4)</span>
+            <span>📥 Tải Về File PDF Chính Thức (Chuẩn A4)</span>
           </a>
         </div>
       </div>
@@ -1319,25 +1310,14 @@ export default function ResultsPage() {
               CONFIDENTIAL · BẢO MẬT HĐQT
             </div>
 
-            {/* Print / Download Button */}
-            <a
-              href={`/results/${surveyId}/print`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3 sm:px-3.5 rounded-lg shadow-sm transition-all"
-            >
-              <span>🖨️</span>
-              <span className="hidden sm:inline">Xuất Bản In A4</span>
-              <span className="sm:hidden">Bản In A4</span>
-            </a>
-
+            {/* Download PDF Button */}
             <a
               href={`${API_URL}/survey/${surveyId}/pdf?download=true`}
-              download={`bao-cao-khao-sat-${surveyId}.pdf`}
-              className="inline-flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-2.5 sm:px-3 rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs py-2 px-3 sm:px-4 rounded-lg shadow-sm transition-all"
               title="Tải trực tiếp file PDF chính thức chuẩn A4"
             >
-              <span>💾 Tải PDF</span>
+              <span>📥</span>
+              <span>Tải Về File PDF</span>
             </a>
 
             {/* Enterprise Privacy & Data Security Button */}

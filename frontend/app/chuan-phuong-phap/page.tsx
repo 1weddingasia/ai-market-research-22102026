@@ -627,17 +627,17 @@ export default function ChuanPhuongPhapPage() {
                 target="_blank"
                 className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold text-center transition-all flex items-center justify-center gap-2 shadow-sm"
               >
-                <span>📊 Xem Báo Cáo Trực Tuyến (4 Tab)</span>
+                <span>👁️ Xem Trên Màn Hình</span>
                 <span>&rarr;</span>
               </Link>
-              <Link
-                href={`/results/${activeModel.demoId}/print`}
-                target="_blank"
+              <a
+                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${activeModel.demoId}/pdf?download=true`}
+                download={`Bao-Cao-Nghien-Cuu-Thi-Truong-${activeModel.demoId.replace('DEMO-', '')}.pdf`}
                 className="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold text-center transition-all flex items-center justify-center gap-2 shadow-sm"
               >
-                <span>🖨️ Bản Digital A4 Đa Trang (Tải PDF)</span>
+                <span>📥 Tải Về File PDF</span>
                 <span>&rarr;</span>
-              </Link>
+              </a>
             </div>
           </div>
 

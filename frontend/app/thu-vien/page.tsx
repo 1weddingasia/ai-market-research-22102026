@@ -386,12 +386,23 @@ export default function ThuVienPage() {
     } catch {}
   }, []);
 
-  const handlePrintClick = (c: CaseStudy, e: React.MouseEvent) => {
-    e.preventDefault();
+  const triggerPdfDownload = (demoId: string) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const cleanId = demoId.replace('DEMO-', '');
+    const link = document.createElement('a');
+    link.href = `${apiUrl}/survey/${demoId}/pdf?download=true`;
+    link.download = `Bao-Cao-Nghien-Cuu-Thi-Truong-${cleanId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDownloadClick = (c: CaseStudy, e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (hasSavedProfile) {
-      // Đã có profile lưu trong session -> mở luôn bản in không cần bắt điền lại
-      window.open(`/results/${c.demoId}/print`, '_blank');
-      // Bắn tracking tải ngầm
+      // Đã có profile lưu -> tải trực tiếp file PDF về máy
+      triggerPdfDownload(c.demoId);
+      // Ghi nhận lead tracking
       try {
         const saved = localStorage.getItem('insight_lead_profile');
         if (saved) {
@@ -450,12 +461,12 @@ export default function ThuVienPage() {
         setHasSavedProfile(true);
         setDownloadSuccess(true);
 
-        const printUrl = `/results/${selectedCaseForDownload.demoId}/print`;
+        const targetDemoId = selectedCaseForDownload.demoId;
         setTimeout(() => {
           setSelectedCaseForDownload(null);
           setDownloadSuccess(false);
-          window.open(printUrl, '_blank');
-        }, 800);
+          triggerPdfDownload(targetDemoId);
+        }, 600);
       }
     } catch (err: any) {
       setDownloadError(err.message || 'Không thể gửi thông tin. Vui lòng thử lại.');
@@ -525,7 +536,7 @@ export default function ThuVienPage() {
           </h1>
           
           <p className="text-slate-300 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed mb-4 font-light">
-            Kho dữ liệu nghiên cứu thị trường chuẩn hóa quy mô lớn lên đến <strong>N = 2.000 Personas</strong> phân tầng chuẩn Niên giám Tổng cục Thống kê GSO, áp dụng nghiêm ngặt 9 mô hình khoa học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff, Monadic...). Toàn bộ báo cáo sẵn sàng cho doanh nghiệp <strong>xem dashboard tương tác, duyệt bản in A4 và tải file PDF chính thức</strong>.
+            Kho dữ liệu nghiên cứu thị trường chuẩn hóa quy mô lớn lên đến <strong>N = 2.000 Personas</strong> phân tầng chuẩn Niên giám Tổng cục Thống kê GSO, áp dụng nghiêm ngặt 9 mô hình khoa học quốc tế (Nielsen BASES, Van Westendorp, Kano, MaxDiff, Monadic...). Toàn bộ báo cáo sẵn sàng cho doanh nghiệp <strong>1. Xem trực tiếp trên màn hình</strong> hoặc <strong>2. Tải về file PDF chính thức</strong>.
           </p>
 
           {/* Legal & Ethical Notice Banner */}
@@ -665,43 +676,25 @@ export default function ThuVienPage() {
                   </div>
                 </div>
 
-                {/* Card Actions */}
-                <div className="pt-4 border-t border-slate-100 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/results/${c.demoId}`}
-                      className="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5"
-                    >
-                      <span>Xem Dashboard</span>
-                      <span className="text-amber-400 font-bold">&rarr;</span>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={(e) => handlePrintClick(c, e)}
-                      className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3 rounded-xl transition-all border border-slate-200 cursor-pointer flex items-center justify-center gap-1 shrink-0"
-                      title="Mở bản in chiến lược A4 chuyên sâu đa trang"
-                    >
-                      <span>📄 Bản In A4</span>
-                    </button>
-                  </div>
+                {/* 2 Chức Năng Cốt Lõi: 1 Xem Trên Màn Hình, 2 Tải Về File PDF */}
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-2.5">
+                  <Link
+                    href={`/results/${c.demoId}`}
+                    className="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5"
+                    title="Xem toàn bộ biểu đồ, ma trận và kết quả nghiên cứu tương tác trên màn hình"
+                  >
+                    <span>👁️ Xem Trên Màn Hình</span>
+                    <span className="text-amber-400 font-bold">&rarr;</span>
+                  </Link>
 
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${c.demoId}/pdf?download=true`}
-                      download={`bao-cao-chinh-thuc-${c.demoId}.pdf`}
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-xs transition-all cursor-pointer"
-                      title="Tải trực tiếp file PDF chính thức chuẩn in ấn A4"
-                    >
-                      <span>💾 Tải Báo Cáo PDF</span>
-                    </a>
-                    <Link
-                      href={`/wizard?model=${c.modelType}`}
-                      className="text-center bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-900 text-xs font-semibold py-2 px-3 rounded-xl transition-all border border-slate-200 hover:border-amber-200 shrink-0"
-                      title="Khởi tạo khảo sát cho sản phẩm của bạn"
-                    >
-                      <span>Khảo sát ngay →</span>
-                    </Link>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => handleDownloadClick(c, e)}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-xs transition-all cursor-pointer"
+                    title="Tải trực tiếp file PDF chính thức chuẩn A4"
+                  >
+                    <span>📥 Tải Về File PDF</span>
+                  </button>
                 </div>
 
               </div>
@@ -753,14 +746,14 @@ export default function ThuVienPage() {
             <div className="flex items-start justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-xl shrink-0">
-                  📄
+                  📥
                 </span>
                 <div>
                   <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
-                    Tải Bản In Chiến Lược A4 Chuyên Sâu
+                    Tải File PDF Báo Cáo Nghiên Cứu Thị Trường
                   </h3>
                   <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mt-0.5">
-                    Hồ Sơ Nghiên Cứu #{selectedCaseForDownload.demoId} · Quy Mô N = 1.000 Personas
+                    Hồ Sơ Nghiên Cứu #{selectedCaseForDownload.demoId} · Quy Mô N = 2.000 Personas
                   </span>
                 </div>
               </div>
@@ -776,7 +769,7 @@ export default function ThuVienPage() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-              Bạn đang yêu cầu trọn bộ tài liệu: <strong>{selectedCaseForDownload.productName}</strong>. Vui lòng cung cấp thông tin để hệ thống mở quyền truy cập và chuẩn bị bản in PDF A4 chất lượng cao.
+              Bạn đang yêu cầu tải tài liệu nghiên cứu: <strong>{selectedCaseForDownload.productName}</strong>. Vui lòng xác nhận thông tin để tải trực tiếp file PDF chính thức về thiết bị của bạn.
             </p>
 
             <form onSubmit={handleDownloadSubmit} className="space-y-3.5">
@@ -872,7 +865,7 @@ export default function ThuVienPage() {
 
               {downloadSuccess && (
                 <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium leading-relaxed">
-                  ✅ Xác nhận thành công! Đang mở Bản In PDF A4...
+                  ✅ Xác nhận thành công! Đang tải file PDF về máy của bạn...
                 </div>
               )}
 
@@ -886,10 +879,10 @@ export default function ThuVienPage() {
                   {downloadLoading ? (
                     <>
                       <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                      <span>Đang xác nhận dữ liệu...</span>
+                      <span>Đang chuẩn bị file PDF...</span>
                     </>
                   ) : (
-                    <span>Xác Nhận & Mở Bản In PDF A4 Ngay &rarr;</span>
+                    <span>Xác Nhận & Tải File PDF Về Máy Ngay &rarr;</span>
                   )}
                 </button>
               </div>

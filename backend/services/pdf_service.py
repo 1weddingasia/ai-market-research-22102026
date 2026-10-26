@@ -373,9 +373,13 @@ async def _render_with_playwright(html_content: str, output_pdf_path: Path) -> b
     try:
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
-            page = await browser.new_page()
+            page = await browser.new_page(viewport={"width": 1200, "height": 1600})
             # Set content và chờ font/ảnh tải xong
-            await page.set_content(html_content, wait_until="networkidle", timeout=20000)
+            await page.set_content(html_content, wait_until="networkidle", timeout=30000)
+            try:
+                await page.evaluate("document.fonts.ready")
+            except Exception:
+                pass
             await page.pdf(
                 path=str(output_pdf_path),
                 format="A4",
@@ -404,6 +408,9 @@ def _render_with_browser_cli(html_content: str, output_pdf_path: Path) -> bool:
             "--disable-gpu",
             "--no-pdf-header-footer",
             "--print-to-pdf-no-header",
+            "--run-all-compositor-stages-before-draw",
+            "--virtual-time-budget=5000",
+            "--window-size=1200,1600",
             f"--print-to-pdf={output_pdf_path.resolve()}",
             str(tmp_html.resolve()),
         ]

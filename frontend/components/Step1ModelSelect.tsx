@@ -194,15 +194,14 @@ export default function Step1ModelSelect() {
                   <span className="font-mono text-[10px] text-amber-700 font-semibold group-hover/btn:translate-x-0.5 transition-transform">↗</span>
                 </a>
                 <a
-                  href={`/results/${demoInfo.id}/print`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/survey/${demoInfo.id}/pdf?download=true`}
+                  download={`Bao-Cao-Nghien-Cuu-Thi-Truong-${demoInfo.id.replace('DEMO-', '')}.pdf`}
                   onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all shrink-0"
-                  title="Mở xem trực tiếp bản in chiến lược A4 chuyên sâu đa trang"
+                  title="Tải trực tiếp file PDF chính thức chuẩn A4"
                 >
-                  <span>📄</span>
-                  <span>Bản In A4</span>
+                  <span>📥</span>
+                  <span>Tải PDF</span>
                 </a>
               </div>
 
