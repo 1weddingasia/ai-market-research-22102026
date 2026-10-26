@@ -786,43 +786,6 @@ export default function ChuanPhuongPhapPage() {
 
         </div>
 
-        {/* ── Section: Cam kết Không Giới Hạn Chiều Dài Báo Cáo & Chuẩn Mực Digital PDF ── */}
-        <section className="mt-14 p-8 sm:p-10 rounded-3xl bg-amber-50/60 border border-amber-300/80 space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-900 font-mono text-xs font-bold uppercase tracking-wider">
-            <span>🔒 CHUẨN MỰC CHẤT LƯỢNG BÁO CÁO CỐ VẤN CHIẾN LƯỢC</span>
-          </div>
-
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
-            Cam Kết Tuyệt Đối: Không Bị Gò Bó Số Trang & Tuân Thủ Chất Lượng Cao Nhất
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700 leading-relaxed">
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 space-y-2">
-              <span className="font-bold text-slate-900 font-serif text-sm block">1. Độ Dài Linh Hoạt Theo Dữ Liệu</span>
-              <p>
-                Báo cáo của Insight AI hoàn toàn <strong>xóa bỏ mọi giới hạn cứng nhắc về số trang</strong>. Độ dài tài liệu 
-                tự động chảy tự nhiên theo độ phong phú của dữ liệu định tính, phân rã nhân khẩu học và các khuyến nghị chuyên sâu.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 space-y-2">
-              <span className="font-bold text-slate-900 font-serif text-sm block">2. Bản Digital A4 Chuẩn In Ấn & PDF</span>
-              <p>
-                Mọi biểu đồ Recharts, bảng đối sánh và trích dẫn người tiêu dùng đều được tinh chỉnh CSS in ấn chuyên nghiệp, 
-                đảm bảo khi bấm tải về (In/Lưu PDF) sẽ đạt chuẩn thẩm mỹ cao nhất để trình bày trong các cuộc họp Hội đồng Quản trị.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 space-y-2">
-              <span className="font-bold text-slate-900 font-serif text-sm block">3. Trách Nhiệm Thẩm Định Độc Lập</span>
-              <p>
-                Mỗi báo cáo đều đi qua bước thẩm định độc lập (Strategic Audit) đối soát mức thu nhập, sức mua thực tế của dân cư 
-                trước khi kết luận để bảo đảm doanh nghiệp không bao giờ nhận phải một báo cáo ngụy tạo hay ảo giác.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* ── Bottom Call To Action ── */}
         <section className="mt-14 text-center p-10 rounded-3xl bg-slate-900 text-white space-y-6">
           <div className="max-w-2xl mx-auto space-y-3">
