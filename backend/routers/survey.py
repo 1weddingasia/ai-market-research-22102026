@@ -6,7 +6,7 @@ from typing import Optional
 
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-from sqlalchemy import func
+from sqlalchemy import case, func
 from sqlalchemy.orm import Session
 
 from database import Survey, DiscountCode, BenchmarkReport, ReportDownloadLead, get_db
@@ -618,7 +618,11 @@ async def get_benchmark_reports(
     if period and period != "all":
         query = query.filter(BenchmarkReport.period_label == period)
 
-    reports = query.order_by(BenchmarkReport.created_at.asc()).all()
+    reports = query.order_by(
+        case((BenchmarkReport.id.like("BM-%"), 0), else_=1),
+        BenchmarkReport.updated_at.desc(),
+        BenchmarkReport.created_at.desc()
+    ).all()
 
     # Nếu DB rỗng (trường hợp chưa seed), fallback sang demo data
     if not reports:
@@ -641,12 +645,17 @@ async def get_benchmark_reports(
         except Exception:
             pass
 
+        is_official = str(r.id).startswith("BM-")
+        sample_size_str = f"N = {r.sample_size:,} Personas" if r.sample_size is not None else "N = 1,000 Personas"
+        sample_methodology = "Phân tầng Niên giám GSO" if is_official else "Đô thị Toàn quốc"
+
         results.append({
             "id": r.id,
             "demoId": r.id,
             "slug": r.slug,
             "title": r.title,
             "productName": r.title,
+            "isOfficial": is_official,
             "category": r.industry,
             "categoryLabel": r.industry_label,
             "periodType": r.period_type,
@@ -654,7 +663,7 @@ async def get_benchmark_reports(
             "modelType": r.model_type,
             "modelLabel": r.model_label,
             "companyName": r.company_name,
-            "sampleSize": f"N = {r.sample_size:,} Personas · Đô thị Toàn quốc",
+            "sampleSize": f"{sample_size_str} · {sample_methodology}",
             "scoreOrVerdict": r.score_or_verdict,
             "scoreNumber": r.score_number,
             "scoreColor": r.score_color or "text-emerald-700 bg-emerald-50 border-emerald-300",

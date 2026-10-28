@@ -6,7 +6,7 @@
 
 -- 1. BẢNG surveys: Lưu trữ thông tin đơn hàng, cấu hình và kết quả khảo sát 5 model
 CREATE TABLE IF NOT EXISTS public.surveys (
-    id VARCHAR(20) PRIMARY KEY,                  -- Ví dụ: 'PANEL131336'
+    id VARCHAR(100) PRIMARY KEY,                 -- Ví dụ: 'PANEL131336', 'BM-EDTECH-2026-MAXDIFF'
     model_type VARCHAR(50) NOT NULL,             -- 'nielsen_bases', 'van_westendorp', 'ab_testing', 'ua_study', 'deal_elasticity'
     status VARCHAR(30) NOT NULL DEFAULT 'PENDING_PAYMENT', -- 'PENDING_PAYMENT', 'PROCESSING', 'COMPLETED', 'FAILED'
     region VARCHAR(100),                         -- 'Toàn quốc', 'Đông Nam Bộ', ...
@@ -26,15 +26,21 @@ CREATE TABLE IF NOT EXISTS public.surveys (
     error_msg TEXT                               -- Lỗi kỹ thuật (nếu có)
 );
 
+-- Nâng cấp độ rộng cột id cho surveys nếu đã tồn tại
+ALTER TABLE IF EXISTS public.surveys ALTER COLUMN id TYPE VARCHAR(100);
+
 -- 2. BẢNG survey_logs: Lưu tiến trình thời gian thực phục vụ Live Telemetry SSE
 CREATE TABLE IF NOT EXISTS public.survey_logs (
     id BIGSERIAL PRIMARY KEY,
-    survey_id VARCHAR(20) NOT NULL REFERENCES public.surveys(id) ON DELETE CASCADE,
+    survey_id VARCHAR(100) NOT NULL REFERENCES public.surveys(id) ON DELETE CASCADE,
     percent INTEGER NOT NULL DEFAULT 0,          -- 0 -> 100%
     log_msg TEXT NOT NULL,                       -- Dòng log telemetry [DUCKDB], [BATCH], etc.
     status VARCHAR(30),                          -- 'PROCESSING', 'COMPLETED', 'FAILED'
     created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now())
 );
+
+-- Nâng cấp độ rộng cột survey_id cho survey_logs nếu đã tồn tại
+ALTER TABLE IF EXISTS public.survey_logs ALTER COLUMN survey_id TYPE VARCHAR(100);
 
 -- 3. TẠO CÁC CHỈ MỤC TỐI ƯU TỐC ĐỘ TRUY VẤN (INDEXES)
 CREATE INDEX IF NOT EXISTS idx_surveys_customer_email ON public.surveys(customer_email);

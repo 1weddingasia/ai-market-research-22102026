@@ -59,7 +59,7 @@ class Base(DeclarativeBase):
 class Survey(Base):
     __tablename__ = "surveys"
 
-    id           = Column(String(20), primary_key=True)   # e.g. "PANEL892"
+    id           = Column(String(100), primary_key=True)   # e.g. "PANEL892", "BM-EDTECH-2026-MAXDIFF"
     model_type   = Column(String(50), nullable=False)      # "nielsen_bases" | ...
     status       = Column(String(30), nullable=False, default="PENDING_PAYMENT")
     # PENDING_PAYMENT → PROCESSING → COMPLETED → FAILED
@@ -113,7 +113,7 @@ class SurveyLog(Base):
     __tablename__ = "survey_logs"
 
     id         = Column(Integer, primary_key=True, autoincrement=True)
-    survey_id  = Column(String(20), nullable=False, index=True)
+    survey_id  = Column(String(100), nullable=False, index=True)
     percent    = Column(Integer, nullable=False)
     log_msg    = Column(Text, nullable=False)
     status     = Column(String(20), nullable=True)   # None | "COMPLETED" | "FAILED"

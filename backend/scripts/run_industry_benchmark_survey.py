@@ -36,11 +36,11 @@ BENCHMARK_TOPICS = [
         "index": 1,
         "id": "BM-FNB-2026-PSM",
         "slug": "fnb-do-uong-it-duong-psm-2026",
-        "title": "Báo Cáo Đo Lường Ngưỡng Giá Chấp Nhận & Xu Hướng: Đồ Uống Ít Đường & Thảo Mộc Bản Địa (Quý 1/2026)",
+        "title": "Báo Cáo Đo Lường Ngưỡng Giá Chấp Nhận & Xu Hướng: Đồ Uống Ít Đường & Thảo Mộc Bản Địa (Quý 4/2026)",
         "industry": "fnb",
         "industry_label": "F&B · Đồ Uống Tự Nhiên",
         "period_type": "quarterly",
-        "period_label": "Quý 1/2026",
+        "period_label": "Quý 4/2026",
         "model_type": "van_westendorp",
         "model_label": "Van Westendorp PSM",
         "sample_size": 2000,
@@ -56,27 +56,27 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Nước Thảo Mộc Bản Địa Lên Men Ít Đường (Lon Sleek 330ml)",
             "product_name": "Nước Thảo Mộc Bản Địa Lên Men Ít Đường (Lon Sleek 330ml)",
-            "title": "Báo Cáo Đo Lường Ngưỡng Giá Chấp Nhận & Xu Hướng: Đồ Uống Ít Đường & Thảo Mộc Bản Địa (Quý 1/2026)",
+            "title": "Báo Cáo Đo Lường Ngưỡng Giá Chấp Nhận & Xu Hướng: Đồ Uống Ít Đường & Thảo Mộc Bản Địa (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Quý 1/2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "F&B · Đồ Uống Tự Nhiên",
             "category": "F&B · Đồ uống tốt cho sức khỏe",
             "description": "Dòng nước giải khát thảo mộc lên men tự nhiên (trà hoa vàng phối hoa atiso đỏ và cỏ ngọt), lượng calo < 25 kcal/lon, không chất bảo quản, đóng lon sleek hiện đại.",
             "target_price": "28000",
             "competitors": "Nước ngọt có gas truyền thống (10.000đ - 12.000đ), Trà đóng chai RTD (12.000đ - 15.000đ), Kombucha nhập khẩu (50.000đ - 65.000đ)",
         },
-        "tags": ["F&B", "Ít đường", "Thảo mộc", "Định giá PSM", "Quý 1/2026"],
+        "tags": ["F&B", "Ít đường", "Thảo mộc", "Định giá PSM", "Quý 4/2026"],
     },
     {
         "index": 2,
         "id": "BM-FMCG-2026-BASES",
         "slug": "thuc-pham-dong-goi-bases-2026",
-        "title": "Báo Cáo Kiểm Định Khả Thi Ra Mắt: Gia Vị Bản Địa & Thực Phẩm Chế Biến Sẵn Tiện Lợi (Quý 1/2026)",
+        "title": "Báo Cáo Kiểm Định Khả Thi Ra Mắt: Gia Vị Bản Địa & Thực Phẩm Tiện Lợi Mùa Cao Điểm Lễ Hội (Quý 4/2026)",
         "industry": "fmcg",
         "industry_label": "Thực Phẩm Đóng Gói · FMCG",
         "period_type": "quarterly",
-        "period_label": "Quý 1/2026",
+        "period_label": "Quý 4/2026",
         "model_type": "nielsen_bases",
         "model_label": "Nielsen BASES",
         "sample_size": 2000,
@@ -92,26 +92,26 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Sốt Nấu Hoàn Chỉnh Vị Thảo Mộc Bản Địa Tiện Lợi (Gói 120g)",
             "product_name": "Sốt Nấu Hoàn Chỉnh Vị Thảo Mộc Bản Địa Tiện Lợi (Gói 120g)",
-            "title": "Báo Cáo Kiểm Định Khả Thi Ra Mắt: Gia Vị Bản Địa & Thực Phẩm Chế Biến Sẵn Tiện Lợi (Quý 1/2026)",
+            "title": "Báo Cáo Kiểm Định Khả Thi Ra Mắt: Gia Vị Bản Địa & Thực Phẩm Tiện Lợi Mùa Cao Điểm Lễ Hội (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Quý 1/2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "Thực Phẩm Đóng Gói · FMCG",
             "category": "Gia vị & Thực phẩm chế biến sẵn",
-            "description": "Gói sốt hoàn chỉnh chiết xuất từ tiêu rừng Tây Bắc và mật mía Nghệ An, chuẩn hóa khẩu vị gia đình trong 10 phút nấu, không chất điều vị nhân tạo.",
+            "description": "Gói sốt hoàn chỉnh chiết xuất từ tiêu rừng Tây Bắc và mật mía Nghệ An, chuẩn hóa khẩu vị gia đình trong 10 phút nấu ăn mùa lễ hội, không chất điều vị nhân tạo.",
             "target_price": "32000",
         },
-        "tags": ["FMCG", "Gia vị bản địa", "Nielsen BASES", "Nấu ăn tiện lợi", "Quý 1/2026"],
+        "tags": ["FMCG", "Gia vị bản địa", "Nielsen BASES", "Nấu ăn tiện lợi", "Quý 4/2026"],
     },
     {
         "index": 3,
         "id": "BM-BEAUTY-2026-MAP",
         "slug": "duoc-my-pham-genz-map-2026",
-        "title": "Báo Cáo Bản Đồ Nhận Thức Định Vị Thương Hiệu: Ngành Dược Mỹ Phẩm Sạch Cho Gen Z (Quý 1/2026)",
+        "title": "Báo Cáo Bản Đồ Nhận Thức Định Vị Thương Hiệu: Dược Mỹ Phẩm Sạch Phục Hồi Cho Gen Z (Quý 4/2026)",
         "industry": "cosmetics",
         "industry_label": "Mỹ Phẩm & Chăm Sóc Da",
         "period_type": "quarterly",
-        "period_label": "Quý 1/2026",
+        "period_label": "Quý 4/2026",
         "model_type": "brand_perceptual_map",
         "model_label": "Brand Perceptual Map",
         "sample_size": 2000,
@@ -127,26 +127,26 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Serum Phục Hồi Rau Má Rừng & B5 Bản Địa",
             "product_name": "Serum Phục Hồi Rau Má Rừng & B5 Bản Địa",
-            "title": "Báo Cáo Bản Đồ Nhận Thức Định Vị Thương Hiệu: Ngành Dược Mỹ Phẩm Sạch Cho Gen Z (Quý 1/2026)",
+            "title": "Báo Cáo Bản Đồ Nhận Thức Định Vị Thương Hiệu: Dược Mỹ Phẩm Sạch Phục Hồi Cho Gen Z (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Quý 1/2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "Mỹ Phẩm & Chăm Sóc Da",
             "category": "Dược mỹ phẩm chăm sóc da mặt",
-            "description": "Tinh chất phục hồi da mụn nhạy cảm chiết xuất rau má rừng hữu cơ Đắk Lắk kết hợp 5% Vitamin B5, bao bì tối giản tái chế, bán qua TikTok Shop và Shopee.",
+            "description": "Tinh chất phục hồi làm dịu da nhạy cảm thời tiết hanh khô cuối năm chiết xuất rau má rừng hữu cơ Đắk Lắk kết hợp 5% Vitamin B5, bao bì tối giản tái chế, bán qua TikTok Shop và Shopee.",
             "brands": "La Roche-Posay, Cocoon, Klairs, The Ordinary, Nhãn hàng Khảo sát",
         },
-        "tags": ["Dược mỹ phẩm", "Gen Z", "Brand Map", "Thị phần nhận thức", "Quý 1/2026"],
+        "tags": ["Dược mỹ phẩm", "Gen Z", "Brand Map", "Thị phần nhận thức", "Quý 4/2026"],
     },
     {
         "index": 4,
         "id": "BM-TECH-2026-KANO",
         "slug": "gia-dung-thong-minh-kano-2026",
-        "title": "Báo Cáo Phân Tích Tính Năng Cốt Lõi vs Kỳ Vọng Vượt Trội: Thiết Bị Gia Dụng Thông Minh (2026)",
+        "title": "Báo Cáo Phân Tích Tính Năng Cốt Lõi vs Kỳ Vọng Vượt Trội: Thiết Bị Gia Dụng Thông Minh (Quý 4/2026)",
         "industry": "smart_home",
         "industry_label": "Gia Dụng & Smarthome",
-        "period_type": "yearly",
-        "period_label": "Năm 2026",
+        "period_type": "quarterly",
+        "period_label": "Quý 4/2026",
         "model_type": "kano",
         "model_label": "Kano Model",
         "sample_size": 2000,
@@ -162,25 +162,25 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Nồi Chiên Không Dầu Hơi Nước Kết Nối App Điều Khiển Giọng Nói Tiếng Việt",
             "product_name": "Nồi Chiên Không Dầu Hơi Nước Kết Nối App Điều Khiển Giọng Nói Tiếng Việt",
-            "title": "Báo Cáo Phân Tích Tính Năng Cốt Lõi vs Kỳ Vọng Vượt Trội: Thiết Bị Gia Dụng Thông Minh (2026)",
+            "title": "Báo Cáo Phân Tích Tính Năng Cốt Lõi vs Kỳ Vọng Vượt Trội: Thiết Bị Gia Dụng Thông Minh (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Năm 2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "Gia Dụng & Smarthome",
             "category": "Thiết bị nhà bếp thông minh",
-            "description": "Nồi chiên kết hợp hấp hơi nước đa tầng, tự động điều chỉnh nhiệt qua cảm biến thực phẩm, điều khiển qua smartphone và nhận lệnh giọng nói tiếng Việt.",
+            "description": "Nồi chiên kết hợp hấp hơi nước đa tầng phục vụ tiệc gia đình cuối năm, tự động điều chỉnh nhiệt qua cảm biến thực phẩm, điều khiển qua smartphone và nhận lệnh giọng nói tiếng Việt.",
         },
-        "tags": ["Gia dụng", "Smarthome", "Kano Model", "Tính năng vượt trội", "Năm 2026"],
+        "tags": ["Gia dụng", "Smarthome", "Kano Model", "Tính năng vượt trội", "Quý 4/2026"],
     },
     {
         "index": 5,
         "id": "BM-GIFT-2026-DEAL",
         "slug": "banh-keo-qua-bieu-deal-2026",
-        "title": "Báo Cáo Đo Lường Độ Nhạy Khuyến Mại & Chính Sách Chiết Khấu: Quà Tặng Doanh Nghiệp B2B (2026)",
+        "title": "Báo Cáo Đo Lường Độ Nhạy Khuyến Mại & Chính Sách Chiết Khấu: Quà Tặng Doanh Nghiệp B2B Mùa Cao Điểm & Tết (Quý 4/2026)",
         "industry": "confectionery",
         "industry_label": "Bánh Kẹo · Quà Tặng B2B",
-        "period_type": "yearly",
-        "period_label": "Năm 2026",
+        "period_type": "quarterly",
+        "period_label": "Quý 4/2026",
         "model_type": "concept_deal",
         "model_label": "Deal Elasticity",
         "sample_size": 2000,
@@ -196,26 +196,26 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Hộp Quà Bánh Thảo Dược & Hạt Đặc Sản Thượng Hạng Thiết Kế Riêng Doanh Nghiệp",
             "product_name": "Hộp Quà Bánh Thảo Dược & Hạt Đặc Sản Thượng Hạng Thiết Kế Riêng Doanh Nghiệp",
-            "title": "Báo Cáo Đo Lường Độ Nhạy Khuyến Mại & Chính Sách Chiết Khấu: Quà Tặng Doanh Nghiệp B2B (2026)",
+            "title": "Báo Cáo Đo Lường Độ Nhạy Khuyến Mại & Chính Sách Chiết Khấu: Quà Tặng Doanh Nghiệp B2B Mùa Cao Điểm & Tết (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Năm 2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "Bánh Kẹo · Quà Tặng B2B",
             "category": "Quà tặng B2B Mùa Vụ",
-            "description": "Set quà cao cấp gồm bánh quy hạt điều Bình Phước, hạt sen sấy Huế và trà cổ thụ Tà Xùa đóng hộp sơn mài in logo doanh nghiệp theo yêu cầu.",
+            "description": "Set quà cao cấp tri ân đối tác cuối năm gồm bánh quy hạt điều Bình Phước, hạt sen sấy Huế và trà cổ thụ Tà Xùa đóng hộp sơn mài in logo doanh nghiệp theo yêu cầu.",
             "target_price": "850000",
         },
-        "tags": ["B2B Gifting", "Bánh kẹo mùa vụ", "Chiết khấu tối ưu", "Deal Elasticity", "Năm 2026"],
+        "tags": ["B2B Gifting", "Bánh kẹo mùa vụ", "Chiết khấu tối ưu", "Deal Elasticity", "Quý 4/2026"],
     },
     {
         "index": 6,
         "id": "BM-EDTECH-2026-MAXDIFF",
         "slug": "edtech-ky-nang-so-maxdiff-2026",
-        "title": "Báo Cáo Xếp Hạng Ưu Tiên Quyết Định Lựa Chọn Khóa Học Kỹ Năng Số Thực Chiến (2026)",
+        "title": "Báo Cáo Xếp Hạng Ưu Tiên Quyết Định Lựa Chọn Khóa Học Kỹ Năng Số & AI Thực Chiến (Quý 4/2026)",
         "industry": "edtech",
         "industry_label": "EdTech & Đào Tạo Số",
-        "period_type": "yearly",
-        "period_label": "Năm 2026",
+        "period_type": "quarterly",
+        "period_label": "Quý 4/2026",
         "model_type": "maxdiff",
         "model_label": "MaxDiff Scaling",
         "sample_size": 2000,
@@ -231,15 +231,15 @@ BENCHMARK_TOPICS = [
         "product_info": {
             "name": "Chương Trình Đào Tạo Ứng Dụng AI & Phân Tích Dữ Liệu Thực Chiến Dành Cho Người Đi Làm",
             "product_name": "Chương Trình Đào Tạo Ứng Dụng AI & Phân Tích Dữ Liệu Thực Chiến Dành Cho Người Đi Làm",
-            "title": "Báo Cáo Xếp Hạng Ưu Tiên Quyết Định Lựa Chọn Khóa Học Kỹ Năng Số Thực Chiến (2026)",
+            "title": "Báo Cáo Xếp Hạng Ưu Tiên Quyết Định Lựa Chọn Khóa Học Kỹ Năng Số & AI Thực Chiến (Quý 4/2026)",
             "company_name": "Khối Nghiên Cứu & Dữ Liệu Thị Trường · 1booking Insight AI Platform",
             "is_benchmark": True,
-            "period_label": "Năm 2026",
+            "period_label": "Quý 4/2026",
             "industry_label": "EdTech & Đào Tạo Số",
             "category": "Đào tạo kỹ năng số",
-            "description": "Khóa đào tạo 8 tuần kèm 1:1 bởi chuyên gia từ các tập đoàn công nghệ, cấp chứng chỉ quốc tế và bảo đảm kết nối dự án thực tế.",
+            "description": "Khóa đào tạo nâng cấp năng lực làm việc với Generative AI & Data Analytics trong 8 tuần kèm 1:1 bởi chuyên gia, cấp chứng chỉ quốc tế và cam kết dự án thực tế.",
         },
-        "tags": ["EdTech", "Kỹ năng AI", "MaxDiff", "Độ ưu tiên", "Năm 2026"],
+        "tags": ["EdTech", "Kỹ năng AI", "MaxDiff", "Độ ưu tiên", "Quý 4/2026"],
     },
 ]
 
@@ -354,6 +354,7 @@ async def execute_benchmark_survey(topic_config: dict) -> bool:
             bm.summary = exec_sum.get("problem_statement") or bm.summary
             bm.findings_json = json.dumps(findings_list, ensure_ascii=False)
             bm.full_report_json = survey.result_json
+            bm.updated_at = datetime.utcnow()
 
         db.commit()
         print(f"🎯 Đã đồng bộ vào bảng benchmark_reports trên Supabase: {survey_id}")
@@ -368,7 +369,7 @@ async def execute_benchmark_survey(topic_config: dict) -> bool:
             f"🎯 *Chỉ số Viability*: *{viability}/100*\n"
             f"⏱️ *Thời gian chạy*: {elapsed:.1f}s\n\n"
             f"🔗 *Xem trực tiếp*: https://insight.1booking.asia/results/{survey_id}\n"
-            f"📄 *Bản in A4 / PDF*: https://insight.1booking.asia/results/{survey_id}/print"
+            f"📥 *Tải file PDF*: https://insight.1booking.asia/api/survey/{survey_id}/pdf"
         )
         await send_telegram_message(msg)
         print(f"📲 Đã gửi thông báo Telegram đến Admin!")
@@ -387,26 +388,68 @@ async def execute_benchmark_survey(topic_config: dict) -> bool:
 async def main():
     import argparse
     parser = argparse.ArgumentParser(description="Chạy khảo sát ngành thật sự")
-    parser.add_argument("--topic", type=int, default=1, help="Số thứ tự chủ đề (1-6) hoặc 0 để chạy tất cả")
+    parser.add_argument("--topic", type=int, default=None, help="Số thứ tự chủ đề (1-6) hoặc 0 để chạy tất cả")
+    parser.add_argument("--start", type=int, default=None, help="Chạy từ topic này đến topic 6 (VD: --start 3)")
+    parser.add_argument("--remaining", action="store_true", help="Chạy các topic còn lại chưa COMPLETED trong DB")
     args = parser.parse_args()
 
     init_db()
 
-    if args.topic == 0:
+    if args.remaining:
+        print("🌟 BẮT ĐẦU QUÉT VÀ CHẠY TẤT CẢ CÁC BÁO CÁO NGÀNH CHƯA HOÀN TẤT...")
+        db = SessionLocal()
+        topics_to_run = []
+        try:
+            for item in BENCHMARK_TOPICS:
+                s = db.query(Survey).filter(Survey.id == item["id"]).first()
+                bm = db.query(BenchmarkReport).filter(BenchmarkReport.id == item["id"]).first()
+                if not s or s.status != "COMPLETED" or not bm or not bm.full_report_json:
+                    topics_to_run.append(item)
+                else:
+                    print(f"⏩ ĐÃ CÓ: [{item['id']}] - {item['title'][:60]} (Status: COMPLETED + Benchmark Synced) -> Bỏ qua.")
+        finally:
+            db.close()
+
+        print(f"📋 Cần thực thi thật sự {len(topics_to_run)} khảo sát ngành (N = 2.000 Personas)...")
+        success_count = 0
+        for item in topics_to_run:
+            ok = await execute_benchmark_survey(item)
+            if ok:
+                success_count += 1
+            await asyncio.sleep(3)
+        print(f"\n🎉 HOÀN TẤT {success_count}/{len(topics_to_run)} KHẢO SÁT NGÀNH!")
+
+    elif args.start is not None:
+        start_idx = max(0, args.start - 1)
+        sub_list = BENCHMARK_TOPICS[start_idx:]
+        print(f"🌟 BẮT ĐẦU CHẠY TỪ CHỦ ĐỀ {args.start} ĐẾN {len(BENCHMARK_TOPICS)} ({len(sub_list)} báo cáo)...")
+        success_count = 0
+        for item in sub_list:
+            ok = await execute_benchmark_survey(item)
+            if ok:
+                success_count += 1
+            await asyncio.sleep(3)
+        print(f"\n🎉 HOÀN TẤT {success_count}/{len(sub_list)} KHẢO SÁT NGÀNH!")
+
+    elif args.topic == 0:
         print(f"🌟 BẮT ĐẦU CHẠY TOÀN BỘ 6 BÁO CÁO NGÀNH THẬT SỰ...")
         success_count = 0
         for item in BENCHMARK_TOPICS:
             ok = await execute_benchmark_survey(item)
             if ok:
                 success_count += 1
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
         print(f"\n🎉 HOÀN TẤT {success_count}/{len(BENCHMARK_TOPICS)} KHẢO SÁT NGÀNH!")
-    else:
+
+    elif args.topic is not None:
         topic_idx = args.topic - 1
         if 0 <= topic_idx < len(BENCHMARK_TOPICS):
             await execute_benchmark_survey(BENCHMARK_TOPICS[topic_idx])
         else:
             print(f"Chỉ số topic không hợp lệ. Vui lòng chọn từ 1 đến 6.")
+    else:
+        # Default topic 1
+        await execute_benchmark_survey(BENCHMARK_TOPICS[0])
 
 
 if __name__ == "__main__":
